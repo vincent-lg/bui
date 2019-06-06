@@ -91,7 +91,7 @@ BUI''s documentation can be found here, or in the *doc* folder in the repository
 - Layout syntax
   - [BUI's layout language overview](layout/overview.md)
   - [Describing the layout in code](layout/code.md)
-  - [Describing the layout in a separate file](layout/file.md]
+  - [Describing the layout in a separate file](layout/file.md)
   - [Building the layout dynamically](layout/dynamic.md)
   - [List of supported markup](layout/markup/index.md)
     - [menubar](layout/markup/menubar.md)
