@@ -1,0 +1,24 @@
+"""Package containing controls.
+
+A control is an action performed at some point, usually triggered by the
+user.  To some extent, they can be linked with the notion of events, found
+in most GUI toolkits.  They're meant to be easier to connect and use the
+full introspection strength of Python.  Behind the scenes, each control
+is a class, though the user doesn't have to use tthat class except
+if she really wants to.  Controls are linked with window methods
+beginning with `on`, and the control name along with the widget
+identifier can be used to create the method name (like `on_click_button`).
+
+BUI will infer control types when a control is defined as being
+"implicit" (a button control without specific control name is believed
+to be "click", since it's usually a good default).
+
+"""
+
+from bui.control.click import Click
+from bui.control.press import Press
+
+CONTROLS = {
+        "click": Click,
+        "press": Press,
+}
