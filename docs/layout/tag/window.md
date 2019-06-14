@@ -1,4 +1,6 @@
-# Tag: window.
+# Layout tag: window
+
+Window tag, to encompass widget tags.
 
 The window tag is the only one that is truly mandatory in your
 [layout](../overview.md).  It is used to describe both a window and
@@ -78,16 +80,16 @@ on her keyboard.
 
 ## Controls
 
-The window tag is tied to the [Window](/class/Window.md) or
-[Dialog](/class/Dialog.md) class.  Therefore, when you write controls
-on either of these classes, you often want to catch controls on
-indidivual graphical elements in the window.  There are a few exceptions
-however:
+The window tag is tied to the [Window](../../class/Window.md) or
+[Dialog](../../class/Dialog.md) class.  Therefore, when you write
+controls on either of these classes, you often want to catch controls
+on indidivual graphical elements in the window.  There are a few
+exceptions however:
 
-| Control                       | Method       | Description       |
-| ----------------------------- | ------------ | ----------------- |
-| [focus](/control/focus.md) | `on_focus` | The window is focused or lose focus.  This usually happens for a top window when the user switches the current app. |
-| [press](/control/press.md) | `on_press` | The user presses on a key from her keyboard.  This control can have sub-controls. |
+| Control                           | Method       | Description    |
+| --------------------------------- | ------------ | -------------- |
+| [focus](../../control/focus.md) | `on_focus` | The window is focused or lose focus.  This usually happens for a top window when the user switches the current app. |
+| [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
 
 Notice that we don't specify the window identifier.  It would make
 no sense here.  Therefore, to use these events, you should just add a

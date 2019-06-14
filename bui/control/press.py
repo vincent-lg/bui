@@ -13,6 +13,8 @@ class Press(Control):
     this one has sub-controls with the name of the key right in the method
     name for easy processing.
 
+    ## Usage
+
     If you want to set up a control on the window that triggers when the
     user presses the 'a' key on her keyboard, you might add a method
     in the window class with the name:
@@ -91,6 +93,7 @@ class Press(Control):
     Here are some examples:
 
         def on_press_a(self, ...): # The user presses the 'a' key
+        def on_press_5(self, ...): # The user presses the '5' key (above 't')
         def on_press_escape(self, ...): # The user presses the 'escape' key
         def on_press_space(self, ...): # The user presses the 'space' key
 
@@ -99,24 +102,24 @@ class Press(Control):
 
     | Name     | Key       | Note                                  |
     | -------- | ----------- | ----------------------------------- |
-    | back     | Backspace   |                                     |
-    | tab      | Tabulation  |                                     |
-    | return   | Return      |                                     |
-    | escape   | Escape      |                                     |
-    | space    | Spacebar    |                                     |
-    | delete   | Delete      |                                     |
+    | back     | Backspace   | `                                   |
+    | tab      | Tabulation  | -                                   |
+    | return   | Return      | -                                   |
+    | escape   | Escape      | -                                   |
+    | space    | Spacebar    | -                                   |
+    | delete   | Delete      | -                                   |
     | shift    | Shift       | May be used by the user OS.         |
     | alt      | Alt         | Open menubar on Windows.            |
-    | home     | Home        |                                     |
-    | end      | End         |                                     |
-    | left     | Left arrow  |                                     |
-    | up       | Up arrow    |                                     |
-    | right    | Right arrow |                                     |
-    | down     | Down arrow  |                                     |
+    | home     | Home        | -                                   |
+    | end      | End         | -                                   |
+    | left     | Left arrow  | -                                   |
+    | up       | Up arrow    | -                                   |
+    | right    | Right arrow | -                                   |
+    | down     | Down arrow  | -                                   |
     | numpadX  | X on numpad | Like `numpad0` or `numpad8`.        |
     | fX       | f<number>   | Like `f1` or `f12`.                 |
-    | pageup   | Page Up     |                                     |
-    | pagedown | Page Down   |                                     |
+    | pageup   | Page Up     | -                                   |
+    | pagedown | Page Down   | -                                   |
 
     There are othert keys but these are the most commonlyused.
 
@@ -173,6 +176,13 @@ class Press(Control):
         def on_press(self, control):
 
     `control` is a reserved name that wil always contain the control object.
+    Read on control attributes in the next section to know what to use as
+    your control method argument.  Of course, your control method can
+    receive, beyond `self`, none, one or more argument depending on your
+    needs.
+
+    ## Control attributes
+
     The control object has the following attributes:
 
     | Attribute | Type      | Note                                |
@@ -187,6 +197,16 @@ class Press(Control):
     > The `raw_key` attribute is useful if you want to intercept 'a' but
       don't care if CTRL or Alt or all of the control keys is being pressed
       at the time.
+
+    Use these attributes as your control method argument.  For instance:
+
+        def on_press(self, raw_key, shift):
+
+    Alternatively you can specify the `control` keyword argument in your
+    method signature which will always contain the control object.
+
+        def on_press(self, control):
+            print(f"The user pressed on {control.key}.")
 
     """
 

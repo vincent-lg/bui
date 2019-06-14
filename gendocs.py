@@ -54,7 +54,7 @@ for name, Control in CONTROLS.items():
     if not Control.__doc__:
         continue
 
-    doc = "# " + format_doc(Control.__doc__).lstrip()
+    doc = f"# Control: {name}\n\n" + format_doc(Control.__doc__).lstrip()
     doc_file = doc_dir / "control" / f"{name}.md"
     with doc_file.open("w", encoding="utf-8") as file:
         file.write(doc)
@@ -64,7 +64,7 @@ for name, (Tag, _) in TAGS.items():
     if not Tag.__doc__:
         continue
 
-    doc = "# " + format_doc(Tag.__doc__).lstrip()
+    doc = f"# Layout tag: {name}\n\n" + format_doc(Tag.__doc__).lstrip()
     doc_file = doc_dir / "layout" / "tag" / f"{name}.md"
     with doc_file.open("w", encoding="utf-8") as file:
         file.write(doc)

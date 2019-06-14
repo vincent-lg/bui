@@ -5,7 +5,7 @@ from bui.control.base import Control
 class Click(Control):
 
     """
-    Click control, triggered when a user click on the widget.
+    When the user clicks on the widget.
 
     This control probably is the most often used in any window.  It is
     triggered when the user clicks on a button or use a similar
