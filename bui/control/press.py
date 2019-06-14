@@ -154,6 +154,35 @@ class Press(Control):
 
         def on_press_ctrl_alt_o(self, ...):
 
+    ### Link common actions with keyboard shortcuts
+
+    It's common to want to link a keyboard shortcut with a simple
+    action.  For instance, if we want to link 'Alt + F4' with the action
+    "close the window".
+
+    BUI offers an easy way to link these actions:
+
+        class Interface(Window):
+
+            # ...
+            on_press_alt_f4 = close
+
+    Although convenient, this code doesn't do any particular magic.  It
+    is almost equivalent to the follwing, more understandable code:
+
+        class Interface(Window):
+
+            # ...
+            def on_press_alt_f4(self):
+                self.close()
+
+    We simply directly link the action "close" to a specific keyboard
+    shortcut.  Python doesn't see much of a difference, although the
+    first syntax is just an alias for the `close` method.  This is
+    a common action: `close` is a basic action that doesn't require
+    any argument and can be linked with a control method in
+    this way.
+
     ### Obtain the key in the control method
 
     With all this flexibility, sometimes you just need to know the real

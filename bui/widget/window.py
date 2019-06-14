@@ -31,7 +31,19 @@ class MetaWindow(type):
     _marks = {}
 
     def __prepare__(name, bases, **kwargs):
-        return {"mark": MetaWindow.mark}
+        namespace = {
+                "mark": MetaWindow.mark
+        }
+
+        # If one of the bases has a `close` method, put it in the namespace
+        for base in bases:
+            close = getattr(base, "close", None)
+            if close:
+                namespace["close"] = close
+                print(f"Add close to {name}.")
+                break
+
+        return namespace
 
     @staticmethod
     def mark(layout: str) -> str:
