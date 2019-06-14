@@ -17,7 +17,7 @@ See [layout overview](../layout/overview.md) for more details.
 from html.parser import HTMLParser
 
 from bui.layout.layout import Layout
-from bui.layout.tags import TAGS
+from bui.layout import TAGS
 
 class BUILayoutParser(HTMLParser):
 

@@ -23,9 +23,9 @@ The way to describe the window is a simple HTML-based layout language.  This typ
 
 This will create a window with only two buttons: OK and cancel, on the third line of the grid with some space left between them.
 
-As you can see, the first step in our case is to defined a [window](./markup/window.md) markup.  This window will contain a grid that will use all the available space on the user screen.  By default, this grid has 6 rows and 6 columns, so that you have 36 available spots to use.  You can change the size of the grid (see the [window](./markup/window.md) markup for details).
+As you can see, the first step in our case is to defined a [window](./tag/window.md) markup tag.  This window will contain a grid that will use all the available space on the user screen.  By default, this grid has 6 rows and 6 columns, so that you have 36 available spots to use.  You can change the size of the grid (see the [window](./tag/window.md) markup tag for details).
 
-Inside of this markup are all widgets (graphical elements) that should be displayed on the screen.  These widgets can be [buttons](./markup/button.md), [checkboxes](./markup/checkboxes.md), [text areas](./markup/text.md) and many others.  Each widget has to be positioned on the grid.
+Inside of this markup are all widgets (graphical elements) that should be displayed on the screen.  These widgets can be [buttons](./tag/button.md), [checkboxes](./tag/checkboxes.md), [text areas](./tag/text.md) and many others.  Each widget has to be positioned on the grid.
 
 Widget positioning is handled by giving a `x` and `y` coordinate to the widget.  The top-left corner of the window is defined by `x=0` and `y=0`.  `x` will allow you to place the widget in a specific column (between `0` and the length of the grid `-1`) and `y` will allow you to place the widget in a specific row of the grid (from `0` to the height of the grid `-1`).
 
@@ -62,19 +62,19 @@ Additionally, you have the option to generate layout [dynamically](./dynamic.md)
 
 ## Layout description
 
-The examples above show that the layout should contain at least a [window](./markup/window.md) markup, containing all widgets (graphical elements).  In fact, a layout can contain several other things:
+The examples above show that the layout should contain at least a [window](./tag/window.md) tag, containing all widgets (graphical elements).  In fact, a layout can contain several other things:
 
-- [menubar](./markup/menubar.md): the menu bar of this window, if any.  You don't have to specify this markup if your window doesn't contain any menu bar.
+- [menubar](./tag/menubar.md): the menu bar of this window, if any.  You don't have to specify this tag if your window doesn't contain any menu bar.
 - [toolbar](./marku/toolbar.md): on the same principle, you can also define a tool bar in your window.  This is not mandatory.  You can define a menu bar, a tool bar, both or none of them.
-- [window](./markup/window.md): the window layout containing what to display on the screen.  The [window](./markup/window.md) defines a rectangular grid where you can position your widgets (graphical elements).  As long as you have room in your grid, you can place any widget you like.  If BUI cannot display your window because the grid definition is incorrect, it will explain to you why and, hopefully, how to fix this error.
+- [window](./tag/window.md): the window layout containing what to display on the screen.  The [window](./tag/window.md) defines a rectangular grid where you can position your widgets (graphical elements).  As long as you have room in your grid, you can place any widget you like.  If BUI cannot display your window because the grid definition is incorrect, it will explain to you why and, hopefully, how to fix this error.
 
 Usually we follow this order to define a window layout:
 
-1. First, if applicable, the [menubar](./markup/menubar.md) definition.  You should leave a blank line between it and the rest, for clarity, though that's far from mandatory.
-2. Next, if applicable, the [toolbar](./markup/toolbar.md) definition.  Again, if you have a toolbar, it might be good to add a blank line after its definition.
-3. Finally, the [window](/markup/window.md) definition.  This is probably where you will spend most time in terms of layout.  Contrary to [menubar](./markup/menubar.md) and [toolbar](./markup/toolbar.md), the [window](./markup/window.md) definition is mandatory in every window or dialog.
+1. First, if applicable, the [menubar](./tag/menubar.md) definition.  You should leave a blank line between it and the rest, for clarity, though that's far from mandatory.
+2. Next, if applicable, the [toolbar](./tag/toolbar.md) definition.  Again, if you have a toolbar, it might be good to add a blank line after its definition.
+3. Finally, the [window](/tag/window.md) definition.  This is probably where you will spend most time in terms of layout.  Contrary to [menubar](./tag/menubar.md) and [toolbar](./tag/toolbar.md), the [window](./tag/window.md) definition is mandatory in every window or dialog.
 
 > To learn more about a widget (graphical element) and see examples on how to use it, refer to its documentation.
 
-- [List of graphical elements](./markup/index.html)
+- [List of graphical elements](./tag/index.html)
 - [Back to the main documentation](../index.md)
