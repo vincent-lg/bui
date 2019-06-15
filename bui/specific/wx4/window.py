@@ -40,7 +40,6 @@ class WX4Window(SpecificWindow):
     @title.setter
     def title(self, new_title):
         """Set the window's title, override in child class."""
-        print("Set title", new_title)
         self._wx_frame.SetTitle(new_title)
 
     def _init(self):
@@ -49,12 +48,28 @@ class WX4Window(SpecificWindow):
         title = self.generic.leaf.title
         self._wx_frame = wx.Frame(None, title=title, name=title)
         self._wx_window = wx.Window(self._wx_frame)
-        wx.Panel(self._wx_window, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN | wx.FULL_REPAINT_ON_RESIZE)
-        self._wx_sizer = wx.GridBagSizer(vgap=5, hgap=5)
+        self._wx_panel = wx.Panel(self._wx_window, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN | wx.FULL_REPAINT_ON_RESIZE)
+        self._wx_grid = wx.GridBagSizer(vgap=5, hgap=5)
 
         # Bind press and type controls
         if "press" in self.generic.controls:
             self._wx_window.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
+
+        for child in self.generic.leaf.children:
+            widget = child.widget
+            widget._bind_controls(self.generic)
+            widget._init()
+
+        children = self.generic.leaf.children
+        if children:
+            children[0].widget.specific.focus()
+
+
+        box = wx.BoxSizer()
+        box.Add(self._wx_grid, 1, wx.EXPAND, 10)
+
+        self._wx_panel.SetSizerAndFit(box)
+        self._wx_frame.SetClientSize(self._wx_panel.GetSize())
 
     def _start(self):
         """Start the window, block."""

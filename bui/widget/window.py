@@ -40,7 +40,6 @@ class MetaWindow(type):
             close = getattr(base, "close", None)
             if close:
                 namespace["close"] = close
-                print(f"Add close to {name}.")
                 break
 
         return namespace
@@ -183,6 +182,10 @@ class Window(Widget, metaclass=MetaWindow):
             widget._bind_controls(window)
             widget._init()
 
+            if widget.widget == "window":
+                break
+
+        window.parsed_layout = parsed_layout
         return window
 
     def _init(self):
