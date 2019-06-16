@@ -15,7 +15,6 @@ class Widget:
 
     def __init__(self, leaf):
         self.leaf = leaf
-        self.id = leaf.id
         self.specific = None
         self.controls = defaultdict(list)
 
@@ -69,3 +68,57 @@ class Widget:
         for name in self.default_controls.keys():
             Control = CONTROLS.get(name)
             Control._bind_methods(self, window)
+
+
+class CachedProperty(property):
+
+    """
+    Cached property, to act like a property with inner cache.
+
+    Use it like a standard property:
+
+        class MyClass:
+
+            @CachedProperty
+            def x(self):
+                return 5
+
+            @x.setter
+            def x(self, new_x):
+                print(f"Setting x = {new_x}")
+
+    Internally, however, the property content is cached when it's
+    modified.  This is useful to define widget properties, as
+    we don't want to read the specific widget (which might call an
+    expensive method) each time we access the property.  However, when the
+    property is modified, we both update the cache and send the required
+    update to the specific widget.
+
+    A CachedProperty, much like a property, can be read-only, or read and
+    write.  If the property cannot be written, the cache is not modified.
+    However, if the generic object containing the property hasn't been
+    linked to a specific object yet (setting is still done in layout at this
+    point, no window is created), a read-only property would still modify
+    the cached when written with no error.
+
+    """
+
+    def __get__(self, obj, type=None):
+        """Get the cached value."""
+        if obj:
+            attr = self.fget.__name__
+            cached_attr = f"cached_{attr}"
+            if hasattr(obj, cached_attr):
+                return getattr(obj, cached_attr)
+            else:
+                value = super().__get__(obj, type)
+                setattr(obj, cached_attr, value)
+                return value
+
+    def __set__(self, obj, value):
+        """Set the cache and call the fset function."""
+        attr = self.fget.__name__
+        cached_attr = f"cached_{attr}"
+        if obj.specific:
+            return super().__set__(obj, value)
+        setattr(obj, cached_attr, value)

@@ -1,6 +1,6 @@
 """Module containing the generic Item class, a generic menu widget."""
 
-from bui.widget.base import Widget
+from bui.widget.base import Widget, CachedProperty
 
 class Item(Widget):
 
@@ -24,6 +24,10 @@ class Item(Widget):
         "click": "This menu item is being clicked on",
     }
     implicit_control = "click"
+
+    @CachedProperty
+    def id(self):
+        return self.leaf.id
 
     def handle_click(self, control):
         """Do nothing if a menu item is clicked."""

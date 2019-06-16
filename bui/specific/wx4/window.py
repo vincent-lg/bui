@@ -94,7 +94,7 @@ class WX4Window(SpecificWindow):
         """Close this window, terminate loop if appropriate."""
         self._wx_frame.Destroy()
 
-    def _OnKeyDown(self, e):
+    def _OnKeyDown(self, e, widget=None):
         """A KeyDown event has been sent, create a control."""
         key_code = e.GetKeyCode()
         key = KEYMAP.get(key_code)
@@ -133,4 +133,7 @@ class WX4Window(SpecificWindow):
 
         kwargs["key"] = key
         print(f"Process command key: {kwargs}")
-        self.generic._process_control("press", kwargs)
+        if widget:
+            widget.generic._process_control("press", kwargs)
+        else:
+            self.generic._process_control("press", kwargs)

@@ -47,7 +47,8 @@ class Control:
             else:
                 cls._register_method(widget, window, f"on_{cls.name}_{widget.id}")
                 if cls.pattern_for_widgets:
-                    pattern = re.compile(cls.pattern_for_widgets.format(id=widget.id))
+                    pattern = cls.pattern_for_widgets.format(id=widget.id)
+                    pattern = re.compile(pattern)
                     contents = dir(window)
                     for content in contents:
                         match = pattern.search(content)
@@ -132,5 +133,8 @@ class Control:
 
         if "control" in parameters:
             kwargs["control"] = self
+
+        if "widget" in parameters:
+            kwargs["widget"] = self.widget
 
         return method(**kwargs)

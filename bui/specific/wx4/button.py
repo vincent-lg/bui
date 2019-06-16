@@ -7,6 +7,16 @@ from bui.specific.base.button import SpecificButton
 
 class WX4Button(SpecificButton):
 
+    @property
+    def name(self):
+        """Get the button name."""
+        return self.wx_button.GetLabel()
+
+    @name.setter
+    def name(self, name):
+        """Set the button name."""
+        self.wx_button.SetLabel(name)
+
     def _init(self):
         """Initialize the specific widget."""
         window = self.generic.leaf.parent.widget.specific
@@ -27,7 +37,10 @@ class WX4Button(SpecificButton):
 
     def OnKeyDown(self, e):
         window = self.generic.leaf.parent.widget.specific
-        window._OnKeyDown(e)
+        if "press" in self.generic.controls:
+            window._OnKeyDown(e, self)
+        else:
+            window._OnKeyDown(e)
 
     def focus(self):
         self.wx_button.SetFocus()

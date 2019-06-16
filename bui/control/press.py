@@ -1,6 +1,9 @@
 """Press control, triggered when a key is pressed by the user."""
 
+import re
+
 from bui.control.base import Control
+from bui.keyboard import KEYS, MODIFIERS
 
 class Press(Control):
 
@@ -243,10 +246,14 @@ class Press(Control):
     widgets = {
             "window": "The user presses on her keyboard anywhere in the window",
     }
+
     has_sub_controls = True
-    pattern_for_window = r"^on_press_(?P<key>.+)$"
-    pattern_for_widgets = r"^on_press_(?P<key>.+)_{id}$"
-    see_also = "[type control](./type.md)"
+    pattern_for_window = (
+        fr"^on_press_(?P<key>({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"
+        fr"({'|'.join([re.escape(key) for key in KEYS])}))$")
+    pattern_for_widgets = (
+        fr"^on_press_(?P<key>({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"
+        fr"({'|'.join([re.escape(key) for key in KEYS])}))_{{id}}$")
     options = ("key", "raw_key", "ctrl", "meta", "alt", "shift")
 
     def __init__(self, widget, key, raw_key, ctrl=False, meta=False,

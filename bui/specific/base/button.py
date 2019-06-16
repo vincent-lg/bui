@@ -6,4 +6,14 @@ class SpecificButton(SpecificWidget):
 
     """Parent class for a specific button widget."""
 
-    pass
+    @property
+    @abstractmethod
+    def name(self):
+        """Get the button name."""
+        pass
+
+    @name.setter
+    @abstractmethod
+    def name(self, name):
+        """Set the button name."""
+        pass
