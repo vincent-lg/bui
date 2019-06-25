@@ -57,10 +57,10 @@ def load_GUI():
 
     return able[0]
 
-def start(window):
+async def start(window):
     """Start a window."""
     window = window.parse_layout(window)
-    window._start()
+    await window._start()
     return window
 
 PACKAGE = load_GUI()

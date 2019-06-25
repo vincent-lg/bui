@@ -61,7 +61,7 @@ class Widget:
             raise ValueError(f"unknown control {control_name!r}")
 
         control = Control(self, **options)
-        control.process(options)
+        return control.process(options)
 
     def _bind_controls(self, window):
         """Bind the diget controls."""

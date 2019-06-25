@@ -1,5 +1,6 @@
 """The wxPython implementation of a BUI button widget."""
 
+import asyncio
 import wx
 
 from bui.specific.base import *
@@ -33,7 +34,11 @@ class WX4Button(SpecificButton):
 
     def OnClick(self, e):
         """The menu is seslected, create a click control."""
-        self.generic._process_control("click")
+        result = self.generic._process_control("click")
+        if asyncio.iscoroutine(result):
+            print(f"{result} is a coroutine.")
+            window = self.generic.leaf.parent.widget.specific
+            window._wx_app.StartAsync(result)
 
     def OnKeyDown(self, e):
         window = self.generic.leaf.parent.widget.specific

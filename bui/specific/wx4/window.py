@@ -11,6 +11,7 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.window import SpecificWindow
+from bui.specific.wx4.app import AsyncApp
 from bui.specific.wx4.constants import KEYMAP
 
 class WX4Window(SpecificWindow):
@@ -29,7 +30,7 @@ class WX4Window(SpecificWindow):
     def _wx_init(self):
         """Initialize wx (creating a wx.App) if necessary."""
         if not self._wx_app:
-            self._wx_app = wx.App()
+            self._wx_app = AsyncApp()
             self._wx_display = wx.Display()
 
     @property
@@ -71,10 +72,10 @@ class WX4Window(SpecificWindow):
         self._wx_panel.SetSizerAndFit(box)
         self._wx_frame.SetClientSize(self._wx_panel.GetSize())
 
-    def _start(self):
+    async def _start(self):
         """Start the window, block."""
         self._wx_frame.Show()
-        self._wx_app.MainLoop()
+        await self._wx_app.MainLoop()
 
     def create_menubar(self, menubar):
         """Create a menu bar."""

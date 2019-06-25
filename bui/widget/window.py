@@ -110,6 +110,11 @@ class Window(Widget, metaclass=MetaWindow):
         super().__init__(leaf)
         self.control_methods = {}
 
+    def __getitem__(self, item):
+        for child in self.leaf.children:
+            if child.id == item:
+                return child.widget
+
     @property
     def usable_surface(self):
         """
