@@ -12,6 +12,7 @@ layout in a separate [file](../layout/file.md).
 
 """
 
+import asyncio
 from pathlib import Path
 import sys
 
@@ -193,6 +194,19 @@ class Window(Widget, metaclass=MetaWindow):
         window.parsed_layout = parsed_layout
         return window
 
+    async def sleep(self, seconds):
+        """
+        Asynchronous sleep during the specified number of seconds.
+
+        This method should ONLY be called in an asynchronous control method.
+        It is a shortcut to `asyncio.sleep`.
+
+        Args:
+            seconds (int or float): the number of seconds to wait.
+
+        """
+        await asyncio.sleep(seconds)
+
     def _init(self):
         """Private method to initialize the generic and specific window."""
         self.specific._init()
@@ -203,9 +217,15 @@ class Window(Widget, metaclass=MetaWindow):
         if menubar:
             self.specific.create_menubar(menubar)
 
-    def _start(self):
-        """Start the window, block execution."""
-        return self.specific._start()
+    def _start(self, loop):
+        """
+        Start the window, watch events and allow async loop.
+
+        Args:
+            loop (AsyncLoop): the asynchronous event loop (see asyncio).
+
+        """
+        return self.specific._start(loop)
 
     def close(self):
         """Close the window, terminate the loop if no window remain."""

@@ -40,8 +40,14 @@ class SpecificWindow(SpecificWidget):
         self.title = self.generic.leaf.title
 
     @abstractmethod
-    def _start(self):
-        """Start the window, block execution."""
+    def _start(self, loop):
+        """
+        Start the window, watch events and allow async loop.
+
+        Args:
+            loop (AsyncLoop): the asynchronous event loop (see asyncio).
+
+        """
         pass
 
     @abstractmethod

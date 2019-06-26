@@ -195,3 +195,46 @@ class Example(Window):
 When the control is triggered, it examines the signature of the control method to call.  It will try to match the expected argument name with its own attributes.  That's why your control method can have none, one or more arguments that will depend on the control being triggered.  Again, remember that `control` and `wiedget` will always be available to use in a control method no matter the control.
 
 Controls list their attributes in the specific control documentation page.  For instance, see the [attributes of the press control](./press.md#control-attributes).
+
+## Asynchronous control methods
+
+Control methods embed the asynchronous power of Python, introduced in Python 3.4 and 3.5.  Writing an asynchronous control method is extremely simple and allows to perform some task but not block other tasks happening at the same time.  A more typical approach would be, for this system, to use threads, but BUI has a clean way to create asynchronous control methods which doesn't require any additional code.  Of course, you can still use threads or sub-processes, if you so choose.
+
+To use the power of asynchronous programming, just add the `async` keyword before your control method definition.  Inside of it, you will then be able to use the `await` keyword, along with other features dedicated to asynchronous operations.  Here is a very short example:
+
+```python
+from bui import Window, start
+
+class HelloBUI(Window):
+
+    """Class to represent a basic hello world window."""
+
+    layout = mark("""
+      <window title="Asynchronous hello from the Blind User Interface">
+        <button x=2 y=2 id="slow" name="Slow clicker" />
+      </window>
+    """)
+
+    async def on_click_slow(self, widget):
+        """On clicking the slow clicker."""
+        i = 10
+        while i > 0:
+            widget.name = f"{i} seconds..."
+            await self.sleep(1)
+            i -= 1
+
+        widget.name = "... TOO LATE! Want to try again?"
+
+
+start(HelloBUI)
+```
+
+Take a look at the `on_click_slow` control method.  It is an asynchronous method (a coroutine), defined with the `async` keyword before the `def` keyword.  In it you find a rather simple loop with an asynchronous loop every second: when the user clicks on the button, this method starts, the user sees the button name change to "10 seconds...", then a pause of 1 second, the button changes to "9 seconds..." and so on.  This doesn't block the rest of the program.  The user can click on other buttons or even shut down the window.  And the user can click on the button again even while it's counting down.  This can be avoided with a little added code.
+
+> The `sleep` method of the [Window](../widget/Window.md) class is a shortcut to call `asyncio.sleep`, no more or less.
+
+A control method can be synchronous (the default), that is blocking, or asynchronous (add the `async` keyword in front of the method definition).  A synchronous method is blocking, that is to say, if you put calls to `time.sleep` in them (or perform other blocking operations), your program will freeze, you won't be able to do anything on it during this freeze, including clicking on other buttons.  However, a control method can easily be asynchronous.  In this case, it is started as usual when the user performs the action triggering the control, but the control method could take time to perform and it won't block the rest of the program.
+
+For instance, a control method could download a file using asynchronous operations.  The file might come from the Internet and downloading it would take some time.  This won't be an issue, since the method won't block.  Or it could delegate some automatic tasks to a game which wouldn't block either.
+
+> Note: beware, though: when this document says "won't block", this is only true if your control method doesn't use blocking functions.  If you use the `requests` library to download a file, for instance, even though the `request` library is synchronous, you won't be able to benefit from this feature.  Look for asynchronous libraries ([aiohttp](https://aiohttp.readthedocs.io/) to query data from the Internet, [aiofiles](https://pypi.org/project/aiofiles/) to read and write data on the user's disk, and so on).

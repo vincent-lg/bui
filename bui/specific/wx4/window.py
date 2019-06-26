@@ -72,10 +72,17 @@ class WX4Window(SpecificWindow):
         self._wx_panel.SetSizerAndFit(box)
         self._wx_frame.SetClientSize(self._wx_panel.GetSize())
 
-    async def _start(self):
-        """Start the window, block."""
+    def _start(self, loop):
+        """
+        Start the window, watch events and allow async loop.
+
+        Args:
+            loop (AsyncLoop): the asynchronous event loop (see asyncio).
+
+        """
         self._wx_frame.Show()
-        await self._wx_app.MainLoop()
+        self._wx_app.loop = loop
+        return self._wx_app.MainLoop()
 
     def create_menubar(self, menubar):
         """Create a menu bar."""

@@ -1,5 +1,6 @@
 """This module contains BUI-specific tools."""
 
+import asyncio
 from importlib import import_module
 import os
 
@@ -57,10 +58,15 @@ def load_GUI():
 
     return able[0]
 
-async def start(window):
+def start(window):
     """Start a window."""
     window = window.parse_layout(window)
-    await window._start()
+
+    # Create an asyncio EventLoop and hand it to the generic (and
+    # specific) window object, to watch for window events AND
+    # asynchronous events at the same time
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(window._start(loop))
     return window
 
 PACKAGE = load_GUI()
