@@ -2,7 +2,7 @@
 
 A control in BUI is a user direct or indirect action.  They can be linked to events in most GUI toolkits.  For instance, if the user presses a key on her keyboard, or clicks with the mouse, a control is created.
 
-A control can easily be linked with the user-defined class inheriting from [Window](../class/Window.md).  The way to link a control is to create a method with a specific name on the child of a [Window](../class/Window.md) class.  These [control methods](#Control-methods) are automatically linked before the [Window](../class/Window.md) object is created and errors can easily be reported to the developer.  This system makes it very easy to process specific controls from your [Window](../class/Window.md)-inherited class.
+A control can easily be linked with the user-defined class inheriting from [Window](../class/Window.md).  The way to link a control is to create a method with a specific name on the child of a [Window](../class/Window.md) class.  These [control methods](#control-methods) are automatically linked before the [Window](../class/Window.md) object is created and errors can easily be reported to the developer.  This system makes it very easy to process specific controls from your [Window](../class/Window.md)-inherited class.
 
 ## Control methods
 
@@ -21,14 +21,14 @@ class Example(Window):
         print("The window was either focused or lost focus.")
 ```
 
-The method will be called when the window is focused or lose focus, basically when the user switches to a different window or comes back to it.  This is a [window control](#Window-control), meaning it is connected with the window itself and not with one of the widgets on the window.  The difference is detailed in the next section.
+The method will be called when the window is focused or lose focus, basically when the user switches to a different window or comes back to it.  This is a [window control](#window-control), meaning it is connected with the window itself and not with one of the widgets on the window.  The difference is detailed in the next section.
 
 ## Control types
 
 Controls are separated into two categories:
 
-- [Window controls](#Window-Control): the window controls are bound to the window and will fire regardless of the specific widget being focused.  Keyboard shorcuts are often intercepted at the window level, for instance.
-- [Widget controls](#Widget-Control): the widget controls are linked to a specific widget on the window.  They will only fire in response to a direct user action if the widget is focused, although indirect widget controlss can still occur in some situations.  The [click control](./click.md) for instance often is a widget control, for we usually want to know if something specific was clicked on, rather than doing something anytime anything is clicked.
+- [Window controls](#window-control): the window controls are bound to the window and will fire regardless of the specific widget being focused.  Keyboard shorcuts are often intercepted at the window level, for instance.
+- [Widget controls](#widget-control): the widget controls are linked to a specific widget on the window.  They will only fire in response to a direct user action if the widget is focused, although indirect widget controlss can still occur in some situations.  The [click control](./click.md) for instance often is a widget control, for we usually want to know if something specific was clicked on, rather than doing something anytime anything is clicked.
 
 A control is not defined as a window or widget control by itself.  All controls can be used in both cases with some exceptions.  This is mentioned on the specific control documentation page.
 
@@ -60,7 +60,7 @@ class Example(Window):
         print(f"The user pressed on {key}.")
 ```
 
-> Note: control arguments are not specific to window controls and will be described in the [section on control attributes](#Control-attributes).
+> Note: control arguments are not specific to window controls and will be described in the [section on control attributes](#control-attributes).
 
 Both methods would be called any time a user presses a key, no matter what widget in the window is currely focused.
 
@@ -126,7 +126,7 @@ class Example(Window):
 
 The method name here is `on_quit`.  It's easy to read and somewhat obvious what it does: when the `File` menu is opened, if the user selects "Quit this app right away", this method is called.  But hold, it's a bit odd at firs glance.
 
-This is a [widget control](#Widget-control), yet we did not specify which control names to use.  Shouldn't we have used `on_click_quit` instead?
+This is a [widget control](#widget-control), yet we did not specify which control names to use.  Shouldn't we have used `on_click_quit` instead?
 
 The answer is somewhat logical but it might take some time to get used to it: `on_click_quit` and `on_quit` do the same thing.  In fact, when BUI tries to bind the control methods, it notices the `on_quit` method.  It looks to see if `quit` is a control name.  It is not.  Then it checks your widgets.  There's one with ID `quit`, so BUI wonders if it's an implicit control.  The [item](../class/Item.md) widget has the "click" implicit control.
 
@@ -194,4 +194,4 @@ class Example(Window):
 
 When the control is triggered, it examines the signature of the control method to call.  It will try to match the expected argument name with its own attributes.  That's why your control method can have none, one or more arguments that will depend on the control being triggered.  Again, remember that `control` and `wiedget` will always be available to use in a control method no matter the control.
 
-Controls list their attributes in the specific control documentation page.  For instance, see the [attributes of the press control](./press.md#Control-attributes).
+Controls list their attributes in the specific control documentation page.  For instance, see the [attributes of the press control](./press.md#control-attributes).
