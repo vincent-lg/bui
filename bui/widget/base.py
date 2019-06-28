@@ -120,5 +120,5 @@ class CachedProperty(property):
         attr = self.fget.__name__
         cached_attr = f"cached_{attr}"
         if obj.specific:
-            return super().__set__(obj, value)
+            super().__set__(obj, value)
         setattr(obj, cached_attr, value)

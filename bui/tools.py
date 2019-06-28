@@ -4,6 +4,8 @@ import asyncio
 from importlib import import_module
 import os
 
+from bui.cmd_parser import parse_args
+
 def load_GUI():
     """
     Attempt to load a GUI toolkit, depending on several factors:
@@ -66,6 +68,7 @@ def start(window):
     # specific) window object, to watch for window events AND
     # asynchronous events at the same time
     loop = asyncio.get_event_loop()
+    parse_args(window, loop)
     loop.run_until_complete(window._start(loop))
     return window
 

@@ -229,7 +229,7 @@ class HelloBUI(Window):
 start(HelloBUI)
 ```
 
-Take a look at the `on_click_slow` control method.  It is an asynchronous method (a coroutine), defined with the `async` keyword before the `def` keyword.  In it you find a rather simple loop with an asynchronous loop every second: when the user clicks on the button, this method starts, the user sees the button name change to "10 seconds...", then a pause of 1 second, the button changes to "9 seconds..." and so on.  This doesn't block the rest of the program.  The user can click on other buttons or even shut down the window.  And the user can click on the button again even while it's counting down.  This can be avoided with a little added code.
+Take a look at the `on_click_slow` control method.  It is an asynchronous method (a coroutine), defined with the `async` keyword before the `def` keyword.  In it you find a rather simple loop with an asynchronous pause every second: when the user clicks on the button, this method starts, the user sees the button name change to "10 seconds...", then a pause of 1 second, the button changes to "9 seconds..." and so on.  This doesn't block the rest of the program.  The user can click on other buttons or even shut down the window.  And the user can click on the button again even while it's counting down.  This can be avoided with a little added code.
 
 > The `sleep` method of the [Window](../widget/Window.md) class is a shortcut to call `asyncio.sleep`, no more or less.
 
