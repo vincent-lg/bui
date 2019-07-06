@@ -8,4 +8,5 @@ from bui.specific.wx4.button import WX4Button as Button
 from bui.specific.wx4.item import WX4Item as Item
 from bui.specific.wx4.menu import WX4Menu as Menu
 from bui.specific.wx4.menubar import WX4Menubar as Menubar
+from bui.specific.wx4.table import WX4Table as Table
 from bui.specific.wx4.window import WX4Window as Window

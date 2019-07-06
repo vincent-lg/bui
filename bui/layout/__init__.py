@@ -1,16 +1,20 @@
 """Package containing layout tags."""
 
 from bui.layout.button import Button
+from bui.layout.col import Col
 from bui.layout.item import Item
 from bui.layout.menu import Menu
 from bui.layout.menubar import Menubar
+from bui.layout.table import Table
 from bui.layout.window import Window
 
 TAGS = {
     # name: (Class, (should be inside))
     "button": (Button, Window),
+    "col": (Col, Table),
     "item": (Item, (Menu, )),
     "menu": (Menu, (Menubar, Menu)),
     "menubar": (Menubar, None),
+    "table": (Table, Window),
     "window": (Window, None),
 }

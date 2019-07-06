@@ -1,10 +1,14 @@
 """This module contains BUI-specific tools."""
 
 import asyncio
+from contextlib import contextmanager
 from importlib import import_module
 import os
 
 from bui.cmd_parser import parse_args
+
+## Constants
+FORBID_START = False
 
 def load_GUI():
     """
@@ -62,6 +66,9 @@ def load_GUI():
 
 def start(window):
     """Start a window."""
+    if FORBID_START:
+        return
+
     window = window.parse_layout(window)
 
     # Create an asyncio EventLoop and hand it to the generic (and
@@ -72,4 +79,16 @@ def start(window):
     loop.run_until_complete(window._start(loop))
     return window
 
+@contextmanager
+def forbid_start():
+    """Pseudo context manager to forbid BUI to start during the with clause."""
+    global FORBID_START
+    FORBID_START = True
+
+    try:
+        yield None
+    finally:
+        FORBID_START = False
+
 PACKAGE = load_GUI()
+

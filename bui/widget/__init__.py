@@ -4,6 +4,7 @@ from bui.widget.button import Button
 from bui.widget.item import Item
 from bui.widget.menu import Menu
 from bui.widget.menubar import Menubar
+from bui.widget.table import Table
 from bui.widget.window import Window
 
 WIDGETS = {
@@ -11,5 +12,6 @@ WIDGETS = {
         "item": Item,
         "menu": Menu,
         "menubar": Menubar,
+        "table": Table,
         "window": Window,
 }

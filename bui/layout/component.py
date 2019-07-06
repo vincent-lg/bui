@@ -7,6 +7,7 @@ class Component:
     tag_name = "to set"
     attrs = ()
     must_have_data = False
+    has_widget = True
 
     def __init__(self, layout, parent):
         self.layout = layout

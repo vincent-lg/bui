@@ -171,7 +171,9 @@ class Window(Widget, metaclass=MetaWindow):
         widgets = []
         for leaf in parsed_layout.flat:
             leaf.complete()
-            if leaf is window_leaf:
+            if not leaf.has_widget:
+                continue
+            elif leaf is window_leaf:
                 Generic = Window
             else:
                 Generic = WIDGETS[leaf.tag_name]
@@ -192,6 +194,9 @@ class Window(Widget, metaclass=MetaWindow):
                 break
 
         window.parsed_layout = parsed_layout
+        for widget in widgets:
+            widget._process_control("init")
+
         return window
 
     async def sleep(self, seconds):

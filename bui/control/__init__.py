@@ -16,9 +16,11 @@ to be "click", since it's usually a good default).
 """
 
 from bui.control.click import Click
+from bui.control.init import Init
 from bui.control.press import Press
 
 CONTROLS = {
         "click": Click,
+        "init": Init,
         "press": Press,
 }

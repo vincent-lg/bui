@@ -1,5 +1,6 @@
 """Base generic widget."""
 
+import asyncio
 from collections import defaultdict
 
 from bui.control import CONTROLS
@@ -69,6 +70,13 @@ class Widget:
             Control = CONTROLS.get(name)
             Control._bind_methods(self, window)
 
+    def schedule(self, coroutine):
+        """Schedule the specified coroutine in the main event loop."""
+        loop = asyncio.get_event_loop()
+        print(f"Scheduling on {loop}.")
+        loop.create_task(coroutine)
+
+
 
 class CachedProperty(property):
 
@@ -120,5 +128,8 @@ class CachedProperty(property):
         attr = self.fget.__name__
         cached_attr = f"cached_{attr}"
         if obj.specific:
-            super().__set__(obj, value)
+            res = self.fset(obj, value)
+            if res is not None:
+                value = res
+
         setattr(obj, cached_attr, value)
