@@ -49,7 +49,7 @@ class Example(Window):
         print("Some key is pressed.")
 ```
 
-Well, this is not too useful, as this control would be called for every key but you don't know which.  Better to at least intercept the keyt pressed:
+Well, this is not too useful, as this control would be called for every key but you don't know which.  Better to at least intercept the key being pressed:
 
 ```python
 class Example(Window):
@@ -63,6 +63,8 @@ class Example(Window):
 > Note: control arguments are not specific to window controls and will be described in the [section on control attributes](#control-attributes).
 
 Both methods would be called any time a user presses a key, no matter what widget in the window is currely focused.
+
+If, for instance, you have two widgets on your window: a [button](../layout/tag/button.md) and a [table](../layout/tag/table.md).  The `on_press` method will be called when the user presses a key on her keyboard, regardless if the button or table is focused.
 
 ### Widget control
 
@@ -126,13 +128,13 @@ class Example(Window):
 
 The method name here is `on_quit`.  It's easy to read and somewhat obvious what it does: when the `File` menu is opened, if the user selects "Quit this app right away", this method is called.  But hold, it's a bit odd at firs glance.
 
-This is a [widget control](#widget-control), yet we did not specify which control names to use.  Shouldn't we have used `on_click_quit` instead?
+This is a [widget control](#widget-control), yet we did not specify which control name to use.  Shouldn't we have used `on_click_quit` instead?
 
 The answer is somewhat logical but it might take some time to get used to it: `on_click_quit` and `on_quit` do the same thing.  In fact, when BUI tries to bind the control methods, it notices the `on_quit` method.  It looks to see if `quit` is a control name.  It is not.  Then it checks your widgets.  There's one with ID `quit`, so BUI wonders if it's an implicit control.  The [item](../class/Item.md) widget has the "click" implicit control.
 
 That's why a method named `on_quit` and `on_click_quit` do the same thing: menu items have an implicit control (when they're clicked).  Because we often want to do this (link a menu item with an action), BUI will assume what to do when we give it an `on_quit` method.
 
-> Implicit controls are somewhat ambiguous at times.  It can be great for very obvious windows, but when you start using a lot of widgets with a lot of identifiers, implicit controls might be confusing.  This is all a choice and BUI lets you decide which to make.
+> Implicit controls are somewhat ambiguous at times.  It can be great for very obvious windows, but when you start using a lot of widgets with a lot of identifiers, implicit controls might be confusing.  This is all a choice and BUI lets you decide which to make.  As a guiding rule, however, you could decide to use only implicit controls with widgets that do not need to intercept more than one control (like menu items, where it's obvious).
 
 If BUI cannot link a control method for any reason, it will try to explain why it failed and will provide additional information on how to fix this error.
 
@@ -140,7 +142,7 @@ If BUI cannot link a control method for any reason, it will try to explain why i
 
 Some controls provide additional flexibility.  You can add more information in the method name to intercept specific controls.  The best example is the [press control](./press.md), which is called when a key is being pressed by the user.
 
-You can define an `on_press` method to intercept any key presses from the user.  But it's more common to want to intercept a specific key withint a method.  That avoids some trange-looking conditions to know what key was pressed and in what context.  The way to do it is to specify the key name in the method name:
+You can define an `on_press` method to intercept any key press from the user.  But it's more common to want to intercept a specific key withint a method.  That avoids some trange-looking conditions to know what key was pressed and in what context.  The way to do it is to specify the key name in the method name:
 
     def on_press_a(self, ...):
 
@@ -238,3 +240,5 @@ A control method can be synchronous (the default), that is blocking, or asynchro
 For instance, a control method could download a file using asynchronous operations.  The file might come from the Internet and downloading it would take some time.  This won't be an issue, since the method won't block.  Or it could delegate some automatic tasks to a game which wouldn't block either.
 
 > Note: beware, though: when this document says "won't block", this is only true if your control method doesn't use blocking functions.  If you use the `requests` library to download a file, for instance, even though the `request` library is synchronous, you won't be able to benefit from this feature.  Look for asynchronous libraries ([aiohttp](https://aiohttp.readthedocs.io/) to query data from the Internet, [aiofiles](https://pypi.org/project/aiofiles/) to read and write data on the user's disk, and so on).
+
+You can see an example of a download window in the [example/download.py](../example/download.md) file.  This shows how one can download several files at once without blocking the window in any way, reporting accurate information on the individual download status (percentage, size and so on).

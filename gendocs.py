@@ -1,10 +1,12 @@
 """Generate documentations, using code docstrings with slight formatting."""
 
+from importlib import import_module
 from pathlib import Path
 from textwrap import dedent
 
 from bui.control import CONTROLS
 from bui.layout import TAGS
+from bui.tools import forbid_start
 
 def format_doc(doc: str) -> str:
     """
@@ -48,6 +50,22 @@ def format_doc(doc: str) -> str:
 
     return formatted
 
+def read_example(path: Path) -> str:
+    """Read an example script, returning the formatted doc."""
+    with forbid_start():
+        module = import_module(".".join(path.parts)[:-3])
+
+        doc = f"# Example: {path.stem}\n\n" + format_doc(module.__doc__)
+
+        with path.open("r", encoding="utf-8") as file:
+            lines = file.read().splitlines()
+
+        # Skip the initial doc
+        add = "\n".join(lines[len(module.__doc__.splitlines()) + 1:]).lstrip("\n")
+        doc += f"## Source code ({len(add.splitlines())} lines)\n\n"
+        doc += "```python\n" + add + "\n```\n"
+        return doc
+
 # Browse different packages
 doc_dir = Path("docs")
 for name, Control in CONTROLS.items():
@@ -69,3 +87,12 @@ for name, (Tag, _) in TAGS.items():
     with doc_file.open("w", encoding="utf-8") as file:
         file.write(doc)
         print(f"Write in {doc_file}")
+
+# Examples
+ex_dir = Path() / "example"
+for path in ex_dir.glob("*.py"):
+    doc = read_example(path)
+    ex_path = doc_dir / "example" / (path.stem + ".md")
+    with ex_path.open("w", encoding="utf-8") as md_file:
+        md_file.write(doc)
+    print(f"Write in {ex_path}.")
