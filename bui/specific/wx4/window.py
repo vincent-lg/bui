@@ -92,9 +92,8 @@ class WX4Window(SpecificWindow):
         for menu in menubar.children:
             wx_menu = wx.Menu()
             for item in menu.children:
-                wx_id = wx.NewId()
-                wx_menu.Append(wx_id, item.data)
-                self._wx_frame.Bind(wx.EVT_MENU, item.widget.specific.OnMenu, id=wx_id)
+                wx_item = wx_menu.Append(wx.ID_ANY, item.data)
+                self._wx_frame.Bind(wx.EVT_MENU, item.widget.specific.OnMenu, wx_item)
             wx_menubar.Append(wx_menu, menu.name)
         self._wx_frame.SetMenuBar(wx_menubar)
 

@@ -61,7 +61,7 @@ class DownloadExample(Window):
         widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _, _ in FILES]
         self.schedule(self.download_all())
 
-    async def on_start(self, widget):
+    def on_start(self, widget):
         """The start button has been clicked by the user."""
         self.downloading = not self.downloading
         widget.name = "Pause" if self.downloading else "Start"
