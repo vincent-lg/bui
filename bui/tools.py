@@ -66,17 +66,17 @@ def load_GUI():
 
 def start(window):
     """Start a window."""
-    if FORBID_START:
-        return
-
     window = window.parse_layout(window)
 
     # Create an asyncio EventLoop and hand it to the generic (and
     # specific) window object, to watch for window events AND
     # asynchronous events at the same time
-    loop = asyncio.get_event_loop()
-    parse_args(window, loop)
-    loop.run_until_complete(window._start(loop))
+    if not FORBID_START:
+        loop = asyncio.get_event_loop()
+        parse_args(window, loop)
+        loop.run_until_complete(window._start(loop))
+
+    return window
     return window
 
 @contextmanager
