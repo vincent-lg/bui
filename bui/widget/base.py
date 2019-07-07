@@ -113,7 +113,7 @@ class CachedProperty(property):
 
     def __get__(self, obj, type=None):
         """Get the cached value."""
-        if obj:
+        if obj is not None:
             attr = self.fget.__name__
             cached_attr = f"cached_{attr}"
             if hasattr(obj, cached_attr):
@@ -127,7 +127,7 @@ class CachedProperty(property):
         """Set the cache and call the fset function."""
         attr = self.fget.__name__
         cached_attr = f"cached_{attr}"
-        if obj.specific:
+        if obj.specific is not None:
             res = self.fset(obj, value)
             if res is not None:
                 value = res

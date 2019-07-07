@@ -35,14 +35,19 @@ class Attr:
         default (any): a default value.  It can be ca callable, in which
                 case, this callable will be called and its return value
                 will be used as a default.
+        if_present: set a default value if the attribute is set, no matter
+                what the value the user specified.  This is useful for
+                toggable attributes.
 
     """
 
-    def __init__(self, name, help, type=str, default=NO_DEFAULT):
+    def __init__(self, name, help, type=str, default=NO_DEFAULT,
+            if_present=NO_DEFAULT):
         self.name = name
         self.help = help
         self.type = type
         self.default = default
+        self.if_present = if_present
 
     def prepare(self, value=NO_VALUE):
         """
@@ -59,6 +64,9 @@ class Attr:
         be returned, if any, or a proper error message will be raised.
 
         """
+        if value is not NO_VALUE and self.if_present is not NO_DEFAULT:
+            return self.if_present
+
         if value is NO_VALUE:
             if self.default is NO_DEFAULT:
                 raise ValueError(f"the attribute {self.name} is mandatory, "
