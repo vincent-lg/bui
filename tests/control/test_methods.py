@@ -7,6 +7,8 @@ linked to controls, and that firing the controls does call the method.
 
 from bui import Window, start
 
+from tests.control.helpers import is_registered
+
 def test_window_control():
     """Test a window control with its associated method."""
     class Example(Window):
@@ -24,7 +26,7 @@ def test_window_control():
 
     # Check that the control method is registered into the window object
     assert "press" in window.controls
-    assert any(method == window.on_press for _, method in window.controls["press"])
+    assert is_registered(window, "press", window.on_press)
 
     # Check that the on_press method is called when firing the control
     window._process_control("press", {"key": "a", "raw_key": "a"})
@@ -49,7 +51,7 @@ def test_widget_control():
     # Check that the control method is registered into the widget object
     widget = window["quit"]
     assert "click" in widget.controls
-    assert any(method == window.on_click_quit for _, method in widget.controls["click"])
+    assert is_registered(widget, "click", window.on_click_quit)
 
     # Check that the on_click_quit method is called when firing the control
     widget._process_control("click")
@@ -81,7 +83,7 @@ def test_implicit_widget_control():
     # Check that the control method is registered into the widget object
     widget = window.parsed_layout.get("item").widget
     assert "click" in widget.controls
-    assert any(method == window.on_quit for _, method in widget.controls["click"])
+    assert is_registered(widget, "click", window.on_quit)
 
     # Check that the on_quit method is called when firing the control
     widget._process_control("click")
@@ -107,14 +109,14 @@ def test_sub_window_controls():
 
     # Check that the control method is registered into the window object
     assert "press" in window.controls
-    assert any(method == window.on_press_a for _, method in window.controls["press"])
+    assert is_registered(window, "press", window.on_press_a)
 
     # Check that the on_press_a method is called when firing the control
     window._process_control("press", {"key": "a", "raw_key": "a"})
     assert window.pressed == 2, "The control method wasn't called."
 
     # Check that the control method is registered into the window object
-    assert any(method == window.on_press for _, method in window.controls["press"])
+    assert is_registered(window, "press", window.on_press)
 
     # Check that the on_press method is called when firing the control
     window._process_control("press", {"key": "b", "raw_key": "b"})
@@ -142,14 +144,14 @@ def test_sub_widget_controls():
 
     # Check that the control method is registered into the widget object
     assert "press" in widget.controls
-    assert any(method == window.on_press_a_count for _, method in widget.controls["press"])
+    assert is_registered(widget, "press", window.on_press_a_count)
 
     # Check that the on_press_a_count method is called when firing the control
     widget._process_control("press", {"key": "a", "raw_key": "a"})
     assert window.pressed == 2, "The control method wasn't called."
 
     # Check that the control method is registered into the widget object
-    assert any(method == window.on_press_count for _, method in widget.controls["press"])
+    assert is_registered(widget, "press", window.on_press_count)
 
     # Check that the on_press_count method is called when firing the control
     widget._process_control("press", {"key": "b", "raw_key": "b"})
@@ -173,7 +175,7 @@ def test_alias_window_control():
 
     # Check that the control method is registered into the window object
     assert "press" in window.controls
-    assert any(method == window.on_press_a for _, method in window.controls["press"])
+    assert is_registered(window, "press", window.on_press_a)
 
     # Check that the on_press_a method is called when firing the control
     window._process_control("press", {"key": "a", "raw_key": "a"})
@@ -181,7 +183,7 @@ def test_alias_window_control():
     window.pressed = False
 
     # Check that the control method is registered into the window object
-    assert any(method == window.on_press_b for _, method in window.controls["press"])
+    assert is_registered(window, "press", window.on_press_b)
 
     # Check that the on_press_b method is called when firing the control
     window._process_control("press", {"key": "b", "raw_key": "b"})
@@ -207,7 +209,7 @@ def test_alias_widget_control():
 
     # Check that the control method is registered into the window object
     assert "press" in widget.controls
-    assert any(method == window.on_click_quit for _, method in widget.controls["press"])
+    assert is_registered(widget, "press", window.on_click_quit)
 
     # Check that the on_click_quit method is called when firing the control
     widget._process_control("click")
@@ -215,9 +217,8 @@ def test_alias_widget_control():
     window.pressed = False
 
     # Check that the control method is registered into the window object
-    assert any(method == window.on_press_b_quit for _, method in widget.controls["press"])
+    assert is_registered(widget, "press", window.on_press_b_quit)
 
     # Check that the on_press_b method is called when firing the control
     widget._process_control("press", {"key": "b", "raw_key": "b"})
     assert window.pressed, "The control method wasn't called."
-
