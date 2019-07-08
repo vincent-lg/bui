@@ -1,6 +1,5 @@
 """The wxPython implementation of a BUI checkbox widget."""
 
-import asyncio
 import wx
 
 from bui.specific.base import *
@@ -43,10 +42,7 @@ class WX4Checkbox(SpecificCheckbox):
     def OnClick(self, e):
         """The checkbox is clicked, create a click control."""
         self.generic.cached_checked = e.IsChecked()
-        result = self.generic._process_control("click")
-        if asyncio.iscoroutine(result):
-            window = self.generic.leaf.parent.widget.specific
-            window._wx_app.StartAsync(result)
+        self.generic._process_control("click")
 
     def focus(self):
         self.wx_checkbox.SetFocus()

@@ -4,6 +4,7 @@ All controls should inherit from the below class.
 
 """
 
+import asyncio
 import inspect
 import re
 
@@ -137,4 +138,8 @@ class Control:
         if "widget" in parameters:
             kwargs["widget"] = self.widget
 
-        return method(**kwargs)
+        result = method(**kwargs)
+        if asyncio.iscoroutine(result):
+            self.widget.schedule(result)
+
+        return result
