@@ -25,7 +25,7 @@ class Init(Control):
 
         def on_init(self):
             # The window initializes
-            table = self[products]
+            table = self["products"]
             table.rows = (
                     ("Pocket watch", "$15", 80),
                     ...
@@ -67,7 +67,7 @@ class Init(Control):
     This control can be bound to an asynchronous method (that is, a
     coroutine).  However, in order to avoid slowing down the display of
     the window, notice that using such a method doesn't guarantee the
-    initialization will be called before teh window is displayed, which
+    initialization will be called before the window is displayed, which
     might create some logical errors depending on what you want to achieve:
 
         async def on_init(self, ...):
@@ -80,7 +80,7 @@ class Init(Control):
     An alternative is also possible: if you want to keep the method
     synchronous (that is, it will always be called before the window
     appears) but you wish to create an asynchronous coroutine in it,
-    you can use `self.schedule` which takes a coroutine in argument:
+    you can use `self.schedule` which takes a coroutine as argument:
 
         class Example(Window):
 
@@ -99,7 +99,7 @@ class Init(Control):
                 # ... and 5 seconds later, perhaps do something else?
 
     The important thing to note here is that the `on_init` method remains
-    synchronous: it will be called before the window appears, even
+    synchronous: it will be called **before** the window appears, even
     if the method blocks, the window will take longer to display.
     However, we schedule the `start_task` method to run.  This method
     has been defined by the developer and is asynchronous.  BUI will
