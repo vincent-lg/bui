@@ -41,8 +41,7 @@ class WX4Checkbox(SpecificCheckbox):
 
     def OnClick(self, e):
         """The checkbox is clicked, create a click control."""
-        self.generic.cached_checked = e.IsChecked()
-        self.generic._process_control("click")
+        self.generic._process_control("check", {'checked': e.IsChecked(), 'state': 'checked' if e.IsChecked() else 'unchecked'})
 
     def focus(self):
         self.wx_checkbox.SetFocus()

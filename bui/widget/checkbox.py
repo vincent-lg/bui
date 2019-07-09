@@ -19,7 +19,7 @@ class Checkbox(Widget):
     widget = "checkbox"
     class_name = "Checkbox"
     default_controls = {
-        "click": "This checkbox is being clicked or toggled via the keyboard.",
+        "check": "This checkbox is being checked or unchecked.",
         "init": "This checkbox is ready to be displayed.",
         "press": "The user presses on a key while the checkbox is focused.",
     }
@@ -62,7 +62,7 @@ class Checkbox(Widget):
         """Force uncheck this checkbox."""
         self.checked = False
 
-    def handle_click(self, control):
+    def handle_check(self, control):
         """Do nothing if a checkbox is clicked."""
         pass
 
