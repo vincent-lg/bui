@@ -29,3 +29,24 @@ class SpecificCheckbox(SpecificWidget):
     def checked(self, checked):
         """Set the checkbox checked status."""
         pass
+
+    @property
+    @abstractmethod
+    def enabled(self):
+        """Return whether the checkbox is enabled or not."""
+        pass
+
+    @property
+    def disabled(self):
+        """Return whether the checkbox is disabled or not."""
+        return not self.enabled
+
+    @abstractmethod
+    def enable(self):
+        """Force-enable the checkbox."""
+        pass
+
+    @abstractmethod
+    def disable(self):
+        """Disable the checkbox."""
+        pass

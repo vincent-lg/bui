@@ -75,6 +75,10 @@ class Checkbox(Component):
     | -------------- | ---------------- | --------------------------- |
     | `name`         | The name (str)   | `self.name = "Other name"`  |
     | `checked`      | On or off (bool) | `self.checked = False`      |
+    | `enabled`      | On or off (bool) | `print(self.enabled)`       |
+    |                | Cannot be set.   |                             |
+    | `disabled`     | On or off (bool) | `print(self.disabled)`      |
+    |                | Cannot be set.   |                             |
 
     > You can use a simple condition to test if the checkbox is checked:
 
@@ -112,6 +116,8 @@ class Checkbox(Component):
     | ------------------------ | -------------------------------------- |
     | `check()`                | Force the checkbox to be checked.      |
     | `uncheck()`              | Force the checkbox to be unchecked.    |
+    | `enable()`               | Force the checkbox to be enabled.      |
+    | `disable`                | Force the checkbox to be disabled.     |
 
     For instance:
 
@@ -119,6 +125,11 @@ class Checkbox(Component):
             '''The window initializes.'''
             option = window["option"]
             option.check()
+
+    > Note: the `enabled` and `disabled` properties, along with the
+      `enable()` and `disable()` method, allow to change whether
+      a checkbox can be set by the user.  A disabled checkbox (usually
+      grayed out or marked unavailable) cannot be changed by the user.
 
     ## Controls
 

@@ -54,6 +54,16 @@ class Checkbox(Widget):
     def checked(self, checked):
         self.specific.checked = checked
 
+    @property
+    def enabled(self):
+        """Return whether the checkbox is enabled or not."""
+        return self.specific.enabled
+
+    @property
+    def disabled(self):
+        """Return whether the checkbox is disabled or not."""
+        return self.specific.disabled
+
     def check(self):
         """Force check this checkbox."""
         self.checked = True
@@ -61,6 +71,14 @@ class Checkbox(Widget):
     def uncheck(self):
         """Force uncheck this checkbox."""
         self.checked = False
+
+    def enable(self):
+        """Force-enable the checkbox."""
+        self.specific.enable()
+
+    def disable(self):
+        """Disable the checkbox."""
+        self.specific.disable()
 
     def handle_check(self, control):
         """Do nothing if a checkbox is clicked."""

@@ -27,6 +27,19 @@ class WX4Checkbox(SpecificCheckbox):
         """Set the checkbox checked status."""
         self.wx_checkbox.SetValue(checked)
 
+    @property
+    def enabled(self):
+        """Return whether the checkbox is enabled or not."""
+        return self.wx_checkbox.Enabled
+
+    def enable(self):
+        """Force-enable the checkbox."""
+        self.wx_checkbox.Enable()
+
+    def disable(self):
+        """Force-disable the checkbox."""
+        self.wx_checkbox.Disable()
+
     def _init(self):
         """Initialize the specific widget."""
         window = self.generic.leaf.parent.widget.specific
@@ -37,9 +50,9 @@ class WX4Checkbox(SpecificCheckbox):
         self.wx_checkbox = wx.CheckBox(panel, label=label, name=label)
         self.wx_checkbox.SetValue(self.generic.checked)
         grid.Add(self.wx_checkbox, (self.generic.leaf.y, self.generic.leaf.x))
-        self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnClick)
+        self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnCheck)
 
-    def OnClick(self, e):
+    def OnCheck(self, e):
         """The checkbox is clicked, create a click control."""
         self.generic._process_control("check", {'checked': e.IsChecked(), 'state': 'checked' if e.IsChecked() else 'unchecked'})
 
