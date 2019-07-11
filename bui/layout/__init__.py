@@ -7,6 +7,7 @@ from bui.layout.item import Item
 from bui.layout.menu import Menu
 from bui.layout.menubar import Menubar
 from bui.layout.table import Table
+from bui.layout.text import Text
 from bui.layout.window import Window
 
 TAGS = {
@@ -18,5 +19,6 @@ TAGS = {
     "menu": (Menu, (Menubar, Menu)),
     "menubar": (Menubar, None),
     "table": (Table, Window),
+    "text": (Text, Window),
     "window": (Window, None),
 }

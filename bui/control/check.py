@@ -9,9 +9,10 @@ class Check(Control):
     """
     When the user checks or unchecks a checkbox.
 
-    This control, specific to checkboxes, is triggered when a user checks
-    or unchecks a checkbox.  This control has optional sub-controls to
-    bind methods to the action of checking or unchecking a checkbox.
+    This control, specific to [checkboxes](../layout/tag/checkbox.md),
+    is triggered when a user checks or unchecks a checkbox.  This control
+    has optional sub-controls to bind methods to the action of checking
+    or unchecking a checkbox.
 
     ## Usage
 
@@ -22,7 +23,8 @@ class Check(Control):
     ### Window control
 
     This control cannot be set on a window.  Checking or unchecking an
-    entire window makes no sense, it should always be bound to a checkbox.
+    entire window makes no sense, it should always be bound to a
+    [checkbox](../layout/tag/checkbox.md).
 
     ### Widget control
 
@@ -37,8 +39,10 @@ class Check(Control):
     in the method:
 
         def on_check_option(self, checked):
-            print(f"The option checkbox has been "
-                    "{'checked' if checked else 'unchecked'}")
+            if checked:
+                print(f"The option checkbox has been checked.")
+            else:
+                print(f"The option checkbox has been unchecked.")
 
     If you want to call a specific method when the "option" checkbox is
     checked, replace the "check" control type with "checked":
@@ -55,17 +59,28 @@ class Check(Control):
     actions to be called when the checkbox is checked and unchecked.
     However, seeing as there are not so many possibilities, most developers
     prefer to create a `on_check_...` method and do a simple condition on
-    the "checked" argument.
+    the "checked" argument, like the second example in this section.
 
     ### Sub-controls and main controls
 
-    Like the [press](./press.md) control, sub-controls takes precedence over main controls.  If you have a method named `on_chedk_option`, it will be called whenver the "option" checkbox is checked.  However, if you also have a `on_check_option` method, it will only be called when the checkbox is unchecked, seeing as they're no specific method to handle that.
+    Like the [press](./press.md) control, sub-controls takes precedence
+    over main controls.  If you have a method named `on_checked_option`, it
+    will be called whenver the "option" checkbox is checked.  However, if
+    you also have a `on_check_option` method, it will only be called
+    when the checkbox is unchecked, seeing as there is no specific method
+    to handle that situation.  In other words, `on_checked_...` and
+    `on_unchedked_...` always have precedence and `on_check_...` will
+    only be called if searching for the more specific method fails.
 
-    As a general rule, due to the slight different in naming that could create confusion and the fact that there are only two states to watch, it is advisable to use either a main control or sub-controls for each checkbox we have to watch.
+    As a general rule, due to the slight different in naming that could
+    create confusion and the fact that there are only two states to watch,
+    it is advisable to use either a main control or sub-controls for each
+    checkbox you have to watch.
 
     Here is a detail of what happens:
 
-    1. The user clicks on a checkbox of ID "option".  This checkbox is unchecked.
+    1. The user clicks on a checkbox of ID "option".  This checkbox is
+        unchecked.
     2. The control "check" is fired.
     3. It first searches for a method named `on_checked_option` on the
         window.  If found, it calls it and stops.  If not...
@@ -73,7 +88,8 @@ class Check(Control):
 
     Similarly, when the checkbox is unchecked:
 
-    1. The user clicks on a checkbox of ID "option".  This checkbox is checked.
+    1. The user clicks on a checkbox of ID "option".  This checkbox is
+        checked.
     2. The control "check" is fired.
     3. It first searches for a method named `on_unchecked_option` on the
         window.  If found, it calls it and stops.  If not...
@@ -85,7 +101,7 @@ class Check(Control):
 
     | Attribute | Type      | Note                                |
     | --------- | --------- | ----------------------------------- |
-    | checked   | bool      | Whether the checkbox is about to be |
+    | checked   | bool      | Whether the checkbox has been       |
     |           |           | checked or not.                     |
     | state     | str       | Either 'checked' or 'unchecked'. In |
     |           |           | practice, using this state as       |
@@ -97,9 +113,9 @@ class Check(Control):
 
         def on_check(self, checked):
             if checked:
-                print(f"The option checkbox was checked.")
+                print("The option checkbox was checked.")
             else:
-                print(f"The option checkbox was unchecked.")
+                print("The option checkbox was unchecked.")
 
     Alternatively you can specify the `control` keyword argument in your
     method signature which will always contain the control object.  You

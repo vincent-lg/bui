@@ -2,7 +2,11 @@
 
 Create a checkbox on the interface.
 
-A checkbox is widget on a [window](./window.md).  It can be either checked or unchecked.  Checking it can be done through the mouse or the keyboard.  The checkbox can also be disabled, toggling it won't be possible.  A click control will be triggered when the checkbox changes state.
+A checkbox is a widget on a [window](./window.md).  It can be either
+checked or unchecked.  Checking it can be done through the mouse or the
+keyboard.  The checkbox can also be disabled, toggling it won't be
+possible.  A [check](../../control/check.md) control will be triggered
+when the checkbox changes state.
 
 ```
 <window title="Test">
@@ -46,13 +50,15 @@ the checkbox should be checked (in harmony to user options, for instance).
 
 ## Data
 
-A checkbox tag will be turned into a [Checkbox](../class/Checkbox.md)
+A checkbox tag will be turned into a [Checkbox](../../widget/Checkbox.md)
 object.  You can access and modify its attributes in a control method.
 
 | Attribute      | Meaning and type | Example                     |
 | -------------- | ---------------- | --------------------------- |
 | `name` | The name (str) | `self.name = "Other name"` |
 | `checked` | On or off (bool) | `self.checked = False` |
+| `enabled` | On or off (bool) Cannot be set. | `print(self.enabled)` |
+| `disabled` | On or off (bool) Cannot be set. | `print(self.disabled)` |
 
 > You can use a simple condition to test if the checkbox is checked:
 
@@ -77,9 +83,8 @@ worry about how it works.  Consider the following example:
 
     class Example(Window):
 
-        def on_click_option(self, widget, checked):
-            '''The option checkbox has been clicked, toggleed.'''
-            widget.name = f"checkbox {'checked' if checked else 'not checked'}"
+        def on_check_option(self, widget, checked):
+            '''The option checkbox has been checked or unchecked.'''                widget.name = f"checkbox {'checked' if checked else 'not checked'}"
 
 > Changing the name will not change the checkbox ID.  Once set
   in layout, the ID won't change.
@@ -90,6 +95,8 @@ A Checkbox also offers the following methods:
 | ------------------------ | -------------------------------------- |
 | `check()` | Force the checkbox to be checked. |
 | `uncheck()` | Force the checkbox to be unchecked. |
+| `enable()` | Force the checkbox to be enabled. |
+| `disable` | Force the checkbox to be disabled. |
 
 For instance:
 
@@ -98,15 +105,23 @@ For instance:
         option = window["option"]
         option.check()
 
+> Note: the `enabled` and `disabled` properties, along with the
+  `enable()` and `disable()` methods, allow to change whether
+  a checkbox can be set by the user.  A disabled checkbox (usually
+  grayed out or marked unavailable) cannot be changed by the user.
+  **However**, notice that some screen readers will skip over
+  unavailable checkboxes and won't even signal them, so make sure
+  no vital information is found in a disabled checkbox.
+
 ## Controls
 
 | Control                           | Method       | Description    |
 | --------------------------------- | ------------ | -------------- |
-| [click](../../control/click.md) | `on_click` | The checkbox is being clicked on, toggled. |
+| [check](../../control/check.md) | `on_check` | The checkbox is checked or unchecked. |
 | [init](../../control/init.md) | `on_init` | The checkbox is ready to be displayed, but is not displayed yet. |
 
     class MainWindow(Window):
 
-        def on_click_checkbox(self, checked):
+        def on_checkk_checkbox(self, checked):
             print(f"You clicked on the checkbox of ID 'checkbox'.  Cecked? {checked}")
 

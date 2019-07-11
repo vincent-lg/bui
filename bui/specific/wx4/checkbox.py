@@ -52,9 +52,11 @@ class WX4Checkbox(SpecificCheckbox):
         grid.Add(self.wx_checkbox, (self.generic.leaf.y, self.generic.leaf.x))
         self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnCheck)
 
-    def OnCheck(self, e):
-        """The checkbox is clicked, create a click control."""
-        self.generic._process_control("check", {'checked': e.IsChecked(), 'state': 'checked' if e.IsChecked() else 'unchecked'})
-
     def focus(self):
         self.wx_checkbox.SetFocus()
+
+    def OnCheck(self, e):
+        """The checkbox is clicked, create a click control."""
+        state = 'checked' if e.IsChecked() else 'unchecked'
+        self.generic._process_control("check", {'checked': e.IsChecked(), 'state': state})
+        self.generic.cached_checked = e.IsChecked()

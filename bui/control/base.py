@@ -13,6 +13,8 @@ class Control:
     """Base control, parent class of all controls."""
 
     name = ""
+    window_control = True
+    widget_control = True
     has_sub_controls = False
     pattern_for_window = ""
     pattern_for_widgets = ""
@@ -34,7 +36,7 @@ class Control:
         if cls.has_sub_controls:
             # This control has sub-controls
             # sub-controls can all be linked to control methods
-            if widget is window:
+            if cls.window_control and widget is window:
                 cls._register_method(widget, window, f"on_{cls.name}")
                 if cls.pattern_for_window:
                     pattern = re.compile(cls.pattern_for_window)
@@ -45,7 +47,7 @@ class Control:
                             group = match.groupdict()
                             cls._register_method(widget, window, content,
                                     group=group)
-            else:
+            elif cls.widget_control:
                 cls._register_method(widget, window, f"on_{cls.name}_{widget.id}")
                 if cls.pattern_for_widgets:
                     pattern = cls.pattern_for_widgets.format(id=widget.id)
@@ -63,17 +65,21 @@ class Control:
         bound = False
         if widget.implicit_control == cls.name:
             # This is an implicit control, don't force-add any method
-            if widget is window:
+            if cls.window_control and widget is window:
                 method_name = f"on_{cls.name}"
-            else:
+            elif cls.widget_control:
                 method_name = f"on_{widget.id}"
+            else:
+                method_name = None
 
-            bound = cls._register_method(widget, window, method_name,
-                    force=False)
+            if method_name:
+                bound = cls._register_method(widget, window, method_name,
+                        force=False)
 
         if not bound:
             method_name = f"on_{cls.name}_{widget.id}"
-            cls._register_method(widget, window, method_name)
+            if cls.widget_control:
+                cls._register_method(widget, window, method_name)
 
     @classmethod
     def _register_method(cls, widget, window, method_name, force=True, group=None):

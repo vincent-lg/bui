@@ -124,6 +124,8 @@ BUI's documentation can be found here, or in the *docs* folder in the repository
 - Controls
   - [BUI controls overview](control/overview.md)
   - [List of controls](control/list.md)
+    - [change](control/change.md)
+    - [check](control/check.md)
     - [click](control/click.md)
     - [context](control/context.md)
     - [press](control/press.md)
