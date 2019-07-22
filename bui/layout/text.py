@@ -5,7 +5,7 @@ from bui.layout.component import Component
 
 class Text(Component):
 
-    """
+    r"""
     Create a text area on the interface.
 
     A text is a text area (or text input) on the [window](./window.md).
@@ -140,7 +140,11 @@ class Text(Component):
 
     ### Cursor object
 
-    The cursor object can be accessed through the `cursor` read-only attribute of the widget.  A cursor object represents the point in which the cursor (or insertion point) is located.  This object has additional attributes of itw own and some methods (see below for an example).
+    The cursor object can be accessed through the `cursor` read-only
+    attribute of the widget.  A cursor object represents the point at
+    which the cursor (or insertion point) is located.  This object has
+    additional attributes of its own and some methods (see below
+    for examples).
 
     | Attribute     | Name and type        | Example                   |
     | ------------- | -------------------- | ------------------------- |

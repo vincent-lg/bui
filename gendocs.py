@@ -27,7 +27,6 @@ def format_doc(doc: str) -> str:
     table = []
     for line in doc.splitlines():
         if watch_table:
-            #breakpoint()
             if not line.strip():
                 tab_lines = [" | ".join(tab_line) for tab_line in table]
                 formatted += "| " + " |\n| ".join(tab_lines) + " |\n\n"
