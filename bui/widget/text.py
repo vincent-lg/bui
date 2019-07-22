@@ -30,6 +30,11 @@ class Text(Widget):
         self.id = leaf.id
         self.label = leaf.label
         self.value = leaf.value
+        self.multiline = leaf.multiline
+        self._cursor = Cursor(self)
+
+    def __len__(self):
+        return len(self.value)
 
     @CachedProperty
     def id(self):
@@ -61,6 +66,10 @@ class Text(Widget):
         """Return whether the text is disabled or not."""
         return self.specific.disabled
 
+    @property
+    def cursor(self):
+        return self._cursor
+
     def enable(self):
         """Force-enable the text."""
         self.specific.enable()
@@ -68,3 +77,38 @@ class Text(Widget):
     def disable(self):
         """Disable the text."""
         self.specific.disable()
+
+
+class Cursor:
+
+    """
+    Class to represent a cursor in a text field.
+
+    A cursor object is created when a text widget is created.  This cursor
+    object will be updated whenever the need arises.
+
+    """
+
+    def __init__(self, widget):
+        self._pos = 0
+        self._widget = widget
+
+    @property
+    def pos(self):
+        return self._pos
+
+    @property
+    def at_begin(self):
+        return self._pos == 0
+
+    @property
+    def at_end(self):
+        return self._pos > len(self._widget)
+
+    @property
+    def text_before(self):
+        return self._widget.value[:self._pos]
+
+    @property
+    def text_after(self):
+        return self._widget.value[self._pos:]

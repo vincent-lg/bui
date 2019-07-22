@@ -49,6 +49,8 @@ class Text(Component):
     |              |          | the text label.          |             |
     | `value`      | No       | The default value of     | `<text      |
     |              |          | the text widget.         | value=Me>`  |
+    | `multiline`  | No       | If present, set the text | `<text      |
+    |              |          | on multiple lines.       | multiline>` |
 
     The required attributes are `x`, and `y`.  It is recommended to also
     set an `id` although the shortened label (only lowercase
@@ -76,6 +78,7 @@ class Text(Component):
     |                | Cannot be set.   |                             |
     | `disabled`     | On or off (bool) | `print(self.disabled)`      |
     |                | Cannot be set.   |                             |
+    | `cursor`       | Cursor object.   | `print(self.cursor.pos)`    |
 
     > Use the `value` attribute to read or modify the text content:
 
@@ -135,6 +138,73 @@ class Text(Component):
       even displaying it.  Make sure to not place vital content
       in a disabled text.
 
+    ### Cursor object
+
+    The cursor object can be accessed through the `cursor` read-only attribute of the widget.  A cursor object represents the point in which the cursor (or insertion point) is located.  This object has additional attributes of itw own and some methods (see below for an example).
+
+    | Attribute     | Name and type        | Example                   |
+    | ------------- | -------------------- | ------------------------- |
+    | `at_begin`    | Yes or no (bool).    | `if cursor.at_begin:`     |
+    |               | Is true if the       |                           |
+    |               | cursor stands at     |                           |
+    |               | the beginning of     |                           |
+    |               | the text widget      |                           |
+    |               | `pos == 0`).         |                           |
+    | `at_end`      | Yes or no (bool).    | `if cursor.at_end:`       |
+    |               | Is true if the       |                           |
+    |               | cursor stands at     |                           |
+    |               | the end of the       |                           |
+    |               | text widget, that    |                           |
+    |               | if typing new        |                           |
+    |               | letters would        |                           |
+    |               | append to the        |                           |
+    |               | current text (`pos   |                           |
+    |               | == len(text) -       |                           |
+    |               | 1`).                 |                           |
+    | `pos`         | Current cursor       | `text.value[:cursor.pos]` |
+    |               | position (int).      |                           |
+    |               | This position is     |                           |
+    |               | the one of the       |                           |
+    |               | character indice     |                           |
+    |               | that will be         |                           |
+    |               | "pushed" when the    |                           |
+    |               | user types, so       |                           |
+    |               | that `pos` is 0 if   |                           |
+    |               | the cursor is at     |                           |
+    |               | the beginning of     |                           |
+    |               | the wdget, and       |                           |
+    |               | `len(text)` if the   |                           |
+    |               | cursor is at the     |                           |
+    |               | very end of the      |                           |
+    |               | text widget.         |                           |
+    | `text_after`  | Text from the        | `cursor.text_after`       |
+    |               | cursor position to   |                           |
+    |               | the end of the       |                           |
+    |               | widget, including    |                           |
+    |               | both limits (str).   |                           |
+    |               | It is identical to   |                           |
+    |               | `text[pos:]`.        |                           |
+    |               | If the cursor is     |                           |
+    |               | under the 'o' of     |                           |
+    |               | 'coffee', then       |                           |
+    |               | `cursor.text_after`  |                           |
+    |               | will return          |                           |
+    |               | 'offee'.             |                           |
+    | `text_before` | The text between the | `cursor.text_before`      |
+    |               | beginning of the     |                           |
+    |               | widget and the       |                           |
+    |               | current cursor       |                           |
+    |               | position, not        |                           |
+    |               | including the        |                           |
+    |               | character under the  |                           |
+    |               | cursor. This is      |                           |
+    |               | identical to         |                           |
+    |               | `text[:pos]`. If the |                           |
+    |               | cursor is under the  |                           |
+    |               | 'o' of 'coffee',     |                           |
+    |               | 'cursor.text_before` |                           |
+    |               | will return 'c'.     |                           |
+
     ## Controls
 
     | Control                           | Method       | Description    |
@@ -179,16 +249,19 @@ class Text(Component):
         Attr("y", help="The widget vertical position", type=int),
         Attr("id", help="The widget identifier", default=""),
         Attr("value", help="The text default value", default=""),
+        Attr("multiline", help="The text is on multiple lines",
+                default=False, if_present=True),
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id="", value=""):
+    def __init__(self, layout, parent, x, y, id="", value="", multiline=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
         self.label = ""
         self.id = id
         self.value = value
+        self.multiline = multiline
 
     def complete(self):
         """Complete the widget, when all the layout has been set."""

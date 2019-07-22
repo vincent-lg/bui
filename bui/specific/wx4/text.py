@@ -42,18 +42,25 @@ class WX4Text(SpecificText):
 
     def _init(self):
         """Initialize the specific widget."""
+        self._nl_offset = 0
+        self.cached_position = -1
         window = self.generic.leaf.parent.widget.specific
         frame = window._wx_frame
         panel = window._wx_panel
         grid = window._wx_grid
         label = self.generic.leaf.label
         self.wx_label = wx.StaticText(panel, label=label)
-        self.wx_text = wx.TextCtrl(panel, value=self.generic.leaf.value)
+        style = 0
+        if self.generic.multiline:
+            style |= wx.TE_MULTILINE
+        self.wx_text = wx.TextCtrl(panel, value=self.generic.leaf.value, style=style)
         self.wx_text.generic = self.generic
         grid.Add(self.wx_label, (self.generic.leaf.y - 1, self.generic.leaf.x))
         grid.Add(self.wx_text, (self.generic.leaf.y, self.generic.leaf.x))
         self.wx_text.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
-        self.wx_text.Bind(wx.EVT_TEXT, self.OnTextChanged)
+        frame.Bind(wx.EVT_TEXT, self.OnTextChanged, self.wx_text)
+        self.wx_text.Bind(wx.EVT_LEFT_UP, self.OnUpdateCursor)
+        self.wx_text.Bind(wx.EVT_KEY_UP, self.OnUpdateCursor)
 
     def focus(self):
         self.wx_text.SetFocus()
@@ -63,6 +70,9 @@ class WX4Text(SpecificText):
         self.generic._process_control("change", {"text": text})
         self.generic.cached_value = text
 
+        # Update the cursor position
+        self.UpdateCorsorPosition(text)
+
     def OnKeyDown(self, e):
         window = self.generic.leaf.parent.widget.specific
         if "press" in self.generic.controls:
@@ -71,3 +81,46 @@ class WX4Text(SpecificText):
             window._OnKeyDown(e)
 
         e.Skip()
+
+    def UpdateCursorPosition(self, text=None):
+        """Check the cursor position."""
+        text = text if text else self.wx_text.GetValue()
+        position = self.wx_text.GetInsertionPoint()
+        if position != self.cached_position:
+            self.cached_position = position
+            # Calculate line offset if necessary
+            # wxPython coupled with Windows break the one-character-per-line-break
+            # convention, so BUI tries to apply a patch.
+            num_nl = text.count("\n")
+            if not self._nl_offset:
+                last = self.wx_text.GetLastPosition()
+                if num_nl > 0:
+                    self._nl_offset = int((last - len(text)) / num_nl) + 1
+
+            # If the text contains new lines, we should have a valid NL offset
+            # (usually 1 for Linux or Mac, 2 for Windows)
+            if num_nl > 0:
+                offset_pos = pos = 0
+                for character in text:
+                    if pos == self.cached_position:
+                        break
+
+                    if character == "\n":
+                        pos += self._nl_offset
+                    else:
+                        pos += 1
+                    offset_pos += 1
+                else:
+                    offset_pos += 1
+            else:
+                offset_pos = position
+
+            cursor = self.generic.cursor
+            cursor._pos = offset_pos
+            print(f"Update cursor: {cursor.pos} {cursor.text_before!r} {cursor.text_after!r}")
+
+    async def AsyncUpdateCursor(self, text=None):
+        self.UpdateCursorPosition(text)
+
+    def OnUpdateCursor(self, e):
+        self.generic.schedule(self.AsyncUpdateCursor())
