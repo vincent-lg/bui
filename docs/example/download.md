@@ -52,7 +52,7 @@ class DownloadExample(Window):
           <col>Downloaded</col>
           <col>Size</col>
         </table>
-        <button x=3 y=4 name="Start" />
+        <button x=3 y=4>Start</button>
       </window>
     """)
 

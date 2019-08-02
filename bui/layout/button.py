@@ -14,14 +14,13 @@ class Button(Component):
 
     ```
     <window title="Test">
-      <button x=1 y=3 name="My button" />
+      <button x=1 y=3>My button</button>
       ...
     </window>
     ```
 
-    > Notice that a button tag is often defined on one line, with the
-      closing sign inside the button definition itself.  This is simply
-      convenient since a button doesn't require data.
+    > Notice that the button label is specified as the data for this
+      tag.  This label cannot be empty.
 
     ## Attributes
 
@@ -37,23 +36,21 @@ class Button(Component):
     |              |          | is at the top). This     |             |
     |              |          | position is relative to  |             |
     |              |          | the window height.       |             |
-    | `name`       | Yes      | The button name (or      | `<button    |
-    |              |          | label).                  | name=OK>`   |
     | `id`         | No       | The button identifier    | `<button    |
     |              |          | (ID). If not set, use    | id=quit>`   |
-    |              |          | the button name.         |             |
+    |              |          | the button label.        |             |
 
-    The required attributes are `x`, `y` and `name`.  It is recommended
-    to also set an `id` although the shortened name (only lowercase
+    The required attributes are `x`, and `y`.  It is recommended
+    to also set an `id` although the shortened label (only lowercase
     letters will be used, spaces turned into the underscore) will be
     given if the `id` attribute is not set.
 
-        <button x=2 y=5 name="Click on me!" />
+        <button x=2 y=5>Click on me!</button>
 
     (This will set a button with `id` of "click_on_me".)
 
-    > `name` is a translatable attribute.  If internationalization is
-      set, it should contain the `ytranslate` path to the name and will
+    > The data is a translatable field.  If internationalization is
+      set, it should contain the `ytranslate` path to the label and will
       be translated in the proper language as needed. Note that in this case,
       you absolutely need to set a proper ID, otherwise control methods
       won't be easy to bind to the button.
@@ -75,7 +72,7 @@ class Button(Component):
         class Example(Window):
 
             def on_click_me(self, widget):
-                '''The click me button has been clicked.'''
+                \"\"\"The click me button has been clicked.\"\"\"
                 widget.name = "Clicked on it"
 
     > Changing the name will not change the button ID.  Once set
@@ -99,18 +96,19 @@ class Button(Component):
     attrs = (
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
-        Attr("name", help="The button name (and label)"),
         Attr("id", help="The widget identifier", default=""),
     )
+    must_have_data = True
 
-    def __init__(self, layout, parent, x, y, name, id=""):
+    def __init__(self, layout, parent, x, y, id=""):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
-        self.name = name
+        self.name = ""
         self.id = id
 
     def complete(self):
         """Complete the widet, when all the layout has been set."""
+        self.name = self.data
         if not self.id:
             self.id = self.deduce_id(self.name)
