@@ -38,7 +38,7 @@ def test_widget_control():
 
         layout = mark("""
           <window title="Test on widget controls">
-            <button x=2 y=2 id="quit" name="Quit the window" />
+            <button x=2 y=2 id="quit">Quit the window</button>
           </window>
         """)
 
@@ -128,7 +128,7 @@ def test_sub_widget_controls():
 
         layout = mark("""
           <window title="Test on window controls">
-            <button x=2 y=3 id=count name="Count me" />
+            <button x=2 y=3 id=count>Count me</button>
           </window>
         """)
 
@@ -195,7 +195,7 @@ def test_alias_widget_control():
 
         layout = mark("""
           <window title="Test on window controls">
-            <button x=2 y=0 id=quit name="Quit or report" />
+            <button x=2 y=0 id=quit>Quit or report</button>
           </window>
         """)
 

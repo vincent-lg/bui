@@ -50,7 +50,6 @@ class Button(Widget):
 
     def handle_click(self, control):
         """Do nothing if a button is clicked."""
-        print("handle click")
         if self.parent.widget == "dialog":
             if self.set_true or self.set_false or self.set:
                 if self.set:
