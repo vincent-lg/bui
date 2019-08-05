@@ -15,10 +15,12 @@ layout in a separate [file](../layout/file.md).
 import asyncio
 from pathlib import Path
 import sys
-
-from bui.widget.base import Widget
+from typing import Type, Union
 
 from bui.layout.parser import BUILayoutParser
+from bui.tasks import cancel_all, run_remaining
+from bui.widget.base import Widget
+from bui import widget as wg
 
 class MetaWindow(type):
 
@@ -97,6 +99,8 @@ class Window(Widget, metaclass=MetaWindow):
     widget = "window"
     class_name = "Window"
     default_controls = {
+        "close": "The window is ready to be closed",
+        "init": "The window is ready to be displayed",
         "press": "The user presses a key anywhere in the window",
     }
 
@@ -110,6 +114,9 @@ class Window(Widget, metaclass=MetaWindow):
     def __init__(self, leaf):
         super().__init__(leaf)
         self.control_methods = {}
+        self.title = leaf.title
+        self.width = leaf.width
+        self.height = leaf.height
 
     def __getitem__(self, item):
         for child in self.leaf.children:
@@ -133,7 +140,7 @@ class Window(Widget, metaclass=MetaWindow):
         return self.specific.usable_surface
 
     @classmethod
-    def parse_layout(cls, Window):
+    def parse_layout(cls, Window, tag_name="window"):
         """
         Determine where the layout is and try to parse it, return a window.
 
@@ -162,7 +169,7 @@ class Window(Widget, metaclass=MetaWindow):
 
         parser.feed(layout)
         parsed_layout = parser.layout
-        window_leaf = parsed_layout.get("window")
+        window_leaf = parsed_layout.get(tag_name)
         if window_leaf is None:
             raise ValueError("the specified layout doesn't contain a <window> description")
 
@@ -189,9 +196,6 @@ class Window(Widget, metaclass=MetaWindow):
         for widget in widgets:
             widget._bind_controls(window)
             widget._init()
-
-            if widget.widget == "window":
-                break
 
         window.parsed_layout = parsed_layout
         for widget in widgets:
@@ -232,6 +236,41 @@ class Window(Widget, metaclass=MetaWindow):
         """
         return self.specific._start(loop)
 
+    def _stop(self):
+        """Stop the window toolkit."""
+        cancel_all()
+        self._process_control("close")
+        run_remaining()
+        self.close()
+
     def close(self):
-        """Close the window, terminate the loop if no window remain."""
+        """Close this window."""
         self.specific.close()
+
+    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]
+            ) -> 'wg.dialog.Dialog':
+        """
+        Pop up a dialog, blocks until the dialog has been closed.
+
+        Args:
+            dialog (str or Dialog): the dialog layout (as a str) or the
+                    Dialog class to instantiate from.
+
+        Returns:
+            dialog (Dialog): the dialog object.
+
+        """
+        from bui.widget.dialog import Dialog
+        if isinstance(dialog, str):
+            class NewDialog(Dialog):
+                layout = mark(dialog)
+            dialog = NewDialog
+        assert issubclass(dialog, wg.dialog.Dialog)
+        dialog.window = self
+        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")
+        self.specific.pop_dialog(dialog_obj.specific)
+        return dialog_obj
+
+    def handle_close(self, control):
+        """The window closes."""
+        pass

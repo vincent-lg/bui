@@ -75,8 +75,9 @@ def start(window):
         loop = asyncio.get_event_loop()
         parse_args(window, loop)
         loop.run_until_complete(window._start(loop))
+        window._stop()
+        window.close()
 
-    return window
     return window
 
 @contextmanager

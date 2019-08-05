@@ -77,8 +77,13 @@ class Control:
                         force=False)
 
         if not bound:
-            method_name = f"on_{cls.name}_{widget.id}"
-            if cls.widget_control:
+            if cls.window_control and widget == window:
+                method_name = f"on_{cls.name}"
+                if cls._register_method(widget, window, method_name):
+                    return
+
+            if cls.widget_control and hasattr(widget, "id"):
+                method_name = f"on_{cls.name}_{widget.id}"
                 cls._register_method(widget, window, method_name)
 
     @classmethod

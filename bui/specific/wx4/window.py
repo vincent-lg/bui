@@ -18,59 +18,63 @@ class WX4Window(SpecificWindow):
 
     def __init__(self, generic):
         super().__init__(generic)
-        self._wx_app = None
-        self._wx_display = None
+        self.wx_app = None
+        self.wx_display = None
 
     @property
     def usable_surface(self):
         self._wx_init()
-        rect = self._wx_display.ClientArea
+        rect = self.wx_display.ClientArea
         return Rectangle((rect.x, rect.y), (rect.width, rect.height))
 
     def _wx_init(self):
         """Initialize wx (creating a wx.App) if necessary."""
-        if not self._wx_app:
-            self._wx_app = AsyncApp()
-            self._wx_display = wx.Display()
+        if not self.wx_app:
+            self.wx_app = AsyncApp()
+            self.wx_display = wx.Display()
 
     @property
     def title(self):
         """Return the current title, override in child class."""
-        return self._wx_frame.GetTitle()
+        return self.wx_frame.GetTitle()
 
     @title.setter
     def title(self, new_title):
         """Set the window's title, override in child class."""
-        self._wx_frame.SetTitle(new_title)
+        self.wx_frame.SetTitle(new_title)
 
     def _init(self):
         """Initialize the specific widget."""
         self._wx_init()
-        title = self.generic.leaf.title
-        self._wx_frame = wx.Frame(None, title=title, name=title)
-        self._wx_window = wx.Window(self._wx_frame)
-        self._wx_panel = wx.Panel(self._wx_window, style=wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN | wx.FULL_REPAINT_ON_RESIZE)
-        self._wx_grid = wx.GridBagSizer(vgap=5, hgap=5)
+        title = self.generic.title
+        self.wx_frame = wx.Frame(None, title=title, name=title)
+        self.wx_app.top_window = self.wx_frame
+        self.wx_parent = self.wx_panel = wx.Panel(self.wx_frame)
+        self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # Bind press and type controls
         if "press" in self.generic.controls:
-            self._wx_window.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
+            self.wx_panel.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
 
-        for child in self.generic.leaf.children:
-            widget = child.widget
-            widget._bind_controls(self.generic)
-            widget._init()
+        self.wx_panel.SetSizerAndFit(self.wx_sizer)
+        self.wx_frame.SetClientSize(self.wx_panel.GetSize())
 
-        children = self.generic.leaf.children
-        if children:
-            children[0].widget.specific.focus()
+    def add_widget(self, widget: SpecificWidget):
+        """
+        Add a widget on the window.
 
+        Args:
+            widget (SpecificWidget): the specific widget to add.
 
-        box = wx.BoxSizer()
-        box.Add(self._wx_grid, 1, wx.EXPAND, 10)
-
-        self._wx_panel.SetSizerAndFit(box)
-        self._wx_frame.SetClientSize(self._wx_panel.GetSize())
+        """
+        generic = widget.generic
+        (top_x, top_y), (bottom_x, bottom_y) = self.usable_surface
+        x = top_x + (generic.x / (self.generic.width + 1)) * (bottom_x - top_x)
+        y = top_y + (generic.y / (self.generic.height + 1)) * (bottom_y - top_y)
+        width = (bottom_x - top_x) * (1 / (self.generic.width + 1)) - 5
+        height = (bottom_y - top_y) * (1 / (self.generic.height + 1)) - 5
+        widget.wx_obj.SetSize(int(x), int(y), int(width), int(height))
+        self.wx_sizer.Add(widget.wx_add)
 
     def _start(self, loop):
         """
@@ -80,9 +84,9 @@ class WX4Window(SpecificWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
-        self._wx_frame.Show()
-        self._wx_app.loop = loop
-        return self._wx_app.MainLoop()
+        self.wx_frame.Show()
+        self.wx_app.loop = loop
+        return self.wx_app.MainLoop()
 
     def create_menubar(self, menubar):
         """Create a menu bar."""
@@ -93,13 +97,14 @@ class WX4Window(SpecificWindow):
             wx_menu = wx.Menu()
             for item in menu.children:
                 wx_item = wx_menu.Append(wx.ID_ANY, item.data)
-                self._wx_frame.Bind(wx.EVT_MENU, item.widget.specific.OnMenu, wx_item)
+                self.wx_frame.Bind(wx.EVT_MENU, item.widget.specific.OnMenu, wx_item)
             wx_menubar.Append(wx_menu, menu.name)
-        self._wx_frame.SetMenuBar(wx_menubar)
+        self.wx_frame.SetMenuBar(wx_menubar)
 
     def close(self):
         """Close this window, terminate loop if appropriate."""
-        self._wx_frame.Destroy()
+        if self.wx_frame:
+            self.wx_frame.Destroy()
 
     def _OnKeyDown(self, e, widget=None):
         """A KeyDown event has been sent, create a control."""
@@ -144,3 +149,7 @@ class WX4Window(SpecificWindow):
             widget.generic._process_control("press", kwargs)
         else:
             self.generic._process_control("press", kwargs)
+
+    def pop_dialog(self, dialog: SpecificWidget):
+        """Pop up a dialog."""
+        return dialog.pop()

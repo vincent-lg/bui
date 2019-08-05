@@ -1,5 +1,4 @@
 """The wxPython implementation of a BUI table widget."""
-"""The wxPython implementation of a BUI table widget."""
 
 import wx
 
@@ -20,14 +19,13 @@ class WX4Table(SpecificTable):
 
     def _init(self):
         self._rows = []
-        window = self.generic.leaf.parent.widget.specific
-        grid = window._wx_grid
-        panel = window._wx_panel
-        self.wx_table = wx.ListCtrl(panel, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+        window = self.parent
+        self.wx_add = self.wx_obj = self.wx_table = wx.ListCtrl(
+                window.wx_parent, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
 
         for i, (_, name) in enumerate(self.generic.cols):
             self.wx_table.InsertColumn(i, name)
-        grid.Add(self.wx_table, (self.generic.leaf.y, self.generic.leaf.x))
+        window.add_widget(self)
 
     def row_at(self, index):
         """
@@ -129,8 +127,3 @@ class WX4Table(SpecificTable):
         if self.wx_table.GetFirstSelected() < 0:
             self.wx_table.Select(0)
             self.wx_table.Focus(0)
-
-    def focus(self):
-        self.wx_table.SetFocus()
-
-        selected = self.wx_table.GetFirstSelected()

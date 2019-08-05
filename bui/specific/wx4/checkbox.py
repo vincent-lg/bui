@@ -42,18 +42,13 @@ class WX4Checkbox(SpecificCheckbox):
 
     def _init(self):
         """Initialize the specific widget."""
-        window = self.generic.leaf.parent.widget.specific
-        frame = window._wx_frame
-        panel = window._wx_panel
-        grid = window._wx_grid
-        label = self.generic.leaf.name
-        self.wx_checkbox = wx.CheckBox(panel, label=label, name=label)
+        window = self.parent
+        label = self.generic.name
+        self.wx_add = self.wx_obj = self.wx_checkbox = wx.CheckBox(
+                window.wx_parent, label=label, name=label)
         self.wx_checkbox.SetValue(self.generic.checked)
-        grid.Add(self.wx_checkbox, (self.generic.leaf.y, self.generic.leaf.x))
+        window.add_widget(self)
         self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnCheck)
-
-    def focus(self):
-        self.wx_checkbox.SetFocus()
 
     def OnCheck(self, e):
         """The checkbox is clicked, create a click control."""

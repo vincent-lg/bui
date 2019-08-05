@@ -27,6 +27,8 @@ class Text(Widget):
 
     def __init__(self, leaf):
         super().__init__(leaf)
+        self.x = leaf.x
+        self.y = leaf.y
         self.id = leaf.id
         self.label = leaf.label
         self.value = leaf.value

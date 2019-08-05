@@ -19,15 +19,12 @@ class WX4Button(SpecificButton):
 
     def _init(self):
         """Initialize the specific widget."""
-        window = self.generic.leaf.parent.widget.specific
-        frame = window._wx_frame
-        panel = window._wx_panel
-        grid = window._wx_grid
-        label = self.generic.leaf.name
-        self.wx_button = wx.Button(panel, label=label, name=label)
-        grid.Add(self.wx_button, (self.generic.leaf.y, self.generic.leaf.x))
-        if "click" in self.generic.controls:
-            frame.Bind(wx.EVT_BUTTON, self.OnClick, self.wx_button)
+        window = self.parent
+        label = self.generic.name
+        self.wx_add = self.wx_obj = self.wx_button = wx.Button(
+                window.wx_parent,label=label, name=label)
+        window.add_widget(self)
+        self.wx_button.Bind(wx.EVT_BUTTON, self.OnClick)
 
         self.wx_button.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
 
@@ -36,11 +33,8 @@ class WX4Button(SpecificButton):
         self.generic._process_control("click")
 
     def OnKeyDown(self, e):
-        window = self.generic.leaf.parent.widget.specific
+        window = self.parent
         if "press" in self.generic.controls:
             window._OnKeyDown(e, self)
         else:
             window._OnKeyDown(e)
-
-    def focus(self):
-        self.wx_button.SetFocus()

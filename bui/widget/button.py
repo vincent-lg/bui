@@ -26,8 +26,15 @@ class Button(Widget):
 
     def __init__(self, leaf):
         super().__init__(leaf)
-        self.name = leaf.name
+        self.x = leaf.x
+        self.y = leaf.y
         self.id = leaf.id
+        self.name = leaf.name
+
+        # Dialog-specific attributes
+        self.set_true = leaf.set_true
+        self.set_false = leaf.set_false
+        self.set = leaf.set
 
     @CachedProperty
     def name(self):
@@ -43,7 +50,16 @@ class Button(Widget):
 
     def handle_click(self, control):
         """Do nothing if a button is clicked."""
-        pass
+        print("handle click")
+        if self.parent.widget == "dialog":
+            if self.set_true or self.set_false or self.set:
+                if self.set:
+                    self.parent.set = self.set
+                elif self.set_true:
+                    self.parent.set = True
+                elif self.set_true:
+                    self.parent.set = False
+                self.parent.close()
 
     def handle_press(self, control):
         """Do nothing if a button is pressed."""

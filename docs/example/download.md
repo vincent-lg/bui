@@ -17,7 +17,7 @@ Then simply run this script with BUI installed.
 
     pip install wxPython
 
-## Source code (114 lines)
+## Source code (131 lines)
 
 ```python
 import asyncio
@@ -27,17 +27,9 @@ import aiohttp
 from bui import Window, start
 
 ## Constants
-TEKNOAXE = "http://www.teknoaxe.com/Music/mobile_direct_download.php"
 FILES = [
-    # ( File name, URL, optional arguments in a dictionary)
-    ("python-3.7.tgz", "https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz", {}),
-    ("Sheltered In Subdued Rain.mp3", TEKNOAXE, {"file": "Sheltered_In_Subdued_Rain.mp3"}),
-    ("Metal and Medeival.mp3", TEKNOAXE, {"file": "Metal_and_Medeival.mp3"}),
-    ("Isle of Doom.mp3", TEKNOAXE, {"file": "Isle_of_Doom.mp3"}),
-    ("Wayward Ghouls.mp3", TEKNOAXE, {"file": "Wayward_Ghouls.mp3"}),
-    ("Figuring Out the Technicalities.mp3", TEKNOAXE, {"file": "Figuring_Out_the_Technicalities.mp3"}),
-    ("Until Your Engine Stops II.mp3", TEKNOAXE, {"file": "Until_Your_Engine_Stops_II.mp3"}),
-    ("Disco Attempt_1.mp3", TEKNOAXE, {"file": "Disco_Attempt_1.mp3"}),
+    # ( File name, URL)
+    ("python-3.7.tgz", "https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz"),
 ]
 
 class DownloadExample(Window):
@@ -52,13 +44,15 @@ class DownloadExample(Window):
           <col>Downloaded</col>
           <col>Size</col>
         </table>
-        <button x=3 y=4>Start</button>
+        <button x=1 y=5>Start</button>
+        <button x=4 y=5>Add</button>
       </window>
     """)
 
     def on_init_download(self, widget):
         self.downloading = False
-        widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _, _ in FILES]
+        self.session = aiohttp.ClientSession()
+        widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _ in FILES]
         self.schedule(self.download_all())
 
     def on_start(self, widget):
@@ -71,16 +65,15 @@ class DownloadExample(Window):
         """Download all files asynchronously."""
         table = self["download"]
         tasks = []
-        async with aiohttp.ClientSession() as session:
-            for i, (filename, url, options) in enumerate(FILES):
-                row = table.rows[i]
-                tasks.append(self.download(row, session, filename, url, options))
+        for i, (filename, url) in enumerate(FILES):
+            row = table.rows[i]
+            tasks.append(self.download(row, filename, url))
 
-            await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 
-    async def download(self, row, session, filename, url, options):
+    async def download(self, row, filename, url):
         """Download one file asynchronously."""
-        async with session.get(url, params=options) as response:
+        async with self.session.get(url) as response:
             if response.status != 200:
                 row.status = "Error"
                 return
@@ -124,6 +117,30 @@ class DownloadExample(Window):
                         await self.sleep(0.1)
                     else:
                         await self.sleep(0.2)
+
+    def on_add(self):
+        """The 'add' button was clicked."""
+        dialog = self.pop_dialog("""
+            <dialog title="Add a file to download">
+              <text x=1 y=1 id=name>Name of the file to add to the download list:</text>
+              <text x=1 y=3 id=url>URL of the file to download from the Internet3:</text>
+              <button x=0 y=5 set_true>OK</button>
+              <button x=4 y=5 set_false>Cancel</button>
+            </dialog>
+        """)
+
+        if dialog:
+            name = dialog["name"].value
+            url = dialog["url"].value
+            table = self["download"]
+            row = table.add_row(name, "Unknown", "Unknown", "Unknown")
+            self.schedule(self.download(row, name, url))
+
+    async def on_close(self):
+        """Close the window, end the session."""
+        print("Closing the session...")
+        await self.session.close()
+        print("... closed.")
 
 def human_size(num):
     for unit in ('', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi'):

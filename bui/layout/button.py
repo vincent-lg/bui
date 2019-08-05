@@ -97,18 +97,32 @@ class Button(Component):
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
         Attr("id", help="The widget identifier", default=""),
+        Attr("set_true", help="Set the dialog to True and close it",
+                default=False, if_present=True),
+        Attr("set_false", help="Set the dialog to False and close it",
+                default=False, if_present=True),
+        Attr("set", help="Set the dialog to some value and close it",
+                default="")
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id=""):
+    def __init__(self, layout, parent, x, y, id="", set_true=False,
+            set_false=False, set=""):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
         self.name = ""
         self.id = id
+        self.set_true = set_true
+        self.set_false = set_false
+        self.set = set
 
     def complete(self):
         """Complete the widet, when all the layout has been set."""
         self.name = self.data
         if not self.id:
             self.id = self.deduce_id(self.name)
+
+        if self.parent.tag_name != "dialog" and (self.set_true or self.set_false or self.set):
+            raise ValueError("Can't yset set_true, set_false or set "
+                    "attributes on a button that doesn't belong in a dialog")

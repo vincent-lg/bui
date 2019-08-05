@@ -4,6 +4,7 @@ import asyncio
 from collections import defaultdict
 
 from bui.control import CONTROLS
+from bui.tasks import schedule
 
 class Widget:
 
@@ -17,6 +18,7 @@ class Widget:
     def __init__(self, leaf):
         self.leaf = leaf
         self.specific = None
+        self.parent = leaf.parent.widget if leaf.parent is not None else None
         self.controls = defaultdict(list)
 
     def __repr__(self):
@@ -72,10 +74,7 @@ class Widget:
 
     def schedule(self, coroutine):
         """Schedule the specified coroutine in the main event loop."""
-        loop = asyncio.get_event_loop()
-        print(f"Scheduling on {loop}.")
-        loop.create_task(coroutine)
-
+        schedule(coroutine)
 
 
 class CachedProperty(property):

@@ -18,6 +18,7 @@ to be "click", since it's usually a good default).
 from bui.control.change import Change
 from bui.control.check import Check
 from bui.control.click import Click
+from bui.control.close import Close
 from bui.control.init import Init
 from bui.control.press import Press
 
@@ -25,6 +26,7 @@ CONTROLS = {
         "change": Change,
         "check": Check,
         "click": Click,
+        "close": Close,
         "init": Init,
         "press": Press,
 }

@@ -30,12 +30,15 @@ class Table(Widget):
 
     def __init__(self, leaf):
         super().__init__(leaf)
+        self.x = leaf.x
+        self.y = leaf.y
         self.id = leaf.id
         self.rows = []
 
         # Look for the <col> sub-tags
         self.cols = []
         self.factory = None
+        self.length = 0
 
     @CachedProperty
     def id(self):
@@ -58,6 +61,7 @@ class Table(Widget):
             rows[i] = row
 
         self.specific.rows = rows
+        self.length = len(rows)
         return rows
 
     def _init(self):
@@ -68,9 +72,16 @@ class Table(Widget):
         self.factory = build_factory(self, self.cols)
         super()._init()
 
+    def add_row(self, *args, **kwargs):
+        """Add a new row."""
+        row = self.factory(self.length, *args, **kwargs)
+        self.update_row(row)
+        return row
+
     def update_row(self, row):
         """Update the specified row."""
         self.specific.update_row(row)
+        self.length = len(self.rows)
 
     def handle_click(self, control):
         """Do nothing if a button is clicked."""

@@ -44,26 +44,23 @@ class WX4Text(SpecificText):
         """Initialize the specific widget."""
         self._nl_offset = 0
         self.cached_position = -1
-        window = self.generic.leaf.parent.widget.specific
-        frame = window._wx_frame
-        panel = window._wx_panel
-        grid = window._wx_grid
-        label = self.generic.leaf.label
-        self.wx_label = wx.StaticText(panel, label=label)
+        window = self.parent
+        label = self.generic.label
+        self.wx_add = self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.wx_label = wx.StaticText(window.wx_parent, label=label)
         style = 0
         if self.generic.multiline:
             style |= wx.TE_MULTILINE
-        self.wx_text = wx.TextCtrl(panel, value=self.generic.leaf.value, style=style)
-        self.wx_text.generic = self.generic
-        grid.Add(self.wx_label, (self.generic.leaf.y - 1, self.generic.leaf.x))
-        grid.Add(self.wx_text, (self.generic.leaf.y, self.generic.leaf.x))
+        self.wx_obj = self.wx_text = wx.TextCtrl(window.wx_parent,
+                value=self.generic.value, style=style, name=label)
+        self.wx_sizer.Add(self.wx_label)
+        self.wx_sizer.Add(self.wx_text, proportion=5)
+        #self.wx_text.generic = self.generic
+        window.add_widget(self)
         self.wx_text.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
-        frame.Bind(wx.EVT_TEXT, self.OnTextChanged, self.wx_text)
+        self.wx_text.Bind(wx.EVT_TEXT, self.OnTextChanged)
         self.wx_text.Bind(wx.EVT_LEFT_UP, self.OnUpdateCursor)
         self.wx_text.Bind(wx.EVT_KEY_UP, self.OnUpdateCursor)
-
-    def focus(self):
-        self.wx_text.SetFocus()
 
     def OnTextChanged(self, e):
         text = e.GetString()
@@ -71,10 +68,10 @@ class WX4Text(SpecificText):
         self.generic.cached_value = text
 
         # Update the cursor position
-        self.UpdateCorsorPosition(text)
+        self.UpdateCursorPosition(text)
 
     def OnKeyDown(self, e):
-        window = self.generic.leaf.parent.widget.specific
+        window = self.parent
         if "press" in self.generic.controls:
             window._OnKeyDown(e, self)
         else:

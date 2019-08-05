@@ -59,3 +59,19 @@ class SpecificWindow(SpecificWidget):
     def close(self):
         """Close this window, terminate loop if appropriate."""
         pass
+
+    @abstractmethod
+    def add_widget(self, widget: SpecificWidget):
+        """
+        Add a widget on the window.
+
+        Args:
+            widget (SpecificWidget): the specific widget to add.
+
+        """
+        pass
+
+    @abstractmethod
+    def pop_dialog(self, dialog: SpecificWidget):
+        """Pop up a dialog."""
+        pass

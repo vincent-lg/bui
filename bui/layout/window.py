@@ -128,8 +128,8 @@ class Window(Component):
     tag_name = "window"
     attrs = (
         Attr("title", help="The window title"),
-        Attr("width", help="The window width", type=int, default=100),
-        Attr("height", help="The window height", type=int, default=100),
+        Attr("width", help="The window width", type=int, default=6),
+        Attr("height", help="The window height", type=int, default=6),
     )
 
     def __init__(self, layout, parent, title, width=0, height=0):
