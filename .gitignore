@@ -5,3 +5,7 @@ bui.egg-info
 build
 dist
 pyenv
+
+# Test and coverage
+.coverage
+htmlcov
