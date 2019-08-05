@@ -73,8 +73,8 @@ for name, Control in CONTROLS.items():
 
     doc = f"# Control: {name}\n\n" + format_doc(Control.__doc__).lstrip()
     doc_file = doc_dir / "control" / f"{name}.md"
-    with doc_file.open("w", encoding="utf-8") as file:
-        file.write(doc)
+    with doc_file.open("wb") as file:
+        file.write(doc.encode("utf-8"))
         print(f"Write in {doc_file}")
 
 for name, (Tag, _) in TAGS.items():
@@ -83,8 +83,8 @@ for name, (Tag, _) in TAGS.items():
 
     doc = f"# Layout tag: {name}\n\n" + format_doc(Tag.__doc__).lstrip()
     doc_file = doc_dir / "layout" / "tag" / f"{name}.md"
-    with doc_file.open("w", encoding="utf-8") as file:
-        file.write(doc)
+    with doc_file.open("wb") as file:
+        file.write(doc.encode("utf-8"))
         print(f"Write in {doc_file}")
 
 # Examples
@@ -92,6 +92,6 @@ ex_dir = Path() / "example"
 for path in ex_dir.glob("*.py"):
     doc = read_example(path)
     ex_path = doc_dir / "example" / (path.stem + ".md")
-    with ex_path.open("w", encoding="utf-8") as md_file:
-        md_file.write(doc)
+    with ex_path.open("wb") as md_file:
+        md_file.write(doc.encode("utf-8"))
     print(f"Write in {ex_path}.")

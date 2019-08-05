@@ -98,8 +98,13 @@ class Window(Component):
     on indidivual graphical elements in the window.  There are a few
     exceptions however:
 
-    | Control                           | Method       | Description    |
-    | --------------------------------- | ------------ | -------------- |
+    | Control                           | Method     | Description      |
+    | --------------------------------- | ---------- | ---------------- |
+    | [close](../../control/close.md) | `on_close`   | The window is    |
+    |                                 |              | about to be      |
+    |                                 |              | closed, but      |
+    |                                 |              | isn't closed     |
+    |                                 |              | yet.             |
     | [focus](../../control/focus.md) | `on_focus`   | The window is    |
     |                                 |              | focused or lose  |
     |                                 |              | focus.  This     |
@@ -108,6 +113,11 @@ class Window(Component):
     |                                 |              | when the user    |
     |                                 |              | switches the     |
     |                                 |              | current app.     |
+    | [init](../../control/init.md)   | `on_init`    | The window is    |
+    |                                 |              | ready to be      |
+    |                                 |              | displayed, but   |
+    |                                 |              | is not displayed |
+    |                                 |              | just yet.        |
     | [press](../../control/press.md) | `on_press`   | The user presses |
     |                                 |              | on a key from her|
     |                                 |              | keyboard. This   |

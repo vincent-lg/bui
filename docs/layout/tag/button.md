@@ -23,6 +23,9 @@ a control method in response, except if the button is disabled.
 | `x` | Yes | The widget's horizontal position in columns (0 is left). This position is relative to the window width. | `<button x=5>` |
 | `y` | Yes | The widget's vertical position in rows (0 is at the top). This position is relative to the window height. | `<button y=2>` |
 | `id` | No | The button identifier (ID). If not set, use the button label. | `<button id=quit>` |
+| `set_true` | No | If inside of a dialog, set the dialog result to `True` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_true>` |
+| `set_false` | No | If inside of a dialog, set the dialog result to `False` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_false>` |
+| `set` | No | If inside of a dialog, set the dialog result to the specified value and close the dialog. | `<button set=ok>` |
 
 The required attributes are `x`, and `y`.  It is recommended
 to also set an `id` although the shortened label (only lowercase
@@ -38,6 +41,20 @@ given if the `id` attribute is not set.
   be translated in the proper language as needed. Note that in this case,
   you absolutely need to set a proper ID, otherwise control methods
   won't be easy to bind to the button.
+
+### Inside of dialogs
+
+If a button is defined inside of a [dialog](dialog.md) tag, it has three
+additional attributes that can be used: `set_true`, `set_false` and
+`set`.  All of them modify the dialog result and close the dialog
+when the button is pressed.
+
+It is very frequent to place `set_true` on a confirmation button
+(like "OK" or "Continue") and `set_false` on a cancellation button
+(like "Cancel" or "Close without modification").  It is then very
+simple to test the dialog result in the control method that popped
+the dialog (see [the page about custom dialogs](dialog.md)
+for more information).
 
 ## Data
 

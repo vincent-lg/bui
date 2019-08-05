@@ -39,6 +39,26 @@ class Button(Component):
     | `id`         | No       | The button identifier    | `<button    |
     |              |          | (ID). If not set, use    | id=quit>`   |
     |              |          | the button label.        |             |
+    | `set_true`   | No       | If inside of a dialog,   | `<button    |
+    |              |          | set the dialog result to | set_true>`  |
+    |              |          | `True` and close the     |             |
+    |              |          | dialog. This field does  |             |
+    |              |          | not require value, its   |             |
+    |              |          | presence in the          |             |
+    |              |          | `<dialog>` tag is        |             |
+    |              |          | sufficient.              |             |
+    | `set_false`  | No       | If inside of a dialog,   | `<button    |
+    |              |          | set the dialog result to | set_false>` |
+    |              |          | `False` and close the    |             |
+    |              |          | dialog. This field does  |             |
+    |              |          | not require value, its   |             |
+    |              |          | presence in the          |             |
+    |              |          | `<dialog>` tag is        |             |
+    |              |          | sufficient.              |             |
+    | `set`        | No       | If inside of a dialog,   | `<button    |
+    |              |          | set the dialog result to | set=ok>`    |
+    |              |          | the specified value and  |             |
+    |              |          | close the dialog.        |             |
 
     The required attributes are `x`, and `y`.  It is recommended
     to also set an `id` although the shortened label (only lowercase
@@ -54,6 +74,20 @@ class Button(Component):
       be translated in the proper language as needed. Note that in this case,
       you absolutely need to set a proper ID, otherwise control methods
       won't be easy to bind to the button.
+
+    ### Inside of dialogs
+
+    If a button is defined inside of a [dialog](dialog.md) tag, it has three
+    additional attributes that can be used: `set_true`, `set_false` and
+    `set`.  All of them modify the dialog result and close the dialog
+    when the button is pressed.
+
+    It is very frequent to place `set_true` on a confirmation button
+    (like "OK" or "Continue") and `set_false` on a cancellation button
+    (like "Cancel" or "Close without modification").  It is then very
+    simple to test the dialog result in the control method that popped
+    the dialog (see [the page about custom dialogs](dialog.md)
+    for more information).
 
     ## Data
 

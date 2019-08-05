@@ -1,6 +1,6 @@
 # Layout tag: dialog
 
-Custom dialog tag, ton encompass widgets.
+Custom dialog tag, to encompass widgets.
 
 The dialog tag allows to create a custom dialog box.  Contrary to the
 window tag, it doesn't describe a window and its elements.  Usually, a
@@ -44,15 +44,15 @@ class Example(Window):
               <button x=1 y=5 set_true>OK</button>
               <button x=4 y=5 set_false>Cancel</button>
             </dialog>
-            """)
+        """)
 
-            # The call to the pop_dialog method will block until the user
-            # has clicked on 'ok' or 'cancel'
-            if dialog: # The user has pressed on OK
-                name = dialog["name"].value
-                print(f"The user entered the name: {name!r}")
-            else: # The user has clicked on cancel
-                print("The user cancelled the operation, do nothing.")
+        # The call to the pop_dialog method will block until the user
+        # has clicked on 'ok' or 'cancel'
+        if dialog: # The user has pressed on OK
+            name = dialog["name"].value
+            print(f"The user entered the name: {name!r}")
+        else: # The user has clicked on cancel
+            print("The user cancelled the operation, do nothing.")
 ```
 
 The created dialog is contained inside a string representation.  This
@@ -81,7 +81,10 @@ field in a very straightforward way.
 
 ### Dialog class
 
-BUI also lets you the option to define a dialog class.  This is a good solution if you want to use the same dialog in different places of your program.  You have to set a [Dialog](../../widget/dialog.md) class in your program:
+BUI also lets you the option to define a dialog class.  This is
+a good solution if you want to use the same dialog in different
+places of your program.  You have to set a
+[Dialog](../../widget/dialog.md) class in your program:
 
 ```python
 import hashlib
@@ -127,7 +130,7 @@ class Example(Window):
         dialog = self.pop_dialog(Hashes)
         # Block until 'ok' or 'cancel' has been pressed
         if dialog:
-            hash_name = dialog["hashes"].selected[0]
+            hash_name = dialog["hashes"].selected.name
 ```
 
 The advantage of this method is that you don't have to redefine the
@@ -211,6 +214,7 @@ There are a few exceptions however:
 
 | Control                           | Method       | Description    |
 | --------------------------------- | ------------ | -------------- |
+| [close](../../control/close.md) | `on_close` | The dialog is about to be closed, but isn't closed yet. |
 | [focus](../../control/focus.md) | `on_focus` | The dialog is focused or lose focus. |
 | [init](../../control/init.md) | `on_init` | The dialog is ready to be displayed, but is not displayed just yet. |
 | [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
