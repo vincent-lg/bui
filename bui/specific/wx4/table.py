@@ -1,9 +1,11 @@
 """The wxPython implementation of a BUI table widget."""
 
+from typing import List
 import wx
 
 from bui.specific.base import *
 from bui.specific.base.table import SpecificTable
+from bui.widget.table import AbcRow
 
 class WX4Table(SpecificTable):
 
@@ -14,11 +16,13 @@ class WX4Table(SpecificTable):
         return self._rows
 
     @rows.setter
-    def rows(self, rows):
+    def rows(self, rows: List[AbcRow]):
+        """Modify the table rows with the specified row objects."""
         self.refresh(rows)
 
     def _init(self):
         self._rows = []
+        self._wx_rows = []
         window = self.parent
         self.wx_add = self.wx_obj = self.wx_table = wx.ListCtrl(
                 window.wx_parent, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
@@ -27,47 +31,7 @@ class WX4Table(SpecificTable):
             self.wx_table.InsertColumn(i, name)
         window.add_widget(self)
 
-    def row_at(self, index):
-        """
-        Return the Row object at the specified index.
-
-        If the index is invalid, raise IndexError.  Otherwise, the
-        returned Row object will have the same definition as the table
-        columns.
-
-        Unlike the `rows` property, this method communicates with the
-        specific GUI toolkit to get accurate and updated content.
-        Therefore, it is not a good idea to use it on a frequent basis.
-        Updating the `rows` property will actually call this method but
-        the content will be cached as much as possible.
-
-        Args:
-            index (int): the row index (starts at 0).
-
-        Returns:
-            row (Row): the row object, if successfully found and created.
-
-        Raises:
-            IndexError if the index is out of range.
-            ValueError if the row doesn't have a logical structure
-            matching the table columns.
-
-        """
-        texts = [self.wx_table.GetItem(index, col).GetText()
-                for col in range(len(self.generic.cols))]
-        row = self.generic.factory(index, *texts)
-        if index < len(self._rows):
-            self._rows[index] = row
-        else:
-            # Force-update the previous indexes
-            i = len(self._rows)
-            while i < index:
-                self.row_at(i)
-                i += 1
-
-            self._rows.append(row)
-
-    def update_row(self, row):
+    def update_row(self, row: AbcRow):
         """
         Update a specific row.
 
@@ -83,19 +47,19 @@ class WX4Table(SpecificTable):
         index = row.index
         if index == num_items:
             # Append the row
-            self.wx_table.Append(list(row))
-            self.row_at(index)
-            return
-        elif index > len(self._rows):
-            old = self.row_at(index)
+            self.wx_table.Append([str(cell) for cell in row])
+            self._rows.append(row)
+            self._wx_rows.append(self.generic.factory(index, *row))
+        elif index > num_items:
+            for i in range(num_items, index + 1):
+                row = self._rows[i]
+                self.update_row(row)
         else:
-            old = self._rows[index]
-
-        for i, (new_value, old_value) in enumerate(zip(row, old)):
-            if new_value != old_value:
-                self.wx_table.SetItem(index, i, new_value)
-
-        self._rows[index] = self.generic.factory(index, *row)
+            old = self._wx_rows[index]
+            for i, (new_value, old_value) in enumerate(zip(row, old)):
+                if new_value != old_value:
+                    self.wx_table.SetItem(index, i, new_value)
+                    old[i] = new_value
 
     def refresh(self, rows):
         """
@@ -112,18 +76,36 @@ class WX4Table(SpecificTable):
             rows (list of Row): the collection of rows to update.
 
         """
-        num_items = self.wx_table.GetItemCount()
-        index = 0
-        while index < num_items:
-            self.row_at(index)
-            index += 1
-
-        # By then, the specific GUI toolkit and the _rows should match,
-        # at least in number
         for row in rows:
             self.update_row(row)
+        self.delete_additional()
 
         # Select the first item if nothing is selected
-        if self.wx_table.GetFirstSelected() < 0:
+        if len(self.rows) > 0 and self.wx_table.GetFirstSelected() < 0:
             self.wx_table.Select(0)
             self.wx_table.Focus(0)
+
+    def remove_row(self, row: AbcRow):
+        """
+        Remove the specified row.
+
+        Args:
+            row (Row): the row to remove.
+
+        The row to remove can be anywhere in the table, not necessarily
+        at the end.
+
+        """
+        index = row.index
+        del self._rows[index]
+        del self._wx_rows[index]
+        self.wx_table.DeleteItem(index)
+        for row, wx_row in zip(self._rows[index:], self._wx_rows[index:]):
+            row.index -= 1
+            wx_row.index -= 1
+
+    def delete_additional(self):
+        """Remove rows that are in generic, not in the wx table."""
+        while len(self._wx_rows) > len(self._rows):
+            self.wx_table.DeleteItem(len(self._wx_rows) - 1)
+            del self._wx_rows[-1]
