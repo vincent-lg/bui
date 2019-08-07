@@ -58,7 +58,7 @@ class WX4Table(SpecificTable):
             old = self._wx_rows[index]
             for i, (new_value, old_value) in enumerate(zip(row, old)):
                 if new_value != old_value:
-                    self.wx_table.SetItem(index, i, new_value)
+                    self.wx_table.SetItem(index, i, str(new_value))
                     old[i] = new_value
 
     def refresh(self, rows):

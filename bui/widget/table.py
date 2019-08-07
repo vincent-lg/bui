@@ -1,7 +1,7 @@
 """Module containing the generic Table class, a generic table widget."""
 
 from abc import ABC, abstractmethod
-from typing import Dict, Iterable, List, Tuple, Union
+from typing import Dict, Iterable, List, Sequence, Tuple, Union
 
 from bui.widget.base import Widget, CachedProperty
 
@@ -24,6 +24,8 @@ class AbcRow(ABC):
     def __init__(self):
         pass
 
+
+Row = Union[dict, list, tuple, AbcRow]
 
 class Table(Widget):
 
@@ -58,6 +60,36 @@ class Table(Widget):
         self.factory = None
         self.length = 0
 
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, item):
+        return self.rows[item]
+
+    def __setitem__(self, item, row: Union[Row, Sequence[Row]]):
+        if isinstance(item, int):
+            items = slice(item, item + 1, 1)
+            rows = [row]
+        else:
+            items = item
+            rows = row
+
+        cur_rows = self.rows[items]
+        try:
+            iter(rows)
+            if len(rows) != len(cur_rows):
+                raise TypeError
+        except TypeError:
+            raise TypeError("the number of rows doesn't match "
+                    "the speicified indices") from None
+
+        for cur_row, row in zip(cur_rows, rows):
+            row = self.factory(cur_row.index, *row)
+            row.index = cur_row.index
+            self.update_row(row)
+
+
+
     @CachedProperty
     def id(self):
         return self.leaf.id
@@ -67,7 +99,7 @@ class Table(Widget):
         return self.specific.rows
 
     @rows.setter
-    def rows(self, rows: Iterable[Union[tuple, list, dict, AbcRow]]):
+    def rows(self, rows: Iterable[Row]):
         """
         Modify the table rows.
 
@@ -222,6 +254,15 @@ def build_factory(widget, cols):
             else:
                 object.__setattr__(self, attr, value)
 
+    def row__getitem__(self, item):
+        return self._cols[item]
+
+    def row__setitem__(self, item, value):
+        if isinstance(item, int):
+            item = tuple(self._cols.keys())[item]
+
+        self._cols[item] = value
+
     factory = type("Row", (AbcRow, ), {
             "widget": widget,
             "columns": [tup[0] for tup in cols],
@@ -231,5 +272,7 @@ def build_factory(widget, cols):
             "__iter__": row__iter__,
             "__getattr__": row__getattr__,
             "__setattr__": row__setattr__,
+            "__getitem__": row__getitem__,
+            "__setitem__": row__setitem__,
     })
     return factory
