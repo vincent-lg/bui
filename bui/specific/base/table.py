@@ -8,17 +8,6 @@ class SpecificTable(SpecificWidget):
 
     """Parent class for a specific table widget."""
 
-    @property
-    @abstractmethod
-    def rows(self):
-        """Return the table row objects."""
-        pass
-
-    @rows.setter
-    def rows(self, rows: List[AbcRow]):
-        """Modify the table rows with the specified row objects."""
-        self.refresh(rows)
-
     @abstractmethod
     def refresh(self, rows: List[AbcRow]):
         """

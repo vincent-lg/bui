@@ -66,7 +66,7 @@ class WX4Table(SpecificTable):
         self.delete_additional()
 
         # Select the first item if nothing is selected
-        if len(self.rows) > 0 and self.wx_table.GetFirstSelected() < 0:
+        if len(self._wx_rows) > 0 and self.wx_table.GetFirstSelected() < 0:
             self.wx_table.Select(0)
             self.wx_table.Focus(0)
 
