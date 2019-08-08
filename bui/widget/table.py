@@ -58,10 +58,10 @@ class Table(Widget):
         self.factory = None
 
     def __len__(self):
-        return len(self.rows)
+        return len(self._rows)
 
     def __getitem__(self, item):
-        return self.rows[item]
+        return self._rows[item]
 
     def __setitem__(self, item, row: Union[Row, Sequence[Row]]):
         if isinstance(item, int):
@@ -71,7 +71,7 @@ class Table(Widget):
             items = item
             rows = row
 
-        cur_rows = self.rows[items]
+        cur_rows = self._rows[items]
         try:
             iter(rows)
             if len(rows) != len(cur_rows):
@@ -90,15 +90,13 @@ class Table(Widget):
             row.index = cur_row.index
             self.update_row(row)
 
-
-
     @CachedProperty
     def id(self):
         return self.leaf.id
 
     @property
     def rows(self):
-        return self.specific.rows
+        return self._rows
 
     @rows.setter
     def rows(self, rows: Iterable[Row]):
@@ -128,14 +126,17 @@ class Table(Widget):
                 raise TypeError(f"invalid row type ({type(row)})")
             rows[i] = row
 
-        self.specific.rows = rows
+        self._rows[:] = rows
+        self.specific.refresh(rows)
         return rows
 
     def _init(self):
         """Widget initialization."""
+        self._rows = []
         for tag in self.leaf.children:
             if tag.tag_name == "col":
                 self.cols.append((tag.id, tag.data))
+
         if len(self.cols) < 2:
             raise ValueError("a table must have at least two columns.  "
                     "Represent a table with one column using the "
@@ -161,12 +162,26 @@ class Table(Widget):
             self.add_row(name="table", price=30, quantity=1)
 
         """
-        row = self.factory(len(self.rows), *args, **kwargs)
+        row = self.factory(len(self._rows), *args, **kwargs)
         self.update_row(row)
         return row
 
     def update_row(self, row):
         """Update the specified row."""
+        index = row.index
+        if index == len(self._rows):
+            # Append the row
+            self._rows.append(row)
+        elif index > len(self._rows):
+            for i in range(len(self._rows), index + 1):
+                row = self._rows[i]
+                self.update_row(row)
+        else:
+            old = self._rows[index]
+            for i, (new_value, old_value) in enumerate(zip(row, old)):
+                if new_value != old_value:
+                    old[i] = new_value
+
         self.specific.update_row(row)
 
     def remove_row(self, row: Union[int, AbcRow]):
@@ -179,7 +194,12 @@ class Table(Widget):
 
         """
         if isinstance(row, int):
-            row = self.rows[row]
+            row = self._rows[row]
+
+        index = row.index
+        del self._rows[index]
+        for row in self._rows[index:]:
+            row.index -= 1
 
         self.specific.remove_row(row)
 

@@ -11,17 +11,7 @@ class WX4Table(SpecificTable):
 
     """Wx-specific table widget."""
 
-    @property
-    def rows(self):
-        return self._rows
-
-    @rows.setter
-    def rows(self, rows: List[AbcRow]):
-        """Modify the table rows with the specified row objects."""
-        self.refresh(rows)
-
     def _init(self):
-        self._rows = []
         self._wx_rows = []
         window = self.parent
         self.wx_add = self.wx_obj = self.wx_table = wx.ListCtrl(
@@ -48,12 +38,7 @@ class WX4Table(SpecificTable):
         if index == num_items:
             # Append the row
             self.wx_table.Append([str(cell) for cell in row])
-            self._rows.append(row)
             self._wx_rows.append(self.generic.factory(index, *row))
-        elif index > num_items:
-            for i in range(num_items, index + 1):
-                row = self._rows[i]
-                self.update_row(row)
         else:
             old = self._wx_rows[index]
             for i, (new_value, old_value) in enumerate(zip(row, old)):
@@ -97,15 +82,13 @@ class WX4Table(SpecificTable):
 
         """
         index = row.index
-        del self._rows[index]
         del self._wx_rows[index]
         self.wx_table.DeleteItem(index)
-        for row, wx_row in zip(self._rows[index:], self._wx_rows[index:]):
-            row.index -= 1
+        for wx_row in self._wx_rows[index:]:
             wx_row.index -= 1
 
     def delete_additional(self):
         """Remove rows that are in generic, not in the wx table."""
-        while len(self._wx_rows) > len(self._rows):
+        while len(self._wx_rows) > len(self.generic._rows):
             self.wx_table.DeleteItem(len(self._wx_rows) - 1)
             del self._wx_rows[-1]

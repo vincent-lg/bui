@@ -19,7 +19,7 @@ DEFAULT_LAYOUT = """
 @pytest.fixture(autouse=True)
 def mock_specific_table():
     """Mock the specific table."""
-    mock_specific("Table", DummyTable)
+    mock_specific("Table")
     yield
     unmock_specific()
 
@@ -33,63 +33,6 @@ def table():
     window = start(TestWindow)
     table = window["table"]
     return table
-
-class DummyTable(SpecificTable):
-
-    """A dummy implementation of a specific table widget."""
-
-    @property
-    def rows(self):
-        return self._rows
-
-    @rows.setter
-    def rows(self, rows):
-        """Modify the table rows with the specified row objects."""
-        self.refresh(rows)
-
-    def _init(self):
-        self._rows = []
-
-    def update_row(self, row):
-        """
-        Update a specific row.
-
-        Args:
-            row (Row): the row to update.
-
-        """
-        index = row.index
-        if index == len(self.generic):
-            # Append the row
-            self._rows.append(row)
-        elif index > len(self.generic):
-            for i in range(len(self.generic), index + 1):
-                row = self._rows[i]
-                self.update_row(row)
-        else:
-            self._rows[index] = row
-
-    def refresh(self, rows):
-        """
-        Refresh the entire table, erasing old rows to update if necessary.
-
-        Args:
-            rows (list of Row): the collection of rows to update.
-
-        """
-        for row in rows:
-            self.update_row(row)
-
-    def remove_row(self, row):
-        """
-        Remove the specified row.
-
-        Args:
-            row (Row): the row to remove.
-
-        """
-        index = row.index
-        del self._rows[index]
 
 def test_no_abc_row():
     """Cannot instantiate AbcRow objects."""

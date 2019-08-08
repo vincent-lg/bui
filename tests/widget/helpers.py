@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 MOCKED = (None, None)
 
-def mock_specific(widget, mock):
+def mock_specific(widget):
     """
     Mock the specified widget.
 
@@ -15,7 +15,7 @@ def mock_specific(widget, mock):
     global MOCKED
     from bui.tools import PACKAGE
     MOCKED = (widget, getattr(PACKAGE, widget))
-    setattr(PACKAGE, widget, mock)
+    setattr(PACKAGE, widget, MagicMock())
 
 def unmock_specific():
     """Unmock the specific widget."""
