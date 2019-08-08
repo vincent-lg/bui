@@ -1,13 +1,12 @@
 """Module containing the generic Table class, a generic table widget."""
 
-from abc import ABC, abstractmethod
 from typing import Dict, Iterable, List, Sequence, Tuple, Union
 
 from bui.widget.base import Widget, CachedProperty
 
 NO_VALUE = object()
 
-class AbcRow(ABC):
+class AbcRow:
 
     """
     Abstract row object.
@@ -20,9 +19,8 @@ class AbcRow(ABC):
 
     """
 
-    @abstractmethod
     def __init__(self):
-        pass
+        raise TypeError("cannot instantiate abstract row")
 
 
 Row = Union[dict, list, tuple, AbcRow]
@@ -58,10 +56,9 @@ class Table(Widget):
         self.id = leaf.id
         self.cols = []
         self.factory = None
-        self.length = 0
 
     def __len__(self):
-        return self.length
+        return len(self.rows)
 
     def __getitem__(self, item):
         return self.rows[item]
@@ -84,7 +81,12 @@ class Table(Widget):
                     "the speicified indices") from None
 
         for cur_row, row in zip(cur_rows, rows):
-            row = self.factory(cur_row.index, *row)
+            if isinstance(row, AbcRow) and not isinstance(row, self.factory):
+                raise TypeError("the specified row isn't of the proper table")
+            elif isinstance(row, dict):
+                row = self.factory(cur_row.index, **row)
+            else:
+                row = self.factory(cur_row.index, *row)
             row.index = cur_row.index
             self.update_row(row)
 
@@ -109,13 +111,13 @@ class Table(Widget):
                     or tuple, list or dict).
 
         """
-        if not isinstance(rows, list):
-            rows = list(rows)
-
         try:
             iter(rows)
         except TypeError:
             raise TypeError("'rows' isn't a valid iterable")
+
+        if not isinstance(rows, list):
+            rows = list(rows)
 
         for i, row in enumerate(rows):
             if isinstance(row, (tuple, list)):
@@ -127,7 +129,6 @@ class Table(Widget):
             rows[i] = row
 
         self.specific.rows = rows
-        self.length = len(rows)
         return rows
 
     def _init(self):
@@ -135,6 +136,11 @@ class Table(Widget):
         for tag in self.leaf.children:
             if tag.tag_name == "col":
                 self.cols.append((tag.id, tag.data))
+        if len(self.cols) < 2:
+            raise ValueError("a table must have at least two columns.  "
+                    "Represent a table with one column using the "
+                    "<list> tag instead.")
+
         self.factory = build_factory(self, self.cols)
         return super()._init()
 
@@ -155,14 +161,13 @@ class Table(Widget):
             self.add_row(name="table", price=30, quantity=1)
 
         """
-        row = self.factory(self.length, *args, **kwargs)
+        row = self.factory(len(self.rows), *args, **kwargs)
         self.update_row(row)
         return row
 
     def update_row(self, row):
         """Update the specified row."""
         self.specific.update_row(row)
-        self.length = len(self.rows)
 
     def remove_row(self, row: Union[int, AbcRow]):
         """
@@ -177,14 +182,6 @@ class Table(Widget):
             row = self.rows[row]
 
         self.specific.remove_row(row)
-
-    def handle_click(self, control):
-        """Do nothing if a button is clicked."""
-        pass
-
-    def handle_press(self, control):
-        """Do nothing if a button is pressed."""
-        pass
 
 
 def build_factory(widget, cols):
@@ -203,9 +200,10 @@ def build_factory(widget, cols):
                     arg = self._cols[col]
                     raise ValueError(f"two values were specified for column "
                             f"{col!r}: {arg!r} in positional arguments, and "
-                            f"{kwargs[col]} in keyword arguments.  You might "
-                            f"be better off using either only positional, "
-                            f"or only keyword arguments when creating a row")
+                            f"{kwargs[col]!r} in keyword arguments.  You "
+                            f"might be better off using either only "
+                            f"positional, or only keyword arguments when "
+                            f"creating a row")
                 else:
                     self._cols[col] = kwargs[col]
 
@@ -255,6 +253,9 @@ def build_factory(widget, cols):
                 object.__setattr__(self, attr, value)
 
     def row__getitem__(self, item):
+        if isinstance(item, int):
+            item = tuple(self._cols.keys())[item]
+
         return self._cols[item]
 
     def row__setitem__(self, item, value):
@@ -262,6 +263,16 @@ def build_factory(widget, cols):
             item = tuple(self._cols.keys())[item]
 
         self._cols[item] = value
+
+    def row__eq__(self, other):
+        if isinstance(other, (tuple, list)):
+            other = self.widget.factory(self.index, *other)
+        elif isinstance(other, dict):
+            other = self.widget.factory(self.index, **other)
+        elif not isinstance(other, self.widget.factory):
+            raise TypeError(f"cannot compare to {type(other)}")
+
+        return self._cols == other._cols
 
     factory = type("Row", (AbcRow, ), {
             "widget": widget,
@@ -274,5 +285,6 @@ def build_factory(widget, cols):
             "__setattr__": row__setattr__,
             "__getitem__": row__getitem__,
             "__setitem__": row__setitem__,
+            "__eq__": row__eq__,
     })
     return factory
