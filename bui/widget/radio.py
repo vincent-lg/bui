@@ -35,6 +35,8 @@ class RadioButton(Widget):
         self.x = leaf.x
         self.y = leaf.y
         self.id = leaf.id
+        self.width = leaf.width
+        self.height = leaf.height
         self._choices = []
         self._selected = 0
 

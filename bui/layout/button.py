@@ -130,6 +130,8 @@ class Button(Component):
     attrs = (
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
+        Attr("width", help="The widget width", type=int, default=1),
+        Attr("height", help="The widget height", type=int, default=1),
         Attr("id", help="The widget identifier", default=""),
         Attr("set_true", help="Set the dialog to True and close it",
                 default=False, if_present=True),
@@ -140,12 +142,14 @@ class Button(Component):
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id="", set_true=False,
-            set_false=False, set=""):
+    def __init__(self, layout, parent, x, y, width=1, height=1,
+            id="", set_true=False, set_false=False, set=""):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
         self.name = ""
+        self.width = width
+        self.height = height
         self.id = id
         self.set_true = set_true
         self.set_false = set_false

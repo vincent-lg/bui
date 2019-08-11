@@ -29,6 +29,8 @@ class Checkbox(Widget):
         super().__init__(leaf)
         self.x = leaf.x
         self.y = leaf.y
+        self.width = leaf.width
+        self.height = leaf.height
         self.id = leaf.id
         self.name = leaf.name
         self.checked = leaf.checked

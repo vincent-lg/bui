@@ -270,6 +270,8 @@ class Text(Component):
     attrs = (
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
+        Attr("width", help="The widget width", type=int, default=1),
+        Attr("height", help="The widget height", type=int, default=1),
         Attr("id", help="The widget identifier", default=""),
         Attr("value", help="The text default value", default=""),
         Attr("multiline", help="The text is on multiple lines",
@@ -279,11 +281,13 @@ class Text(Component):
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id="", value="",
-            multiline=False, read_only=False):
+    def __init__(self, layout, parent, x, y, width=1, height=1, id="",
+            value="", multiline=False, read_only=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.label = ""
         self.id = id
         self.value = value

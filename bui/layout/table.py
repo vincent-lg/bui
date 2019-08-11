@@ -152,10 +152,14 @@ class Table(Component):
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
         Attr("id", help="The widget identifier"),
+        Attr("width", help="The widget width", type=int, default=1),
+        Attr("height", help="The widget height", type=int, default=1),
     )
 
-    def __init__(self, layout, parent, x, y, id):
+    def __init__(self, layout, parent, x, y, id, width=1, height=1):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
         self.id = id
+        self.width = width
+        self.height = height

@@ -161,15 +161,20 @@ class Checkbox(Component):
     attrs = (
         Attr("x", help="The widget horizontal position", type=int),
         Attr("y", help="The widget vertical position", type=int),
+        Attr("width", help="The widget width", type=int, default=1),
+        Attr("height", help="The widget height", type=int, default=1),
         Attr("id", help="The widget identifier", default=""),
         Attr("checked", help="Checked by default", default=False, if_present=True),
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id="", checked=False):
+    def __init__(self, layout, parent, x, y, width=1, height=1,
+            id="", checked=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.name = ""
         self.id = id
         self.checked = checked

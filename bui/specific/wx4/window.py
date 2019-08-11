@@ -71,8 +71,8 @@ class WX4Window(SpecificWindow):
         (top_x, top_y), (bottom_x, bottom_y) = self.usable_surface
         x = top_x + (generic.x / (self.generic.width + 1)) * (bottom_x - top_x)
         y = top_y + (generic.y / (self.generic.height + 1)) * (bottom_y - top_y)
-        width = (bottom_x - top_x) * (1 / (self.generic.width + 1)) - 5
-        height = (bottom_y - top_y) * (1 / (self.generic.height + 1)) - 5
+        width = (bottom_x - top_x) * (generic.width / (self.generic.width + 1)) - 5
+        height = (bottom_y - top_y) * (generic.height / (self.generic.height + 1)) - 5
         widget.wx_obj.SetSize(int(x), int(y), int(width), int(height))
         self.wx_sizer.Add(widget.wx_add)
 
