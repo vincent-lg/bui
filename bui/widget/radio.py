@@ -26,7 +26,7 @@ class RadioButton(Widget):
     default_controls = {
         #"focus": "The radio button gets or loses focus",
         "init": "The window is initialized",
-        #"press": "The user presses on a key while the radio button is focused.",
+        "press": "The user presses on a key while the radio button is focused.",
         #"select": "The radio button selection changes.",
     }
 
