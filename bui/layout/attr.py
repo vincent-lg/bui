@@ -49,6 +49,11 @@ class Attr:
         self.default = default
         self.if_present = if_present
 
+    @property
+    def python_name(self):
+        """Return a Python identifier."""
+        return self.name.replace("-", "_")
+
     def prepare(self, value=NO_VALUE):
         """
         Prepare and return the proper value for this attribute, if possible.

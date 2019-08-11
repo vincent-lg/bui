@@ -51,6 +51,25 @@ class Text(Component):
     |              |          | the text widget.         | value=Me>`  |
     | `multiline`  | No       | If present, set the text | `<text      |
     |              |          | on multiple lines.       | multiline>` |
+    | `read-only`  | No       | If present, the text     | `<text      |
+    |              |          | field will be read-only, | read-only>` |
+    |              |          | forbiding the user to    |             |
+    |              |          | edit it. The text value  |             |
+    |              |          | will still be editable   |             |
+    |              |          | through code. Due to     |             |
+    |              |          | system constraints, this |             |
+    |              |          | behavior cannot be       |             |
+    |              |          | altered, once set, a     |             |
+    |              |          | read-only text cannot be |             |
+    |              |          | turned back into an      |             |
+    |              |          | editable one. Also note  |             |
+    |              |          | that screen readers will |             |
+    |              |          | probably ignore a        |             |
+    |              |          | read-only text field and |             |
+    |              |          | forbid to focus one, so  |             |
+    |              |          | make sure this field     |             |
+    |              |          | doesn't contain vital    |             |
+    |              |          | information.             |             |
 
     The required attributes are `x`, and `y`.  It is recommended to also
     set an `id` although the shortened label (only lowercase
@@ -255,10 +274,13 @@ class Text(Component):
         Attr("value", help="The text default value", default=""),
         Attr("multiline", help="The text is on multiple lines",
                 default=False, if_present=True),
+        Attr("read-only", help="The text is read-only",
+                default=False, if_present=True),
     )
     must_have_data = True
 
-    def __init__(self, layout, parent, x, y, id="", value="", multiline=False):
+    def __init__(self, layout, parent, x, y, id="", value="",
+            multiline=False, read_only=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
@@ -266,6 +288,7 @@ class Text(Component):
         self.id = id
         self.value = value
         self.multiline = multiline
+        self.read_only = read_only
 
     def complete(self):
         """Complete the widget, when all the layout has been set."""

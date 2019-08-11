@@ -51,6 +51,9 @@ class WX4Text(SpecificText):
         style = 0
         if self.generic.multiline:
             style |= wx.TE_MULTILINE
+        if self.generic.read_only:
+            style |= wx.TE_READONLY
+
         self.wx_obj = self.wx_text = wx.TextCtrl(window.wx_parent,
                 value=self.generic.value, style=style, name=label)
         self.wx_sizer.Add(self.wx_label)

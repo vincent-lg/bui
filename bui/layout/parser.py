@@ -71,7 +71,7 @@ class BUILayoutParser(HTMLParser):
             except ValueError as err:
                 raise ValueError(f"Error {self.pos}: attribute {attr.name}, {err}") from None
             else:
-                values[attr.name] = value
+                values[attr.python_name] = value
                 remaining.remove(attr)
 
         for attr in remaining:
@@ -80,7 +80,7 @@ class BUILayoutParser(HTMLParser):
             except ValueError as err:
                 raise ValueError(f"Error {self.pos}: attribute {attr.name}, {err}") from None
             else:
-                values[attr.name] = value
+                values[attr.python_name] = value
 
         # If there's already one open component, add it to the element if possible
         Tag.can_be_inside(parent_types, self.current_component)

@@ -33,6 +33,7 @@ class Text(Widget):
         self.label = leaf.label
         self.value = leaf.value
         self.multiline = leaf.multiline
+        self.read_only = leaf.read_only
         self._cursor = Cursor(self)
 
     def __len__(self):
