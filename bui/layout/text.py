@@ -44,6 +44,34 @@ class Text(Component):
     |              |          | is at the top). This     |             |
     |              |          | position is relative to  |             |
     |              |          | the window height.       |             |
+    | `width`      | No       | The widget width, that   | `<text      |
+    |              |          | is, the number of        | width=2>`   |
+    |              |          | columns it will use in   |             |
+    |              |          | the window grid. A       |             |
+    |              |          | widget with a width of   |             |
+    |              |          | 2 will stretch one       |             |
+    |              |          | additional column to the |             |
+    |              |          | right. A widget with `x` |             |
+    |              |          | set to 2 and `width` set |             |
+    |              |          | to 3 will span `x=2`,    |             |
+    |              |          | `x=3`, and `x=4`.  The   |             |
+    |              |          | default is 1, so a       |             |
+    |              |          | widget will remain in    |             |
+    |              |          | its `x` column.          |             |
+    | `height`     | No       | The widget height, that  | `<text      |
+    |              |          | is, the number of        | height=2>`  |
+    |              |          | rows it will use in      |             |
+    |              |          | the window grid. A       |             |
+    |              |          | widget with a height of  |             |
+    |              |          | 2 will stretch one       |             |
+    |              |          | additional row downward. |             |
+    |              |          | A widget with `y` set    |             |
+    |              |          | to 2 and `height` set    |             |
+    |              |          | to 3 will span `y=2`,    |             |
+    |              |          | `y=3`, and `y=4`.  The   |             |
+    |              |          | default is 1, so a       |             |
+    |              |          | widget will remain in    |             |
+    |              |          | its `y` row.             |             |
     | `id`         | No       | The text identifier      | `<text      |
     |              |          | (ID). If not set,        | id=name>`   |
     |              |          | the text label.          |             |

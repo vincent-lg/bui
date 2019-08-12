@@ -3,6 +3,7 @@
 from bui.widget.button import Button
 from bui.widget.checkbox import Checkbox
 from bui.widget.item import Item
+from bui.widget.list import List
 from bui.widget.menu import Menu
 from bui.widget.menubar import Menubar
 from bui.widget.radio import RadioButton
@@ -14,6 +15,7 @@ WIDGETS = {
         "button": Button,
         "checkbox": Checkbox,
         "item": Item,
+        "list": List,
         "menu": Menu,
         "menubar": Menubar,
         "radio": RadioButton,

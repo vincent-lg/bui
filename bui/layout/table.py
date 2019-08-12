@@ -40,6 +40,34 @@ class Table(Component):
     |              |          | (ID). Contrary to most   | id=quit>`   |
     |              |          | other tags, you need to  |             |
     |              |          | set this attribute.      |             |
+    | `width`      | No       | The widget width, that   | `<table     |
+    |              |          | is, the number of        | width=2>`   |
+    |              |          | columns it will use in   |             |
+    |              |          | the window grid. A       |             |
+    |              |          | widget with a width of   |             |
+    |              |          | 2 will stretch one       |             |
+    |              |          | additional column to the |             |
+    |              |          | right. A widget with `x` |             |
+    |              |          | set to 2 and `width` set |             |
+    |              |          | to 3 will span `x=2`,    |             |
+    |              |          | `x=3`, and `x=4`.  The   |             |
+    |              |          | default is 1, so a       |             |
+    |              |          | widget will remain in    |             |
+    |              |          | its `x` column.          |             |
+    | `height`     | No       | The widget height, that  | `<table     |
+    |              |          | is, the number of        | height=2>`  |
+    |              |          | rows it will use in      |             |
+    |              |          | the window grid. A       |             |
+    |              |          | widget with a height of  |             |
+    |              |          | 2 will stretch one       |             |
+    |              |          | additional row downward. |             |
+    |              |          | A widget with `y` set    |             |
+    |              |          | to 2 and `height` set    |             |
+    |              |          | to 3 will span `y=2`,    |             |
+    |              |          | `y=3`, and `y=4`.  The   |             |
+    |              |          | default is 1, so a       |             |
+    |              |          | widget will remain in    |             |
+    |              |          | its `y` row.             |             |
 
     See also the [col](./col.md) tag to define the columns in a table.  This tag will need more information.
 
