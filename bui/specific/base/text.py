@@ -6,6 +6,8 @@ class SpecificText(SpecificWidget):
 
     """Parent class for a specific text widget."""
 
+    widget_name = "text"
+
     @property
     @abstractmethod
     def label(self):

@@ -7,4 +7,4 @@ class SpecificDialog(SpecificWindow):
 
     """Parent class for a specific dialog."""
 
-    pass
+    widget_name = "dialog"

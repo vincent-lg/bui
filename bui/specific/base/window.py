@@ -6,6 +6,8 @@ class SpecificWindow(SpecificWidget):
 
     """Parent class for a specific window object."""
 
+    widget_name = "window"
+
     @property
     @abstractmethod
     def usable_surface(self):
@@ -51,10 +53,6 @@ class SpecificWindow(SpecificWidget):
         pass
 
     @abstractmethod
-    def create_menubar(self, menubar):
-        """Create a menu bar."""
-        pass
-
     @abstractmethod
     def close(self):
         """Close this window, terminate loop if appropriate."""

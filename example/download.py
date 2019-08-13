@@ -35,6 +35,13 @@ class DownloadExample(Window):
 
     layout = mark("""
       <window title="Blind User Interface - downloading">
+        <menubar>
+          <menu name="File">
+            <item id=add_file>Add a file...</item>
+            <item id=quit>Quit</item>
+          </menu>
+        </menubar>
+
         <table x=2 y=2 id="download">
           <col>File</col>
           <col>Status</col>
@@ -48,7 +55,6 @@ class DownloadExample(Window):
 
     def on_init_download(self, widget):
         self.downloading = False
-        self.session = aiohttp.ClientSession()
         widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _ in FILES]
         self.schedule(self.download_all())
 
@@ -60,6 +66,7 @@ class DownloadExample(Window):
 
     async def download_all(self):
         """Download all files asynchronously."""
+        self.session = aiohttp.ClientSession()
         table = self["download"]
         tasks = []
         for i, (filename, url) in enumerate(FILES):
@@ -132,6 +139,9 @@ class DownloadExample(Window):
             table = self["download"]
             row = table.add_row(name, "Unknown", "Unknown", "Unknown")
             self.schedule(self.download(row, name, url))
+    on_add_file = on_add
+    on_quit = close
+    on_press_ctrl_q = close
 
     async def on_close(self):
         """Close the window, end the session."""

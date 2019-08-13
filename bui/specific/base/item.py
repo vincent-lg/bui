@@ -6,4 +6,4 @@ class SpecificItem(SpecificWidget):
 
     """Parent class for a specific item widget."""
 
-    pass
+    widget_name = "item"

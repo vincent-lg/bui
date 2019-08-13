@@ -219,12 +219,6 @@ class Window(Widget, metaclass=MetaWindow):
     def _init(self):
         """Private method to initialize the generic and specific window."""
         self.specific._init()
-        layout = self.leaf.layout
-
-        # If the layout defines a menubar
-        menubar = layout.get("menubar")
-        if menubar:
-            self.specific.create_menubar(menubar)
 
     def _start(self, loop):
         """

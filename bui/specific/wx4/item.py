@@ -7,6 +7,18 @@ from bui.specific.base.item import SpecificItem
 
 class WX4Item(SpecificItem):
 
-    def OnMenu(self, e):
+    def _init(self):
+        """Initialize the menu."""
+        window = self.parent
+        while window and window.widget_name != "window":
+            window = window.parent
+        window.wx_menus.append(self)
+
+    def _complete(self, window):
+        """Complete the menu item."""
+        self.wx_item = self.parent.wx_menu.Append(wx.ID_ANY, self.generic.data)
+        window.wx_frame.Bind(wx.EVT_MENU, self.OnItem, self.wx_item)
+
+    def OnItem(self, e):
         """The menu is seslected, create a click control."""
         self.generic._process_control("click")

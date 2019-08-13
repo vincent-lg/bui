@@ -124,6 +124,7 @@ class List(Widget):
         self._choices[:] = new_choices
         self._ids = ids
         self._pos = pos
+        self._selected = 0
         self.specific.refresh()
 
     @property

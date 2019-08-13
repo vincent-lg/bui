@@ -42,13 +42,13 @@ class HelloBUI(Window):
 
       <window cols=5 rows=5 title="A BUI demonstration">
         <button x=2 y=2 name="Click me!" />
-        <text x=3 y=3 value="Nothing yet" />
+        <text x=3 y=3 id=report>Report</text>
       </window>
     """)
 
     def on_click_me(self):
         """When the 'Click me!' button is pressed."""
-        self.get("text").value = "The button was clicked!"
+        self["report"].value = "The button was clicked!"
 
     def on_quit(self):
         """When the user press the quit menu item in the File menu."""
@@ -58,6 +58,9 @@ class HelloBUI(Window):
     def on_press_alt_f4(self):
         """When the user presses Alt + F4."""
         self.close()
+
+    # Linking an alias to a method is so simple
+    on_press_ctrl_q = on_press_alt_f4
 
 
 start(HelloBUI)
@@ -79,10 +82,11 @@ In terms of code, here is what we do:
 - Notice we wrap this multi-line string in a call to `mark()`. This function is only available in a class inheriting from [Window](./class/Window.md) and only serves for debugging purposes, to show the error with greater accuracy (and tell you where it went wrong).
 - That's it for the window layout.  The next methods are controls (event handlers).  They are written by developers and are meant to intercept user actions (like "this button was clicked").
 - Our first control method is `on_click_me`.  BUI will automatically bind that to the action "the 'click me!' button was clicked".  The process deserves [its own documentation](./control/overview.md).  For the time being, suffice it to say that when the user clicks on the button, this method is called with no argument.
-- The only thing it does is update the text field.  The `get` method is called to retrieve the **only** field of type text.  If you have two, you'll have to give a better identifier, but because there's only one, BUI understands what we want to do.  We then update it (that is, change its value attribute).  So that when the user clicks on this button, the text field will be updated.
+- The only thing it does is update the text field.  The `[]` operator is used to retrieve the widget of a given ID (here, `"report"`).  We then update it (that is, change its value attribute).  So that when the user clicks on this button, the text field will be updated.
 - The second method, `on_quit`, is called when the users clicks on the Quit menu item in the File menu.  Again, BUI is smart enough to establish the connection.  Should it have its doubts, it will ask you to clarify in plain English and will not be as mean as not linking control methods that have no apparent meaning to it.
 - In this method we just call the `close` method of the window to terminate.
 - The `on_press_alt_f4` is a control method that will be called whenever the user presses 'Alt + F4' when the window is focused.  We close it.  Notice that we include the key names in the method name, which tends to be much easier to read and link.
+- The `on_press_ctrl_q` is a simple alias for the previous method.  So when the user presses *CTRL + Q*, it's as if she had pressed *ALT + F4* or clicked on "Quit".
 - This was a class, we give it to `start` which will be responsible for starting a new window, try to find a toolkit it can use and then use it.
 
 Notice that most of the code is actually used by our window layout.  You can (and maybe should) place the HTML window layout in a separate file, so that designers can edit it wihout seeing and worrying about your code.  On your side, you don't really need to know how the window is designed, as long as you know the controls to interact with users.

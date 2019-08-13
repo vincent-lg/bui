@@ -6,4 +6,4 @@ class SpecificMenu(SpecificWidget):
 
     """Parent class for a specific menu widget."""
 
-    pass
+    widget_name = "menu"

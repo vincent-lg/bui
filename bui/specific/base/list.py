@@ -6,6 +6,8 @@ class SpecificList(SpecificWidget):
 
     """Parent class for a specific list widget."""
 
+    widget_name = "list"
+
     @abstractmethod
     def refresh(self):
         """Refresh the list choices, using the generic widget."""

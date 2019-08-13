@@ -8,6 +8,8 @@ class SpecificTable(SpecificWidget):
 
     """Parent class for a specific table widget."""
 
+    widget_name = "table"
+
     @abstractmethod
     def refresh(self, rows: List[AbcRow]):
         """

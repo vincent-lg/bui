@@ -6,4 +6,4 @@ class SpecificMenubar(SpecificWidget):
 
     """Parent class for a specific menubar widget."""
 
-    pass
+    widget_name = "menubar"

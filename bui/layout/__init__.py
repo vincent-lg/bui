@@ -24,7 +24,7 @@ TAGS = {
     "item": (Item, (Menu, )),
     "list": (List, (Window, Dialog)),
     "menu": (Menu, (Menubar, Menu)),
-    "menubar": (Menubar, None),
+    "menubar": (Menubar, Window),
     "radio": (RadioButton, (Window, Dialog)),
     "table": (Table, (Window, Dialog)),
     "text": (Text, (Window, Dialog)),

@@ -19,3 +19,7 @@ class Menu(Widget):
 
     widget = "menu"
     class_name = "Menu"
+
+    def __init__(self, leaf):
+        super().__init__(leaf)
+        self.name = leaf.name

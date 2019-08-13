@@ -20,6 +20,7 @@ class WX4Window(SpecificWindow):
         super().__init__(generic)
         self.wx_app = None
         self.wx_display = None
+        self.wx_menus = []
 
     @property
     def usable_surface(self):
@@ -84,6 +85,9 @@ class WX4Window(SpecificWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
+        for wx_menu in self.wx_menus:
+            wx_menu._complete(self)
+
         self.wx_frame.Show()
         self.wx_app.loop = loop
         return self.wx_app.MainLoop()

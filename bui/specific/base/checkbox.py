@@ -6,6 +6,8 @@ class SpecificCheckbox(SpecificWidget):
 
     """Parent class for a specific checkbox widget."""
 
+    widget_name = "checkbox"
+
     @property
     @abstractmethod
     def name(self):

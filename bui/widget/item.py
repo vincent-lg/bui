@@ -25,6 +25,11 @@ class Item(Widget):
     }
     implicit_control = "click"
 
+    def __init__(self, leaf):
+        super().__init__(leaf)
+        self.id = leaf.id
+        self.data = leaf.data
+
     @CachedProperty
     def id(self):
         return self.leaf.id
