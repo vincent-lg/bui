@@ -22,6 +22,8 @@ a control method in response, except if the button is disabled.
 | ------------ | -------- | ------------------------ | ----------- |
 | `x` | Yes | The widget's horizontal position in columns (0 is left). This position is relative to the window width. | `<button x=5>` |
 | `y` | Yes | The widget's vertical position in rows (0 is at the top). This position is relative to the window height. | `<button y=2>` |
+| `width` | No | The widget width, that is, the number of columns it will use in the window grid. A widget with a width of 2 will stretch one additional column to the right. A widget with `x` set to 2 and `width` set to 3 will span `x=2`, `x=3`, and `x=4`.  The default is 1, so a widget will remain in its `x` column. | `<button width=2>` |
+| `height` | No | The widget height, that is, the number of rows it will use in the window grid. A widget with a height of 2 will stretch one additional row downward. A widget with `y` set to 2 and `height` set to 3 will span `y=2`, `y=3`, and `y=4`.  The default is 1, so a widget will remain in its `y` row. | `<button height=2>` |
 | `id` | No | The button identifier (ID). If not set, use the button label. | `<button id=quit>` |
 | `set_true` | No | If inside of a dialog, set the dialog result to `True` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_true>` |
 | `set_false` | No | If inside of a dialog, set the dialog result to `False` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_false>` |

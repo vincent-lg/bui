@@ -30,9 +30,12 @@ the text label will be used.
 | ------------ | -------- | ------------------------ | ----------- |
 | `x` | Yes | The widget's horizontal position in columns (0 is left). This position is relative to the window width. | `<text x=5>` |
 | `y` | Yes | The widget's vertical position in rows (0 is at the top). This position is relative to the window height. | `<text y=2>` |
+| `width` | No | The widget width, that is, the number of columns it will use in the window grid. A widget with a width of 2 will stretch one additional column to the right. A widget with `x` set to 2 and `width` set to 3 will span `x=2`, `x=3`, and `x=4`.  The default is 1, so a widget will remain in its `x` column. | `<text width=2>` |
+| `height` | No | The widget height, that is, the number of rows it will use in the window grid. A widget with a height of 2 will stretch one additional row downward. A widget with `y` set to 2 and `height` set to 3 will span `y=2`, `y=3`, and `y=4`.  The default is 1, so a widget will remain in its `y` row. | `<text height=2>` |
 | `id` | No | The text identifier (ID). If not set, the text label. | `<text id=name>` |
 | `value` | No | The default value of the text widget. | `<text value=Me>` |
 | `multiline` | No | If present, set the text on multiple lines. | `<text multiline>` |
+| `read-only` | No | If present, the text field will be read-only, forbiding the user to edit it. The text value will still be editable through code. Due to system constraints, this behavior cannot be altered, once set, a read-only text cannot be turned back into an editable one. Also note that screen readers will probably ignore a read-only text field and forbid to focus one, so make sure this field doesn't contain vital information. | `<text read-only>` |
 
 The required attributes are `x`, and `y`.  It is recommended to also
 set an `id` although the shortened label (only lowercase

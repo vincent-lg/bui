@@ -24,6 +24,8 @@ when the checkbox changes state.
 | ------------ | -------- | ------------------------ | ----------- |
 | `x` | Yes | The widget's horizontal position in columns (0 is left). This position is relative to the window width. | `<checkbox x=5>` |
 | `y` | Yes | The widget's vertical position in rows (0 is at the top). This position is relative to the window height. | `<checkbox y=2>` |
+| `width` | No | The widget width, that is, the number of columns it will use in the window grid. A widget with a width of 2 will stretch one additional column to the right. A widget with `x` set to 2 and `width` set to 3 will span `x=2`, `x=3`, and `x=4`.  The default is 1, so a widget will remain in its `x` column. | `<checkbox width=2>` |
+| `height` | No | The widget height, that is, the number of rows it will use in the window grid. A widget with a height of 2 will stretch one additional row downward. A widget with `y` set to 2 and `height` set to 3 will span `y=2`, `y=3`, and `y=4`.  The default is 1, so a widget will remain in its `y` row. | `<checkbox height=2>` |
 | `id` | No | The checkbox identifier (ID). If not set, use the checkbox name. | `<checkbox id=on>` |
 | `checked` | No | Whether the checkbox is checked when the window first appears (not set by default). This attribute doesn't require a value, its presence is enough. | `<checkbox checked>` |
 

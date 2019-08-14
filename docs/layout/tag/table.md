@@ -23,6 +23,8 @@ Using the `<table>` landmark creates an empty table, which will cause an error. 
 | `x` | Yes | The widget's horizontal position in columns (0 is left). This position is relative to the window width. | `<table x=5>` |
 | `y` | Yes | The widget's vertical position in rows (0 is at the top). This position is relative to the window height. | `<table y=2>` |
 | `id` | Yes | The table identifier (ID). Contrary to most other tags, you need to set this attribute. | `<table id=quit>` |
+| `width` | No | The widget width, that is, the number of columns it will use in the window grid. A widget with a width of 2 will stretch one additional column to the right. A widget with `x` set to 2 and `width` set to 3 will span `x=2`, `x=3`, and `x=4`.  The default is 1, so a widget will remain in its `x` column. | `<table width=2>` |
+| `height` | No | The widget height, that is, the number of rows it will use in the window grid. A widget with a height of 2 will stretch one additional row downward. A widget with `y` set to 2 and `height` set to 3 will span `y=2`, `y=3`, and `y=4`.  The default is 1, so a widget will remain in its `y` row. | `<table height=2>` |
 
 See also the [col](./col.md) tag to define the columns in a table.  This tag will need more information.
 
