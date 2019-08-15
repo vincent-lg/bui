@@ -64,13 +64,12 @@ def test_implicit_widget_control():
         """Window showing implicit controls."""
 
         layout = mark("""
-          <menubar>
-            <menu name="File">
-              <item id="quit">Quit this app right away</item>
-            </menu>
-          </menubar>
-
           <window title="An example for implicit controls">
+            <menubar>
+              <menu name="File">
+                <item id="quit">Quit this app right away</item>
+              </menu>
+            </menubar>
           </window>
         """)
 

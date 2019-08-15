@@ -1,6 +1,7 @@
 """Module containing the generic Table class, a generic table widget."""
 
-from typing import Dict, Iterable, List, Sequence, Tuple, Union
+from operator import itemgetter
+from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, Union
 
 from bui.widget.base import Widget, CachedProperty
 
@@ -58,12 +59,31 @@ class Table(Widget):
         self.height = leaf.height
         self.cols = []
         self.factory = None
+        self._rows = []
+        self._associations = {}
+        self._selected = 0
+        self.use_association = False
 
     def __len__(self):
         return len(self._rows)
 
     def __getitem__(self, item):
-        return self._rows[item]
+        row = self._rows[item]
+        if isinstance(row, AbcRow):
+            if self.use_association:
+                return (row, self._associations.get(id(row)))
+            else:
+                return row
+
+        associations = []
+        rows = row
+        for row in rows:
+            if self.use_association:
+                associations.append((row, self._associations.get(id(row))))
+            else:
+                associations.append(row)
+
+        return associations
 
     def __setitem__(self, item, row: Union[Row, Sequence[Row]]):
         if isinstance(item, int):
@@ -98,7 +118,16 @@ class Table(Widget):
 
     @property
     def rows(self):
-        return self._rows
+        rows = self._rows
+        associations = []
+        use_association = self.use_association
+        for row in rows:
+            if use_association:
+                associations.append((row, self._associations.get(id(row))))
+            else:
+                associations.append(row)
+
+        return associations
 
     @rows.setter
     def rows(self, rows: Iterable[Row]):
@@ -132,9 +161,31 @@ class Table(Widget):
         self.specific.refresh(rows)
         return rows
 
+    @property
+    def selected(self):
+        """Return the row and its associated object if needed."""
+        row = self._rows[self._selected]
+        if self.use_association:
+            return (row, self._associations.get(id(row)))
+
+        return row
+
+    @selected.setter
+    def selected(self, row: Union[int, Row]):
+        """
+        Select the given row or index.
+
+        Args:
+            row (int or Row): the row to select.
+
+        """
+        if isinstance(row, AbcRow):
+            row = row.index
+        self._selected = row
+        self.specific.select_row(row)
+
     def _init(self):
         """Widget initialization."""
-        self._rows = []
         for tag in self.leaf.children:
             if tag.tag_name == "col":
                 self.cols.append((tag.id, tag.data))
@@ -204,6 +255,54 @@ class Table(Widget):
             row.index -= 1
 
         self.specific.remove_row(row)
+
+        # Remove associations
+        self._associations.pop(id(row), None)
+
+    def sort(self, key: Callable = None, reverse=False):
+        """
+        Sort the table rows, given an optional key.
+
+        This method is similar to the sort method of a list.  You
+        can use it to sort using, by default, the first column, or by
+        specifying a column key.
+
+        Args:
+            key (callable, optional): the key to call on every row.
+            reverse (bool, optional): sort in reverse order.
+
+        Example:
+            >>> from operator import attrgetter
+            >>> table.sort(key=attrgetter("grade"))
+
+        """
+        if key is None:
+            key = itemgetter(0)
+
+        selected = self._rows[self._selected]
+        self._rows.sort(key=key, reverse=reverse)
+        for index, row in zip(range(len(self._rows)), self._rows):
+            row.index = index
+
+        self.specific.sort(key=key, reverse=reverse)
+        self.selected = selected
+
+    def associate(self, row: AbcRow, obj: Any):
+        """
+        Associate the given row with an arbitrary object.
+
+        The given object can contain extra information that won't
+        be displayed on the table, but can be useful for the developer.
+        You can associate a row to an object and retrieve it,
+        either using the `selected` property, or the `associations`
+        generator.
+
+        Args:
+            row (Row): the row to associate with the object.
+            obj (any): the python object to associate with the row.
+
+        """
+        self._associations[id(row)] = obj
 
 
 def build_factory(widget, cols):

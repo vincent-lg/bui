@@ -1,6 +1,6 @@
 """The wxPython implementation of a BUI table widget."""
 
-from typing import List
+from typing import Callable, List
 import wx
 
 from bui.specific.base import *
@@ -20,6 +20,7 @@ class WX4Table(SpecificTable):
         for i, (_, name) in enumerate(self.generic.cols):
             self.wx_table.InsertColumn(i, name)
         window.add_widget(self)
+        self.wx_table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._OnSelected)
 
     def update_row(self, row: AbcRow):
         """
@@ -92,3 +93,17 @@ class WX4Table(SpecificTable):
         while len(self._wx_rows) > len(self.generic._rows):
             self.wx_table.DeleteItem(len(self._wx_rows) - 1)
             del self._wx_rows[-1]
+    def select_row(self, row: int):
+        """Select the specified row."""
+        self.wx_table.Select(row)
+        self.wx_table.Focus(row)
+
+    def sort(self, key: Callable = None, reverse=False):
+        """Sort the table."""
+        # The generic table has been sorted, so follow it
+        for row in self.generic._rows:
+            self.update_row(row)
+
+    def _OnSelected(self, e):
+        """An item has been selected."""
+        self.generic._selected = e.GetIndex()

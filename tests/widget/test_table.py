@@ -1,5 +1,7 @@
 """Test the table widget."""
 
+from operator import attrgetter
+
 import pytest
 
 from bui.specific.base.table import SpecificTable
@@ -243,3 +245,104 @@ def test_table_with_0_or_1_column():
 
     with pytest.raises(ValueError):
         start(TestWindow)
+
+def test_with_association(table):
+    """Use the association on tables."""
+    table.use_association = True
+    o0 = object()
+    o1 = object()
+    o2 = object()
+    rows = (
+            ("Magalie", 21, "B+"),
+            ("Viktor", 20, "A-"),
+            ("Vanessa", 21, "B"),
+    )
+
+    for (name, age, grade), obj in zip(rows, (o0, o1, o2)):
+        row = table.add_row(name, age, grade)
+        table.associate(row, obj)
+
+    # Check the three rows
+    assert table[0][0].name == rows[0][0]
+    assert table[0][1] is o0
+    assert table[0][1] is not o1
+    assert table[0][1] is not o2
+    assert table[1][0].name == rows[1][0]
+    assert table[1][1] is not o0
+    assert table[1][1] is o1
+    assert table[1][1] is not o2
+    assert table[2][0].name == rows[2][0]
+    assert table[2][1] is not o0
+    assert table[2][1] is not o1
+    assert table[2][1] is o2
+
+    for row, obj in table[:2]:
+        assert obj in (o0, o1)
+
+def test_selected(table):
+    """Test selected rows."""
+    rows = (
+            ("Magalie", 21, "B+"),
+            ("Viktor", 20, "A-"),
+            ("Vanessa", 21, "B"),
+    )
+
+    for name, age, grade in rows:
+        row = table.add_row(name, age, grade)
+
+    # The first row should always be selected
+    assert table.selected.index == 0
+    assert table.selected.name == "Magalie"
+
+    # Change the selection
+    table.selected = 1
+    assert table.selected.index == 1
+    assert table.selected.name == "Viktor"
+
+    # Select the first row
+    table.selected = table[0]
+    assert table.selected.index == 0
+    assert table.selected.name == "Magalie"
+
+    # Do the same checks but with associations
+    rows = table._rows
+    table.use_association = True
+    table.associate(rows[0], [0, 1, 2])
+    table.associate(rows[1], [3, 4, 5])
+    table.associate(rows[2], [6, 7, 8])
+
+    # Change the selection
+    table.selected = 1
+    assert table.selected == (rows[1], [3, 4, 5])
+
+    # Select the first row
+    table.selected = rows[0]
+    assert table.selected == (rows[0], [0, 1, 2])
+
+def test_sort(table):
+    """Try to sort the table using different criteria."""
+    rows = (
+            ("Magalie", 21, "B+"),
+            ("Viktor", 20, "A-"),
+            ("Vanessa", 21, "B"),
+            ("Arold", 23, "C+"),
+    )
+
+    for name, age, grade in rows:
+        row = table.add_row(name, age, grade)
+
+    # Sort by name
+    table.sort()
+    assert table[0].name == "Arold"
+
+    # Reverse
+    table.sort(reverse=True)
+    assert table[3].name == "Arold"
+
+    # Sort by age
+    table.sort(key=attrgetter("age"))
+    assert table[0].name == "Viktor"
+
+    # Sort by reverse grades
+    table.sort(key=attrgetter("grade"), reverse=True)
+    assert table[0].name == "Arold"
