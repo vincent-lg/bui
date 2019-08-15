@@ -102,6 +102,7 @@ class Window(Widget, metaclass=MetaWindow):
         "close": "The window is ready to be closed",
         "init": "The window is ready to be displayed",
         "press": "The user presses a key anywhere in the window",
+        "right_click": "The user right clicks in the window",
     }
 
     # Can be overrideen by subclasses

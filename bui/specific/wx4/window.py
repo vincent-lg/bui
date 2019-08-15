@@ -56,6 +56,8 @@ class WX4Window(SpecificWindow):
         # Bind press and type controls
         if "press" in self.generic.controls:
             self.wx_panel.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
+        if "right_click" in self.generic.controls:
+            self.wx_frame.Bind(wx.EVT_CONTEXT_MENU, self._OnContext)
 
         self.wx_panel.SetSizerAndFit(self.wx_sizer)
         self.wx_frame.SetClientSize(self.wx_panel.GetSize())
@@ -153,6 +155,13 @@ class WX4Window(SpecificWindow):
             widget.generic._process_control("press", kwargs)
         else:
             self.generic._process_control("press", kwargs)
+
+    def _OnContext(self, e, widget=None):
+        """On context menu."""
+        if widget:
+            widget.generic._process_control("right_click")
+        else:
+            self.generic._process_control("right_click")
 
     def pop_dialog(self, dialog: SpecificWidget):
         """Pop up a dialog."""

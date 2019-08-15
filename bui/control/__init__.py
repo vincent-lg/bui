@@ -21,6 +21,7 @@ from bui.control.click import Click
 from bui.control.close import Close
 from bui.control.init import Init
 from bui.control.press import Press
+from bui.control.right_click import RightClick
 
 CONTROLS = {
         "change": Change,
@@ -29,4 +30,5 @@ CONTROLS = {
         "close": Close,
         "init": Init,
         "press": Press,
+        "right_click": RightClick,
 }
