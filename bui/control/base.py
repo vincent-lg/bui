@@ -33,7 +33,6 @@ class Control:
             window (Window); othe window on which are control methods.
 
         """
-        if cls.name == "right_click": breakpoint()
         if cls.has_sub_controls:
             # This control has sub-controls
             # sub-controls can all be linked to control methods
