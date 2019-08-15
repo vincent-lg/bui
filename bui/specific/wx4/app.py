@@ -32,18 +32,17 @@ class AsyncApp(wx.App):
 
     def __init__(self, loop=None, top_window=None):
         self.loop = loop or asyncio.get_event_loop()
-        self.top_window = top_window
+        self.top_windows = [top_window]
         self.exiting = False
         self.tasks = []
         super().__init__()
-        #self.SetExitOnFrameDelete(True)
 
     async def MainLoop(self):
         """Asynchronous version of combined asyncio and wxPython event loops."""
         # inspired by https://github.com/wxWidgets/Phoenix/blob/master/samples/mainloop/mainloop.py
         evtloop = wx.GUIEventLoop()
         with wx.EventLoopActivator(evtloop):
-            while self.top_window and not self.exiting:
+            while any(self.top_windows) and not self.exiting:
                 if IS_MAC:
                     # evtloop.Pending() just returns True on MacOs
                     evtloop.DispatchTimeout(0)

@@ -238,6 +238,7 @@ class Window(Widget, metaclass=MetaWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
+        self.specific.show()
         return self.specific._start(loop)
 
     def _stop(self):
@@ -285,6 +286,20 @@ class Window(Widget, metaclass=MetaWindow):
         """
         context = self[context_id]
         self.specific.pop_menu(context.specific)
+
+    def open_window(self, window: "Window", child=False):
+        """
+        Open a new window.
+
+        Args:
+            window (Window): the window class.
+            child (bool): if True, the new window will be a child of the
+                    current window (closing self will close the new window).
+
+        """
+        window = window.parse_layout(window)
+        self.specific.open_window(window.specific, child=child)
+        return window
 
     def handle_close(self, control):
         """The window closes."""

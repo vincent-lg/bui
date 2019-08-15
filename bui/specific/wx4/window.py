@@ -14,6 +14,8 @@ from bui.specific.base.window import SpecificWindow
 from bui.specific.wx4.app import AsyncApp
 from bui.specific.wx4.constants import KEYMAP
 
+WX_APP = None
+
 class WX4Window(SpecificWindow):
 
     def __init__(self, generic):
@@ -30,8 +32,16 @@ class WX4Window(SpecificWindow):
 
     def _wx_init(self):
         """Initialize wx (creating a wx.App) if necessary."""
-        if not self.wx_app:
+        global WX_APP
+        if self.wx_app:
+            pass
+        elif WX_APP:
+            self.wx_app = WX_APP
+        elif not self.wx_app:
             self.wx_app = AsyncApp()
+            WX_APP = self.wx_app
+
+        if not self.wx_display:
             self.wx_display = wx.Display()
 
     @property
@@ -49,7 +59,7 @@ class WX4Window(SpecificWindow):
         self._wx_init()
         title = self.generic.title
         self.wx_frame = wx.Frame(None, title=title, name=title)
-        self.wx_app.top_window = self.wx_frame
+        #self.wx_app.top_windows.append(self.wx_frame)
         self.wx_parent = self.wx_panel = wx.Panel(self.wx_frame)
         self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -79,6 +89,13 @@ class WX4Window(SpecificWindow):
         widget.wx_obj.SetSize(int(x), int(y), int(width), int(height))
         self.wx_sizer.Add(widget.wx_add)
 
+    def show(self):
+        """Show the window."""
+        for wx_menu in self.wx_menus:
+            wx_menu._complete(self)
+
+        self.wx_frame.Show()
+
     def _start(self, loop):
         """
         Start the window, watch events and allow async loop.
@@ -87,10 +104,7 @@ class WX4Window(SpecificWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
-        for wx_menu in self.wx_menus:
-            wx_menu._complete(self)
-
-        self.wx_frame.Show()
+        self.wx_app.top_windows.append(self.wx_frame)
         self.wx_app.loop = loop
         return self.wx_app.MainLoop()
 
@@ -150,7 +164,6 @@ class WX4Window(SpecificWindow):
             key = f"{modified}_{key}"
 
         kwargs["key"] = key
-        print(f"Process command key: {kwargs}")
         if widget:
             widget.generic._process_control("press", kwargs)
         else:
@@ -170,3 +183,18 @@ class WX4Window(SpecificWindow):
     def pop_menu(self, context: SpecificWidget):
         """Pop a context menu, blocks until the menu is closed."""
         self.wx_frame.PopupMenu(context.wx_menu)
+
+    def prepare_other_window(self, window):
+        """Prepare another window."""
+        app = self.wx_app
+        window.wx_app = app
+
+    def open_window(self, window, child):
+        """Open another window."""
+        #self._wx_init()
+        app = self.wx_app
+        window.wx_app = app
+        app.top_windows.append(window.wx_frame)
+        if child:
+            window.specific.wx_frame.SetParent(self.wx_frame)
+        window.show()
