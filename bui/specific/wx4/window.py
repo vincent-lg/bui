@@ -157,3 +157,7 @@ class WX4Window(SpecificWindow):
     def pop_dialog(self, dialog: SpecificWidget):
         """Pop up a dialog."""
         return dialog.pop()
+
+    def pop_menu(self, context: SpecificWidget):
+        """Pop a context menu, blocks until the menu is closed."""
+        self.wx_frame.PopupMenu(context.wx_menu)

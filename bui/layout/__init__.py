@@ -4,6 +4,7 @@ from bui.layout.button import Button
 from bui.layout.checkbox import Checkbox
 from bui.layout.choice import Choice
 from bui.layout.col import Col
+from bui.layout.context import Context
 from bui.layout.dialog import Dialog
 from bui.layout.item import Item
 from bui.layout.list import List
@@ -20,10 +21,11 @@ TAGS = {
     "checkbox": (Checkbox, (Window, Dialog)),
     "choice": (Choice, (RadioButton, List)),
     "col": (Col, Table),
+    "context": (Context, Window),
     "dialog": (Dialog, None),
-    "item": (Item, (Menu, )),
+    "item": (Item, (Context, Menu, )),
     "list": (List, (Window, Dialog)),
-    "menu": (Menu, (Menubar, Menu)),
+    "menu": (Menu, (Context, Menu, Menubar)),
     "menubar": (Menubar, Window),
     "radio": (RadioButton, (Window, Dialog)),
     "table": (Table, (Window, Dialog)),

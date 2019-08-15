@@ -73,3 +73,8 @@ class SpecificWindow(SpecificWidget):
     def pop_dialog(self, dialog: SpecificWidget):
         """Pop up a dialog."""
         pass
+
+    @abstractmethod
+    def pop_menu(self, context: SpecificWidget):
+        """Pop a context menu, blocks until the menu is closed."""
+        pass

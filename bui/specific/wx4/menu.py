@@ -18,7 +18,7 @@ class WX4Menu(SpecificMenu):
     def _complete(self, window):
         """Complete the menu."""
         parent = self.parent
-        if parent.widget_name == "menu":
+        if parent.widget_name in ("context", "menu"):
             parent.wx_menu.AppendSubMenu(self.wx_menu, self.generic.name)
         else:
             parent.wx_menubar.Append(self.wx_menu, self.generic.name)

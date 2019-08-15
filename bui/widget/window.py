@@ -117,11 +117,14 @@ class Window(Widget, metaclass=MetaWindow):
         self.title = leaf.title
         self.width = leaf.width
         self.height = leaf.height
+        self._ids = {}
 
     def __getitem__(self, item):
-        for child in self.leaf.children:
-            if child.id == item:
-                return child.widget
+        try:
+            return self._ids[item]
+        except KeyError:
+            raise KeyError(f"{item!r} isn't a known or valid "
+                    "widget identifier") from None
 
     @property
     def usable_surface(self):
@@ -176,6 +179,7 @@ class Window(Widget, metaclass=MetaWindow):
         # Creates all the leafs
         from bui.widget import WIDGETS
         widgets = []
+        ids = {}
         for leaf in parsed_layout.flat:
             leaf.complete()
             if not leaf.has_widget:
@@ -192,6 +196,11 @@ class Window(Widget, metaclass=MetaWindow):
             if leaf is window_leaf:
                 window = widget
 
+            widget_id = getattr(widget, "id", None)
+            if widget_id:
+                ids[widget_id] = widget
+
+        window._ids = ids
         # Call the `_init` method on all generic widgets
         for widget in widgets:
             widget._bind_controls(window)
@@ -264,6 +273,17 @@ class Window(Widget, metaclass=MetaWindow):
         dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")
         self.specific.pop_dialog(dialog_obj.specific)
         return dialog_obj
+
+    def pop_menu(self, context_id: str):
+        """
+        Pop a context menu, blocks until the menu is closed.
+
+        Args:
+            context_id (str): the registered ID of the context menu.
+
+        """
+        context = self[context_id]
+        self.specific.pop_menu(context.specific)
 
     def handle_close(self, control):
         """The window closes."""

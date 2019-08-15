@@ -6,6 +6,7 @@ NEVER instanciate classes in this module directly.  Always use the `bui.Window` 
 
 from bui.specific.wx4.button import WX4Button as Button
 from bui.specific.wx4.checkbox import WX4Checkbox as Checkbox
+from bui.specific.wx4.context import WX4Context as Context
 from bui.specific.wx4.dialog import WX4Dialog as Dialog
 from bui.specific.wx4.item import WX4Item as Item
 from bui.specific.wx4.list import WX4List as List

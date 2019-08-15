@@ -2,6 +2,7 @@
 
 from bui.widget.button import Button
 from bui.widget.checkbox import Checkbox
+from bui.widget.context import Context
 from bui.widget.item import Item
 from bui.widget.list import List
 from bui.widget.menu import Menu
@@ -14,6 +15,7 @@ from bui.widget.window import Window
 WIDGETS = {
         "button": Button,
         "checkbox": Checkbox,
+        "context": Context,
         "item": Item,
         "list": List,
         "menu": Menu,
