@@ -248,7 +248,7 @@ def test_table_with_0_or_1_column():
 
 def test_with_association(table):
     """Use the association on tables."""
-    table.use_association = True
+    table.can_associate = True
     o0 = object()
     o1 = object()
     o2 = object()
@@ -306,7 +306,7 @@ def test_selected(table):
 
     # Do the same checks but with associations
     rows = table._rows
-    table.use_association = True
+    table.can_associate = True
     table.associate(rows[0], [0, 1, 2])
     table.associate(rows[1], [3, 4, 5])
     table.associate(rows[2], [6, 7, 8])

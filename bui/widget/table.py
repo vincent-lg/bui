@@ -62,7 +62,7 @@ class Table(Widget):
         self._rows = []
         self._associations = {}
         self._selected = 0
-        self.use_association = False
+        self.can_associate = False
 
     def __len__(self):
         return len(self._rows)
@@ -70,7 +70,7 @@ class Table(Widget):
     def __getitem__(self, item):
         row = self._rows[item]
         if isinstance(row, AbcRow):
-            if self.use_association:
+            if self.can_associate:
                 return (row, self._associations.get(id(row)))
             else:
                 return row
@@ -78,7 +78,7 @@ class Table(Widget):
         associations = []
         rows = row
         for row in rows:
-            if self.use_association:
+            if self.can_associate:
                 associations.append((row, self._associations.get(id(row))))
             else:
                 associations.append(row)
@@ -120,9 +120,9 @@ class Table(Widget):
     def rows(self):
         rows = self._rows
         associations = []
-        use_association = self.use_association
+        can_associate = self.can_associate
         for row in rows:
-            if use_association:
+            if can_associate:
                 associations.append((row, self._associations.get(id(row))))
             else:
                 associations.append(row)
@@ -165,7 +165,7 @@ class Table(Widget):
     def selected(self):
         """Return the row and its associated object if needed."""
         row = self._rows[self._selected]
-        if self.use_association:
+        if self.can_associate:
             return (row, self._associations.get(id(row)))
 
         return row
