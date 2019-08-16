@@ -73,6 +73,7 @@ class Text(Widget):
 
     @property
     def cursor(self):
+        """Return the text Cursor object."""
         return self._cursor
 
     def enable(self):
@@ -100,20 +101,25 @@ class Cursor:
 
     @property
     def pos(self):
+        """Return the current position as an indice."""
         return self._pos
 
     @property
     def at_begin(self):
+        """Return True if the cursor is at the beginning of the text field."""
         return self._pos == 0
 
     @property
     def at_end(self):
+        """Return True if the cursor is at the end of the text field."""
         return self._pos > len(self._widget)
 
     @property
     def text_before(self):
+        """Return the text before the cursor."""
         return self._widget.value[:self._pos]
 
     @property
     def text_after(self):
+        """Return the text after the cursor."""
         return self._widget.value[self._pos:]

@@ -119,7 +119,7 @@ class Button(Component):
 
     ## Data
 
-    A button tag will be turned into a [Button](../class/Button.md) object.
+    A button tag will be turned into a [Button](../widget/Button.md) object.
     You can access and modify its attributes in a control method.
 
     | Attribute      | Meaning and type | Example                     |

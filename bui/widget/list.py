@@ -87,6 +87,7 @@ class List(Widget):
 
     @property
     def choices(self):
+        """Return the list choices."""
         return self._choices
 
     @choices.setter
@@ -129,6 +130,7 @@ class List(Widget):
 
     @property
     def selected(self):
+        """Return the currently-selected choice ID or position."""
         return self._pos[self._selected]
 
     @selected.setter

@@ -68,62 +68,63 @@
       <span style="white-space: pre;"><a id="L46"></a></span><br />
       <span style="white-space: pre;"><a id="L47"></a>    @property</span><br />
       <span style="white-space: pre;"><a id="L48"></a>    def choices(self):</span><br />
-      <span style="white-space: pre;"><a id="L49"></a>        return tuple(self._choices)</span><br />
-      <span style="white-space: pre;"><a id="L50"></a></span><br />
-      <span style="white-space: pre;"><a id="L51"></a>    @choices.setter</span><br />
-      <span style="white-space: pre;"><a id="L52"></a>    def choices(self, choices: Iterable[Tuple[str, str]]):</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>        Modify the radio button choices.</span><br />
-      <span style="white-space: pre;"><a id="L55"></a></span><br />
-      <span style="white-space: pre;"><a id="L56"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L57"></a>            choices (iterable): an iterable containing choices, each</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>                    choice being a tuple with two elements (both of</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>                    `str`): the choice ID and the choice label.</span><br />
-      <span style="white-space: pre;"><a id="L60"></a></span><br />
-      <span style="white-space: pre;"><a id="L61"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L63"></a>            iter(choices)</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>        except TypeError:</span><br />
-      <span style="white-space: pre;"><a id="L65"></a>            raise TypeError("'choices' isn't a valid iterable")</span><br />
-      <span style="white-space: pre;"><a id="L66"></a></span><br />
-      <span style="white-space: pre;"><a id="L67"></a>        apply_choices = []</span><br />
-      <span style="white-space: pre;"><a id="L68"></a>        for i, (choice_id, choice_label) in enumerate(choices):</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>            apply_choices.append((str(choice_id), str(choice_label)))</span><br />
-      <span style="white-space: pre;"><a id="L70"></a></span><br />
-      <span style="white-space: pre;"><a id="L71"></a>        if len(apply_choices) &lt; 2:</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>            raise ValueError("you need to specify at least two choices")</span><br />
-      <span style="white-space: pre;"><a id="L73"></a></span><br />
-      <span style="white-space: pre;"><a id="L74"></a>        self._choices = apply_choices</span><br />
-      <span style="white-space: pre;"><a id="L75"></a>        self.specific.refresh()</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>        self._selected = 0</span><br />
-      <span style="white-space: pre;"><a id="L77"></a></span><br />
-      <span style="white-space: pre;"><a id="L78"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>    def selected(self):</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>        """Return the ID of the selected choice."""</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>        return self._choices[self._selected][0]</span><br />
-      <span style="white-space: pre;"><a id="L82"></a></span><br />
-      <span style="white-space: pre;"><a id="L83"></a>    @selected.setter</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>    def selected(self, choice: str):</span><br />
-      <span style="white-space: pre;"><a id="L85"></a>        """Change the selected choice."""</span><br />
-      <span style="white-space: pre;"><a id="L86"></a>        index = 0</span><br />
-      <span style="white-space: pre;"><a id="L87"></a>        for i, (choice_id, choice_label) in enumerate(self._choices):</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>            if choice_id == choice:</span><br />
-      <span style="white-space: pre;"><a id="L89"></a>                self._selected = i</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>                break</span><br />
-      <span style="white-space: pre;"><a id="L91"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L92"></a>            raise ValueError(f"can't select choice of ID {choice!r}")</span><br />
-      <span style="white-space: pre;"><a id="L93"></a></span><br />
-      <span style="white-space: pre;"><a id="L94"></a>    def _init(self):</span><br />
-      <span style="white-space: pre;"><a id="L95"></a>        """Widget initialization."""</span><br />
-      <span style="white-space: pre;"><a id="L96"></a>        choices = []</span><br />
-      <span style="white-space: pre;"><a id="L97"></a>        for tag in self.leaf.children:</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>            if tag.tag_name == "choice":</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>                choices.append((tag.id, tag.data))</span><br />
-      <span style="white-space: pre;"><a id="L100"></a></span><br />
-      <span style="white-space: pre;"><a id="L101"></a>        if len(choices) &gt;= 2:</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>            self.choices = choices</span><br />
-      <span style="white-space: pre;"><a id="L103"></a></span><br />
-      <span style="white-space: pre;"><a id="L104"></a>        return super()._init()</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        """Return the current choices."""</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>        return tuple(self._choices)</span><br />
+      <span style="white-space: pre;"><a id="L51"></a></span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    @choices.setter</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    def choices(self, choices: Iterable[Tuple[str, str]]):</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        Modify the radio button choices.</span><br />
+      <span style="white-space: pre;"><a id="L56"></a></span><br />
+      <span style="white-space: pre;"><a id="L57"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>            choices (iterable): an iterable containing choices, each</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                    choice being a tuple with two elements (both of</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>                    `str`): the choice ID and the choice label.</span><br />
+      <span style="white-space: pre;"><a id="L61"></a></span><br />
+      <span style="white-space: pre;"><a id="L62"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>            iter(choices)</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>            raise TypeError("'choices' isn't a valid iterable")</span><br />
+      <span style="white-space: pre;"><a id="L67"></a></span><br />
+      <span style="white-space: pre;"><a id="L68"></a>        apply_choices = []</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>        for i, (choice_id, choice_label) in enumerate(choices):</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>            apply_choices.append((str(choice_id), str(choice_label)))</span><br />
+      <span style="white-space: pre;"><a id="L71"></a></span><br />
+      <span style="white-space: pre;"><a id="L72"></a>        if len(apply_choices) &lt; 2:</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>            raise ValueError("you need to specify at least two choices")</span><br />
+      <span style="white-space: pre;"><a id="L74"></a></span><br />
+      <span style="white-space: pre;"><a id="L75"></a>        self._choices = apply_choices</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        self.specific.refresh()</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        self._selected = 0</span><br />
+      <span style="white-space: pre;"><a id="L78"></a></span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    def selected(self):</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        """Return the ID of the selected choice."""</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>        return self._choices[self._selected][0]</span><br />
+      <span style="white-space: pre;"><a id="L83"></a></span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    @selected.setter</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    def selected(self, choice: str):</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>        """Change the selected choice."""</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>        index = 0</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>        for i, (choice_id, choice_label) in enumerate(self._choices):</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>            if choice_id == choice:</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>                self._selected = i</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>                break</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>            raise ValueError(f"can't select choice of ID {choice!r}")</span><br />
+      <span style="white-space: pre;"><a id="L94"></a></span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    def _init(self):</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>        """Widget initialization."""</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>        choices = []</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>        for tag in self.leaf.children:</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>            if tag.tag_name == "choice":</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>                choices.append((tag.id, tag.data))</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>        if len(choices) &gt;= 2:</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>            self.choices = choices</span><br />
+      <span style="white-space: pre;"><a id="L104"></a></span><br />
+      <span style="white-space: pre;"><a id="L105"></a>        return super()._init()</span><br />
     </div>
   </body>
 </html>

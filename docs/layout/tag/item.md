@@ -103,7 +103,7 @@ if necessary, bind to the same control using aliases.
 
 ## Data
 
-An item tag will be turned into an [Item](../class/Item.md)
+An item tag will be turned into an [Item](../widget/Item.md)
 widget.  This widget has no data for the time being.
 
 ## Controls

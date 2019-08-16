@@ -118,6 +118,7 @@ class Table(Widget):
 
     @property
     def rows(self):
+        """Return the table rows with optional associated objects."""
         rows = self._rows
         associations = []
         can_associate = self.can_associate
@@ -259,7 +260,7 @@ class Table(Widget):
         # Remove associations
         self._associations.pop(id(row), None)
 
-    def sort(self, key: Callable = None, reverse=False):
+    def sort(self, key: Callable = None, reverse: bool = False):
         """
         Sort the table rows, given an optional key.
 

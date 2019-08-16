@@ -80,8 +80,8 @@ on her keyboard.
 
 ## Controls
 
-The window tag is tied to the [Window](../../class/Window.md) or
-[Dialog](../../class/Dialog.md) class.  Therefore, when you write
+The window tag is tied to the [Window](../../widget/Window.md) or
+[Dialog](../../widget/Dialog.md) class.  Therefore, when you write
 controls on either of these classes, you often want to catch controls
 on indidivual graphical elements in the window.  There are a few
 exceptions however:

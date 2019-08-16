@@ -95,50 +95,56 @@
       <span style="white-space: pre;"><a id="L73"></a></span><br />
       <span style="white-space: pre;"><a id="L74"></a>    @property</span><br />
       <span style="white-space: pre;"><a id="L75"></a>    def cursor(self):</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>        return self._cursor</span><br />
-      <span style="white-space: pre;"><a id="L77"></a></span><br />
-      <span style="white-space: pre;"><a id="L78"></a>    def enable(self):</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>        """Force-enable the text."""</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>        self.specific.enable()</span><br />
-      <span style="white-space: pre;"><a id="L81"></a></span><br />
-      <span style="white-space: pre;"><a id="L82"></a>    def disable(self):</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>        """Disable the text."""</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>        self.specific.disable()</span><br />
-      <span style="white-space: pre;"><a id="L85"></a></span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        """Return the text Cursor object."""</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        return self._cursor</span><br />
+      <span style="white-space: pre;"><a id="L78"></a></span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    def enable(self):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        """Force-enable the text."""</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        self.specific.enable()</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    def disable(self):</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>        """Disable the text."""</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        self.specific.disable()</span><br />
       <span style="white-space: pre;"><a id="L86"></a></span><br />
-      <span style="white-space: pre;"><a id="L87"></a>class Cursor:</span><br />
-      <span style="white-space: pre;"><a id="L88"></a></span><br />
-      <span style="white-space: pre;"><a id="L89"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>    Class to represent a cursor in a text field.</span><br />
-      <span style="white-space: pre;"><a id="L91"></a></span><br />
-      <span style="white-space: pre;"><a id="L92"></a>    A cursor object is created when a text widget is created.  This cursor</span><br />
-      <span style="white-space: pre;"><a id="L93"></a>    object will be updated whenever the need arises.</span><br />
-      <span style="white-space: pre;"><a id="L94"></a></span><br />
-      <span style="white-space: pre;"><a id="L95"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L96"></a></span><br />
-      <span style="white-space: pre;"><a id="L97"></a>    def __init__(self, widget):</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>        self._pos = 0</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>        self._widget = widget</span><br />
-      <span style="white-space: pre;"><a id="L100"></a></span><br />
-      <span style="white-space: pre;"><a id="L101"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>    def pos(self):</span><br />
-      <span style="white-space: pre;"><a id="L103"></a>        return self._pos</span><br />
-      <span style="white-space: pre;"><a id="L104"></a></span><br />
-      <span style="white-space: pre;"><a id="L105"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>    def at_begin(self):</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>        return self._pos == 0</span><br />
-      <span style="white-space: pre;"><a id="L108"></a></span><br />
-      <span style="white-space: pre;"><a id="L109"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>    def at_end(self):</span><br />
-      <span style="white-space: pre;"><a id="L111"></a>        return self._pos &gt; len(self._widget)</span><br />
-      <span style="white-space: pre;"><a id="L112"></a></span><br />
-      <span style="white-space: pre;"><a id="L113"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>    def text_before(self):</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>        return self._widget.value[:self._pos]</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>class Cursor:</span><br />
+      <span style="white-space: pre;"><a id="L89"></a></span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    Class to represent a cursor in a text field.</span><br />
+      <span style="white-space: pre;"><a id="L92"></a></span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    A cursor object is created when a text widget is created.  This cursor</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    object will be updated whenever the need arises.</span><br />
+      <span style="white-space: pre;"><a id="L95"></a></span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    def __init__(self, widget):</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>        self._pos = 0</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>        self._widget = widget</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>    def pos(self):</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>        """Return the current position as an indice."""</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>        return self._pos</span><br />
+      <span style="white-space: pre;"><a id="L106"></a></span><br />
+      <span style="white-space: pre;"><a id="L107"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    def at_begin(self):</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>        """Return True if the cursor is at the beginning of the text field."""</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>        return self._pos == 0</span><br />
+      <span style="white-space: pre;"><a id="L111"></a></span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    def at_end(self):</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>        """Return True if the cursor is at the end of the text field."""</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>        return self._pos &gt; len(self._widget)</span><br />
       <span style="white-space: pre;"><a id="L116"></a></span><br />
       <span style="white-space: pre;"><a id="L117"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>    def text_after(self):</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>        return self._widget.value[self._pos:]</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    def text_before(self):</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>        """Return the text before the cursor."""</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>        return self._widget.value[:self._pos]</span><br />
+      <span style="white-space: pre;"><a id="L121"></a></span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    def text_after(self):</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>        """Return the text after the cursor."""</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>        return self._widget.value[self._pos:]</span><br />
     </div>
   </body>
 </html>

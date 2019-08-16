@@ -49,6 +49,7 @@ class MetaWindow(type):
 
     @staticmethod
     def mark(layout: str) -> str:
+        """Mark layout in the window."""
         frame = sys._getframe().f_back
         file = frame.f_globals["__file__"]
         line = frame.f_lineno

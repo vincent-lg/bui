@@ -46,6 +46,7 @@ class RadioButton(Widget):
 
     @property
     def choices(self):
+        """Return the current choices."""
         return tuple(self._choices)
 
     @choices.setter

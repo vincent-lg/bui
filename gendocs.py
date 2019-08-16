@@ -2,6 +2,7 @@
 
 from cgi import escape
 from importlib import import_module
+import inspect
 from pathlib import Path
 from textwrap import dedent
 
@@ -134,6 +135,151 @@ for path in ex_dir.glob("*.py"):
     with ex_path.open("wb") as md_file:
         md_file.write(doc.encode("utf-8"))
     print(f"Write in {ex_path}.")
+
+# Analyze widget classes
+widgets = (
+        ("button", "Button"),
+        ("checkbox", "Checkbox"),
+        ("context", "Context"),
+        ("dialog", "Dialog"),
+        ("item", "Item"),
+        ("list", "List"),
+        ("menu", "Menu"),
+        ("menubar", "Menubar"),
+        ("radio", "RadioButton"),
+        ("table", "Table"),
+        ("text", "Text"),
+        ("text", "Cursor"),
+        ("window", "Window"),
+)
+for module_name, class_name in widgets:
+    module = import_module(f"bui.widget.{module_name}")
+    cls = getattr(module, class_name)
+
+    lineno = inspect.getsourcelines(cls)[1]
+    doc = (
+            f"# {class_name} in [widget/{module_name}:{lineno}]"
+            f"(../raw/widget/{module_name}.html#L{lineno})"
+    )
+
+    doc += f"\n\n{inspect.cleandoc(cls.__doc__)}"
+
+    # Method summary
+    doc += "\n\n## Class summary"
+
+    properties, methods = [], []
+    for name, member in inspect.getmembers(cls):
+        if name.startswith("_"):
+            continue
+
+        if isinstance(member, property):
+            properties.append((name, member))
+            continue
+
+        if not callable(member):
+            continue
+
+        methods.append((name, member))
+
+    # Properties
+    if properties:
+        doc += f"\n\nThis class offers {len(properties)} propert{'y' if len(properties) < 2 else 'ies'}.\n"
+        doc += "\n| Property | Get | Set |"
+        doc += "\n| -------- | --- | --- |"
+
+        for name, pro in properties:
+            fget = fset = "**Can't read.**", "**Can't write**"
+            if pro.fget:
+                if pro.fget.__doc__ is None:
+                    breakpoint()
+                fget = inspect.cleandoc(pro.fget.__doc__).splitlines()[0]
+
+            if pro.fset:
+                if pro.fset.__doc__ is None:
+                    breakpoint()
+                fset = inspect.cleandoc(pro.fset.__doc__).splitlines()[0]
+
+            doc += f"\n| [{name}](#{name}) | {fget} | {fset} |"
+
+    # Methods
+    doc += f"\n\nThis class offers {len(methods)} method{'' if len(methods) < 2 else 's'}.\n\n"
+    doc += dedent("""
+            | Method | Signature | Description |
+            | ------ | --------- | ----------- |
+    """).strip()
+    for name, method in methods:
+        first_line = inspect.cleandoc(method.__doc__).splitlines()[0]
+        signature = inspect.signature(method)
+        parameters = dict(signature.parameters)
+        parameters.pop("self", None)
+        parameters = ", ".join([str(p) for p in parameters.values()])
+        doc += (
+                f"\n| [{name}](#{name}) | "
+                f"`{name}({parameters})` | {first_line} |"
+        )
+
+    # Longer description
+    if len(properties):
+        doc += "\n\n## Properties"
+        for name, pro in properties:
+            if pro.fget and pro.fset:
+                can = "can get and be set"
+            elif pro.fget:
+                can = "can only get (read-only)"
+            else:
+                can = "can only be set"
+            doc += f"\n\n### {name}\n\nThis property {can}."
+            if pro.fget:
+                doc += "\n\n#### Get"
+                lineno = inspect.getsourcelines(pro.fget)[1]
+                doc += (
+                        f"\n\n[See the source code]("
+                        f"../raw/widget/{module_name}.html#L{lineno})"
+                )
+                doc += "\n\n" + inspect.cleandoc(pro.fget.__doc__)
+            if pro.fset:
+                doc += "\n\n#### Set"
+                lineno = inspect.getsourcelines(pro.fset)[1]
+                doc += (
+                        f"\n\n[See the source code]("
+                        f"../raw/widget/{module_name}.html#L{lineno})"
+                )
+                doc += "\n\n" + inspect.cleandoc(pro.fset.__doc__)
+
+    # Methods
+    doc += "\n\n## Methods"
+    for name, method in methods:
+        signature = inspect.signature(method)
+        parameters = dict(signature.parameters)
+        short = ", ".join([str(p) for p in parameters.values()])
+        doc += f"\n\n### {name}\n\n`{name}({short})`"
+        lineno = inspect.getsourcelines(method)[1]
+        doc += (
+                f"\n\n[See the source code]("
+                f"../raw/widget/{module_name}.html#L{lineno})"
+        )
+        doc += "\n\n| Parameter | Type | Default |"
+        doc += "\n| --------- | ---- | ------- |"
+        for parameter in parameters.values():
+            if parameter.name == "self": # Assume this is the instance keyword
+                annotation = f"`{class_name}`"
+            elif parameter.annotation:
+                annotation = "`" + inspect.formatannotation(parameter.annotation) + "`"
+            else:
+                annotation = "*Not set*"
+
+            doc += f"\n| {parameter.name} | "
+            doc += f"{annotation} | "
+            if parameter.default != inspect._empty:
+                doc += f"`{parameter.default!r}`"
+            doc += " |"
+
+        doc += "\n\n" + inspect.cleandoc(method.__doc__)
+
+    dump = doc_dir / "widget" / f"{class_name}.md"
+    with dump.open("wb") as file:
+        file.write(doc.encode("utf-8"))
+    print(f"Write in {dump}")
 
 # Write the raw files
 control_dir = Path() / "bui/control"
