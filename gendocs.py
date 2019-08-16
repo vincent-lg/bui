@@ -188,7 +188,7 @@ for module_name, class_name in widgets:
         doc += "\n| -------- | --- | --- |"
 
         for name, pro in properties:
-            fget = fset = "**Can't read.**", "**Can't write**"
+            fget, fset = "**Can't read.**", "**Can't write**"
             if pro.fget:
                 if pro.fget.__doc__ is None:
                     breakpoint()
@@ -263,14 +263,14 @@ for module_name, class_name in widgets:
         for parameter in parameters.values():
             if parameter.name == "self": # Assume this is the instance keyword
                 annotation = f"`{class_name}`"
-            elif parameter.annotation:
+            elif parameter.annotation is not parameter.empty:
                 annotation = "`" + inspect.formatannotation(parameter.annotation) + "`"
             else:
                 annotation = "*Not set*"
 
             doc += f"\n| {parameter.name} | "
             doc += f"{annotation} | "
-            if parameter.default != inspect._empty:
+            if parameter.default is not parameter.empty:
                 doc += f"`{parameter.default!r}`"
             doc += " |"
 

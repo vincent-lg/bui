@@ -84,8 +84,8 @@ Args:
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Table` |  |
-| args | `inspect._empty` |  |
-| kwargs | `inspect._empty` |  |
+| args | *Not set* |  |
+| kwargs | *Not set* |  |
 
 Add a new row with the specified arguments at the bottom of the table.
 
@@ -166,7 +166,7 @@ Args:
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Table` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
 
@@ -205,6 +205,6 @@ Example:
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Table` |  |
-| row | `inspect._empty` |  |
+| row | *Not set* |  |
 
 Update the specified row.

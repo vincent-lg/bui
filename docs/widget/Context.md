@@ -44,6 +44,6 @@ raise no exception.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Context` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.

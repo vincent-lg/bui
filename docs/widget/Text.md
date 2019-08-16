@@ -16,9 +16,9 @@ This class offers 3 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [cursor](#cursor) | Return the text Cursor object. | ("**Can't read.**", "**Can't write**") |
-| [disabled](#disabled) | Return whether the text is disabled or not. | ("**Can't read.**", "**Can't write**") |
-| [enabled](#enabled) | Return whether the text is enabled or not. | ("**Can't read.**", "**Can't write**") |
+| [cursor](#cursor) | Return the text Cursor object. | **Can't write** |
+| [disabled](#disabled) | Return whether the text is disabled or not. | **Can't write** |
+| [enabled](#enabled) | Return whether the text is enabled or not. | **Can't write** |
 
 This class offers 4 methods.
 
@@ -111,6 +111,6 @@ Force-enable the text.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Text` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.

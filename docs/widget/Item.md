@@ -47,7 +47,7 @@ raise no exception.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Item` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a menu item is clicked.
 
@@ -60,6 +60,6 @@ Do nothing if a menu item is clicked.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Item` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.

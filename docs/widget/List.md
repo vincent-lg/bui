@@ -138,7 +138,7 @@ Args:
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `List` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
 
@@ -151,7 +151,7 @@ Schedule the specified coroutine in the main event loop.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `List` |  |
-| i | `inspect._empty` |  |
-| choice | `inspect._empty` |  |
+| i | *Not set* |  |
+| choice | *Not set* |  |
 
 Update the specified choice.

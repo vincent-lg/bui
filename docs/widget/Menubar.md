@@ -46,6 +46,6 @@ raise no exception.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Menubar` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.

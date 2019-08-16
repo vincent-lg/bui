@@ -46,7 +46,7 @@ raise no exception.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Button` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a button is clicked.
 
@@ -59,7 +59,7 @@ Do nothing if a button is clicked.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Button` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a button is pressed.
 
@@ -72,6 +72,6 @@ Do nothing if a button is pressed.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Button` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.

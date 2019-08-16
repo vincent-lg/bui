@@ -12,7 +12,7 @@ This class offers 1 property.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [usable_surface](#usable_surface) | Return the screen size that can be used, in pixels. | ("**Can't read.**", "**Can't write**") |
+| [usable_surface](#usable_surface) | Return the screen size that can be used, in pixels. | **Can't write** |
 
 This class offers 10 methods.
 
@@ -87,7 +87,7 @@ raise no exception.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 The window closes.
 
@@ -113,7 +113,7 @@ Mark layout in the window.
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
 | window | `'Window'` |  |
-| child | `inspect._empty` | `False` |
+| child | *Not set* | `False` |
 
 Open a new window.
 
@@ -130,8 +130,8 @@ Args:
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
-| Window | `inspect._empty` |  |
-| tag_name | `inspect._empty` | `'window'` |
+| Window | *Not set* |  |
+| tag_name | *Not set* | `'window'` |
 
 Determine where the layout is and try to parse it, return a window.
 
@@ -183,7 +183,7 @@ Args:
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
 
@@ -196,7 +196,7 @@ Schedule the specified coroutine in the main event loop.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
-| seconds | `inspect._empty` |  |
+| seconds | *Not set* |  |
 
 Asynchronous sleep during the specified number of seconds.
 

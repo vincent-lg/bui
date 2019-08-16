@@ -15,8 +15,8 @@ This class offers 2 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [disabled](#disabled) | Return whether the checkbox is disabled or not. | ("**Can't read.**", "**Can't write**") |
-| [enabled](#enabled) | Return whether the checkbox is enabled or not. | ("**Can't read.**", "**Can't write**") |
+| [disabled](#disabled) | Return whether the checkbox is disabled or not. | **Can't write** |
+| [enabled](#enabled) | Return whether the checkbox is enabled or not. | **Can't write** |
 
 This class offers 9 methods.
 
@@ -116,7 +116,7 @@ Force-enable the checkbox.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Checkbox` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a checkbox is clicked.
 
@@ -129,7 +129,7 @@ Do nothing if a checkbox is clicked.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Checkbox` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a checkbox is pressed.
 
@@ -142,7 +142,7 @@ Do nothing if a checkbox is pressed.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Checkbox` |  |
-| control | `inspect._empty` |  |
+| control | *Not set* |  |
 
 Do nothing if a checkbox is pressed.
 
@@ -155,7 +155,7 @@ Do nothing if a checkbox is pressed.
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Checkbox` |  |
-| coroutine | `inspect._empty` |  |
+| coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
 

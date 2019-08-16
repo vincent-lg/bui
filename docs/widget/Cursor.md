@@ -11,11 +11,11 @@ This class offers 5 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [at_begin](#at_begin) | Return True if the cursor is at the beginning of the text field. | ("**Can't read.**", "**Can't write**") |
-| [at_end](#at_end) | Return True if the cursor is at the end of the text field. | ("**Can't read.**", "**Can't write**") |
-| [pos](#pos) | Return the current position as an indice. | ("**Can't read.**", "**Can't write**") |
-| [text_after](#text_after) | Return the text after the cursor. | ("**Can't read.**", "**Can't write**") |
-| [text_before](#text_before) | Return the text before the cursor. | ("**Can't read.**", "**Can't write**") |
+| [at_begin](#at_begin) | Return True if the cursor is at the beginning of the text field. | **Can't write** |
+| [at_end](#at_end) | Return True if the cursor is at the end of the text field. | **Can't write** |
+| [pos](#pos) | Return the current position as an indice. | **Can't write** |
+| [text_after](#text_after) | Return the text after the cursor. | **Can't write** |
+| [text_before](#text_before) | Return the text before the cursor. | **Can't write** |
 
 This class offers 0 method.
 
