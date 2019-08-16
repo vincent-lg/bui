@@ -37,7 +37,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/dialog.html#L131)
+[See the source code](../raw/widget/dialog.html#L133)
 
 Return the screen size that can be used, in pixels.
 
@@ -55,7 +55,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L252)
+[See the source code](../raw/widget/dialog.html#L258)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -82,7 +82,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L305)
+[See the source code](../raw/widget/dialog.html#L311)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -107,7 +107,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L291)
+[See the source code](../raw/widget/dialog.html#L297)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -126,7 +126,7 @@ Args:
 
 `parse_layout(Window, tag_name='window')`
 
-[See the source code](../raw/widget/dialog.html#L147)
+[See the source code](../raw/widget/dialog.html#L149)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -142,7 +142,7 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/dialog.html#L256)
+[See the source code](../raw/widget/dialog.html#L262)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -162,7 +162,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L280)
+[See the source code](../raw/widget/dialog.html#L286)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -191,7 +191,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sleep(self, seconds)`
 
-[See the source code](../raw/widget/dialog.html#L217)
+[See the source code](../raw/widget/dialog.html#L223)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

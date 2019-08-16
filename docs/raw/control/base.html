@@ -59,123 +59,182 @@
       <span style="white-space: pre;"><a id="L37"></a>            # This control has sub-controls</span><br />
       <span style="white-space: pre;"><a id="L38"></a>            # sub-controls can all be linked to control methods</span><br />
       <span style="white-space: pre;"><a id="L39"></a>            if cls.window_control and widget is window:</span><br />
-      <span style="white-space: pre;"><a id="L40"></a>                cls._register_method(widget, window, f"on_{cls.name}")</span><br />
-      <span style="white-space: pre;"><a id="L41"></a>                if cls.pattern_for_window:</span><br />
-      <span style="white-space: pre;"><a id="L42"></a>                    pattern = re.compile(cls.pattern_for_window)</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>                    contents = dir(window)</span><br />
-      <span style="white-space: pre;"><a id="L44"></a>                    for content in contents:</span><br />
-      <span style="white-space: pre;"><a id="L45"></a>                        match = pattern.search(content)</span><br />
-      <span style="white-space: pre;"><a id="L46"></a>                        if match:</span><br />
-      <span style="white-space: pre;"><a id="L47"></a>                            group = match.groupdict()</span><br />
-      <span style="white-space: pre;"><a id="L48"></a>                            cls._register_method(widget, window, content,</span><br />
-      <span style="white-space: pre;"><a id="L49"></a>                                    group=group)</span><br />
-      <span style="white-space: pre;"><a id="L50"></a>            elif cls.widget_control:</span><br />
-      <span style="white-space: pre;"><a id="L51"></a>                cls._register_method(widget, window, f"on_{cls.name}_{widget.id}")</span><br />
-      <span style="white-space: pre;"><a id="L52"></a>                if cls.pattern_for_widgets:</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>                    pattern = cls.pattern_for_widgets.format(id=widget.id)</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>                    pattern = re.compile(pattern)</span><br />
-      <span style="white-space: pre;"><a id="L55"></a>                    contents = dir(window)</span><br />
-      <span style="white-space: pre;"><a id="L56"></a>                    for content in contents:</span><br />
-      <span style="white-space: pre;"><a id="L57"></a>                        match = pattern.search(content)</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>                        if match:</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>                            group = match.groupdict()</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>                            cls._register_method(widget, window, content,</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>                                    group=group)</span><br />
-      <span style="white-space: pre;"><a id="L62"></a></span><br />
-      <span style="white-space: pre;"><a id="L63"></a>            return</span><br />
-      <span style="white-space: pre;"><a id="L64"></a></span><br />
-      <span style="white-space: pre;"><a id="L65"></a>        bound = False</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>        if widget.implicit_control == cls.name:</span><br />
-      <span style="white-space: pre;"><a id="L67"></a>            # This is an implicit control, don't force-add any method</span><br />
-      <span style="white-space: pre;"><a id="L68"></a>            if cls.window_control and widget is window:</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>                method_name = f"on_{cls.name}"</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>            elif cls.widget_control:</span><br />
-      <span style="white-space: pre;"><a id="L71"></a>                method_name = f"on_{widget.id}"</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L73"></a>                method_name = None</span><br />
-      <span style="white-space: pre;"><a id="L74"></a></span><br />
-      <span style="white-space: pre;"><a id="L75"></a>            if method_name:</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>                bound = cls._register_method(widget, window, method_name,</span><br />
-      <span style="white-space: pre;"><a id="L77"></a>                        force=False)</span><br />
-      <span style="white-space: pre;"><a id="L78"></a></span><br />
-      <span style="white-space: pre;"><a id="L79"></a>        if not bound:</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>            if cls.window_control and widget == window:</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>                method_name = f"on_{cls.name}"</span><br />
-      <span style="white-space: pre;"><a id="L82"></a>                if cls._register_method(widget, window, method_name):</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>                    return</span><br />
-      <span style="white-space: pre;"><a id="L84"></a></span><br />
-      <span style="white-space: pre;"><a id="L85"></a>            if cls.widget_control and hasattr(widget, "id"):</span><br />
-      <span style="white-space: pre;"><a id="L86"></a>                method_name = f"on_{cls.name}_{widget.id}"</span><br />
-      <span style="white-space: pre;"><a id="L87"></a>                cls._register_method(widget, window, method_name)</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>                method_name = f"on_{cls.name}"</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>                bound = cls._register_method(widget, window, method_name)</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>                if bound and window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>                    print(</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>                            f"    Bound {cls.name} as a window control "</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>                            f"to the {method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>                    )</span><br />
+      <span style="white-space: pre;"><a id="L47"></a></span><br />
+      <span style="white-space: pre;"><a id="L48"></a>                if cls.pattern_for_window:</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>                    pattern = re.compile(cls.pattern_for_window)</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>                    contents = dir(window)</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>                    for content in contents:</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>                        match = pattern.search(content)</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>                        if match:</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>                            group = match.groupdict()</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>                            bound = cls._register_method(widget, window,</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>                                    content, group=group)</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>                            if bound and window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>                                print(</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                                    f"    Bound {cls.name} as a window "</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>                                    f"control with {group} to the "</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>                                    f"{content!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>                                )</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>            elif cls.widget_control:</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>                method_name = f"on_{cls.name}_{widget.id}"</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>                bound = cls._register_method(widget, window, method_name)</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>                if bound and window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>                    print(</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>                            f"    Bound {cls.name} as a widget control "</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>                            f"of {widget.id} to the {method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>                    )</span><br />
+      <span style="white-space: pre;"><a id="L71"></a></span><br />
+      <span style="white-space: pre;"><a id="L72"></a>                if cls.pattern_for_widgets:</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>                    pattern = cls.pattern_for_widgets.format(id=widget.id)</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>                    pattern = re.compile(pattern)</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>                    contents = dir(window)</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>                    for content in contents:</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>                        match = pattern.search(content)</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>                        if match:</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>                            group = match.groupdict()</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>                            bound = cls._register_method(widget, window,</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>                                    content, group=group)</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>                            if bound and window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>                                print(</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>                                    f"    Bound {cls.name} as a widget "</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>                                    f"control of {widget.id} with "</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>                                    f"{group} to the {content!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>                                )</span><br />
       <span style="white-space: pre;"><a id="L88"></a></span><br />
-      <span style="white-space: pre;"><a id="L89"></a>    @classmethod</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>    def _register_method(cls, widget, window, method_name, force=True, group=None):</span><br />
-      <span style="white-space: pre;"><a id="L91"></a>        """Try to register a control method."""</span><br />
-      <span style="white-space: pre;"><a id="L92"></a>        group = group or {}</span><br />
-      <span style="white-space: pre;"><a id="L93"></a>        method = getattr(window, method_name, None)</span><br />
-      <span style="white-space: pre;"><a id="L94"></a>        if method:</span><br />
-      <span style="white-space: pre;"><a id="L95"></a>            former, control = window.control_methods.get(method_name, (None, None))</span><br />
-      <span style="white-space: pre;"><a id="L96"></a>            if former and force:</span><br />
-      <span style="white-space: pre;"><a id="L97"></a>                raise ValueError(</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>                        f"attempting to connect control {widget}"</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>                        f"[{cls.name}] but fails because {former}[{control}] "</span><br />
-      <span style="white-space: pre;"><a id="L100"></a>                        f"is using the same method ({method_name}).  Please "</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>                        f"clarify their respective IDs and use explicit "</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>                        f"names to avoid this conflit.")</span><br />
-      <span style="white-space: pre;"><a id="L103"></a></span><br />
-      <span style="white-space: pre;"><a id="L104"></a>            widget.controls[cls.name].append((group, method))</span><br />
-      <span style="white-space: pre;"><a id="L105"></a>            window.control_methods[method_name] = (widget, cls.name)</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>            return True</span><br />
-      <span style="white-space: pre;"><a id="L107"></a></span><br />
-      <span style="white-space: pre;"><a id="L108"></a>        return False</span><br />
-      <span style="white-space: pre;"><a id="L109"></a></span><br />
-      <span style="white-space: pre;"><a id="L110"></a>    def process(self, options=None):</span><br />
-      <span style="white-space: pre;"><a id="L111"></a>        """Process the control, calls a generic `on_` method if found."""</span><br />
-      <span style="white-space: pre;"><a id="L112"></a>        # Call on_{control} on the widget</span><br />
-      <span style="white-space: pre;"><a id="L113"></a>        method = getattr(self.widget, f"handle_{self.name}", None)</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>        if method:</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>            method(self)</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>            return</span><br />
+      <span style="white-space: pre;"><a id="L90"></a></span><br />
+      <span style="white-space: pre;"><a id="L91"></a>        bound = False</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>        if widget.implicit_control == cls.name:</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>            # This is an implicit control, don't force-add any method</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>            if cls.window_control and widget is window:</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>                method_name = f"on_{cls.name}"</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>            elif cls.widget_control:</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>                method_name = f"on_{widget.id}"</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>                method_name = None</span><br />
+      <span style="white-space: pre;"><a id="L100"></a></span><br />
+      <span style="white-space: pre;"><a id="L101"></a>            if method_name:</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>                bound = cls._register_method(widget, window, method_name,</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>                        force=False)</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>                if bound and window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>                    if cls.window_control and widget is window:</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>                        print(</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>                            f"    Bound {cls.name} as an implicit window "</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>                            f"control to the {method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>                        )</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>                    else:</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>                        print(</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>                            f"    Bound {cls.name} as an implicit widget "</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>                            f"control of {widget.id} to the "</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>                            f"{method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>                        )</span><br />
       <span style="white-space: pre;"><a id="L116"></a></span><br />
-      <span style="white-space: pre;"><a id="L117"></a>        # Call the `on_...` method on the window</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>        options = options or {}</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>        methods = self.widget.controls.get(self.name, [])</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>        for group, method in methods:</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>            to_test = {}</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>            for key, value in options.items():</span><br />
-      <span style="white-space: pre;"><a id="L123"></a>                if key in group.keys():</span><br />
-      <span style="white-space: pre;"><a id="L124"></a>                    to_test[key] = value</span><br />
-      <span style="white-space: pre;"><a id="L125"></a></span><br />
-      <span style="white-space: pre;"><a id="L126"></a>            if group and group == to_test:</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>                return self._call_method(method)</span><br />
-      <span style="white-space: pre;"><a id="L128"></a></span><br />
-      <span style="white-space: pre;"><a id="L129"></a>        # At this point we consider no match was found in the options,</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>        # so we call the parent control if appropriate.</span><br />
-      <span style="white-space: pre;"><a id="L131"></a>        options = {}</span><br />
-      <span style="white-space: pre;"><a id="L132"></a>        methods = self.widget.controls.get(self.name, [])</span><br />
-      <span style="white-space: pre;"><a id="L133"></a>        for group, method in methods:</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>            if group == options:</span><br />
-      <span style="white-space: pre;"><a id="L135"></a>                return self._call_method(method)</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>        if not bound:</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>            if cls.window_control and widget == window:</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>                method_name = f"on_{cls.name}"</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>                if cls._register_method(widget, window, method_name):</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>                    if window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>                        print(</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>                            f"    Bound {cls.name} as a window control "</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>                            f"to the {method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>                        )</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>                    return</span><br />
+      <span style="white-space: pre;"><a id="L127"></a></span><br />
+      <span style="white-space: pre;"><a id="L128"></a>            if cls.widget_control and hasattr(widget, "id"):</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>                method_name = f"on_{cls.name}_{widget.id}"</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>                if cls._register_method(widget, window, method_name):</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>                    if window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>                        print(</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>                            f"    Bound {cls.name} as a widget control of "</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>                            f"{widget.id} to the {method_name!r} method"</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>                        )</span><br />
       <span style="white-space: pre;"><a id="L136"></a></span><br />
-      <span style="white-space: pre;"><a id="L137"></a>    def _call_method(self, method):</span><br />
-      <span style="white-space: pre;"><a id="L138"></a>        """Call a control method with optional arguments."""</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>        signature = inspect.signature(method)</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>        parameters = tuple(signature.parameters.keys())</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>        kwargs = {}</span><br />
-      <span style="white-space: pre;"><a id="L142"></a>        for key in self.options:</span><br />
-      <span style="white-space: pre;"><a id="L143"></a>            if key in parameters:</span><br />
-      <span style="white-space: pre;"><a id="L144"></a>                kwargs[key] = getattr(self, key)</span><br />
-      <span style="white-space: pre;"><a id="L145"></a></span><br />
-      <span style="white-space: pre;"><a id="L146"></a>        if "control" in parameters:</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>            kwargs["control"] = self</span><br />
-      <span style="white-space: pre;"><a id="L148"></a></span><br />
-      <span style="white-space: pre;"><a id="L149"></a>        if "widget" in parameters:</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>            kwargs["widget"] = self.widget</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>    @classmethod</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>    def _register_method(cls, widget, window, method_name, force=True, group=None):</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        """Try to register a control method."""</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>        group = group or {}</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>        method = getattr(window, method_name, None)</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>        if method:</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>            former, control = window.control_methods.get(method_name, (None, None))</span><br />
+      <span style="white-space: pre;"><a id="L144"></a>            if former and force:</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>                raise ValueError(</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>                        f"attempting to connect control {widget}"</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>                        f"[{cls.name}] but fails because {former}[{control}] "</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>                        f"is using the same method ({method_name}).  Please "</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>                        f"clarify their respective IDs and use explicit "</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>                        f"names to avoid this conflit.")</span><br />
       <span style="white-space: pre;"><a id="L151"></a></span><br />
-      <span style="white-space: pre;"><a id="L152"></a>        result = method(**kwargs)</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>        if asyncio.iscoroutine(result):</span><br />
-      <span style="white-space: pre;"><a id="L154"></a>            self.widget.schedule(result)</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>            widget.controls[cls.name].append((group, method))</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>            window.control_methods[method_name] = (widget, cls.name)</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>            return True</span><br />
       <span style="white-space: pre;"><a id="L155"></a></span><br />
-      <span style="white-space: pre;"><a id="L156"></a>        return result</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>        return False</span><br />
+      <span style="white-space: pre;"><a id="L157"></a></span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    def process(self, options=None):</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>        """Process the control, calls a generic `on_` method if found."""</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>        # Call on_{control} on the widget</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>        print(f"  Fire {self.name} control with options={options}")</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>        method = getattr(self.widget, f"handle_{self.name}", None)</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>        if method:</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>            method(self)</span><br />
+      <span style="white-space: pre;"><a id="L165"></a></span><br />
+      <span style="white-space: pre;"><a id="L166"></a>        # Call the `on_...` method on the window</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>        options = options or {}</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>        methods = self.widget.controls.get(self.name, [])</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>        for group, method in methods:</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>            to_test = {}</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>            for key, value in options.items():</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>                if key in group.keys():</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>                    to_test[key] = value</span><br />
+      <span style="white-space: pre;"><a id="L174"></a></span><br />
+      <span style="white-space: pre;"><a id="L175"></a>            if group and group == to_test:</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>                if method.__self__._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>                    print(</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>                        f"    Match sub-control to "</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>                        f"{method.__name__}, call it"</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>                    )</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>                return self._call_method(method)</span><br />
+      <span style="white-space: pre;"><a id="L182"></a></span><br />
+      <span style="white-space: pre;"><a id="L183"></a>        # At this point we consider no match was found in the options,</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        # so we call the parent control if appropriate.</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>        options = {}</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>        methods = self.widget.controls.get(self.name, [])</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>        for group, method in methods:</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>            if group == options:</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>                if method.__self__._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>                    print(</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>                        f"    Match parent control to "</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>                        f"{method.__name__}, call it"</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>                    )</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>                return self._call_method(method)</span><br />
+      <span style="white-space: pre;"><a id="L195"></a></span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    def _call_method(self, method):</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>        """Call a control method with optional arguments."""</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>        signature = inspect.signature(method)</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>        parameters = tuple(signature.parameters.keys())</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>        kwargs = {}</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        for key in self.options:</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>            if key in parameters:</span><br />
+      <span style="white-space: pre;"><a id="L203"></a>                kwargs[key] = getattr(self, key)</span><br />
+      <span style="white-space: pre;"><a id="L204"></a></span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        if "control" in parameters:</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>            kwargs["control"] = self</span><br />
+      <span style="white-space: pre;"><a id="L207"></a></span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        if "widget" in parameters:</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>            kwargs["widget"] = self.widget</span><br />
+      <span style="white-space: pre;"><a id="L210"></a></span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        result = method(**kwargs)</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        if asyncio.iscoroutine(result):</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>            self.widget.schedule(result)</span><br />
+      <span style="white-space: pre;"><a id="L214"></a></span><br />
+      <span style="white-space: pre;"><a id="L215"></a>        return result</span><br />
     </div>
   </body>
 </html>

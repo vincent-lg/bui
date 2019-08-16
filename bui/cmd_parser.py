@@ -14,20 +14,39 @@ import code
 import queue
 import threading
 
-def parse_args(window, loop):
+def init_args(Window):
     """
-    Parse command-line arguments.
+    Initialize the command parser, parse and return.
 
-    Args:
-        window (Window): the BUI window.
-        loop (asyncio Loop): the event loop.
+    This function can also be used to run operations before the window
+    is actually created.
 
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--interactive", action="store_true",
             help="Start an interactive Python interpreeter in the console, "
             "won't block the BUI window.")
+    parser.add_argument("-c", "--debug-controls",
+            help="Show subscribed control methods and fired controls",
+            action="store_true")
 
+    args = parser.parse_args()
+    if args.debug_controls:
+        print("Running in 'debug controls' mode.")
+        Window._debug_controls = True
+
+    return args
+
+def before_displaying(args, window, loop):
+    """
+    Called before displaying the window.
+
+    Args:
+        args (namespace): argument parser arguments.
+        window (Window): the BUI window.
+        loop (asyncio Loop): the event loop.
+
+    """
     inputs = asyncio.Queue()
     prompts = queue.Queue()
 
@@ -56,7 +75,6 @@ def parse_args(window, loop):
 
             prompts.put(prompt)
 
-    args = parser.parse_args()
     if args.interactive:
         print("Interactive...")
         threading.Thread(target=threaded).start()

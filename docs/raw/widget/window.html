@@ -128,205 +128,211 @@
       <span style="white-space: pre;"><a id="L106"></a>        "right_click": "The user right clicks in the window",</span><br />
       <span style="white-space: pre;"><a id="L107"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L108"></a></span><br />
-      <span style="white-space: pre;"><a id="L109"></a>    # Can be overrideen by subclasses</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>    layout = ""</span><br />
-      <span style="white-space: pre;"><a id="L111"></a>    bui = ""</span><br />
-      <span style="white-space: pre;"><a id="L112"></a></span><br />
-      <span style="white-space: pre;"><a id="L113"></a>    # Class attributes, to be overridden by instance attributes</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>    parsed_layout = None</span><br />
-      <span style="white-space: pre;"><a id="L115"></a></span><br />
-      <span style="white-space: pre;"><a id="L116"></a>    def __init__(self, leaf):</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>        super().__init__(leaf)</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>        self.control_methods = {}</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>        self.title = leaf.title</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>        self.width = leaf.width</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>        self.height = leaf.height</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>        self._ids = {}</span><br />
-      <span style="white-space: pre;"><a id="L123"></a></span><br />
-      <span style="white-space: pre;"><a id="L124"></a>    def __getitem__(self, item):</span><br />
-      <span style="white-space: pre;"><a id="L125"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>            return self._ids[item]</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>        except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>            raise KeyError(f"{item!r} isn't a known or valid "</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>                    "widget identifier") from None</span><br />
-      <span style="white-space: pre;"><a id="L130"></a></span><br />
-      <span style="white-space: pre;"><a id="L131"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L132"></a>    def usable_surface(self):</span><br />
-      <span style="white-space: pre;"><a id="L133"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>        Return the screen size that can be used, in pixels.</span><br />
-      <span style="white-space: pre;"><a id="L135"></a></span><br />
-      <span style="white-space: pre;"><a id="L136"></a>        This size is returned in a tuple: (width, height), so that</span><br />
-      <span style="white-space: pre;"><a id="L137"></a>        (x, y) follow the exact same pattern.  Both components are integers.</span><br />
-      <span style="white-space: pre;"><a id="L138"></a></span><br />
-      <span style="white-space: pre;"><a id="L139"></a>        Note that this is the screen surface being "free", that is,</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>        not counting the taskbar on some operating systems, since</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>        we cannot draw on that.  Therefore, the usable surface tends</span><br />
-      <span style="white-space: pre;"><a id="L142"></a>        to be somewhat narrower than the screen resolution.</span><br />
-      <span style="white-space: pre;"><a id="L143"></a></span><br />
-      <span style="white-space: pre;"><a id="L144"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L145"></a>        return self.specific.usable_surface</span><br />
-      <span style="white-space: pre;"><a id="L146"></a></span><br />
-      <span style="white-space: pre;"><a id="L147"></a>    @classmethod</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>    def parse_layout(cls, Window, tag_name="window"):</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>        Determine where the layout is and try to parse it, return a window.</span><br />
-      <span style="white-space: pre;"><a id="L151"></a></span><br />
-      <span style="white-space: pre;"><a id="L152"></a>        Raises:</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>            ValueError: the layout couldn't be parsed.</span><br />
-      <span style="white-space: pre;"><a id="L154"></a></span><br />
-      <span style="white-space: pre;"><a id="L155"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L156"></a>        if cls.layout:</span><br />
-      <span style="white-space: pre;"><a id="L157"></a>            layout = cls.layout</span><br />
-      <span style="white-space: pre;"><a id="L158"></a></span><br />
-      <span style="white-space: pre;"><a id="L159"></a>            # Try to find the first line and the proper file,</span><br />
-      <span style="white-space: pre;"><a id="L160"></a>            # since the layout is defined in code</span><br />
-      <span style="white-space: pre;"><a id="L161"></a>            qualname = cls.__qualname__</span><br />
-      <span style="white-space: pre;"><a id="L162"></a>            file, line = MetaWindow._marks.get(qualname, ("__unknown__", 0))</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>            parser = BUILayoutParser(file, line)</span><br />
-      <span style="white-space: pre;"><a id="L164"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L165"></a>            bui = cls.bui</span><br />
-      <span style="white-space: pre;"><a id="L166"></a>            if not bui:</span><br />
-      <span style="white-space: pre;"><a id="L167"></a>                filename = Path(__name__)</span><br />
-      <span style="white-space: pre;"><a id="L168"></a>                bui = f"{filename.stem}.bui"</span><br />
-      <span style="white-space: pre;"><a id="L169"></a></span><br />
-      <span style="white-space: pre;"><a id="L170"></a>            with open(bui, 'r', encoding="utf-8") as file:</span><br />
-      <span style="white-space: pre;"><a id="L171"></a>                layout = file.read()</span><br />
-      <span style="white-space: pre;"><a id="L172"></a></span><br />
-      <span style="white-space: pre;"><a id="L173"></a>            parser = BUILayoutParser(bui)</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    _debug_controls = False</span><br />
+      <span style="white-space: pre;"><a id="L110"></a></span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    # Can be overrideen by subclasses</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    layout = ""</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    bui = ""</span><br />
+      <span style="white-space: pre;"><a id="L114"></a></span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    # Class attributes, to be overridden by instance attributes</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>    parsed_layout = None</span><br />
+      <span style="white-space: pre;"><a id="L117"></a></span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>        self.control_methods = {}</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>        self.title = leaf.title</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>        self.width = leaf.width</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>        self.height = leaf.height</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>        self._ids = {}</span><br />
+      <span style="white-space: pre;"><a id="L125"></a></span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    def __getitem__(self, item):</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>            return self._ids[item]</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>        except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            raise KeyError(f"{item!r} isn't a known or valid "</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>                    "widget identifier") from None</span><br />
+      <span style="white-space: pre;"><a id="L132"></a></span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>    def usable_surface(self):</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>        Return the screen size that can be used, in pixels.</span><br />
+      <span style="white-space: pre;"><a id="L137"></a></span><br />
+      <span style="white-space: pre;"><a id="L138"></a>        This size is returned in a tuple: (width, height), so that</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        (x, y) follow the exact same pattern.  Both components are integers.</span><br />
+      <span style="white-space: pre;"><a id="L140"></a></span><br />
+      <span style="white-space: pre;"><a id="L141"></a>        Note that this is the screen surface being "free", that is,</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>        not counting the taskbar on some operating systems, since</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>        we cannot draw on that.  Therefore, the usable surface tends</span><br />
+      <span style="white-space: pre;"><a id="L144"></a>        to be somewhat narrower than the screen resolution.</span><br />
+      <span style="white-space: pre;"><a id="L145"></a></span><br />
+      <span style="white-space: pre;"><a id="L146"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>        return self.specific.usable_surface</span><br />
+      <span style="white-space: pre;"><a id="L148"></a></span><br />
+      <span style="white-space: pre;"><a id="L149"></a>    @classmethod</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    def parse_layout(cls, Window, tag_name="window"):</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        Determine where the layout is and try to parse it, return a window.</span><br />
+      <span style="white-space: pre;"><a id="L153"></a></span><br />
+      <span style="white-space: pre;"><a id="L154"></a>        Raises:</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>            ValueError: the layout couldn't be parsed.</span><br />
+      <span style="white-space: pre;"><a id="L156"></a></span><br />
+      <span style="white-space: pre;"><a id="L157"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>        if cls.layout:</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>            layout = cls.layout</span><br />
+      <span style="white-space: pre;"><a id="L160"></a></span><br />
+      <span style="white-space: pre;"><a id="L161"></a>            # Try to find the first line and the proper file,</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>            # since the layout is defined in code</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>            qualname = cls.__qualname__</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>            file, line = MetaWindow._marks.get(qualname, ("__unknown__", 0))</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>            parser = BUILayoutParser(file, line)</span><br />
+      <span style="white-space: pre;"><a id="L166"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>            bui = cls.bui</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>            if not bui:</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>                filename = Path(__name__)</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>                bui = f"{filename.stem}.bui"</span><br />
+      <span style="white-space: pre;"><a id="L171"></a></span><br />
+      <span style="white-space: pre;"><a id="L172"></a>            with open(bui, 'r', encoding="utf-8") as file:</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>                layout = file.read()</span><br />
       <span style="white-space: pre;"><a id="L174"></a></span><br />
-      <span style="white-space: pre;"><a id="L175"></a>        parser.feed(layout)</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>        parsed_layout = parser.layout</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>        window_leaf = parsed_layout.get(tag_name)</span><br />
-      <span style="white-space: pre;"><a id="L178"></a>        if window_leaf is None:</span><br />
-      <span style="white-space: pre;"><a id="L179"></a>            raise ValueError("the specified layout doesn't contain a &lt;window&gt; description")</span><br />
-      <span style="white-space: pre;"><a id="L180"></a></span><br />
-      <span style="white-space: pre;"><a id="L181"></a>        # Creates all the leafs</span><br />
-      <span style="white-space: pre;"><a id="L182"></a>        from bui.widget import WIDGETS</span><br />
-      <span style="white-space: pre;"><a id="L183"></a>        widgets = []</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>        ids = {}</span><br />
-      <span style="white-space: pre;"><a id="L185"></a>        for leaf in parsed_layout.flat:</span><br />
-      <span style="white-space: pre;"><a id="L186"></a>            leaf.complete()</span><br />
-      <span style="white-space: pre;"><a id="L187"></a>            if not leaf.has_widget:</span><br />
-      <span style="white-space: pre;"><a id="L188"></a>                continue</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>            elif leaf is window_leaf:</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>                Generic = Window</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>                Generic = WIDGETS[leaf.tag_name]</span><br />
-      <span style="white-space: pre;"><a id="L193"></a></span><br />
-      <span style="white-space: pre;"><a id="L194"></a>            widget = Generic(leaf)</span><br />
-      <span style="white-space: pre;"><a id="L195"></a>            leaf.widget = widget</span><br />
-      <span style="white-space: pre;"><a id="L196"></a>            widget.create_specific()</span><br />
-      <span style="white-space: pre;"><a id="L197"></a>            widgets.append(widget)</span><br />
-      <span style="white-space: pre;"><a id="L198"></a>            if leaf is window_leaf:</span><br />
-      <span style="white-space: pre;"><a id="L199"></a>                window = widget</span><br />
-      <span style="white-space: pre;"><a id="L200"></a></span><br />
-      <span style="white-space: pre;"><a id="L201"></a>            widget_id = getattr(widget, "id", None)</span><br />
-      <span style="white-space: pre;"><a id="L202"></a>            if widget_id:</span><br />
-      <span style="white-space: pre;"><a id="L203"></a>                ids[widget_id] = widget</span><br />
-      <span style="white-space: pre;"><a id="L204"></a></span><br />
-      <span style="white-space: pre;"><a id="L205"></a>        window._ids = ids</span><br />
-      <span style="white-space: pre;"><a id="L206"></a>        # Call the `_init` method on all generic widgets</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>        for widget in widgets:</span><br />
-      <span style="white-space: pre;"><a id="L208"></a>            widget._bind_controls(window)</span><br />
-      <span style="white-space: pre;"><a id="L209"></a>            widget._init()</span><br />
-      <span style="white-space: pre;"><a id="L210"></a></span><br />
-      <span style="white-space: pre;"><a id="L211"></a>        window.parsed_layout = parsed_layout</span><br />
-      <span style="white-space: pre;"><a id="L212"></a>        for widget in widgets:</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>            widget._process_control("init")</span><br />
-      <span style="white-space: pre;"><a id="L214"></a></span><br />
-      <span style="white-space: pre;"><a id="L215"></a>        return window</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>            parser = BUILayoutParser(bui)</span><br />
+      <span style="white-space: pre;"><a id="L176"></a></span><br />
+      <span style="white-space: pre;"><a id="L177"></a>        parser.feed(layout)</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>        parsed_layout = parser.layout</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>        window_leaf = parsed_layout.get(tag_name)</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>        if window_leaf is None:</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>            raise ValueError("the specified layout doesn't contain a &lt;window&gt; description")</span><br />
+      <span style="white-space: pre;"><a id="L182"></a></span><br />
+      <span style="white-space: pre;"><a id="L183"></a>        # Creates all the leafs</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        from bui.widget import WIDGETS</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>        widgets = []</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>        ids = {}</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>        for leaf in parsed_layout.flat:</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>            leaf.complete()</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>            if not leaf.has_widget:</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>                continue</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>            elif leaf is window_leaf:</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>                Generic = Window</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>                Generic = WIDGETS[leaf.tag_name]</span><br />
+      <span style="white-space: pre;"><a id="L195"></a></span><br />
+      <span style="white-space: pre;"><a id="L196"></a>            widget = Generic(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>            leaf.widget = widget</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>            widget.create_specific()</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>            widgets.append(widget)</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>            if leaf is window_leaf:</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>                window = widget</span><br />
+      <span style="white-space: pre;"><a id="L202"></a></span><br />
+      <span style="white-space: pre;"><a id="L203"></a>            widget_id = getattr(widget, "id", None)</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>            if widget_id:</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>                ids[widget_id] = widget</span><br />
+      <span style="white-space: pre;"><a id="L206"></a></span><br />
+      <span style="white-space: pre;"><a id="L207"></a>        window._ids = ids</span><br />
+      <span style="white-space: pre;"><a id="L208"></a></span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        # Call the `_init` method on all generic widgets</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>        if window._debug_controls:</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>            print("  Binding control methods...")</span><br />
+      <span style="white-space: pre;"><a id="L212"></a></span><br />
+      <span style="white-space: pre;"><a id="L213"></a>        for widget in widgets:</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>            widget._bind_controls(window)</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>            widget._init()</span><br />
       <span style="white-space: pre;"><a id="L216"></a></span><br />
-      <span style="white-space: pre;"><a id="L217"></a>    async def sleep(self, seconds):</span><br />
-      <span style="white-space: pre;"><a id="L218"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>        Asynchronous sleep during the specified number of seconds.</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>        window.parsed_layout = parsed_layout</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>        for widget in widgets:</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>            widget._process_control("init")</span><br />
       <span style="white-space: pre;"><a id="L220"></a></span><br />
-      <span style="white-space: pre;"><a id="L221"></a>        This method should ONLY be called in an asynchronous control method.</span><br />
-      <span style="white-space: pre;"><a id="L222"></a>        It is a shortcut to `asyncio.sleep`.</span><br />
-      <span style="white-space: pre;"><a id="L223"></a></span><br />
-      <span style="white-space: pre;"><a id="L224"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L225"></a>            seconds (int or float): the number of seconds to wait.</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        return window</span><br />
+      <span style="white-space: pre;"><a id="L222"></a></span><br />
+      <span style="white-space: pre;"><a id="L223"></a>    async def sleep(self, seconds):</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>        Asynchronous sleep during the specified number of seconds.</span><br />
       <span style="white-space: pre;"><a id="L226"></a></span><br />
-      <span style="white-space: pre;"><a id="L227"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L228"></a>        await asyncio.sleep(seconds)</span><br />
+      <span style="white-space: pre;"><a id="L227"></a>        This method should ONLY be called in an asynchronous control method.</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>        It is a shortcut to `asyncio.sleep`.</span><br />
       <span style="white-space: pre;"><a id="L229"></a></span><br />
-      <span style="white-space: pre;"><a id="L230"></a>    def _init(self):</span><br />
-      <span style="white-space: pre;"><a id="L231"></a>        """Private method to initialize the generic and specific window."""</span><br />
-      <span style="white-space: pre;"><a id="L232"></a>        self.specific._init()</span><br />
-      <span style="white-space: pre;"><a id="L233"></a></span><br />
-      <span style="white-space: pre;"><a id="L234"></a>    def _start(self, loop):</span><br />
-      <span style="white-space: pre;"><a id="L235"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L236"></a>        Start the window, watch events and allow async loop.</span><br />
-      <span style="white-space: pre;"><a id="L237"></a></span><br />
-      <span style="white-space: pre;"><a id="L238"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L239"></a>            loop (AsyncLoop): the asynchronous event loop (see asyncio).</span><br />
-      <span style="white-space: pre;"><a id="L240"></a></span><br />
+      <span style="white-space: pre;"><a id="L230"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>            seconds (int or float): the number of seconds to wait.</span><br />
+      <span style="white-space: pre;"><a id="L232"></a></span><br />
+      <span style="white-space: pre;"><a id="L233"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>        await asyncio.sleep(seconds)</span><br />
+      <span style="white-space: pre;"><a id="L235"></a></span><br />
+      <span style="white-space: pre;"><a id="L236"></a>    def _init(self):</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>        """Private method to initialize the generic and specific window."""</span><br />
+      <span style="white-space: pre;"><a id="L238"></a>        self.specific._init()</span><br />
+      <span style="white-space: pre;"><a id="L239"></a></span><br />
+      <span style="white-space: pre;"><a id="L240"></a>    def _start(self, loop):</span><br />
       <span style="white-space: pre;"><a id="L241"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L242"></a>        self.specific.show()</span><br />
-      <span style="white-space: pre;"><a id="L243"></a>        return self.specific._start(loop)</span><br />
-      <span style="white-space: pre;"><a id="L244"></a></span><br />
-      <span style="white-space: pre;"><a id="L245"></a>    def _stop(self):</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>        """Stop the window toolkit."""</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>        cancel_all()</span><br />
-      <span style="white-space: pre;"><a id="L248"></a>        self._process_control("close")</span><br />
-      <span style="white-space: pre;"><a id="L249"></a>        run_remaining()</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>        self.close()</span><br />
-      <span style="white-space: pre;"><a id="L251"></a></span><br />
-      <span style="white-space: pre;"><a id="L252"></a>    def close(self):</span><br />
-      <span style="white-space: pre;"><a id="L253"></a>        """Close this window."""</span><br />
-      <span style="white-space: pre;"><a id="L254"></a>        self.specific.close()</span><br />
-      <span style="white-space: pre;"><a id="L255"></a></span><br />
-      <span style="white-space: pre;"><a id="L256"></a>    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]</span><br />
-      <span style="white-space: pre;"><a id="L257"></a>            ) -&gt; 'wg.dialog.Dialog':</span><br />
-      <span style="white-space: pre;"><a id="L258"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L259"></a>        Pop up a dialog, blocks until the dialog has been closed.</span><br />
-      <span style="white-space: pre;"><a id="L260"></a></span><br />
-      <span style="white-space: pre;"><a id="L261"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>            dialog (str or Dialog): the dialog layout (as a str) or the</span><br />
-      <span style="white-space: pre;"><a id="L263"></a>                    Dialog class to instantiate from.</span><br />
-      <span style="white-space: pre;"><a id="L264"></a></span><br />
-      <span style="white-space: pre;"><a id="L265"></a>        Returns:</span><br />
-      <span style="white-space: pre;"><a id="L266"></a>            dialog (Dialog): the dialog object.</span><br />
-      <span style="white-space: pre;"><a id="L267"></a></span><br />
-      <span style="white-space: pre;"><a id="L268"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L269"></a>        from bui.widget.dialog import Dialog</span><br />
-      <span style="white-space: pre;"><a id="L270"></a>        if isinstance(dialog, str):</span><br />
-      <span style="white-space: pre;"><a id="L271"></a>            class NewDialog(Dialog):</span><br />
-      <span style="white-space: pre;"><a id="L272"></a>                layout = mark(dialog)</span><br />
-      <span style="white-space: pre;"><a id="L273"></a>            dialog = NewDialog</span><br />
-      <span style="white-space: pre;"><a id="L274"></a>        assert issubclass(dialog, wg.dialog.Dialog)</span><br />
-      <span style="white-space: pre;"><a id="L275"></a>        dialog.window = self</span><br />
-      <span style="white-space: pre;"><a id="L276"></a>        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")</span><br />
-      <span style="white-space: pre;"><a id="L277"></a>        self.specific.pop_dialog(dialog_obj.specific)</span><br />
-      <span style="white-space: pre;"><a id="L278"></a>        return dialog_obj</span><br />
-      <span style="white-space: pre;"><a id="L279"></a></span><br />
-      <span style="white-space: pre;"><a id="L280"></a>    def pop_menu(self, context_id: str):</span><br />
-      <span style="white-space: pre;"><a id="L281"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L282"></a>        Pop a context menu, blocks until the menu is closed.</span><br />
-      <span style="white-space: pre;"><a id="L283"></a></span><br />
-      <span style="white-space: pre;"><a id="L284"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L285"></a>            context_id (str): the registered ID of the context menu.</span><br />
-      <span style="white-space: pre;"><a id="L286"></a></span><br />
+      <span style="white-space: pre;"><a id="L242"></a>        Start the window, watch events and allow async loop.</span><br />
+      <span style="white-space: pre;"><a id="L243"></a></span><br />
+      <span style="white-space: pre;"><a id="L244"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L245"></a>            loop (AsyncLoop): the asynchronous event loop (see asyncio).</span><br />
+      <span style="white-space: pre;"><a id="L246"></a></span><br />
+      <span style="white-space: pre;"><a id="L247"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>        self.specific.show()</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>        return self.specific._start(loop)</span><br />
+      <span style="white-space: pre;"><a id="L250"></a></span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    def _stop(self):</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>        """Stop the window toolkit."""</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>        cancel_all()</span><br />
+      <span style="white-space: pre;"><a id="L254"></a>        self._process_control("close")</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>        run_remaining()</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>        self.close()</span><br />
+      <span style="white-space: pre;"><a id="L257"></a></span><br />
+      <span style="white-space: pre;"><a id="L258"></a>    def close(self):</span><br />
+      <span style="white-space: pre;"><a id="L259"></a>        """Close this window."""</span><br />
+      <span style="white-space: pre;"><a id="L260"></a>        self.specific.close()</span><br />
+      <span style="white-space: pre;"><a id="L261"></a></span><br />
+      <span style="white-space: pre;"><a id="L262"></a>    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]</span><br />
+      <span style="white-space: pre;"><a id="L263"></a>            ) -&gt; 'wg.dialog.Dialog':</span><br />
+      <span style="white-space: pre;"><a id="L264"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L265"></a>        Pop up a dialog, blocks until the dialog has been closed.</span><br />
+      <span style="white-space: pre;"><a id="L266"></a></span><br />
+      <span style="white-space: pre;"><a id="L267"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L268"></a>            dialog (str or Dialog): the dialog layout (as a str) or the</span><br />
+      <span style="white-space: pre;"><a id="L269"></a>                    Dialog class to instantiate from.</span><br />
+      <span style="white-space: pre;"><a id="L270"></a></span><br />
+      <span style="white-space: pre;"><a id="L271"></a>        Returns:</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>            dialog (Dialog): the dialog object.</span><br />
+      <span style="white-space: pre;"><a id="L273"></a></span><br />
+      <span style="white-space: pre;"><a id="L274"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>        from bui.widget.dialog import Dialog</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>        if isinstance(dialog, str):</span><br />
+      <span style="white-space: pre;"><a id="L277"></a>            class NewDialog(Dialog):</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>                layout = mark(dialog)</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>            dialog = NewDialog</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>        assert issubclass(dialog, wg.dialog.Dialog)</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>        dialog.window = self</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")</span><br />
+      <span style="white-space: pre;"><a id="L283"></a>        self.specific.pop_dialog(dialog_obj.specific)</span><br />
+      <span style="white-space: pre;"><a id="L284"></a>        return dialog_obj</span><br />
+      <span style="white-space: pre;"><a id="L285"></a></span><br />
+      <span style="white-space: pre;"><a id="L286"></a>    def pop_menu(self, context_id: str):</span><br />
       <span style="white-space: pre;"><a id="L287"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L288"></a>        context = self[context_id]</span><br />
-      <span style="white-space: pre;"><a id="L289"></a>        self.specific.pop_menu(context.specific)</span><br />
-      <span style="white-space: pre;"><a id="L290"></a></span><br />
-      <span style="white-space: pre;"><a id="L291"></a>    def open_window(self, window: "Window", child=False):</span><br />
-      <span style="white-space: pre;"><a id="L292"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L293"></a>        Open a new window.</span><br />
-      <span style="white-space: pre;"><a id="L294"></a></span><br />
-      <span style="white-space: pre;"><a id="L295"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L296"></a>            window (Window): the window class.</span><br />
-      <span style="white-space: pre;"><a id="L297"></a>            child (bool): if True, the new window will be a child of the</span><br />
-      <span style="white-space: pre;"><a id="L298"></a>                    current window (closing self will close the new window).</span><br />
-      <span style="white-space: pre;"><a id="L299"></a></span><br />
-      <span style="white-space: pre;"><a id="L300"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L301"></a>        window = window.parse_layout(window)</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>        self.specific.open_window(window.specific, child=child)</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>        return window</span><br />
-      <span style="white-space: pre;"><a id="L304"></a></span><br />
-      <span style="white-space: pre;"><a id="L305"></a>    def handle_close(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L306"></a>        """The window closes."""</span><br />
-      <span style="white-space: pre;"><a id="L307"></a>        pass</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>        Pop a context menu, blocks until the menu is closed.</span><br />
+      <span style="white-space: pre;"><a id="L289"></a></span><br />
+      <span style="white-space: pre;"><a id="L290"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L291"></a>            context_id (str): the registered ID of the context menu.</span><br />
+      <span style="white-space: pre;"><a id="L292"></a></span><br />
+      <span style="white-space: pre;"><a id="L293"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L294"></a>        context = self[context_id]</span><br />
+      <span style="white-space: pre;"><a id="L295"></a>        self.specific.pop_menu(context.specific)</span><br />
+      <span style="white-space: pre;"><a id="L296"></a></span><br />
+      <span style="white-space: pre;"><a id="L297"></a>    def open_window(self, window: "Window", child=False):</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L299"></a>        Open a new window.</span><br />
+      <span style="white-space: pre;"><a id="L300"></a></span><br />
+      <span style="white-space: pre;"><a id="L301"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L302"></a>            window (Window): the window class.</span><br />
+      <span style="white-space: pre;"><a id="L303"></a>            child (bool): if True, the new window will be a child of the</span><br />
+      <span style="white-space: pre;"><a id="L304"></a>                    current window (closing self will close the new window).</span><br />
+      <span style="white-space: pre;"><a id="L305"></a></span><br />
+      <span style="white-space: pre;"><a id="L306"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>        window = window.parse_layout(window)</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>        self.specific.open_window(window.specific, child=child)</span><br />
+      <span style="white-space: pre;"><a id="L309"></a>        return window</span><br />
+      <span style="white-space: pre;"><a id="L310"></a></span><br />
+      <span style="white-space: pre;"><a id="L311"></a>    def handle_close(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>        """The window closes."""</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>        pass</span><br />
     </div>
   </body>
 </html>

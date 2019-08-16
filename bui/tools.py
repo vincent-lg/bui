@@ -5,7 +5,7 @@ from contextlib import contextmanager
 from importlib import import_module
 import os
 
-from bui.cmd_parser import parse_args
+from bui.cmd_parser import init_args, before_displaying
 
 ## Constants
 FORBID_START = False
@@ -66,6 +66,7 @@ def load_GUI():
 
 def start(window):
     """Start a window."""
+    args = init_args(window)
     window = window.parse_layout(window)
 
     # Create an asyncio EventLoop and hand it to the generic (and
@@ -73,7 +74,7 @@ def start(window):
     # asynchronous events at the same time
     if not FORBID_START:
         loop = asyncio.get_event_loop()
-        parse_args(window, loop)
+        before_displaying(args, window, loop)
         loop.run_until_complete(window._start(loop))
         window._stop()
         window.close()

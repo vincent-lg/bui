@@ -106,6 +106,8 @@ class Window(Widget, metaclass=MetaWindow):
         "right_click": "The user right clicks in the window",
     }
 
+    _debug_controls = False
+
     # Can be overrideen by subclasses
     layout = ""
     bui = ""
@@ -203,7 +205,11 @@ class Window(Widget, metaclass=MetaWindow):
                 ids[widget_id] = widget
 
         window._ids = ids
+
         # Call the `_init` method on all generic widgets
+        if window._debug_controls:
+            print("  Binding control methods...")
+
         for widget in widgets:
             widget._bind_controls(window)
             widget._init()
