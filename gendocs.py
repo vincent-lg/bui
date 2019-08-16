@@ -1,5 +1,6 @@
 """Generate documentations, using code docstrings with slight formatting."""
 
+from cgi import escape
 from importlib import import_module
 from pathlib import Path
 from textwrap import dedent
@@ -65,6 +66,44 @@ def read_example(path: Path) -> str:
         doc += "```python\n" + add + "\n```\n"
         return doc
 
+def read_raw(path: Path) -> str:
+    """Read a raw file, return HTML-appropriate documentation."""
+    with path.open("r", encoding="utf-8") as file:
+        content = file.read()
+
+    parent = path.parent.name
+    name = "/".join(path.parts[-2:])
+    doc = dedent(fr"""
+        <!DOCTYPE html>
+        <html lang="en-US">
+          <head>
+           <meta charset="UTF-8">
+            <title>Blind User Interface - {name}</title>
+            <meta name="generator" content="Jekyll v3.8.5" />
+            <meta property="og:title" content="{name}" />
+            <meta property="og:locale" content="en_US" />
+            <meta name="description" content="{name}" />
+            <meta property="og:description" content="{name}" />
+            <link rel="canonical" href="https://vincent-lg.github.io/bui/{parent}/{path.stem}.html" />
+            <meta property="og:url" content="https://vincent-lg.github.io/bui/{parent}/{path.stem}.html" />
+            <meta property="og:site_name" content="bui" />
+            <script type="application/ld+json">
+            {{"@type":"WebSite","headline":"Blind User Interface - {name}","url":"https://vincent-lg.github.io/bui/{parent}/{path.stem}.html","name":"{name}","description":"{name}","@context":"http://schema.org"}}</script>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="theme-color" content="#157878">
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+            <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+          </head>
+          <body>
+            <div>
+    """).strip()
+    for i, line in enumerate(content.splitlines()):
+        line = escape(line)
+        doc += (f"\n      <span style=\"white-space: pre;\">"
+                f"<a id=\"L{i + 1}\"></a>{line}</span><br />")
+    doc += "\n    </div>\n  </body>\n</html>"
+    return doc
+
 # Browse different packages
 doc_dir = Path("docs")
 for name, Control in CONTROLS.items():
@@ -95,3 +134,37 @@ for path in ex_dir.glob("*.py"):
     with ex_path.open("wb") as md_file:
         md_file.write(doc.encode("utf-8"))
     print(f"Write in {ex_path}.")
+
+# Write the raw files
+control_dir = Path() / "bui/control"
+for path in control_dir.glob("*.py"):
+    if path.stem.startswith("__"):
+        continue
+
+    doc = read_raw(path)
+    raw_path = doc_dir / "raw" / "control" / (path.stem + ".html")
+    with raw_path.open("wb") as html_file:
+        html_file.write(doc.encode("utf-8"))
+    print(f"Write in {raw_path}.")
+
+layout_dir = Path() / "bui/layout"
+for path in layout_dir.glob("*.py"):
+    if path.stem.startswith("__"):
+        continue
+
+    doc = read_raw(path)
+    raw_path = doc_dir / "raw" / "layout" / (path.stem + ".html")
+    with raw_path.open("wb") as html_file:
+        html_file.write(doc.encode("utf-8"))
+    print(f"Write in {raw_path}.")
+
+widget_dir = Path() / "bui/widget"
+for path in widget_dir.glob("*.py"):
+    if path.stem.startswith("__"):
+        continue
+
+    doc = read_raw(path)
+    raw_path = doc_dir / "raw" / "widget" / (path.stem + ".html")
+    with raw_path.open("wb") as html_file:
+        html_file.write(doc.encode("utf-8"))
+    print(f"Write in {raw_path}.")

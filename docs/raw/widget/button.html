@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - widget/button.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="widget/button.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="widget/button.py" />
+    <meta property="og:description" content="widget/button.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/widget/button.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/widget/button.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - widget/button.py","url":"https://vincent-lg.github.io/bui/widget/button.html","name":"widget/button.py","description":"widget/button.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic Button class, a generic button widget."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.widget.base import Widget, CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>class Button(Widget):</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    The generic button widget.</span><br />
+      <span style="white-space: pre;"><a id="L9"></a></span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    A button is meant to be contained inside a</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    [window](../layout/tag/window.md) tag.  It can have a label and can</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    be linked with specific control methods.</span><br />
+      <span style="white-space: pre;"><a id="L13"></a></span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    depending on the used GUI toolkit.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    widget = "button"</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    class_name = "Button"</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    default_controls = {</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>        "click": "This button is being clicked on or activated from the keyboard",</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>        "press": "The user presses on a key while the button is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    implicit_control = "click"</span><br />
+      <span style="white-space: pre;"><a id="L26"></a></span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        self.x = leaf.x</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>        self.y = leaf.y</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>        self.width = leaf.width</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>        self.height = leaf.height</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>        self.id = leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>        self.name = leaf.name</span><br />
+      <span style="white-space: pre;"><a id="L35"></a></span><br />
+      <span style="white-space: pre;"><a id="L36"></a>        # Dialog-specific attributes</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>        self.set_true = leaf.set_true</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>        self.set_false = leaf.set_false</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>        self.set = leaf.set</span><br />
+      <span style="white-space: pre;"><a id="L40"></a></span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    def name(self):</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        return self.specific.name</span><br />
+      <span style="white-space: pre;"><a id="L44"></a></span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    @name.setter</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    def name(self, name):</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>        self.specific.name = name</span><br />
+      <span style="white-space: pre;"><a id="L48"></a></span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    def id(self):</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>        return self.leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L52"></a></span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    def handle_click(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>        """Do nothing if a button is clicked."""</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        if self.parent.widget == "dialog":</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>            if self.set_true or self.set_false or self.set:</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>                if self.set:</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>                    self.parent.set = self.set</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                elif self.set_true:</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>                    self.parent.set = True</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>                elif self.set_true:</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>                    self.parent.set = False</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>                self.parent.close()</span><br />
+      <span style="white-space: pre;"><a id="L64"></a></span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    def handle_press(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>        """Do nothing if a button is pressed."""</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        pass</span><br />
+    </div>
+  </body>
+</html>

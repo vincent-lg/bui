@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - widget/checkbox.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="widget/checkbox.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="widget/checkbox.py" />
+    <meta property="og:description" content="widget/checkbox.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/widget/checkbox.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/widget/checkbox.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - widget/checkbox.py","url":"https://vincent-lg.github.io/bui/widget/checkbox.html","name":"widget/checkbox.py","description":"widget/checkbox.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic Checkbox class, a generic checkbox widget."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.widget.base import Widget, CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>class Checkbox(Widget):</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    The generic checkbox widget.</span><br />
+      <span style="white-space: pre;"><a id="L9"></a></span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    A checkbox is meant to be contained inside a</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    [window](../layout/tag/window.md) tag.  It can have a label and can</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    be checked or not checked.</span><br />
+      <span style="white-space: pre;"><a id="L13"></a></span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    depending on the used GUI toolkit.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    widget = "checkbox"</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    class_name = "Checkbox"</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    default_controls = {</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>        "check": "This checkbox is being checked or unchecked.",</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>        "init": "This checkbox is ready to be displayed.",</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>        "press": "The user presses on a key while the checkbox is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    implicit_control = "click"</span><br />
+      <span style="white-space: pre;"><a id="L27"></a></span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>        self.x = leaf.x</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>        self.y = leaf.y</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>        self.width = leaf.width</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>        self.height = leaf.height</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>        self.id = leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>        self.name = leaf.name</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>        self.checked = leaf.checked</span><br />
+      <span style="white-space: pre;"><a id="L37"></a></span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    def __bool__(self):</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>        return self.checked</span><br />
+      <span style="white-space: pre;"><a id="L40"></a></span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    def id(self):</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        return self.leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L44"></a></span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    def name(self):</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>        return self.specific.name</span><br />
+      <span style="white-space: pre;"><a id="L48"></a></span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    @name.setter</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    def name(self, name):</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>        self.specific.name = name</span><br />
+      <span style="white-space: pre;"><a id="L52"></a></span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    def checked(self):</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        return self.specific.checked</span><br />
+      <span style="white-space: pre;"><a id="L56"></a></span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    @checked.setter</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    def checked(self, checked):</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>        self.specific.checked = checked</span><br />
+      <span style="white-space: pre;"><a id="L60"></a></span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    def enabled(self):</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>        """Return whether the checkbox is enabled or not."""</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        return self.specific.enabled</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    def disabled(self):</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>        """Return whether the checkbox is disabled or not."""</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>        return self.specific.disabled</span><br />
+      <span style="white-space: pre;"><a id="L70"></a></span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    def check(self):</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>        """Force check this checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>        self.checked = True</span><br />
+      <span style="white-space: pre;"><a id="L74"></a></span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    def uncheck(self):</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        """Force uncheck this checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        self.checked = False</span><br />
+      <span style="white-space: pre;"><a id="L78"></a></span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    def enable(self):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        """Force-enable the checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        self.specific.enable()</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    def disable(self):</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>        """Disable the checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        self.specific.disable()</span><br />
+      <span style="white-space: pre;"><a id="L86"></a></span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    def handle_check(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>        """Do nothing if a checkbox is clicked."""</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>        pass</span><br />
+      <span style="white-space: pre;"><a id="L90"></a></span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    def handle_init(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>        """Do nothing if a checkbox is pressed."""</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>        pass</span><br />
+      <span style="white-space: pre;"><a id="L94"></a></span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    def handle_press(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>        """Do nothing if a checkbox is pressed."""</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>        pass</span><br />
+    </div>
+  </body>
+</html>

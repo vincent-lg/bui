@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - widget/menubar.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="widget/menubar.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="widget/menubar.py" />
+    <meta property="og:description" content="widget/menubar.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/widget/menubar.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/widget/menubar.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - widget/menubar.py","url":"https://vincent-lg.github.io/bui/widget/menubar.html","name":"widget/menubar.py","description":"widget/menubar.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic MenuBar class, a generic menubar widget."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.widget.base import Widget</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>class Menubar(Widget):</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    The generic menubar widget.</span><br />
+      <span style="white-space: pre;"><a id="L9"></a></span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    A menubar is a top-level widget, meaning it is not defined inside a</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    `&lt;window&gt;` or `&lt;dialog&gt;` tag, but is a root element on the layout</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    description.  It usually contains `&lt;menu&gt;` which can contain other</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    `&lt;menu&gt;` or `&lt;item&gt;` widgets.  See more information on the</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    [menubar](/layout/tag/menubar.md) tag.</span><br />
+      <span style="white-space: pre;"><a id="L15"></a></span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    depending on the used GUI toolkit.</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L20"></a></span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    widget = "menubar"</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    class_name = "Menubar"</span><br />
+    </div>
+  </body>
+</html>

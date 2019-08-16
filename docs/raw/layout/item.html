@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/item.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/item.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/item.py" />
+    <meta property="og:description" content="layout/item.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/item.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/item.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/item.py","url":"https://vincent-lg.github.io/bui/layout/item.html","name":"layout/item.py","description":"layout/item.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Item object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class Item(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Create a menu item inside a menu, toolbar or context menu.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A menu item is a clickable element in a menu.  It is used for</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    a choice the user can select.  Inside of a</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    [menu bar](menubar.md), selecting a menu item will fire</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    a control and close the menu bar.  You can also use</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    menu items inside of [toolbars[(toolbar.md) and</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    [context menus](context.md).</span><br />
+      <span style="white-space: pre;"><a id="L17"></a></span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L19"></a></span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    A menu item is supposed to be the "last choice" in a menu:</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    clicking on it doesn't open another menu (use the</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    [menu tag](menu.md) to create sub-menus).  You need</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    to specify the item name in the tag's data:</span><br />
+      <span style="white-space: pre;"><a id="L24"></a></span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    &lt;menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>      &lt;menu name=File&gt;</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        &lt;item&gt;Quit&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>      &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    &lt;/menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L32"></a></span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    In this example, if the user opens the menu bar, clicks</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    on "File", the "Quit" menu item will be displayed.</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    Clicking on it fires a [control](#controls) and close</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    the menu bar.</span><br />
+      <span style="white-space: pre;"><a id="L37"></a></span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    See [toolbar](toolbar.md) and [context](context.md)</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    for examples on how to use menu items in these widgets.</span><br />
+      <span style="white-space: pre;"><a id="L40"></a></span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L42"></a></span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    | `id`         | No       | The menu item identifier | `&lt;item      |</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    |              |          | (ID). If not set, use    | id=quit&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    |              |          | the item name set in     |             |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    |              |          | data.                    |             |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a></span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    This tag has no required attribute, although its data must contain</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    the text to be displayed.  It is also recommended to set an `id`</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    even though the shortened name (only lowercase letters will be used,</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    spaces turned into the underscore) will be given if the `id`</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    attribute is not set.</span><br />
+      <span style="white-space: pre;"><a id="L55"></a></span><br />
+      <span style="white-space: pre;"><a id="L56"></a>        &lt;item&gt;Quit the app&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L57"></a></span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    (This will set a menu item with `id` of "quit_the_app".)</span><br />
+      <span style="white-space: pre;"><a id="L59"></a></span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    &gt; The data is a translatable field.  If internationalization is</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>      set, it should contain the `ytranslate` path to the name and will</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>      be translated in the proper language as needed. Note that in this case,</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>      you absolutely need to set a proper ID, otherwise control methods</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>      won't be easy to bind to the menu item.</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    ### Note about identifiers</span><br />
+      <span style="white-space: pre;"><a id="L67"></a></span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    It is not uncommon to have an application with several buttons,</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    menu items, items inside toolbars or context menus, doing</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    the same thing.  You might consider the</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    [download example](../../example/download.md) that</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    shows and solves this issue: a button is present at the bottom</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    of the window to add a new file to the download list.  Clicking</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    it opens a dialog to enter the file name and URL.  But you can</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    also open the File menu in the menu bar and select the Add...</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    button.  Both do the same thing.  What then?  Do they share</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    the same identifier?</span><br />
+      <span style="white-space: pre;"><a id="L78"></a></span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    No, they can't.  An identifier is unique.  Two widgets in your</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    application can't share the same identifier.  In this case, we</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    bind them to different IDs, create a control method to intercept</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    one, then an alias, to say that clicking on the other will</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    do the same thing.</span><br />
+      <span style="white-space: pre;"><a id="L84"></a></span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    ```python</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    class DownloadExample(Window):</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>        layout = mark(\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>          &lt;window title="Blind User Interface - downloading"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>            &lt;menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>              &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>                &lt;item id=add_file&gt;Add a file...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>              &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>            &lt;/menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L95"></a></span><br />
+      <span style="white-space: pre;"><a id="L96"></a>            &lt;!-- ... --&gt;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>            &lt;button x=4 y=5&gt;Add&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>          &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>        \"\"\")</span><br />
+      <span style="white-space: pre;"><a id="L100"></a></span><br />
+      <span style="white-space: pre;"><a id="L101"></a>        # So the menu item to add has ID "add_file" while the Add button</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>        # on the window has ID "add" (we didn't change it)</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>        def on_add(self):</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>            \"\"\"The 'add' button was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>            # ...</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>        on_add_file = on_add</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L108"></a></span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    So if you have several buttons and menu items doing the same</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    thing, be careful to give them different IDs, then,</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    if necessary, bind to the same control using aliases.</span><br />
+      <span style="white-space: pre;"><a id="L112"></a></span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L114"></a></span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    An item tag will be turned into an [Item](../class/Item.md)</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>    widget.  This widget has no data for the time being.</span><br />
+      <span style="white-space: pre;"><a id="L117"></a></span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L119"></a></span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    | [click](../../control/click.md)   | `on_click`   | The menu item  |</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    |                                 |              | is being clicked |</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    |                                 |              | on. This is an   |</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>    |                                 |              | implicit control |</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    |                                 |              | for menu items.  |</span><br />
+      <span style="white-space: pre;"><a id="L127"></a></span><br />
+      <span style="white-space: pre;"><a id="L128"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L129"></a></span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            def on_click_quit(self):</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>                \"\"\"Click on the 'quit' menu item</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>                (you could have called your method on_quit, the</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>                "click" control type is implicit for menu items).</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>                \"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>                print("Clicked on the menu item...")</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>                self.close()</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L138"></a></span><br />
+      <span style="white-space: pre;"><a id="L139"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L140"></a></span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    tag_name = "item"</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L144"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L146"></a></span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    def __init__(self, layout, parent, id):</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L150"></a></span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        """Complete the widet, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>            self.id = self.deduce_id(self.data)</span><br />
+    </div>
+  </body>
+</html>

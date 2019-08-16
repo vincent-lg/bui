@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - widget/radio.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="widget/radio.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="widget/radio.py" />
+    <meta property="og:description" content="widget/radio.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/widget/radio.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/widget/radio.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - widget/radio.py","url":"https://vincent-lg.github.io/bui/widget/radio.html","name":"widget/radio.py","description":"widget/radio.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic RadioButton class, a generic radio button widget."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from typing import Iterable, Tuple</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>from bui.widget.base import Widget, CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>class RadioButton(Widget):</span><br />
+      <span style="white-space: pre;"><a id="L8"></a></span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    The generic radio button widget.</span><br />
+      <span style="white-space: pre;"><a id="L11"></a></span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    A radio button is to represent a group of choices, each choice being</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    a button.  Selecting one forces the other ones to get unselected.</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    This widget needs to be inside a [window](../layout/tag/window.md)</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    tag.  It should have at least two choices, but you can set them</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    initially with the [choice tag]../layout/tag/choice.md) or later</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    with the `choices` property on this widget.</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    depending on the used GUI toolkit.</span><br />
+      <span style="white-space: pre;"><a id="L21"></a></span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L23"></a></span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    widget = "radio"</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    class_name = "RadioButton"</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    default_controls = {</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>        #"focus": "The radio button gets or loses focus",</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        "init": "The window is initialized",</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        "press": "The user presses on a key while the radio button is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>        #"select": "The radio button selection changes.",</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L32"></a></span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>        self.x = leaf.x</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>        self.y = leaf.y</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>        self.id = leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>        self.width = leaf.width</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>        self.height = leaf.height</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>        self._choices = []</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>        self._selected = 0</span><br />
+      <span style="white-space: pre;"><a id="L42"></a></span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    def id(self):</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>        return self.leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L46"></a></span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    def choices(self):</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        return tuple(self._choices)</span><br />
+      <span style="white-space: pre;"><a id="L50"></a></span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    @choices.setter</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    def choices(self, choices: Iterable[Tuple[str, str]]):</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>        Modify the radio button choices.</span><br />
+      <span style="white-space: pre;"><a id="L55"></a></span><br />
+      <span style="white-space: pre;"><a id="L56"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>            choices (iterable): an iterable containing choices, each</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>                    choice being a tuple with two elements (both of</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                    `str`): the choice ID and the choice label.</span><br />
+      <span style="white-space: pre;"><a id="L60"></a></span><br />
+      <span style="white-space: pre;"><a id="L61"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>            iter(choices)</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>            raise TypeError("'choices' isn't a valid iterable")</span><br />
+      <span style="white-space: pre;"><a id="L66"></a></span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        apply_choices = []</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>        for i, (choice_id, choice_label) in enumerate(choices):</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>            apply_choices.append((str(choice_id), str(choice_label)))</span><br />
+      <span style="white-space: pre;"><a id="L70"></a></span><br />
+      <span style="white-space: pre;"><a id="L71"></a>        if len(apply_choices) &lt; 2:</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>            raise ValueError("you need to specify at least two choices")</span><br />
+      <span style="white-space: pre;"><a id="L73"></a></span><br />
+      <span style="white-space: pre;"><a id="L74"></a>        self._choices = apply_choices</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>        self.specific.refresh()</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        self._selected = 0</span><br />
+      <span style="white-space: pre;"><a id="L77"></a></span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    def selected(self):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        """Return the ID of the selected choice."""</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        return self._choices[self._selected][0]</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    @selected.setter</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    def selected(self, choice: str):</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        """Change the selected choice."""</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>        index = 0</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>        for i, (choice_id, choice_label) in enumerate(self._choices):</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>            if choice_id == choice:</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>                self._selected = i</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>                break</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>            raise ValueError(f"can't select choice of ID {choice!r}")</span><br />
+      <span style="white-space: pre;"><a id="L93"></a></span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    def _init(self):</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>        """Widget initialization."""</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>        choices = []</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>        for tag in self.leaf.children:</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>            if tag.tag_name == "choice":</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>                choices.append((tag.id, tag.data))</span><br />
+      <span style="white-space: pre;"><a id="L100"></a></span><br />
+      <span style="white-space: pre;"><a id="L101"></a>        if len(choices) &gt;= 2:</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>            self.choices = choices</span><br />
+      <span style="white-space: pre;"><a id="L103"></a></span><br />
+      <span style="white-space: pre;"><a id="L104"></a>        return super()._init()</span><br />
+    </div>
+  </body>
+</html>

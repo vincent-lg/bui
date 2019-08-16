@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/attr.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/attr.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/attr.py" />
+    <meta property="og:description" content="layout/attr.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/attr.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/attr.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/attr.py","url":"https://vincent-lg.github.io/bui/layout/attr.html","name":"layout/attr.py","description":"layout/attr.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Class to represent an attribute in a layout tag.</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>An attribute in this case is similar to a HTML attribute:</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>    &lt;window title="Something good"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>In this case, the attribute is `title`.  Some markups (tags) have mandatory</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>or optional attributes and they must match the specifications.  Attributes</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>are listed in the layout class (see for instance `bui/layout/window.py`).</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>An `Attr` object is somewhat similar to an argument in `argparse`, and</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>possesses very similar attributes.</span><br />
+      <span style="white-space: pre;"><a id="L13"></a></span><br />
+      <span style="white-space: pre;"><a id="L14"></a>"""</span><br />
+      <span style="white-space: pre;"><a id="L15"></a></span><br />
+      <span style="white-space: pre;"><a id="L16"></a>NO_DEFAULT = object()</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>NO_VALUE = object()</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>class Attr:</span><br />
+      <span style="white-space: pre;"><a id="L20"></a></span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    A tag attribute, mandatory or not.</span><br />
+      <span style="white-space: pre;"><a id="L23"></a></span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    It can have a default value and a type to be converted.  It should</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    always have a name (first argument) and a help text.</span><br />
+      <span style="white-space: pre;"><a id="L26"></a></span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    Args:</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        name (str): the attribute name.</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        help (str): the help text, given in case of errors for instance.</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>        type (any, optional): the attribute type (default str).  It can</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>                be set to another class, like `type=int` for an integer</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>                conversion.  In this case, the attribute will be converted</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>                before the layout class is created, and an error message</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>                will be sent if the conversion fails.</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>        default (any): a default value.  It can be ca callable, in which</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>                case, this callable will be called and its return value</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>                will be used as a default.</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>        if_present: set a default value if the attribute is set, no matter</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>                what the value the user specified.  This is useful for</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>                toggable attributes.</span><br />
+      <span style="white-space: pre;"><a id="L41"></a></span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L43"></a></span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    def __init__(self, name, help, type=str, default=NO_DEFAULT,</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>            if_present=NO_DEFAULT):</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>        self.name = name</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>        self.help = help</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>        self.type = type</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        self.default = default</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>        self.if_present = if_present</span><br />
+      <span style="white-space: pre;"><a id="L51"></a></span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    def python_name(self):</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>        """Return a Python identifier."""</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        return self.name.replace("-", "_")</span><br />
+      <span style="white-space: pre;"><a id="L56"></a></span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    def prepare(self, value=NO_VALUE):</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>        Prepare and return the proper value for this attribute, if possible.</span><br />
+      <span style="white-space: pre;"><a id="L60"></a></span><br />
+      <span style="white-space: pre;"><a id="L61"></a>        Otherwise, a clear `ValueError` is raised.</span><br />
+      <span style="white-space: pre;"><a id="L62"></a></span><br />
+      <span style="white-space: pre;"><a id="L63"></a>        The `value` can be `None` to indicate an attribute without value:</span><br />
+      <span style="white-space: pre;"><a id="L64"></a></span><br />
+      <span style="white-space: pre;"><a id="L65"></a>            &lt;checkbox checked&gt;</span><br />
+      <span style="white-space: pre;"><a id="L66"></a></span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        If you leave the argument empty, this is assumed to mean that</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>        this attribute wasn't given.  In which case, the default value will</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>        be returned, if any, or a proper error message will be raised.</span><br />
+      <span style="white-space: pre;"><a id="L70"></a></span><br />
+      <span style="white-space: pre;"><a id="L71"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>        if value is not NO_VALUE and self.if_present is not NO_DEFAULT:</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>            return self.if_present</span><br />
+      <span style="white-space: pre;"><a id="L74"></a></span><br />
+      <span style="white-space: pre;"><a id="L75"></a>        if value is NO_VALUE:</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>            if self.default is NO_DEFAULT:</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>                raise ValueError(f"the attribute {self.name} is mandatory, "</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>                        f"but no value was given to it.  {self.help}")</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>            elif callable(self.default):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>                return self.default()</span><br />
+      <span style="white-space: pre;"><a id="L81"></a></span><br />
+      <span style="white-space: pre;"><a id="L82"></a>            return self.default</span><br />
+      <span style="white-space: pre;"><a id="L83"></a></span><br />
+      <span style="white-space: pre;"><a id="L84"></a>        # A value has been specified. Is it of the proper type?</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>            value = self.type(value)</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>        except ValueError:</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>                raise ValueError(f"the attribute {self.name} received an "</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>                        f"invalid value ({value} of type {type(value)}).  {self.help}") from None</span><br />
+      <span style="white-space: pre;"><a id="L90"></a></span><br />
+      <span style="white-space: pre;"><a id="L91"></a>        return value</span><br />
+    </div>
+  </body>
+</html>

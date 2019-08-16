@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/checkbox.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/checkbox.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/checkbox.py" />
+    <meta property="og:description" content="layout/checkbox.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/checkbox.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/checkbox.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/checkbox.py","url":"https://vincent-lg.github.io/bui/layout/checkbox.html","name":"layout/checkbox.py","description":"layout/checkbox.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Checkbox object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class Checkbox(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Create a checkbox on the interface.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A checkbox is a widget on a [window](./window.md).  It can be either</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    checked or unchecked.  Checking it can be done through the mouse or the</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    keyboard.  The checkbox can also be disabled, toggling it won't be</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    possible.  A [check](../../control/check.md) control will be triggered</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    when the checkbox changes state.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    &lt;window title="Test"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>      &lt;checkbox x=1 y=3&gt;Toggle me&lt;/checkbox&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>      ...</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L23"></a></span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    &gt; Note: the checkbox name (its label) is specified as data of this tag.</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>      If not specified, the checkbox ID will be deduced from this data.</span><br />
+      <span style="white-space: pre;"><a id="L26"></a></span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L28"></a></span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    |              |          | is left). This position  |             |</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    |              |          | is relative to the       |             |</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    |              |          | window width.            |             |</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    |              |          | is at the top). This     |             |</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    |              |          | position is relative to  |             |</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    |              |          | the window height.       |             |</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    | `width`      | No       | The widget width, that   | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    |              |          | is, the number of        | width=2&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    |              |          | columns it will use in   |             |</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    |              |          | widget with a width of   |             |</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    |              |          | additional column to the |             |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    |              |          | right. A widget with `x` |             |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    |              |          | set to 2 and `width` set |             |</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    |              |          | to 3 will span `x=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    |              |          | `x=3`, and `x=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    |              |          | its `x` column.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    | `height`     | No       | The widget height, that  | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    |              |          | is, the number of        | height=2&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    |              |          | rows it will use in      |             |</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    |              |          | widget with a height of  |             |</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    |              |          | additional row downward. |             |</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    |              |          | A widget with `y` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>    |              |          | to 2 and `height` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    |              |          | to 3 will span `y=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    |              |          | `y=3`, and `y=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    |              |          | its `y` row.             |             |</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    | `id`         | No       | The checkbox identifier  | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    |              |          | (ID). If not set, use    | id=on&gt;`     |</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    |              |          | the checkbox name.       |             |</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    | `checked`    | No       | Whether the checkbox is  | `&lt;checkbox  |</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    |              |          | checked when the window  | checked&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    |              |          | first appears (not set   |             |</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    |              |          | by default). This        |             |</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    |              |          | attribute doesn't        |             |</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    |              |          | require a value, its     |             |</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    |              |          | presence is enough.      |             |</span><br />
+      <span style="white-space: pre;"><a id="L79"></a></span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    The required attributes are `x`, and `y`.  It is recommended to also</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    set an `id` although the shortened name (only lowercase</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    letters will be used, spaces turned into the underscore) will be</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    given if the `id` attribute is not set.</span><br />
+      <span style="white-space: pre;"><a id="L84"></a></span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        &lt;checkbox x=2 y=5&gt;Toggle me!&lt;/checkbox&gt;</span><br />
+      <span style="white-space: pre;"><a id="L86"></a></span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    (This will set a checkbox with `id` of "toggle_me".)</span><br />
+      <span style="white-space: pre;"><a id="L88"></a></span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    The checkbox name can contain a translatable field.  In this case,</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    giving the checkbox an ID is recommended.</span><br />
+      <span style="white-space: pre;"><a id="L91"></a></span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    By default, a checkbox will be unchecked when it appears on the window.</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    To create a checkbox that is checked by default, specify the attribute</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    `checked` with no value:</span><br />
+      <span style="white-space: pre;"><a id="L95"></a></span><br />
+      <span style="white-space: pre;"><a id="L96"></a>        &lt;checkbox x=2 y=0 checked&gt;On by default&lt;/checkbox&gt;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    You can also use the init control to programatically determine whether</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>    the checkbox should be checked (in harmony to user options, for instance).</span><br />
+      <span style="white-space: pre;"><a id="L100"></a></span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L102"></a></span><br />
+      <span style="white-space: pre;"><a id="L103"></a>    A checkbox tag will be turned into a [Checkbox](../../widget/Checkbox.md)</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>    object.  You can access and modify its attributes in a control method.</span><br />
+      <span style="white-space: pre;"><a id="L105"></a></span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    | `name`         | The name (str)   | `self.name = "Other name"`  |</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    | `checked`      | On or off (bool) | `self.checked = False`      |</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    | `enabled`      | On or off (bool) | `print(self.enabled)`       |</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    |                | Cannot be set.   |                             |</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    | `disabled`     | On or off (bool) | `print(self.disabled)`      |</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    |                | Cannot be set.   |                             |</span><br />
+      <span style="white-space: pre;"><a id="L114"></a></span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    &gt; You can use a simple condition to test if the checkbox is checked:</span><br />
+      <span style="white-space: pre;"><a id="L116"></a></span><br />
+      <span style="white-space: pre;"><a id="L117"></a>        class Example(Window):</span><br />
+      <span style="white-space: pre;"><a id="L118"></a></span><br />
+      <span style="white-space: pre;"><a id="L119"></a>            layout = mark('''</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>              &lt;window title="Are you sure?"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>                &lt;checkbox x=2 y=0 id="confirm"&gt;Do you really want to continue?&lt;/checkbox&gt;</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>                &lt;button x=0 y=4 name="OK" /&gt;</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>                &lt;button x=2 y=4 name="Cancel" /&gt;</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>              &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>            ''')</span><br />
+      <span style="white-space: pre;"><a id="L126"></a></span><br />
+      <span style="white-space: pre;"><a id="L127"></a>            def on_ok(self):</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>                if window["confirm"]: # equivalent to if window["confirm"].checked</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>                    ...</span><br />
+      <span style="white-space: pre;"><a id="L130"></a></span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    These attributes can be accessed and set using the standard Python</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    syntax for attributes.  Behind the scenes, these attributes are cached,</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    handled by an extended `property()`, but you don't really need to</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>    worry about how it works.  Consider the following example:</span><br />
+      <span style="white-space: pre;"><a id="L135"></a></span><br />
+      <span style="white-space: pre;"><a id="L136"></a>        class Example(Window):</span><br />
+      <span style="white-space: pre;"><a id="L137"></a></span><br />
+      <span style="white-space: pre;"><a id="L138"></a>            def on_check_option(self, widget, checked):</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>                '''The option checkbox has been checked or unchecked.'''                widget.name = f"checkbox {'checked' if checked else 'not checked'}"</span><br />
+      <span style="white-space: pre;"><a id="L140"></a></span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    &gt; Changing the name will not change the checkbox ID.  Once set</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>      in layout, the ID won't change.</span><br />
+      <span style="white-space: pre;"><a id="L143"></a></span><br />
+      <span style="white-space: pre;"><a id="L144"></a>    A Checkbox also offers the following methods:</span><br />
+      <span style="white-space: pre;"><a id="L145"></a></span><br />
+      <span style="white-space: pre;"><a id="L146"></a>    | Name                     | Description                            |</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    | ------------------------ | -------------------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    | `check()`                | Force the checkbox to be checked.      |</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>    | `uncheck()`              | Force the checkbox to be unchecked.    |</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    | `enable()`               | Force the checkbox to be enabled.      |</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    | `disable`                | Force the checkbox to be disabled.     |</span><br />
+      <span style="white-space: pre;"><a id="L152"></a></span><br />
+      <span style="white-space: pre;"><a id="L153"></a>    For instance:</span><br />
+      <span style="white-space: pre;"><a id="L154"></a></span><br />
+      <span style="white-space: pre;"><a id="L155"></a>        def on_init(self):</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>            '''The window initializes.'''</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>            option = window["option"]</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>            option.check()</span><br />
+      <span style="white-space: pre;"><a id="L159"></a></span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    &gt; Note: the `enabled` and `disabled` properties, along with the</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>      `enable()` and `disable()` methods, allow to change whether</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>      a checkbox can be set by the user.  A disabled checkbox (usually</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>      grayed out or marked unavailable) cannot be changed by the user.</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>      **However**, notice that some screen readers will skip over</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>      unavailable checkboxes and won't even signal them, so make sure</span><br />
+      <span style="white-space: pre;"><a id="L166"></a>      no vital information is found in a disabled checkbox.</span><br />
+      <span style="white-space: pre;"><a id="L167"></a></span><br />
+      <span style="white-space: pre;"><a id="L168"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L169"></a></span><br />
+      <span style="white-space: pre;"><a id="L170"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>    | [check](../../control/check.md)   | `on_check`   | The checkbox   |</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>    |                                 |              | is checked or    |</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>    |                                 |              | unchecked.       |</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>    | [init](../../control/init.md)   | `on_init`    | The checkbox is  |</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    |                                 |              | yet.             |</span><br />
+      <span style="white-space: pre;"><a id="L180"></a></span><br />
+      <span style="white-space: pre;"><a id="L181"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L182"></a></span><br />
+      <span style="white-space: pre;"><a id="L183"></a>            def on_checkk_checkbox(self, checked):</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>                print(f"You clicked on the checkbox of ID 'checkbox'.  Cecked? {checked}")</span><br />
+      <span style="white-space: pre;"><a id="L185"></a></span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L187"></a></span><br />
+      <span style="white-space: pre;"><a id="L188"></a>    tag_name = "checkbox"</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>        Attr("checked", help="Checked by default", default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L198"></a></span><br />
+      <span style="white-space: pre;"><a id="L199"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>            id="", checked=False):</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L203"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        self.name = ""</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        self.checked = checked</span><br />
+      <span style="white-space: pre;"><a id="L209"></a></span><br />
+      <span style="white-space: pre;"><a id="L210"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        """Complete the widget, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        self.name = self.data</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>            self.id = self.deduce_id(self.data)</span><br />
+    </div>
+  </body>
+</html>

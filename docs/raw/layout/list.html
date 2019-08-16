@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/list.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/list.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/list.py" />
+    <meta property="og:description" content="layout/list.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/list.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/list.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/list.py","url":"https://vincent-lg.github.io/bui/layout/list.html","name":"layout/list.py","description":"layout/list.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""List object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class List(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Create a list of choices.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A list is a widget offering several choices, prompting the user to</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    choose one or several by selecting them.  This widget is not so</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    different from a [table](table.md), but it doesn't contain several</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    columns.  Each choice can be identified, that is, you can check the</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    selection through indices or string identifiers.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    &lt;window title="List demonstration"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>      &lt;list id=actions x=2 y=4&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>        &lt;choice id=upgrade&gt;Update this software&lt;/choice&gt;</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>        &lt;choice id=remove&gt;Uninstall this software&lt;/choice&gt;</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>      &lt;/list&lt;</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L25"></a></span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    You will notice that this widget is also very close from a</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    [radio button](radio.md) widget.  This is not a coincidence.  A list</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    can host a lot more choices, however, and be more easily refreshed if</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    choices have to change.  Contrary to a [radio button](radio.md), a list</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    can be empty or contain only one choice.  You can use the</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    [choice](choice.md) tag to set default choices in the list, or modify</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    the choices with the widget `choices` property (see below for details).</span><br />
+      <span style="white-space: pre;"><a id="L33"></a></span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L35"></a></span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;list     |</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    |              |          | is left). This position  |             |</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    |              |          | is relative to the       |             |</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    |              |          | window width.            |             |</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;list     |</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    |              |          | is at the top). This     |             |</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    |              |          | position is relative to  |             |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    |              |          | the window height.       |             |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    | `id`         | No       | The list identifier      | `&lt;list       |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    |              |          | (ID).                    | id=what&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    | `width`      | No       | The widget width, that   | `&lt;list      |</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    |              |          | is, the number of        | width=2&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    |              |          | columns it will use in   |             |</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    |              |          | widget with a width of   |             |</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    |              |          | additional column to the |             |</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    |              |          | right. A widget with `x` |             |</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    |              |          | set to 2 and `width` set |             |</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    |              |          | to 3 will span `x=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    |              |          | `x=3`, and `x=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>    |              |          | its `x` column.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    | `height`     | No       | The widget height, that  | `&lt;list      |</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    |              |          | is, the number of        | height=2&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    |              |          | rows it will use in      |             |</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    |              |          | widget with a height of  |             |</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    |              |          | additional row downward. |             |</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    |              |          | A widget with `y` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    |              |          | to 2 and `height` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    |              |          | to 3 will span `y=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    |              |          | `y=3`, and `y=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    |              |          | its `y` row.             |             |</span><br />
+      <span style="white-space: pre;"><a id="L78"></a></span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    See also the [choice](./choice.md) tag to define the default choices</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    in a list.</span><br />
+      <span style="white-space: pre;"><a id="L81"></a></span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L83"></a></span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    The [list widget](../../widget/List.md) can be manipulated to add and</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    remove choices, and know what choice (or what chocies) is (are)</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    currently selected.</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    | `choices`      | The choice (list | `self.choices =             |</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    |                | of tuple). The   | (("update", "Update the     |</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    |                | first element is | software"))`                |</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    |                | the choice       |                             |</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    |                | identifier (int  |                             |</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    |                | or str), the     |                             |</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    |                | second is the    |                             |</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>    |                | choice label     |                             |</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    |                | (str).           |                             |</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    You can easily update the entire list this way.  Just set the</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    `choices` property on the [list widget](../../widget/List.md) instance:</span><br />
+      <span style="white-space: pre;"><a id="L102"></a></span><br />
+      <span style="white-space: pre;"><a id="L103"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>            # There is a list of ID 'actions' in the window</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>            list = self["actions"]</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>            list.choices = (</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>                ("update", "Update the software without configuration change"),</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>                ("reset", "Update and reset the configuration"),</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>                ("remove", "Uninstall the software altogether"),</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>            )</span><br />
+      <span style="white-space: pre;"><a id="L112"></a></span><br />
+      <span style="white-space: pre;"><a id="L113"></a>            selected = list.selected</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>            # selected will be either 'update', 'reset' or 'remove' (str)</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>            if choice == "update":</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>                # ...</span><br />
+      <span style="white-space: pre;"><a id="L117"></a></span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    The `choices` property can be a tuple of tuples (with each</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>    choice being a two-tuple data: the choice identifier (an ID to retrieve</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    it quickly, must be hashable, probably a `str`) and the choice label</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    (a `str`).  You can also use a single `str` to represent both,</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    in which case, the choice ID will be its indice in the list.  Giving</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    identifiers to each choice is not always necessary, so to follow the</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    same example:</span><br />
+      <span style="white-space: pre;"><a id="L125"></a></span><br />
+      <span style="white-space: pre;"><a id="L126"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>            # There is a list of ID 'actions' in the window</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>            list = self["actions"]</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            list.choices = (</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>                "Update the software without configuration change",</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>                "Update and reset the configuration",</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>                "Uninstall the software altogether",</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>            )</span><br />
+      <span style="white-space: pre;"><a id="L135"></a></span><br />
+      <span style="white-space: pre;"><a id="L136"></a>            selected = list.selected</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>            # selected will be either 0, 1 or 2 (int)</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>            if choice == 0: # update</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>                # ...</span><br />
+      <span style="white-space: pre;"><a id="L140"></a></span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    Using this property will reset the entire list.  You can also use</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>    the `add_choice` and `remove_choice` methods.</span><br />
+      <span style="white-space: pre;"><a id="L143"></a></span><br />
+      <span style="white-space: pre;"><a id="L144"></a>    | Method            | Signature       | Description               |</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    | ----------------- | --------------- | ------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>    | `add_choice`      | `add_choice(    | Add a choice at the end   |</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    |                   | choice: Union[  | of the list. The choice   |</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    |                   | Any, Tuple[     | to specify as argument    |</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>    |                   | Hashable, Any]]`| can be a single string.   |</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    |                   |                 | If so, the choice         |</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    |                   |                 | identifier will be the    |</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>    |                   |                 | position of the string in |</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>    |                   |                 | the choice (starting at   |</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>    |                   |                 | 0). The choice can also   |</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>    |                   |                 | be a tuple of two     |</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>    |                   |                 | elements: the choice  |</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    |                   |                 | identifier and the    |</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    |                   |                 | choice label. The     |</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>    |                   |                 | choice identifier     |</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    |                   |                 | often is a string too |</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>    |                   |                 | and the same goes for |</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>    |                   |                 | the label, although   |</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>    |                   |                 | you have freedom to   |</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>    |                   |                 | use other types, as   |</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>    |                   |                 | long as the           |</span><br />
+      <span style="white-space: pre;"><a id="L166"></a>    |                   |                 | identifier is         |</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    |                   |                 | hashable.             |</span><br />
+      <span style="white-space: pre;"><a id="L168"></a></span><br />
+      <span style="white-space: pre;"><a id="L169"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L170"></a></span><br />
+      <span style="white-space: pre;"><a id="L171"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>    | [focus](../../control/focus.md)   | `on_focus`   | The list is    |</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>    |                                   |              | focused or lose|</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>    |                                   |              | focus.         |</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    | [init](../../control/init.md)     | `on_init`    | The list is    |</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    |                                   |              | ready to be    |</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>    |                                   |              | displayed, but |</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    |                                   |              | is not         |</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>    |                                   |              | displayed yet. |</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>    | [press](../../control/press.md)   | `on_press`   | The user       |</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>    |                                   |              | pressed on a   |</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>    |                                   |              | key of her     |</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>    |                                   |              | keyboard while |</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>    |                                   |              | the list is    |</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    |                                   |              | focused. This  |</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>    |                                   |              | control is     |</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>    |                                   |              | triggered      |</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>    |                                   |              | before the     |</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>    |                                   |              | key has had    |</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>    |                                   |              | any impact, so |</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    |                                   |              | you can cancel |</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>    |                                   |              | the action at  |</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>    |                                   |              | this point.    |</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>    | [select](../../control/select.md] | `on_select`  | The list       |</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    |                                   |              | selection has  |</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>    |                                   |              | changed.       |</span><br />
+      <span style="white-space: pre;"><a id="L198"></a></span><br />
+      <span style="white-space: pre;"><a id="L199"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L200"></a></span><br />
+      <span style="white-space: pre;"><a id="L201"></a>            def on_select_actions(self, widget, choice):</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>                print(f"The user selected the choice of ID {choice}.")</span><br />
+      <span style="white-space: pre;"><a id="L203"></a></span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L205"></a></span><br />
+      <span style="white-space: pre;"><a id="L206"></a>    tag_name = "list"</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>        Attr("id", help="The widget identifier"),</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L214"></a></span><br />
+      <span style="white-space: pre;"><a id="L215"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        self.height = height</span><br />
+    </div>
+  </body>
+</html>
