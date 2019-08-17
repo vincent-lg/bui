@@ -5,8 +5,13 @@ All controls should inherit from the below class.
 """
 
 import asyncio
+from enum import Enum
 import inspect
 import re
+from typing import Callable
+
+# Private constants
+_WINDOW = None
 
 class Control:
 
@@ -33,17 +38,20 @@ class Control:
             window (Window); othe window on which are control methods.
 
         """
+        global _WINDOW
+        # Import the window if necessary
+        if _WINDOW is None:
+            from bui.widget.window import Window as _WINDOW
+
         if cls.has_sub_controls:
             # This control has sub-controls
             # sub-controls can all be linked to control methods
             if cls.window_control and widget is window:
                 method_name = f"on_{cls.name}"
                 bound = cls._register_method(widget, window, method_name)
-                if bound and window._debug_controls:
-                    print(
-                            f"    Bound {cls.name} as a window control "
-                            f"to the {method_name!r} method"
-                    )
+                if bound:
+                    cls._report_bound(_ControlScope.WINDOW, window,
+                            method_name)
 
                 if cls.pattern_for_window:
                     pattern = re.compile(cls.pattern_for_window)
@@ -54,20 +62,15 @@ class Control:
                             group = match.groupdict()
                             bound = cls._register_method(widget, window,
                                     content, group=group)
-                            if bound and window._debug_controls:
-                                print(
-                                    f"    Bound {cls.name} as a window "
-                                    f"control with {group} to the "
-                                    f"{content!r} method"
-                                )
+                            if bound:
+                                cls._report_bound(_ControlScope.WINDOW,
+                                        window, content, options=group)
             elif cls.widget_control:
                 method_name = f"on_{cls.name}_{widget.id}"
                 bound = cls._register_method(widget, window, method_name)
-                if bound and window._debug_controls:
-                    print(
-                            f"    Bound {cls.name} as a widget control "
-                            f"of {widget.id} to the {method_name!r} method"
-                    )
+                if bound:
+                    cls._report_bound(_ControlScope.WIDGET, widget,
+                            method_name)
 
                 if cls.pattern_for_widgets:
                     pattern = cls.pattern_for_widgets.format(id=widget.id)
@@ -79,12 +82,9 @@ class Control:
                             group = match.groupdict()
                             bound = cls._register_method(widget, window,
                                     content, group=group)
-                            if bound and window._debug_controls:
-                                print(
-                                    f"    Bound {cls.name} as a widget "
-                                    f"control of {widget.id} with "
-                                    f"{group} to the {content!r} method"
-                                )
+                            if bound:
+                                cls._report_bound(_ControlScope.WIDGET,
+                                        widget, content, options=group)
 
             return
 
@@ -101,38 +101,27 @@ class Control:
             if method_name:
                 bound = cls._register_method(widget, window, method_name,
                         force=False)
-                if bound and window._debug_controls:
+                if bound:
                     if cls.window_control and widget is window:
-                        print(
-                            f"    Bound {cls.name} as an implicit window "
-                            f"control to the {method_name!r} method"
-                        )
+                        cls._report_bound(_ControlScope.WINDOW, window,
+                                method_name, implicit=True)
                     else:
-                        print(
-                            f"    Bound {cls.name} as an implicit widget "
-                            f"control of {widget.id} to the "
-                            f"{method_name!r} method"
-                        )
+                        cls._report_bound(_ControlScope.WIDGET, widget,
+                                method_name, implicit=True)
 
         if not bound:
             if cls.window_control and widget == window:
                 method_name = f"on_{cls.name}"
                 if cls._register_method(widget, window, method_name):
-                    if window._debug_controls:
-                        print(
-                            f"    Bound {cls.name} as a window control "
-                            f"to the {method_name!r} method"
-                        )
+                    cls._report_bound(_ControlScope.WINDOW, window,
+                            method_name)
                     return
 
             if cls.widget_control and hasattr(widget, "id"):
                 method_name = f"on_{cls.name}_{widget.id}"
                 if cls._register_method(widget, window, method_name):
-                    if window._debug_controls:
-                        print(
-                            f"    Bound {cls.name} as a widget control of "
-                            f"{widget.id} to the {method_name!r} method"
-                        )
+                    cls._report_bound(_ControlScope.WIDGET, widget,
+                            method_name)
 
     @classmethod
     def _register_method(cls, widget, window, method_name, force=True, group=None):
@@ -155,10 +144,37 @@ class Control:
 
         return False
 
+    @classmethod
+    def _report_bound(cls, kind: '_ControlScope', widget: 'Widget', method: str,
+            options: dict = None, implicit: bool = False):
+        if _WINDOW._debug_controls:
+            report = f"Bound {cls.name} as "
+            if implicit:
+                report += "an implicit "
+            else:
+                report += "a "
+
+            if kind is _ControlScope.WINDOW:
+                report += "window control "
+            elif kind is _ControlScope.WIDGET:
+                report += f"widget control of {widget.widget}"
+                wid = getattr(widget, "id", None)
+                if wid:
+                    report += f"({wid}) "
+            else:
+                report += "unknown scope "
+
+            if options is not None:
+                report += f"with options={options} "
+
+            report += f"to the {method!r} method"
+            print(" " * 4 + report.strip())
+
     def process(self, options=None):
         """Process the control, calls a generic `on_` method if found."""
+        self._report_fire(options)
+
         # Call on_{control} on the widget
-        print(f"  Fire {self.name} control with options={options}")
         method = getattr(self.widget, f"handle_{self.name}", None)
         if method:
             method(self)
@@ -173,11 +189,7 @@ class Control:
                     to_test[key] = value
 
             if group and group == to_test:
-                if method.__self__._debug_controls:
-                    print(
-                        f"    Match sub-control to "
-                        f"{method.__name__}, call it"
-                    )
+                self._report_call(method, child=True)
                 return self._call_method(method)
 
         # At this point we consider no match was found in the options,
@@ -186,11 +198,7 @@ class Control:
         methods = self.widget.controls.get(self.name, [])
         for group, method in methods:
             if group == options:
-                if method.__self__._debug_controls:
-                    print(
-                        f"    Match parent control to "
-                        f"{method.__name__}, call it"
-                    )
+                self._report_call(method)
                 return self._call_method(method)
 
     def _call_method(self, method):
@@ -213,3 +221,34 @@ class Control:
             self.widget.schedule(result)
 
         return result
+
+    def _report_fire(self, options: dict = None):
+        if _WINDOW._debug_controls:
+            report = f"Fire {self.name} control on {self.widget.widget}"
+            wid = getattr(self.widget, "id", None)
+            if wid:
+                report += f"({wid}) "
+            else:
+                report += " "
+            if options:
+                report += f"with options={options}"
+            print("  " + report.strip())
+
+    def _report_call(self, method: Callable, child: bool = False):
+        if _WINDOW._debug_controls:
+            report = "Match "
+            if child:
+                report += "child "
+            else:
+                report += "main "
+
+            report += f"control to {method.__name__}, call it"
+            print(" " * 4 + report.strip())
+
+
+class _ControlScope:
+
+    """Enumeration to define the control scope."""
+
+    WINDOW = 'window control'
+    WIDGET = 'widget control'

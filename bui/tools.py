@@ -66,7 +66,7 @@ def load_GUI():
 
 def start(window):
     """Start a window."""
-    args = init_args(window)
+    args = init_args()
     window = window.parse_layout(window)
 
     # Create an asyncio EventLoop and hand it to the generic (and

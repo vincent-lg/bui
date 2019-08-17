@@ -14,7 +14,9 @@ import code
 import queue
 import threading
 
-def init_args(Window):
+from bui.widget.window import Window
+
+def init_args():
     """
     Initialize the command parser, parse and return.
 
