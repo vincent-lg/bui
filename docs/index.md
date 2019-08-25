@@ -17,9 +17,7 @@ To install BUI, you should simply run `pip`:
 
     pip install bui
 
-Additionally, you should also install a GUI toolkit.  Remember that BUI will draw the bridge betwewen simple and portable code to the usable GUI toolkit on this platform.  For the time being, BUI is only compatible with wxPython, though this is to change in future versions:
-
-    pip install wxPython
+> BUI is currently supported on Windows and will install wxPython.  Other toolkits and platforms will be supported with some help and time.
 
 ## Brief example
 
@@ -33,14 +31,14 @@ class HelloBUI(Window):
     """Class to represent a basic hello world window."""
 
     layout = mark("""
-      <menubar>
-        <menu name="File">
-          <item>What is it?</item>
-          <item>Quit</item>
-        </menu>
-      </menubar>
-
       <window cols=5 rows=5 title="A BUI demonstration">
+        <menubar>
+          <menu name="File">
+            <item>What is it?</item>
+            <item>Quit</item>
+          </menu>
+        </menubar>
+
         <button x=2 y=2 name="Click me!" />
         <text x=3 y=3 id=report>Report</text>
       </window>
@@ -76,8 +74,9 @@ In terms of code, here is what we do:
 
 - We import the `bui` package, most specifically the [Window](./class/Window.md) class and the `start` function.  Usually you won't need to import more than the [Window](./class/Window.md) class, except for a window meant to open with your program.
 - We create a class, `HelloBUI`, inheriting from [Window](./class/Window.md).  So far, this is all very standard.
-- The `layout` class attribute deserves some explanation.  You can see it contains a multiline string.  In this string is defined the window layout, that is, how it should appear.  It contains something like simple HTML syntax, though it's not the HTML you will find on websites.  The syntax is, it is hoped, somewhat easy to read.  The menu bar is defined first, with its single menu (File) and a set of menu items in this menu.
+- The `layout` class attribute deserves some explanation.  You can see it contains a multiline string.  In this string is defined the window layout, that is, how it should appear.  It contains something like simple HTML syntax, though it's not the HTML you will find on websites.  The syntax is, it is hoped, somewhat easy to read.
 - Below is our actual window, in the `window` tag.  This one might be trickier: we define the window with a size (both width in columns and height in rows).  You can picture the end result as a grid.  On this grid we will place our widgets in the window.  You can choose a big or small grid (it will give you more power to place widgets with a greater precision, but the size will always be relative to the window and screen size as defined by the operating system).
+- The menu bar is defined first on this window, with its single menu (File) and a set of menu items in this menu.
 - In the window, we have two widgets: a button and a text field.  `x` and `y` are given to place the widget in this grid.  Note that `x=0, y=0` is the upper-left corner of the window, thus, `x=2 y=2` with a window of 5 colums and 5 rows will be in the middle.  And `x=3 y=3` will be a bit below and to the right of this widget.
 - Notice we wrap this multi-line string in a call to `mark()`. This function is only available in a class inheriting from [Window](./class/Window.md) and only serves for debugging purposes, to show the error with greater accuracy (and tell you where it went wrong).
 - That's it for the window layout.  The next methods are controls (event handlers).  They are written by developers and are meant to intercept user actions (like "this button was clicked").
