@@ -59,6 +59,8 @@ That's it.  This little code will generate a window with:
 2. A button in the center of the window, called "Click me!".
 3. A text field below and to the right of this button where the text will be updated when the button is clicked.
 
+You will find more explanation in the [documentation](https://vincent-lg.github.io/bui/) or by browsing through the [examples](https://vincent-lg.github.io/bui/example/).
+
 ## Documentation
 
 - [BUI full documentation](https://vincent-lg.github.io/bui/)
