@@ -31,7 +31,7 @@ class HelloBUI(Window):
     """Class to represent a basic hello world window."""
 
     layout = mark("""
-      <window cols=5 rows=5 title="A BUI demonstration">
+      <window title="A BUI demonstration">
         <menubar>
           <menu name="File">
             <item>What is it?</item>
@@ -39,7 +39,7 @@ class HelloBUI(Window):
           </menu>
         </menubar>
 
-        <button x=2 y=2 name="Click me!" />
+        <button x=2 y=2>Click me!</button>
         <text x=3 y=3 id=report>Report</text>
       </window>
     """)
