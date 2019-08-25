@@ -1,5 +1,7 @@
 """Module containing the generic Text class, a generic text widget."""
 
+from typing import Optional
+
 from bui.widget.base import Widget, CachedProperty
 
 class Text(Widget):
@@ -97,12 +99,24 @@ class Cursor:
 
     def __init__(self, widget):
         self._pos = 0
+        self._lineno = 0
+        self._col = 0
         self._widget = widget
 
     @property
     def pos(self):
         """Return the current position as an indice."""
         return self._pos
+
+    @property
+    def lineno(self):
+        """Return the current line number (vertical position of the cursor)."""
+        return self._lineno
+
+    @property
+    def col(self):
+        """Return the current column (horizontal position of the cursor)."""
+        return self._col
 
     @property
     def at_begin(self):
@@ -112,7 +126,7 @@ class Cursor:
     @property
     def at_end(self):
         """Return True if the cursor is at the end of the text field."""
-        return self._pos > len(self._widget)
+        return self._pos >= len(self._widget)
 
     @property
     def text_before(self):
@@ -123,3 +137,24 @@ class Cursor:
     def text_after(self):
         """Return the text after the cursor."""
         return self._widget.value[self._pos:]
+
+    @property
+    def line(self):
+        """Return the current line of text."""
+        return self._widget.value.splitlines()[self._lineno]
+
+    def move(self, pos: int, col: Optional[int] = None):
+        """
+        Move the cursor.
+
+        This method accepts two possible signatures:
+            move(position): moves the cursor to the absolute position
+                    in the text.
+            move(lineno, col): move the cursor at a given line number
+                    and column number.
+
+        """
+        if col is None:
+            self._widget.specific.move(pos)
+        else:
+            self._widget.specific.vertical_move(pos, col)

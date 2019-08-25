@@ -1,5 +1,7 @@
 """The wxPython implementation of a BUI text widget."""
 
+from itertools import count
+
 import wx
 
 from bui.specific.base import *
@@ -43,7 +45,9 @@ class WX4Text(SpecificText):
     def _init(self):
         """Initialize the specific widget."""
         self._nl_offset = 0
-        self.cached_position = -1
+        self._update_counter = count()
+        self._last_updated = next(self._update_counter)
+        self._last_checked = self._last_updated
         window = self.parent
         label = self.generic.label
         self.wx_add = self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -68,6 +72,7 @@ class WX4Text(SpecificText):
         text = e.GetString()
         self.generic._process_control("change", {"text": text})
         self.generic.cached_value = text
+        self._last_checked = next(self._update_counter)
 
         # Update the cursor position
         self.UpdateCursorPosition(text)
@@ -85,7 +90,8 @@ class WX4Text(SpecificText):
         """Check the cursor position."""
         text = text if text else self.wx_text.GetValue()
         position = self.wx_text.GetInsertionPoint()
-        if position != self.cached_position:
+        if self._last_updated != self._last_checked:
+            self._last_updated = self._last_checked
             self.cached_position = position
             # Calculate line offset if necessary
             # wxPython coupled with Windows break the one-character-per-line-break
@@ -98,6 +104,7 @@ class WX4Text(SpecificText):
 
             # If the text contains new lines, we should have a valid NL offset
             # (usually 1 for Linux or Mac, 2 for Windows)
+            lineno, col = 0, 0
             if num_nl > 0:
                 offset_pos = pos = 0
                 for character in text:
@@ -106,17 +113,23 @@ class WX4Text(SpecificText):
 
                     if character == "\n":
                         pos += self._nl_offset
+                        lineno += 1
+                        col = 0
                     else:
                         pos += 1
+                        col += 1
                     offset_pos += 1
                 else:
                     offset_pos += 1
+                    col += 1
             else:
                 offset_pos = position
+                col = position
 
             cursor = self.generic.cursor
             cursor._pos = offset_pos
-            print(f"Update cursor: {cursor.pos} {cursor.text_before!r} {cursor.text_after!r}")
+            cursor._lineno = lineno
+            cursor._col = col
 
     async def AsyncUpdateCursor(self, text=None):
         self.UpdateCursorPosition(text)
@@ -124,3 +137,67 @@ class WX4Text(SpecificText):
     def OnUpdateCursor(self, e):
         self.generic.schedule(self.AsyncUpdateCursor())
         e.Skip()
+
+    def move(self, position: int):
+        """Move the cursor to the given position.
+
+        Args:
+            position (int): the cursor position.
+
+        """
+        offset_pos = 0
+        lineno, col = 0, 0
+        cursor = self.generic.cursor
+        text = self.generic.value
+        for i, char in enumerate(text):
+            if i == position:
+                cursor._pos = i
+                cursor._lineno = lineno
+                cursor._col = col
+                self.wx_text.SetInsertionPoint(offset_pos)
+                break
+
+            if char == "\n":
+                offset_pos += self._nl_offset
+                lineno += 1
+                col = 0
+            else:
+                offset_pos += 1
+                col += 1
+        else:
+            num_nl = text.count("\n")
+            if num_nl > 0:
+                lineno = num_nl - 1
+                col = len(text) - text.rfind("\n")
+            else:
+                lineno = 0
+                col = len(text)
+
+            cursor._pos = len(text)
+            cursor._lineno = lineno
+            cursor._col = col
+            self.wx_text.SetInsertionPoint(self.wx_text.GetLastPosition())
+
+    def vertical_move(self, lineno: int, col: int):
+        """
+        Move the cursor to the given vertiical position.
+
+        Args:
+            lineno (int): the line number.
+            col (int): the column.
+
+        """
+        text = self.generic.value
+        _lineno, _col = 0, 0
+        for pos, char in enumerate(text):
+            if lineno == _lineno and col == _col:
+                self.move(pos)
+                break
+
+            if char == "\n":
+                _lineno += 1
+                _col = 0
+            else:
+                _col += 1
+        else:
+            self.move(len(text))

@@ -52,3 +52,25 @@ class SpecificText(SpecificWidget):
     def disable(self):
         """Disable the text."""
         pass
+
+    @abstractmethod
+    def move(self, position: int):
+        """Move the cursor to the given position.
+
+        Args:
+            position (int): the cursor position.
+
+        """
+        pass
+
+    @abstractmethod
+    def vertical_move(self, lineno: int, col: int):
+        """
+        Move the cursor to the given vertiical position.
+
+        Args:
+            lineno (int): the line number.
+            col (int): the column.
+
+        """
+        pass

@@ -210,13 +210,34 @@ class Text(Component):
     |               | letters would        |                           |
     |               | append to the        |                           |
     |               | current text (`pos   |                           |
-    |               | == len(text) -       |                           |
-    |               | 1`).                 |                           |
+    |               | == len(text)`).      |                           |
+    | `col`         | The current column   | `col = cursor.col`              |
+    |               | number (int),        |                                 |
+    |               | starting from 0.     |                                 |
+    |               | With `lineno`, this  |                                 |
+    |               | helps to represent   |                                 |
+    |               | the cursor position  |                                 |
+    |               | as a 2D position in  |                                 |
+    |               | the text (number of  |                                 |
+    |               | lines from the top,  |                                 |
+    |               | number of columns    |                                 |
+    |               | from the left). This |                                 |
+    |               | attribute is read-   |                                 |
+    |               | only (see the `move` |                                 |
+    |               | method to move the   |                                 |
+    |               | cursor).             |                                 |
+    | `lineno`      | Current line number  | `lineno = cursor.lineno`  |
+    |               | (int) starting from  |                           |
+    |               | 0. This attribute is |                           |
+    |               | read-only, see the   |                                 |
+    |               | `move` method to     |                                 |
+    |               | change the cursor    |                                 |
+    |               | position.            |                                 |
     | `pos`         | Current cursor       | `text.value[:cursor.pos]` |
     |               | position (int).      |                           |
     |               | This position is     |                           |
     |               | the one of the       |                           |
-    |               | character indice     |                           |
+    |               | character index      |                           |
     |               | that will be         |                           |
     |               | "pushed" when the    |                           |
     |               | user types, so       |                           |
@@ -227,7 +248,11 @@ class Text(Component):
     |               | `len(text)` if the   |                           |
     |               | cursor is at the     |                           |
     |               | very end of the      |                           |
-    |               | text widget.         |                           |
+    |               | text widget. This    |                           |
+    |               | attribute is read-   |                           |
+    |               | only, see the `move` |                                 |
+    |               | method to change the |                                 |
+    |               | cursor position.     |                                 |
     | `text_after`  | Text from the        | `cursor.text_after`       |
     |               | cursor position to   |                           |
     |               | the end of the       |                           |
@@ -255,6 +280,22 @@ class Text(Component):
     |               | 'o' of 'coffee',     |                           |
     |               | 'cursor.text_before` |                           |
     |               | will return 'c'.     |                           |
+
+    The cursor also has some methods:
+
+    | Method  | Signature                | Description                |
+    | ------- | ------------------------ | -------------------------- |
+    | `move`  | `move(pos: int, col:     | Move the cursor. Either    |
+    |         | Optionao[int] = None)`   | specify only one number    |
+    |         |                          | as argument for an         |
+    |         |                          | absolute movement (the     |
+    |         |                          | given position is the      |
+    |         |                          | index of the text in the   |
+    |         |                          | widget), or two numbers    |
+    |         |                          | (`lineno` and `col`) for a |
+    |         |                          | vertical movement taking   |
+    |         |                          | into account the number of |
+    |         |                          | lines and columns.         |
 
     ## Controls
 

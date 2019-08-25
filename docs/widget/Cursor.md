@@ -1,4 +1,4 @@
-# Cursor in [widget/text:88](../raw/widget/text.html#L88)
+# Cursor in [widget/text:90](../raw/widget/text.html#L90)
 
 Class to represent a cursor in a text field.
 
@@ -7,20 +7,24 @@ object will be updated whenever the need arises.
 
 ## Class summary
 
-This class offers 5 properties.
+This class offers 8 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
 | [at_begin](#at_begin) | Return True if the cursor is at the beginning of the text field. | **Can't write** |
 | [at_end](#at_end) | Return True if the cursor is at the end of the text field. | **Can't write** |
+| [col](#col) | Return the current column (horizontal position of the cursor). | **Can't write** |
+| [line](#line) | Return the current line of text. | **Can't write** |
+| [lineno](#lineno) | Return the current line number (vertical position of the cursor). | **Can't write** |
 | [pos](#pos) | Return the current position as an indice. | **Can't write** |
 | [text_after](#text_after) | Return the text after the cursor. | **Can't write** |
 | [text_before](#text_before) | Return the text before the cursor. | **Can't write** |
 
-This class offers 0 method.
+This class offers 1 method.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
+| [move](#move) | `move(pos: int, col: Union[int, NoneType] = None)` | Move the cursor. |
 
 ## Properties
 
@@ -30,7 +34,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L107)
+[See the source code](../raw/widget/text.html#L121)
 
 Return True if the cursor is at the beginning of the text field.
 
@@ -40,9 +44,39 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L112)
+[See the source code](../raw/widget/text.html#L126)
 
 Return True if the cursor is at the end of the text field.
+
+### col
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/text.html#L116)
+
+Return the current column (horizontal position of the cursor).
+
+### line
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/text.html#L141)
+
+Return the current line of text.
+
+### lineno
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/text.html#L111)
+
+Return the current line number (vertical position of the cursor).
 
 ### pos
 
@@ -50,7 +84,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L102)
+[See the source code](../raw/widget/text.html#L106)
 
 Return the current position as an indice.
 
@@ -60,7 +94,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L122)
+[See the source code](../raw/widget/text.html#L136)
 
 Return the text after the cursor.
 
@@ -70,8 +104,28 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L117)
+[See the source code](../raw/widget/text.html#L131)
 
 Return the text before the cursor.
 
 ## Methods
+
+### move
+
+`move(self, pos: int, col: Union[int, NoneType] = None)`
+
+[See the source code](../raw/widget/text.html#L146)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Cursor` |  |
+| pos | `int` |  |
+| col | `Union[int, NoneType]` | `None` |
+
+Move the cursor.
+
+This method accepts two possible signatures:
+    move(position): moves the cursor to the absolute position
+            in the text.
+    move(lineno, col): move the cursor at a given line number
+            and column number.

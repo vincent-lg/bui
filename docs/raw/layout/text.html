@@ -232,123 +232,164 @@
       <span style="white-space: pre;"><a id="L210"></a>    |               | letters would        |                           |</span><br />
       <span style="white-space: pre;"><a id="L211"></a>    |               | append to the        |                           |</span><br />
       <span style="white-space: pre;"><a id="L212"></a>    |               | current text (`pos   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>    |               | == len(text) -       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L214"></a>    |               | 1`).                 |                           |</span><br />
-      <span style="white-space: pre;"><a id="L215"></a>    | `pos`         | Current cursor       | `text.value[:cursor.pos]` |</span><br />
-      <span style="white-space: pre;"><a id="L216"></a>    |               | position (int).      |                           |</span><br />
-      <span style="white-space: pre;"><a id="L217"></a>    |               | This position is     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L218"></a>    |               | the one of the       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>    |               | character indice     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L220"></a>    |               | that will be         |                           |</span><br />
-      <span style="white-space: pre;"><a id="L221"></a>    |               | "pushed" when the    |                           |</span><br />
-      <span style="white-space: pre;"><a id="L222"></a>    |               | user types, so       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L223"></a>    |               | that `pos` is 0 if   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>    |               | the cursor is at     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L225"></a>    |               | the beginning of     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L226"></a>    |               | the wdget, and       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L227"></a>    |               | `len(text)` if the   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L228"></a>    |               | cursor is at the     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L229"></a>    |               | very end of the      |                           |</span><br />
-      <span style="white-space: pre;"><a id="L230"></a>    |               | text widget.         |                           |</span><br />
-      <span style="white-space: pre;"><a id="L231"></a>    | `text_after`  | Text from the        | `cursor.text_after`       |</span><br />
-      <span style="white-space: pre;"><a id="L232"></a>    |               | cursor position to   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L233"></a>    |               | the end of the       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L234"></a>    |               | widget, including    |                           |</span><br />
-      <span style="white-space: pre;"><a id="L235"></a>    |               | both limits (str).   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L236"></a>    |               | It is identical to   |                           |</span><br />
-      <span style="white-space: pre;"><a id="L237"></a>    |               | `text[pos:]`.        |                           |</span><br />
-      <span style="white-space: pre;"><a id="L238"></a>    |               | If the cursor is     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L239"></a>    |               | under the 'o' of     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L240"></a>    |               | 'coffee', then       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L241"></a>    |               | `cursor.text_after`  |                           |</span><br />
-      <span style="white-space: pre;"><a id="L242"></a>    |               | will return          |                           |</span><br />
-      <span style="white-space: pre;"><a id="L243"></a>    |               | 'offee'.             |                           |</span><br />
-      <span style="white-space: pre;"><a id="L244"></a>    | `text_before` | The text between the | `cursor.text_before`      |</span><br />
-      <span style="white-space: pre;"><a id="L245"></a>    |               | beginning of the     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>    |               | widget and the       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>    |               | current cursor       |                           |</span><br />
-      <span style="white-space: pre;"><a id="L248"></a>    |               | position, not        |                           |</span><br />
-      <span style="white-space: pre;"><a id="L249"></a>    |               | including the        |                           |</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>    |               | character under the  |                           |</span><br />
-      <span style="white-space: pre;"><a id="L251"></a>    |               | cursor. This is      |                           |</span><br />
-      <span style="white-space: pre;"><a id="L252"></a>    |               | identical to         |                           |</span><br />
-      <span style="white-space: pre;"><a id="L253"></a>    |               | `text[:pos]`. If the |                           |</span><br />
-      <span style="white-space: pre;"><a id="L254"></a>    |               | cursor is under the  |                           |</span><br />
-      <span style="white-space: pre;"><a id="L255"></a>    |               | 'o' of 'coffee',     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L256"></a>    |               | 'cursor.text_before` |                           |</span><br />
-      <span style="white-space: pre;"><a id="L257"></a>    |               | will return 'c'.     |                           |</span><br />
-      <span style="white-space: pre;"><a id="L258"></a></span><br />
-      <span style="white-space: pre;"><a id="L259"></a>    ## Controls</span><br />
-      <span style="white-space: pre;"><a id="L260"></a></span><br />
-      <span style="white-space: pre;"><a id="L261"></a>    | Control                           | Method       | Description    |</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
-      <span style="white-space: pre;"><a id="L263"></a>    | [change](../../control/change.md) | `on_change`  | The text has   |</span><br />
-      <span style="white-space: pre;"><a id="L264"></a>    |                                   |              | been changed,  |</span><br />
-      <span style="white-space: pre;"><a id="L265"></a>    |                                   |              | either by the  |</span><br />
-      <span style="white-space: pre;"><a id="L266"></a>    |                                   |              | user or the    |</span><br />
-      <span style="white-space: pre;"><a id="L267"></a>    |                                   |              | program.       |</span><br />
-      <span style="white-space: pre;"><a id="L268"></a>    | [init](../../control/init.md)     | `on_init`    | The text is    |</span><br />
-      <span style="white-space: pre;"><a id="L269"></a>    |                                   |              | ready to be    |</span><br />
-      <span style="white-space: pre;"><a id="L270"></a>    |                                   |              | displayed, but |</span><br />
-      <span style="white-space: pre;"><a id="L271"></a>    |                                   |              | is not         |</span><br />
-      <span style="white-space: pre;"><a id="L272"></a>    |                                   |              | displayed yet. |</span><br />
-      <span style="white-space: pre;"><a id="L273"></a>    | [press](../../control/press.md)   | `on_press`   | The user       |</span><br />
-      <span style="white-space: pre;"><a id="L274"></a>    |                                   |              | pressed on a   |</span><br />
-      <span style="white-space: pre;"><a id="L275"></a>    |                                   |              | key of her     |</span><br />
-      <span style="white-space: pre;"><a id="L276"></a>    |                                   |              | keyboard while |</span><br />
-      <span style="white-space: pre;"><a id="L277"></a>    |                                   |              | the text is    |</span><br />
-      <span style="white-space: pre;"><a id="L278"></a>    |                                   |              | focused. This  |</span><br />
-      <span style="white-space: pre;"><a id="L279"></a>    |                                   |              | control is     |</span><br />
-      <span style="white-space: pre;"><a id="L280"></a>    |                                   |              | triggered      |</span><br />
-      <span style="white-space: pre;"><a id="L281"></a>    |                                   |              | before the     |</span><br />
-      <span style="white-space: pre;"><a id="L282"></a>    |                                   |              | text is        |</span><br />
-      <span style="white-space: pre;"><a id="L283"></a>    |                                   |              | actually       |</span><br />
-      <span style="white-space: pre;"><a id="L284"></a>    |                                   |              | modified, and  |</span><br />
-      <span style="white-space: pre;"><a id="L285"></a>    |                                   |              | you can        |</span><br />
-      <span style="white-space: pre;"><a id="L286"></a>    |                                   |              | prevent the    |</span><br />
-      <span style="white-space: pre;"><a id="L287"></a>    |                                   |              | default change |</span><br />
-      <span style="white-space: pre;"><a id="L288"></a>    |                                   |              | to the text.   |</span><br />
-      <span style="white-space: pre;"><a id="L289"></a></span><br />
-      <span style="white-space: pre;"><a id="L290"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L291"></a></span><br />
-      <span style="white-space: pre;"><a id="L292"></a>            def on_init_first_name(self, widget):</span><br />
-      <span style="white-space: pre;"><a id="L293"></a>                widget.value = "Vincent"</span><br />
-      <span style="white-space: pre;"><a id="L294"></a></span><br />
-      <span style="white-space: pre;"><a id="L295"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L296"></a></span><br />
-      <span style="white-space: pre;"><a id="L297"></a>    tag_name = "text"</span><br />
-      <span style="white-space: pre;"><a id="L298"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L299"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L300"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L301"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L304"></a>        Attr("value", help="The text default value", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L305"></a>        Attr("multiline", help="The text is on multiple lines",</span><br />
-      <span style="white-space: pre;"><a id="L306"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L307"></a>        Attr("read-only", help="The text is read-only",</span><br />
-      <span style="white-space: pre;"><a id="L308"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L309"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L310"></a>    must_have_data = True</span><br />
-      <span style="white-space: pre;"><a id="L311"></a></span><br />
-      <span style="white-space: pre;"><a id="L312"></a>    def __init__(self, layout, parent, x, y, width=1, height=1, id="",</span><br />
-      <span style="white-space: pre;"><a id="L313"></a>            value="", multiline=False, read_only=False):</span><br />
-      <span style="white-space: pre;"><a id="L314"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L315"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L316"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L317"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L318"></a>        self.height = height</span><br />
-      <span style="white-space: pre;"><a id="L319"></a>        self.label = ""</span><br />
-      <span style="white-space: pre;"><a id="L320"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L321"></a>        self.value = value</span><br />
-      <span style="white-space: pre;"><a id="L322"></a>        self.multiline = multiline</span><br />
-      <span style="white-space: pre;"><a id="L323"></a>        self.read_only = read_only</span><br />
-      <span style="white-space: pre;"><a id="L324"></a></span><br />
-      <span style="white-space: pre;"><a id="L325"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L326"></a>        """Complete the widget, when all the layout has been set."""</span><br />
-      <span style="white-space: pre;"><a id="L327"></a>        self.label = self.data</span><br />
-      <span style="white-space: pre;"><a id="L328"></a>        if not self.id:</span><br />
-      <span style="white-space: pre;"><a id="L329"></a>            self.id = self.deduce_id(self.data)</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>    |               | == len(text)`).      |                           |</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>    | `col`         | The current column   | `col = cursor.col`              |</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>    |               | number (int),        |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>    |               | starting from 0.     |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>    |               | With `lineno`, this  |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>    |               | helps to represent   |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>    |               | the cursor position  |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>    |               | as a 2D position in  |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>    |               | the text (number of  |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>    |               | lines from the top,  |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>    |               | number of columns    |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>    |               | from the left). This |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>    |               | attribute is read-   |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L226"></a>    |               | only (see the `move` |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L227"></a>    |               | method to move the   |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>    |               | cursor).             |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>    | `lineno`      | Current line number  | `lineno = cursor.lineno`  |</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>    |               | (int) starting from  |                           |</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>    |               | 0. This attribute is |                           |</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>    |               | read-only, see the   |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L233"></a>    |               | `move` method to     |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>    |               | change the cursor    |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L235"></a>    |               | position.            |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L236"></a>    | `pos`         | Current cursor       | `text.value[:cursor.pos]` |</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>    |               | position (int).      |                           |</span><br />
+      <span style="white-space: pre;"><a id="L238"></a>    |               | This position is     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>    |               | the one of the       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L240"></a>    |               | character index      |                           |</span><br />
+      <span style="white-space: pre;"><a id="L241"></a>    |               | that will be         |                           |</span><br />
+      <span style="white-space: pre;"><a id="L242"></a>    |               | "pushed" when the    |                           |</span><br />
+      <span style="white-space: pre;"><a id="L243"></a>    |               | user types, so       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L244"></a>    |               | that `pos` is 0 if   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L245"></a>    |               | the cursor is at     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L246"></a>    |               | the beginning of     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>    |               | the wdget, and       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>    |               | `len(text)` if the   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>    |               | cursor is at the     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>    |               | very end of the      |                           |</span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    |               | text widget. This    |                           |</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>    |               | attribute is read-   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>    |               | only, see the `move` |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L254"></a>    |               | method to change the |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>    |               | cursor position.     |                                 |</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>    | `text_after`  | Text from the        | `cursor.text_after`       |</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>    |               | cursor position to   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>    |               | the end of the       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L259"></a>    |               | widget, including    |                           |</span><br />
+      <span style="white-space: pre;"><a id="L260"></a>    |               | both limits (str).   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L261"></a>    |               | It is identical to   |                           |</span><br />
+      <span style="white-space: pre;"><a id="L262"></a>    |               | `text[pos:]`.        |                           |</span><br />
+      <span style="white-space: pre;"><a id="L263"></a>    |               | If the cursor is     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L264"></a>    |               | under the 'o' of     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L265"></a>    |               | 'coffee', then       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L266"></a>    |               | `cursor.text_after`  |                           |</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>    |               | will return          |                           |</span><br />
+      <span style="white-space: pre;"><a id="L268"></a>    |               | 'offee'.             |                           |</span><br />
+      <span style="white-space: pre;"><a id="L269"></a>    | `text_before` | The text between the | `cursor.text_before`      |</span><br />
+      <span style="white-space: pre;"><a id="L270"></a>    |               | beginning of the     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L271"></a>    |               | widget and the       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>    |               | current cursor       |                           |</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>    |               | position, not        |                           |</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>    |               | including the        |                           |</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>    |               | character under the  |                           |</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>    |               | cursor. This is      |                           |</span><br />
+      <span style="white-space: pre;"><a id="L277"></a>    |               | identical to         |                           |</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>    |               | `text[:pos]`. If the |                           |</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>    |               | cursor is under the  |                           |</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>    |               | 'o' of 'coffee',     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>    |               | 'cursor.text_before` |                           |</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>    |               | will return 'c'.     |                           |</span><br />
+      <span style="white-space: pre;"><a id="L283"></a></span><br />
+      <span style="white-space: pre;"><a id="L284"></a>    The cursor also has some methods:</span><br />
+      <span style="white-space: pre;"><a id="L285"></a></span><br />
+      <span style="white-space: pre;"><a id="L286"></a>    | Method  | Signature                | Description                |</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>    | ------- | ------------------------ | -------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>    | `move`  | `move(pos: int, col:     | Move the cursor. Either    |</span><br />
+      <span style="white-space: pre;"><a id="L289"></a>    |         | Optionao[int] = None)`   | specify only one number    |</span><br />
+      <span style="white-space: pre;"><a id="L290"></a>    |         |                          | as argument for an         |</span><br />
+      <span style="white-space: pre;"><a id="L291"></a>    |         |                          | absolute movement (the     |</span><br />
+      <span style="white-space: pre;"><a id="L292"></a>    |         |                          | given position is the      |</span><br />
+      <span style="white-space: pre;"><a id="L293"></a>    |         |                          | index of the text in the   |</span><br />
+      <span style="white-space: pre;"><a id="L294"></a>    |         |                          | widget), or two numbers    |</span><br />
+      <span style="white-space: pre;"><a id="L295"></a>    |         |                          | (`lineno` and `col`) for a |</span><br />
+      <span style="white-space: pre;"><a id="L296"></a>    |         |                          | vertical movement taking   |</span><br />
+      <span style="white-space: pre;"><a id="L297"></a>    |         |                          | into account the number of |</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>    |         |                          | lines and columns.         |</span><br />
+      <span style="white-space: pre;"><a id="L299"></a></span><br />
+      <span style="white-space: pre;"><a id="L300"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L301"></a></span><br />
+      <span style="white-space: pre;"><a id="L302"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L303"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L304"></a>    | [change](../../control/change.md) | `on_change`  | The text has   |</span><br />
+      <span style="white-space: pre;"><a id="L305"></a>    |                                   |              | been changed,  |</span><br />
+      <span style="white-space: pre;"><a id="L306"></a>    |                                   |              | either by the  |</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>    |                                   |              | user or the    |</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>    |                                   |              | program.       |</span><br />
+      <span style="white-space: pre;"><a id="L309"></a>    | [init](../../control/init.md)     | `on_init`    | The text is    |</span><br />
+      <span style="white-space: pre;"><a id="L310"></a>    |                                   |              | ready to be    |</span><br />
+      <span style="white-space: pre;"><a id="L311"></a>    |                                   |              | displayed, but |</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>    |                                   |              | is not         |</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>    |                                   |              | displayed yet. |</span><br />
+      <span style="white-space: pre;"><a id="L314"></a>    | [press](../../control/press.md)   | `on_press`   | The user       |</span><br />
+      <span style="white-space: pre;"><a id="L315"></a>    |                                   |              | pressed on a   |</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>    |                                   |              | key of her     |</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>    |                                   |              | keyboard while |</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>    |                                   |              | the text is    |</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>    |                                   |              | focused. This  |</span><br />
+      <span style="white-space: pre;"><a id="L320"></a>    |                                   |              | control is     |</span><br />
+      <span style="white-space: pre;"><a id="L321"></a>    |                                   |              | triggered      |</span><br />
+      <span style="white-space: pre;"><a id="L322"></a>    |                                   |              | before the     |</span><br />
+      <span style="white-space: pre;"><a id="L323"></a>    |                                   |              | text is        |</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>    |                                   |              | actually       |</span><br />
+      <span style="white-space: pre;"><a id="L325"></a>    |                                   |              | modified, and  |</span><br />
+      <span style="white-space: pre;"><a id="L326"></a>    |                                   |              | you can        |</span><br />
+      <span style="white-space: pre;"><a id="L327"></a>    |                                   |              | prevent the    |</span><br />
+      <span style="white-space: pre;"><a id="L328"></a>    |                                   |              | default change |</span><br />
+      <span style="white-space: pre;"><a id="L329"></a>    |                                   |              | to the text.   |</span><br />
+      <span style="white-space: pre;"><a id="L330"></a></span><br />
+      <span style="white-space: pre;"><a id="L331"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L332"></a></span><br />
+      <span style="white-space: pre;"><a id="L333"></a>            def on_init_first_name(self, widget):</span><br />
+      <span style="white-space: pre;"><a id="L334"></a>                widget.value = "Vincent"</span><br />
+      <span style="white-space: pre;"><a id="L335"></a></span><br />
+      <span style="white-space: pre;"><a id="L336"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L337"></a></span><br />
+      <span style="white-space: pre;"><a id="L338"></a>    tag_name = "text"</span><br />
+      <span style="white-space: pre;"><a id="L339"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L340"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L341"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L342"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L343"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L344"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L345"></a>        Attr("value", help="The text default value", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L346"></a>        Attr("multiline", help="The text is on multiple lines",</span><br />
+      <span style="white-space: pre;"><a id="L347"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L348"></a>        Attr("read-only", help="The text is read-only",</span><br />
+      <span style="white-space: pre;"><a id="L349"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L350"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L351"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L352"></a></span><br />
+      <span style="white-space: pre;"><a id="L353"></a>    def __init__(self, layout, parent, x, y, width=1, height=1, id="",</span><br />
+      <span style="white-space: pre;"><a id="L354"></a>            value="", multiline=False, read_only=False):</span><br />
+      <span style="white-space: pre;"><a id="L355"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L356"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L357"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L358"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L359"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L360"></a>        self.label = ""</span><br />
+      <span style="white-space: pre;"><a id="L361"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L362"></a>        self.value = value</span><br />
+      <span style="white-space: pre;"><a id="L363"></a>        self.multiline = multiline</span><br />
+      <span style="white-space: pre;"><a id="L364"></a>        self.read_only = read_only</span><br />
+      <span style="white-space: pre;"><a id="L365"></a></span><br />
+      <span style="white-space: pre;"><a id="L366"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L367"></a>        """Complete the widget, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L368"></a>        self.label = self.data</span><br />
+      <span style="white-space: pre;"><a id="L369"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L370"></a>            self.id = self.deduce_id(self.data)</span><br />
     </div>
   </body>
 </html>
