@@ -61,6 +61,14 @@ def read_example(path: Path) -> str:
         with path.open("r", encoding="utf-8") as file:
             lines = file.read().splitlines()
 
+        # Add the links
+        doc += (
+                f"[Open raw](https://raw.githubusercontent.com/vincent-lg/"
+                f"bui/master/example/{path.name}) [Open in github]("
+                f"https://github.com/vincent-lg/bui/blob/master/"
+                f"example/{path.name})\n\n"
+        )
+
         # Skip the initial doc
         add = "\n".join(lines[len(module.__doc__.splitlines()) + 1:]).lstrip("\n")
         doc += f"## Source code ({len(add.splitlines())} lines)\n\n"

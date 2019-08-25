@@ -17,6 +17,8 @@ Then simply run this script with BUI installed.
 
     pip install wxPython
 
+[Open raw](https://raw.githubusercontent.com/vincent-lg/bui/master/example/download.py) [Open in github](https://github.com/vincent-lg/bui/blob/master/example/download.py)
+
 ## Source code (141 lines)
 
 ```python

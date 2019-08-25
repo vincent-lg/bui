@@ -9,6 +9,8 @@ bind them to control methods, as there are different possible strategies.
 
     pip install wxPython
 
+[Open raw](https://raw.githubusercontent.com/vincent-lg/bui/master/example/checkbox.py) [Open in github](https://github.com/vincent-lg/bui/blob/master/example/checkbox.py)
+
 ## Source code (28 lines)
 
 ```python

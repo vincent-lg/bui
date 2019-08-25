@@ -58,7 +58,6 @@ class WX4Text(SpecificText):
                 value=self.generic.value, style=style, name=label)
         self.wx_sizer.Add(self.wx_label)
         self.wx_sizer.Add(self.wx_text, proportion=5)
-        #self.wx_text.generic = self.generic
         window.add_widget(self)
         self.wx_text.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
         self.wx_text.Bind(wx.EVT_TEXT, self.OnTextChanged)
@@ -124,3 +123,4 @@ class WX4Text(SpecificText):
 
     def OnUpdateCursor(self, e):
         self.generic.schedule(self.AsyncUpdateCursor())
+        e.Skip()

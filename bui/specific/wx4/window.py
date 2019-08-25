@@ -169,6 +169,7 @@ class WX4Window(SpecificWindow):
         else:
             self.generic._process_control("press", kwargs)
 
+
     def _OnContext(self, e, widget=None):
         """On context menu."""
         if widget:
