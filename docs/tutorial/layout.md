@@ -30,7 +30,8 @@ So to use the [basic example](../example/basic.md), let's see how that would wor
    from bui import Window, start
 
    class HelloBUI(Window):
-        """Class to represent a basic hello world window."""
+
+       """Class to represent a basic hello world window."""
 
        def on_click_me(self):
            """When the 'Click me!' button is pressed."""
