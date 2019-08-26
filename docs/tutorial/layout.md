@@ -10,52 +10,51 @@ So to use the [basic example](../example/basic.md), let's see how that would wor
 
 1. Create a file, named `basic.bui`.  Open it with a standard editor (like notepad++ or Vim) and write the layout in it:
 
-    ```
-    <window title="A BUI demonstration">
-      <menubar>
-        <menu name=File>
-          <item>What is it?</item>
-          <item>Quit</item>
-        </menu>
-      </menubar>
+   ```
+   <window title="A BUI demonstration">
+     <menubar>
+       <menu name=File>
+         <item>What is it?</item>
+         <item>Quit</item>
+       </menu>
+     </menubar>
 
-      <button x=2 y=2>Click me!</button>
-      <text x=3 y=3 id=report>Report</text>
-    </window>
-    ```
+     <button x=2 y=2>Click me!</button>
+     <text x=3 y=3 id=report>Report</text>
+   </window>
+   ```
 
 2. Create a file in the same folder, named `basic.py`.  In it write the Python code:
 
-    ```python
-    from bui import Window, start
+   ```python
+   from bui import Window, start
 
-    class HelloBUI(Window):
-
+   class HelloBUI(Window):
         """Class to represent a basic hello world window."""
 
-        def on_click_me(self):
-            """When the 'Click me!' button is pressed."""
-            self["report"].value = "The button was clicked!"
+       def on_click_me(self):
+           """When the 'Click me!' button is pressed."""
+           self["report"].value = "The button was clicked!"
 
-        def on_quit(self):
-            """When the user press the quit menu item in the File menu."""
-            self.close()
+       def on_quit(self):
+           """When the user press the quit menu item in the File menu."""
+           self.close()
 
-        # Keyboard shortcuts
-        def on_press_alt_f4(self):
-            """When the user presses Alt + F4."""
-            self.close()
+       # Keyboard shortcuts
+       def on_press_alt_f4(self):
+           """When the user presses Alt + F4."""
+           self.close()
 
-        # Linking an alias to a method is so simple
-        on_press_ctrl_q = on_press_alt_f4
+       # Linking an alias to a method is so simple
+       on_press_ctrl_q = on_press_alt_f4
 
 
-    start(HelloBUI)
-    ```
+   start(HelloBUI)
+   ```
 
 3. Execute this script with Python:
 
-        python basic.py
+       python basic.py
 
 It should display the [basic example window](../example/basic.md).  The advantage here is that we've separated layout and code: the layout is in a file by itself, a file designers can edit without worrying about the code, while the code only contains Python, not the BUI layout.
 
