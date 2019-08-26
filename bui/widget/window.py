@@ -13,6 +13,7 @@ layout in a separate [file](../layout/file.md).
 """
 
 import asyncio
+import inspect
 from pathlib import Path
 import sys
 from typing import Type, Union
@@ -166,7 +167,7 @@ class Window(Widget, metaclass=MetaWindow):
         else:
             bui = cls.bui
             if not bui:
-                filename = Path(__name__)
+                filename = Path(inspect.getsourcefile(cls))
                 bui = f"{filename.stem}.bui"
 
             with open(bui, 'r', encoding="utf-8") as file:
