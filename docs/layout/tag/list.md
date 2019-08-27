@@ -94,7 +94,7 @@ the `add_choice` and `remove_choice` methods.
 
 | Method            | Signature       | Description               |
 | ----------------- | --------------- | ------------------------- |
-| `add_choice` | `add_choice( choice: Union[ Any, Tuple[ Hashable, Any]]` | Add a choice at the end of the list. The choice to specify as argument can be a single string. If so, the choice identifier will be the position of the string in the choice (starting at 0). The choice can also be a tuple of two elements: the choice identifier and the choice label. The choice identifier often is a string too and the same goes for the label, although you have freedom to use other types, as long as the identifier is hashable. |
+| `add_choice` | `add_choice( choice: Union[Any, Tuple[Hashable, Any]]` | Add a choice at the end of the list. The choice to specify as argument can be a single string. If so, the choice identifier will be the position of the string in the choice (starting at 0). The choice can also be a tuple of two elements: the choice identifier and the choice label. The choice identifier often is a string too and the same goes for the label, although you have freedom to use other types, as long as the identifier is hashable. |
 
 ## Controls
 
@@ -103,8 +103,8 @@ the `add_choice` and `remove_choice` methods.
 | [focus](../../control/focus.md) | `on_focus` | The list is focused or lose focus. |
 | [init](../../control/init.md) | `on_init` | The list is ready to be displayed, but is not displayed yet. |
 | [press](../../control/press.md) | `on_press` | The user pressed on a key of her keyboard while the list is focused. This control is triggered before the key has had any impact, so you can cancel the action at this point. |
-| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
-| [select](../../ control/select.md) | `on_select` | The list selection has changed. |
+| [release](../../control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub-controls. |
+| [select](../../control/select.md) | `on_select` | The list selection has changed. |
 | [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
     class MainWindow(Window):

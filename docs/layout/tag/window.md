@@ -92,7 +92,7 @@ exceptions however:
 | [focus](../../control/focus.md) | `on_focus` | The window is focused or lose focus.  This usually happens for a top window when the user switches the current app. |
 | [init](../../control/init.md) | `on_init` | The window is ready to be displayed, but is not displayed just yet. |
 | [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
-| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [release](../../control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub-controls. |
 | [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
 Notice that we don't specify the window identifier.  It would make

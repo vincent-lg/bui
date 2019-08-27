@@ -18,6 +18,7 @@ from pathlib import Path
 import sys
 from typing import Type, Union
 
+from bui.control.exceptions import StopControl
 from bui.layout.parser import BUILayoutParser
 from bui.tasks import cancel_all, run_remaining
 from bui.widget.base import Widget
@@ -44,6 +45,7 @@ class MetaWindow(type):
             close = getattr(base, "close", None)
             if close:
                 namespace["close"] = close
+                namespace["stop_control"] = base.stop_control
                 break
 
         return namespace
@@ -110,7 +112,6 @@ class Window(Widget, metaclass=MetaWindow):
     }
 
     _debug_controls = False
-
     # Can be overrideen by subclasses
     layout = ""
     bui = ""
@@ -261,6 +262,10 @@ class Window(Widget, metaclass=MetaWindow):
     def close(self):
         """Close this window."""
         self.specific.close()
+
+    def stop_control(self):
+        """Stop the control, and the control method that called it."""
+        raise StopControl()
 
     def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]
             ) -> 'wg.dialog.Dialog':

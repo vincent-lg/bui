@@ -10,6 +10,8 @@ import inspect
 import re
 from typing import Callable
 
+from bui.control.exceptions import StopControl
+
 # Private constants
 _WINDOW = None
 
@@ -201,6 +203,25 @@ class Control:
                 self._report_call(method)
                 return self._call_method(method)
 
+    def stop(self, reason=""):
+        """
+        Stop the control, interrupt the contorl method.
+
+        This method raises an exception that will interrupt the parent
+        control method.  You might specify an optional reason for this
+        control to be stopped.  This reason will be reported if you
+        run the application in debug-control mode.
+
+        Args:
+            reason (str, optional): the reason for this control to be stopped.
+
+        Raises:
+            StopControl
+
+        """
+        self._report_stop(reason)
+        raise StopControl()
+
     def _call_method(self, method):
         """Call a control method with optional arguments."""
         signature = inspect.signature(method)
@@ -244,6 +265,14 @@ class Control:
 
             report += f"control to {method.__name__}, call it"
             print(" " * 4 + report.strip())
+
+    def _report_stop(self, reason=""):
+        if _WINDOW._debug_controls:
+            if reason:
+                report = f"Stopping: {reason}"
+            else:
+                report = f"Stopping"
+            print(6 * " " + report)
 
 
 class _ControlScope:

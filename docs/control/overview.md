@@ -138,6 +138,32 @@ That's why a method named `on_quit` and `on_click_quit` do the same thing: menu 
 
 If BUI cannot link a control method for any reason, it will try to explain why it failed and will provide additional information on how to fix this error.
 
+## Interrupting controls
+
+Controls can be interrupted.  This will prevent other controls in the chain to execute and will prevent the system from performing "default actions" this control would generate.
+
+For instance, assuming you have a [text widget](../layout/tag/text.md) and you want to prevent the user from using the left arrow key in it:
+
+```python
+    def on_press_left_in_text(self, control):
+        """The left arrow key is pressed in the text of ID 'text'."""
+        control.stop("the left arrow key is forbidden")
+```
+
+You will use the `stop` method on the control object to stop the control method.  This will raise an exception and the rest of the method will not be executed.  You can give an optional reason as parameter to `stop`: this won't be displayed to the user, but if you run your window in [debug control mode](#debugging-controls), you will see the reason when the control stops.
+
+There's a common shortcut to mark a control method as blocked by default:
+
+```python
+class Example(Window):
+
+    ...
+
+    on_press_left = stop_control
+```
+
+`stop_control` is an alias for a common method that just raises the `StopControl` exception.
+
 ## Main controls and sub-controls
 
 Some controls provide additional flexibility.  You can add more information in the method name to intercept specific controls.  The best example is the [press control](./press.md), which is called when a key is being pressed by the user.

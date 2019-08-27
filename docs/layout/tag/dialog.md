@@ -218,7 +218,7 @@ There are a few exceptions however:
 | [focus](../../control/focus.md) | `on_focus` | The dialog is focused or lose focus. |
 | [init](../../control/init.md) | `on_init` | The dialog is ready to be displayed, but is not displayed just yet. |
 | [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
-| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [release](../../control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub-controls. |
 | [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
 Notice that we don't specify the dialog identifier.  It would make

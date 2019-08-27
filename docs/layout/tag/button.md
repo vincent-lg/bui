@@ -88,7 +88,7 @@ worry about how it works.  Consider the following example:
 | [click](../../control/click.md) | `on_click` | The button is being clicked on. |
 | [init](../../control/init.md) | `on_init` | The button is ready to be displayed, but is not displayed just yet. |
 | [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
-| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [release](../../control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub-controls. |
 | [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
     class MainWindow(Window):

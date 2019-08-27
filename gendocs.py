@@ -41,7 +41,10 @@ def format_doc(doc: str) -> str:
             if table and any(not cell for cell in cells):
                 for i, cell in enumerate(cells):
                     if cell:
-                        table[-1][i] = f"{table[-1][i].strip()} {cell}"
+                        table[-1][i] = f"{table[-1][i].strip()}"
+                        if table[-1][i][-1] not in "/[-":
+                            table[-1][i] += " "
+                        table[-1][i] +=  cell
             else:
                 table.append(cells)
         else:

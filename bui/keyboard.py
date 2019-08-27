@@ -14,7 +14,8 @@ LEFT_PAD = (
 MIDDLE_PAD = (
     "screenshot scroll pause "
     "insert home pageup "
-    "delete end pagedown"
+    "delete end pagedown "
+    "up left down right"
 ).split()
 
 NUMPAD = (

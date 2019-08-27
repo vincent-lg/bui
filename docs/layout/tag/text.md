@@ -132,9 +132,9 @@ for examples).
 | ------------- | -------------------- | ------------------------- |
 | `at_begin` | Yes or no (bool). Is true if the cursor stands at the beginning of the text widget `pos == 0`). | `if cursor.at_begin:` |
 | `at_end` | Yes or no (bool). Is true if the cursor stands at the end of the text widget, that if typing new letters would append to the current text (`pos == len(text)`). | `if cursor.at_end:` |
-| `col` | The current column number (int), starting from 0. With `lineno`, this helps to represent the cursor position as a 2D position in the text (number of lines from the top, number of columns from the left). This attribute is read- only (see the `move` method to move the cursor). | `col = cursor.col` |
+| `col` | The current column number (int), starting from 0. With `lineno`, this helps to represent the cursor position as a 2D position in the text (number of lines from the top, number of columns from the left). This attribute is read-only (see the `move` method to move the cursor). | `col = cursor.col` |
 | `lineno` | Current line number (int) starting from 0. This attribute is read-only, see the `move` method to change the cursor position. | `lineno = cursor.lineno` |
-| `pos` | Current cursor position (int). This position is the one of the character index that will be "pushed" when the user types, so that `pos` is 0 if the cursor is at the beginning of the wdget, and `len(text)` if the cursor is at the very end of the text widget. This attribute is read- only, see the `move` method to change the cursor position. | `text.value[:cursor.pos]` |
+| `pos` | Current cursor position (int). This position is the one of the character index that will be "pushed" when the user types, so that `pos` is 0 if the cursor is at the beginning of the wdget, and `len(text)` if the cursor is at the very end of the text widget. This attribute is read-only, see the `move` method to change the cursor position. | `text.value[:cursor.pos]` |
 | `text_after` | Text from the cursor position to the end of the widget, including both limits (str). It is identical to `text[pos:]`. If the cursor is under the 'o' of 'coffee', then `cursor.text_after` will return 'offee'. | `cursor.text_after` |
 | `text_before` | The text between the beginning of the widget and the current cursor position, not including the character under the cursor. This is identical to `text[:pos]`. If the cursor is under the 'o' of 'coffee', 'cursor.text_before` will return 'c'. | `cursor.text_before` |
 
@@ -148,10 +148,10 @@ The cursor also has some methods:
 
 | Control                         | Method       | Description      |
 | ------------------------------- | ------------ | ---------------- |
-| [change](../../ control/change.md) | `on_change` | The text has been changed, either by the user or the program. |
+| [change](../../control/change.md) | `on_change` | The text has been changed, either by the user or the program. |
 | [init](../../control/init.md) | `on_init` | The text is ready to be displayed, but is not displayed yet. |
 | [press](../../control/press.md) | `on_press` | The user pressed on a key of her keyboard while the text is focused. This control is triggered before the text is actually modified, and you can prevent the default change to the text. |
-| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [release](../../control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub-controls. |
 | [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
     class MainWindow(Window):

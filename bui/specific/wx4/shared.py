@@ -4,6 +4,7 @@ from collections import namedtuple
 
 import wx
 
+from bui.control.exceptions import StopControl
 from bui.specific.wx4.constants import KEYMAP
 
 class WXShared:
@@ -19,11 +20,7 @@ class WXShared:
     def _OnKeyDown(self, e):
         """A key was pressed."""
         kwargs = self._get_control_args(e)
-        if "press" in self.generic.controls:
-            self.generic._process_control("press", kwargs)
-        else:
-            self.generic.parent._process_control("press", kwargs)
-        e.Skip()
+        self.process_control(e, "press", kwargs)
 
     def _OnChar(self, e):
         """A key was pressed leadng to a key type."""
@@ -31,20 +28,12 @@ class WXShared:
                 "unicode": chr(e.GetUnicodeKey()),
         }
 
-        if "type" in self.generic.controls:
-            self.generic._process_control("type", kwargs)
-        else:
-            self.generic.parent._process_control("type", kwargs)
-        e.Skip()
+        self.process_control(e, "type", kwargs)
 
     def _OnKeyUp(self, e):
         """A key was released."""
         kwargs = self._get_control_args(e)
-        if "release" in self.generic.controls:
-            self.generic._process_control("release", kwargs)
-        else:
-            self.generic.parent._process_control("release", kwargs)
-        e.Skip()
+        self.process_control(e, "release", kwargs)
 
     def _get_control_args(self, e):
         key_code = e.GetKeyCode()
@@ -87,3 +76,29 @@ class WXShared:
 
         kwargs["key"] = key
         return kwargs
+
+    def process_control(self, e, control, options=None):
+        """Process the control.
+
+        Args:
+            e (wx.Event): the wxPython event.
+            control (str): the control name to call.
+            options (optional, dict): the control options.
+
+        If the generic widget is not subscribed to this control,
+        look for the parent widget and so on.
+
+        """
+        widget = self
+        while control not in widget.generic.controls:
+            widget = widget.parent
+            if widget is None:
+                break
+
+        if widget:
+            try:
+                widget.generic._process_control(control, options)
+            except StopControl:
+                pass
+            else:
+                e.Skip()

@@ -14,7 +14,7 @@ This class offers 1 property.
 | -------- | --- | --- |
 | [usable_surface](#usable_surface) | Return the screen size that can be used, in pixels. | **Can't write** |
 
-This class offers 10 methods.
+This class offers 11 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -28,6 +28,7 @@ This class offers 10 methods.
 | [pop_menu](#pop_menu) | `pop_menu(context_id: str)` | Pop a context menu, blocks until the menu is closed. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
 | [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
+| [stop_control](#stop_control) | `stop_control()` | Stop the control, and the control method that called it. |
 
 ## Properties
 
@@ -37,7 +38,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/dialog.html#L136)
+[See the source code](../raw/widget/dialog.html#L137)
 
 Return the screen size that can be used, in pixels.
 
@@ -55,7 +56,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L261)
+[See the source code](../raw/widget/dialog.html#L262)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -82,7 +83,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L314)
+[See the source code](../raw/widget/dialog.html#L319)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -95,7 +96,7 @@ The window closes.
 
 `mark(layout: str)`
 
-[See the source code](../raw/widget/dialog.html#L51)
+[See the source code](../raw/widget/dialog.html#L53)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -107,7 +108,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L300)
+[See the source code](../raw/widget/dialog.html#L305)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -126,7 +127,7 @@ Args:
 
 `parse_layout(Window, tag_name='window')`
 
-[See the source code](../raw/widget/dialog.html#L152)
+[See the source code](../raw/widget/dialog.html#L153)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -142,7 +143,7 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/dialog.html#L265)
+[See the source code](../raw/widget/dialog.html#L270)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -162,7 +163,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L289)
+[See the source code](../raw/widget/dialog.html#L294)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -191,7 +192,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sleep(self, seconds)`
 
-[See the source code](../raw/widget/dialog.html#L226)
+[See the source code](../raw/widget/dialog.html#L227)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -205,3 +206,15 @@ It is a shortcut to `asyncio.sleep`.
 
 Args:
     seconds (int or float): the number of seconds to wait.
+
+### stop_control
+
+`stop_control(self)`
+
+[See the source code](../raw/widget/dialog.html#L266)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Dialog` |  |
+
+Stop the control, and the control method that called it.
