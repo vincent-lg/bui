@@ -392,38 +392,60 @@
       <span style="white-space: pre;"><a id="L370"></a></span><br />
       <span style="white-space: pre;"><a id="L371"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L372"></a></span><br />
-      <span style="white-space: pre;"><a id="L373"></a>    | Control                           | Method       | Description    |</span><br />
-      <span style="white-space: pre;"><a id="L374"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
-      <span style="white-space: pre;"><a id="L375"></a>    | [focus](../../control/focus.md)   | `on_focus`   | The table is   |</span><br />
-      <span style="white-space: pre;"><a id="L376"></a>    |                                   |              | focused or lose  |</span><br />
-      <span style="white-space: pre;"><a id="L377"></a>    |                                   |              | focus.           |</span><br />
-      <span style="white-space: pre;"><a id="L378"></a>    | [select](../../control/select.md] | `on_select`  | The table        |</span><br />
-      <span style="white-space: pre;"><a id="L379"></a>    |                                   |              | selection has    |</span><br />
-      <span style="white-space: pre;"><a id="L380"></a>    |                                   |              | changed.         |</span><br />
-      <span style="white-space: pre;"><a id="L381"></a></span><br />
-      <span style="white-space: pre;"><a id="L382"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L383"></a></span><br />
-      <span style="white-space: pre;"><a id="L384"></a>            def on_select_products(self, widget, row):</span><br />
-      <span style="white-space: pre;"><a id="L385"></a>                print(f"The user selected the row {row} in the table.")</span><br />
-      <span style="white-space: pre;"><a id="L386"></a></span><br />
-      <span style="white-space: pre;"><a id="L387"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L388"></a></span><br />
-      <span style="white-space: pre;"><a id="L389"></a>    tag_name = "table"</span><br />
-      <span style="white-space: pre;"><a id="L390"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L391"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L392"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L393"></a>        Attr("id", help="The widget identifier"),</span><br />
-      <span style="white-space: pre;"><a id="L394"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L395"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L396"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L397"></a></span><br />
-      <span style="white-space: pre;"><a id="L398"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
-      <span style="white-space: pre;"><a id="L399"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L400"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L401"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L402"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L403"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L404"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L373"></a>    | Control                         | Method       | Description      |</span><br />
+      <span style="white-space: pre;"><a id="L374"></a>    | ------------------------------- | ------------ | ---------------- |</span><br />
+      <span style="white-space: pre;"><a id="L375"></a>    | [focus](../../control/focus.md) | `on_focus`   | The table is     |</span><br />
+      <span style="white-space: pre;"><a id="L376"></a>    |                                 |              | focused or lose  |</span><br />
+      <span style="white-space: pre;"><a id="L377"></a>    |                                 |              | focus.           |</span><br />
+      <span style="white-space: pre;"><a id="L378"></a>    | [init](../../control/init.md)   | `on_init`    | The table is     |</span><br />
+      <span style="white-space: pre;"><a id="L379"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L380"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L381"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L382"></a>    |                                 |              | just yet.        |</span><br />
+      <span style="white-space: pre;"><a id="L383"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L384"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L385"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L386"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L387"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L388"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L389"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L390"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L391"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L392"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L393"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L394"></a>    | [select](../../                 | `on_select`  | The table        |</span><br />
+      <span style="white-space: pre;"><a id="L395"></a>    | control/select.md)              |              | selection has    |</span><br />
+      <span style="white-space: pre;"><a id="L396"></a>    |                                 |              | changed.         |</span><br />
+      <span style="white-space: pre;"><a id="L397"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L398"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L399"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L400"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L401"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L402"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L403"></a></span><br />
+      <span style="white-space: pre;"><a id="L404"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L405"></a></span><br />
+      <span style="white-space: pre;"><a id="L406"></a>            def on_select_products(self, widget, row):</span><br />
+      <span style="white-space: pre;"><a id="L407"></a>                print(f"The user selected the row {row} in the table.")</span><br />
+      <span style="white-space: pre;"><a id="L408"></a></span><br />
+      <span style="white-space: pre;"><a id="L409"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L410"></a></span><br />
+      <span style="white-space: pre;"><a id="L411"></a>    tag_name = "table"</span><br />
+      <span style="white-space: pre;"><a id="L412"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L413"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L414"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L415"></a>        Attr("id", help="The widget identifier"),</span><br />
+      <span style="white-space: pre;"><a id="L416"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L417"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L418"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L419"></a></span><br />
+      <span style="white-space: pre;"><a id="L420"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
+      <span style="white-space: pre;"><a id="L421"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L422"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L423"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L424"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L425"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L426"></a>        self.height = height</span><br />
     </div>
   </body>
 </html>

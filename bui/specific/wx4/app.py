@@ -30,9 +30,10 @@ class AsyncApp(wx.App):
 
     """
 
-    def __init__(self, loop=None, top_window=None):
-        self.loop = loop or asyncio.get_event_loop()
-        self.top_windows = [top_window]
+    def __init__(self, top_window):
+        self.loop = asyncio.get_event_loop()
+        self.top_window = top_window
+        self.top_windows = []
         self.exiting = False
         self.tasks = []
         super().__init__()

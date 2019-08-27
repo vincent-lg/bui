@@ -280,10 +280,14 @@ the user, how could you do it?
 
 ## Controls
 
-| Control                           | Method       | Description    |
-| --------------------------------- | ------------ | -------------- |
+| Control                         | Method       | Description      |
+| ------------------------------- | ------------ | ---------------- |
 | [focus](../../control/focus.md) | `on_focus` | The table is focused or lose focus. |
-| [select](../../control/select.md] | `on_select` | The table selection has changed. |
+| [init](../../control/init.md) | `on_init` | The table is ready to be displayed, but is not displayed just yet. |
+| [press](../../control/press.md) | `on_press` | The user presses on a key from her keyboard. This control can have sub-controls. |
+| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [select](../../ control/select.md) | `on_select` | The table selection has changed. |
+| [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
     class MainWindow(Window):
 

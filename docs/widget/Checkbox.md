@@ -40,7 +40,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/checkbox.html#L66)
+[See the source code](../raw/widget/checkbox.html#L68)
 
 Return whether the checkbox is disabled or not.
 
@@ -50,7 +50,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/checkbox.html#L61)
+[See the source code](../raw/widget/checkbox.html#L63)
 
 Return whether the checkbox is enabled or not.
 
@@ -60,7 +60,7 @@ Return whether the checkbox is enabled or not.
 
 `check(self)`
 
-[See the source code](../raw/widget/checkbox.html#L71)
+[See the source code](../raw/widget/checkbox.html#L73)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -87,7 +87,7 @@ raise no exception.
 
 `disable(self)`
 
-[See the source code](../raw/widget/checkbox.html#L83)
+[See the source code](../raw/widget/checkbox.html#L85)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -99,7 +99,7 @@ Disable the checkbox.
 
 `enable(self)`
 
-[See the source code](../raw/widget/checkbox.html#L79)
+[See the source code](../raw/widget/checkbox.html#L81)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -111,7 +111,7 @@ Force-enable the checkbox.
 
 `handle_check(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L87)
+[See the source code](../raw/widget/checkbox.html#L89)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -124,7 +124,7 @@ Do nothing if a checkbox is clicked.
 
 `handle_init(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L91)
+[See the source code](../raw/widget/checkbox.html#L93)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -137,7 +137,7 @@ Do nothing if a checkbox is pressed.
 
 `handle_press(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L95)
+[See the source code](../raw/widget/checkbox.html#L97)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -163,7 +163,7 @@ Schedule the specified coroutine in the main event loop.
 
 `uncheck(self)`
 
-[See the source code](../raw/widget/checkbox.html#L75)
+[See the source code](../raw/widget/checkbox.html#L77)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

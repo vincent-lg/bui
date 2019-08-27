@@ -5,9 +5,10 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.table import SpecificTable
+from bui.specific.wx4.shared import WXShared
 from bui.widget.table import AbcRow
 
-class WX4Table(SpecificTable):
+class WX4Table(WXShared, SpecificTable):
 
     """Wx-specific table widget."""
 
@@ -20,7 +21,7 @@ class WX4Table(SpecificTable):
         for i, (_, name) in enumerate(self.generic.cols):
             self.wx_table.InsertColumn(i, name)
         window.add_widget(self)
-        self.wx_table.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
+        self.watch_keyboard(self.wx_table)
         self.wx_table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._OnSelected)
 
     def update_row(self, row: AbcRow):
@@ -104,15 +105,6 @@ class WX4Table(SpecificTable):
         # The generic table has been sorted, so follow it
         for row in self.generic._rows:
             self.update_row(row)
-
-    def _OnKeyDown(self, e):
-        window = self.parent
-        if "press" in self.generic.controls:
-            window._OnKeyDown(e, self)
-        else:
-            window._OnKeyDown(e)
-
-        e.Skip()
 
     def _OnSelected(self, e):
         """An item has been selected."""

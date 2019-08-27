@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.radio import SpecificRadioButton
+from bui.specific.wx4.shared import WXShared
 
-class WX4RadioButton(SpecificRadioButton):
+class WX4RadioButton(WXShared, SpecificRadioButton):
 
     """Wx-specific radio button widget."""
 
@@ -23,7 +24,7 @@ class WX4RadioButton(SpecificRadioButton):
             self.wx_grid.Add(choice, proportion=1)
             self.wx_choices.append(choice)
             choice.Bind(wx.EVT_RADIOBUTTON, self.OnSelect)
-            choice.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+            self.watch_keyboard(choice)
 
         self.wx_panel.SetSizer(self.wx_grid)
         window.add_widget(self)
@@ -46,7 +47,7 @@ class WX4RadioButton(SpecificRadioButton):
             self.wx_grid.Add(choice, proportion=1)
             self.wx_choices.append(choice)
             choice.Bind(wx.EVT_RADIOBUTTON, self.OnSelect)
-            choice.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+            self.watch_keyboard(choice)
 
         self.wx_panel.SetSizer(self.wx_grid)
 
@@ -55,11 +56,3 @@ class WX4RadioButton(SpecificRadioButton):
         wx_choice = e.GetEventObject()
         index = self.wx_choices.index(wx_choice)
         self.generic._selected = index
-
-    def OnKeyDown(self, e):
-        window = self.parent
-        if "press" in self.generic.controls:
-            window._OnKeyDown(e, self)
-        else:
-            window._OnKeyDown(e)
-        e.Skip()

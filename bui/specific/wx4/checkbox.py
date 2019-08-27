@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.checkbox import SpecificCheckbox
+from bui.specific.wx4.shared import WXShared
 
-class WX4Checkbox(SpecificCheckbox):
+class WX4Checkbox(WXShared, SpecificCheckbox):
 
     @property
     def name(self):
@@ -49,6 +50,7 @@ class WX4Checkbox(SpecificCheckbox):
         self.wx_checkbox.SetValue(self.generic.checked)
         window.add_widget(self)
         self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnCheck)
+        self.watch_keyboard(self.wx_checkbox)
 
     def OnCheck(self, e):
         """The checkbox is clicked, create a click control."""

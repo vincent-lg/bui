@@ -68,370 +68,372 @@
       <span style="white-space: pre;"><a id="L46"></a>    default_controls = {</span><br />
       <span style="white-space: pre;"><a id="L47"></a>        #"focus": "The table gets or loses focus",</span><br />
       <span style="white-space: pre;"><a id="L48"></a>        "init": "The window is initialized",</span><br />
-      <span style="white-space: pre;"><a id="L49"></a>        #"press": "The user presses on a key while the table is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        "press": "The user presses on a key while the table is focused.",</span><br />
       <span style="white-space: pre;"><a id="L50"></a>        #"select": "The table selection changes.",</span><br />
-      <span style="white-space: pre;"><a id="L51"></a>    }</span><br />
-      <span style="white-space: pre;"><a id="L52"></a></span><br />
-      <span style="white-space: pre;"><a id="L53"></a>    def __init__(self, leaf):</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>        super().__init__(leaf)</span><br />
-      <span style="white-space: pre;"><a id="L55"></a>        self.x = leaf.x</span><br />
-      <span style="white-space: pre;"><a id="L56"></a>        self.y = leaf.y</span><br />
-      <span style="white-space: pre;"><a id="L57"></a>        self.id = leaf.id</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>        self.width = leaf.width</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>        self.height = leaf.height</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>        self.cols = []</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>        self.factory = None</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>        self._rows = []</span><br />
-      <span style="white-space: pre;"><a id="L63"></a>        self._associations = {}</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>        self._selected = 0</span><br />
-      <span style="white-space: pre;"><a id="L65"></a>        self.can_associate = False</span><br />
-      <span style="white-space: pre;"><a id="L66"></a></span><br />
-      <span style="white-space: pre;"><a id="L67"></a>    def __len__(self):</span><br />
-      <span style="white-space: pre;"><a id="L68"></a>        return len(self._rows)</span><br />
-      <span style="white-space: pre;"><a id="L69"></a></span><br />
-      <span style="white-space: pre;"><a id="L70"></a>    def __getitem__(self, item):</span><br />
-      <span style="white-space: pre;"><a id="L71"></a>        row = self._rows[item]</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>        if isinstance(row, AbcRow):</span><br />
-      <span style="white-space: pre;"><a id="L73"></a>            if self.can_associate:</span><br />
-      <span style="white-space: pre;"><a id="L74"></a>                return (row, self._associations.get(id(row)))</span><br />
-      <span style="white-space: pre;"><a id="L75"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>                return row</span><br />
-      <span style="white-space: pre;"><a id="L77"></a></span><br />
-      <span style="white-space: pre;"><a id="L78"></a>        associations = []</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>        rows = row</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>        for row in rows:</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>            if self.can_associate:</span><br />
-      <span style="white-space: pre;"><a id="L82"></a>                associations.append((row, self._associations.get(id(row))))</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>                associations.append(row)</span><br />
-      <span style="white-space: pre;"><a id="L85"></a></span><br />
-      <span style="white-space: pre;"><a id="L86"></a>        return associations</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>        "release": "The user releases a key while the table is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>        "type": "The user types a character while the table is focused.",</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L54"></a></span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>        self.x = leaf.x</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>        self.y = leaf.y</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>        self.id = leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>        self.width = leaf.width</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>        self.height = leaf.height</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>        self.cols = []</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>        self.factory = None</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        self._rows = []</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>        self._associations = {}</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>        self._selected = 0</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        self.can_associate = False</span><br />
+      <span style="white-space: pre;"><a id="L68"></a></span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    def __len__(self):</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>        return len(self._rows)</span><br />
+      <span style="white-space: pre;"><a id="L71"></a></span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    def __getitem__(self, item):</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>        row = self._rows[item]</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>        if isinstance(row, AbcRow):</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>            if self.can_associate:</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>                return (row, self._associations.get(id(row)))</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>                return row</span><br />
+      <span style="white-space: pre;"><a id="L79"></a></span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        associations = []</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        rows = row</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>        for row in rows:</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>            if self.can_associate:</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>                associations.append((row, self._associations.get(id(row))))</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>                associations.append(row)</span><br />
       <span style="white-space: pre;"><a id="L87"></a></span><br />
-      <span style="white-space: pre;"><a id="L88"></a>    def __setitem__(self, item, row: Union[Row, Sequence[Row]]):</span><br />
-      <span style="white-space: pre;"><a id="L89"></a>        if isinstance(item, int):</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>            items = slice(item, item + 1, 1)</span><br />
-      <span style="white-space: pre;"><a id="L91"></a>            rows = [row]</span><br />
-      <span style="white-space: pre;"><a id="L92"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L93"></a>            items = item</span><br />
-      <span style="white-space: pre;"><a id="L94"></a>            rows = row</span><br />
-      <span style="white-space: pre;"><a id="L95"></a></span><br />
-      <span style="white-space: pre;"><a id="L96"></a>        cur_rows = self._rows[items]</span><br />
-      <span style="white-space: pre;"><a id="L97"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>            iter(rows)</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>            if len(rows) != len(cur_rows):</span><br />
-      <span style="white-space: pre;"><a id="L100"></a>                raise TypeError</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>        except TypeError:</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>            raise TypeError("the number of rows doesn't match "</span><br />
-      <span style="white-space: pre;"><a id="L103"></a>                    "the speicified indices") from None</span><br />
-      <span style="white-space: pre;"><a id="L104"></a></span><br />
-      <span style="white-space: pre;"><a id="L105"></a>        for cur_row, row in zip(cur_rows, rows):</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>            if isinstance(row, AbcRow) and not isinstance(row, self.factory):</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>                raise TypeError("the specified row isn't of the proper table")</span><br />
-      <span style="white-space: pre;"><a id="L108"></a>            elif isinstance(row, dict):</span><br />
-      <span style="white-space: pre;"><a id="L109"></a>                row = self.factory(cur_row.index, **row)</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L111"></a>                row = self.factory(cur_row.index, *row)</span><br />
-      <span style="white-space: pre;"><a id="L112"></a>            row.index = cur_row.index</span><br />
-      <span style="white-space: pre;"><a id="L113"></a>            self.update_row(row)</span><br />
-      <span style="white-space: pre;"><a id="L114"></a></span><br />
-      <span style="white-space: pre;"><a id="L115"></a>    @CachedProperty</span><br />
-      <span style="white-space: pre;"><a id="L116"></a>    def id(self):</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>        return self.leaf.id</span><br />
-      <span style="white-space: pre;"><a id="L118"></a></span><br />
-      <span style="white-space: pre;"><a id="L119"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>    def rows(self):</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>        """Return the table rows with optional associated objects."""</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>        rows = self._rows</span><br />
-      <span style="white-space: pre;"><a id="L123"></a>        associations = []</span><br />
-      <span style="white-space: pre;"><a id="L124"></a>        can_associate = self.can_associate</span><br />
-      <span style="white-space: pre;"><a id="L125"></a>        for row in rows:</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>            if can_associate:</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>                associations.append((row, self._associations.get(id(row))))</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>                associations.append(row)</span><br />
-      <span style="white-space: pre;"><a id="L130"></a></span><br />
-      <span style="white-space: pre;"><a id="L131"></a>        return associations</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>        return associations</span><br />
+      <span style="white-space: pre;"><a id="L89"></a></span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    def __setitem__(self, item, row: Union[Row, Sequence[Row]]):</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>        if isinstance(item, int):</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>            items = slice(item, item + 1, 1)</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>            rows = [row]</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>            items = item</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>            rows = row</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>        cur_rows = self._rows[items]</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>            iter(rows)</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>            if len(rows) != len(cur_rows):</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>                raise TypeError</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>            raise TypeError("the number of rows doesn't match "</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>                    "the speicified indices") from None</span><br />
+      <span style="white-space: pre;"><a id="L106"></a></span><br />
+      <span style="white-space: pre;"><a id="L107"></a>        for cur_row, row in zip(cur_rows, rows):</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>            if isinstance(row, AbcRow) and not isinstance(row, self.factory):</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>                raise TypeError("the specified row isn't of the proper table")</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>            elif isinstance(row, dict):</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>                row = self.factory(cur_row.index, **row)</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>                row = self.factory(cur_row.index, *row)</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>            row.index = cur_row.index</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>            self.update_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L116"></a></span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    def id(self):</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>        return self.leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L120"></a></span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    def rows(self):</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>        """Return the table rows with optional associated objects."""</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>        rows = self._rows</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>        associations = []</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>        can_associate = self.can_associate</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>        for row in rows:</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>            if can_associate:</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>                associations.append((row, self._associations.get(id(row))))</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>                associations.append(row)</span><br />
       <span style="white-space: pre;"><a id="L132"></a></span><br />
-      <span style="white-space: pre;"><a id="L133"></a>    @rows.setter</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>    def rows(self, rows: Iterable[Row]):</span><br />
-      <span style="white-space: pre;"><a id="L135"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>        Modify the table rows.</span><br />
-      <span style="white-space: pre;"><a id="L137"></a></span><br />
-      <span style="white-space: pre;"><a id="L138"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>            rows (iterable): an iterable containing representations</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>                    of rows (can be Row objects specific to this table,</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>                    or tuple, list or dict).</span><br />
-      <span style="white-space: pre;"><a id="L142"></a></span><br />
-      <span style="white-space: pre;"><a id="L143"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L144"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L145"></a>            iter(rows)</span><br />
-      <span style="white-space: pre;"><a id="L146"></a>        except TypeError:</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>            raise TypeError("'rows' isn't a valid iterable")</span><br />
-      <span style="white-space: pre;"><a id="L148"></a></span><br />
-      <span style="white-space: pre;"><a id="L149"></a>        if not isinstance(rows, list):</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>            rows = list(rows)</span><br />
-      <span style="white-space: pre;"><a id="L151"></a></span><br />
-      <span style="white-space: pre;"><a id="L152"></a>        for i, row in enumerate(rows):</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>            if isinstance(row, (tuple, list)):</span><br />
-      <span style="white-space: pre;"><a id="L154"></a>                row = self.factory(i, *row)</span><br />
-      <span style="white-space: pre;"><a id="L155"></a>            elif isinstance(row, (dict)):</span><br />
-      <span style="white-space: pre;"><a id="L156"></a>                row = self.factory(i, **row)</span><br />
-      <span style="white-space: pre;"><a id="L157"></a>            elif not isinstance(row, self.factory):</span><br />
-      <span style="white-space: pre;"><a id="L158"></a>                raise TypeError(f"invalid row type ({type(row)})")</span><br />
-      <span style="white-space: pre;"><a id="L159"></a>            rows[i] = row</span><br />
-      <span style="white-space: pre;"><a id="L160"></a></span><br />
-      <span style="white-space: pre;"><a id="L161"></a>        self._rows[:] = rows</span><br />
-      <span style="white-space: pre;"><a id="L162"></a>        self.specific.refresh(rows)</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>        return rows</span><br />
-      <span style="white-space: pre;"><a id="L164"></a></span><br />
-      <span style="white-space: pre;"><a id="L165"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L166"></a>    def selected(self):</span><br />
-      <span style="white-space: pre;"><a id="L167"></a>        """Return the row and its associated object if needed."""</span><br />
-      <span style="white-space: pre;"><a id="L168"></a>        row = self._rows[self._selected]</span><br />
-      <span style="white-space: pre;"><a id="L169"></a>        if self.can_associate:</span><br />
-      <span style="white-space: pre;"><a id="L170"></a>            return (row, self._associations.get(id(row)))</span><br />
-      <span style="white-space: pre;"><a id="L171"></a></span><br />
-      <span style="white-space: pre;"><a id="L172"></a>        return row</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>        return associations</span><br />
+      <span style="white-space: pre;"><a id="L134"></a></span><br />
+      <span style="white-space: pre;"><a id="L135"></a>    @rows.setter</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    def rows(self, rows: Iterable[Row]):</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>        Modify the table rows.</span><br />
+      <span style="white-space: pre;"><a id="L139"></a></span><br />
+      <span style="white-space: pre;"><a id="L140"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>            rows (iterable): an iterable containing representations</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>                    of rows (can be Row objects specific to this table,</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>                    or tuple, list or dict).</span><br />
+      <span style="white-space: pre;"><a id="L144"></a></span><br />
+      <span style="white-space: pre;"><a id="L145"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>            iter(rows)</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>            raise TypeError("'rows' isn't a valid iterable")</span><br />
+      <span style="white-space: pre;"><a id="L150"></a></span><br />
+      <span style="white-space: pre;"><a id="L151"></a>        if not isinstance(rows, list):</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>            rows = list(rows)</span><br />
+      <span style="white-space: pre;"><a id="L153"></a></span><br />
+      <span style="white-space: pre;"><a id="L154"></a>        for i, row in enumerate(rows):</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>            if isinstance(row, (tuple, list)):</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>                row = self.factory(i, *row)</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>            elif isinstance(row, (dict)):</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>                row = self.factory(i, **row)</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>            elif not isinstance(row, self.factory):</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>                raise TypeError(f"invalid row type ({type(row)})")</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>            rows[i] = row</span><br />
+      <span style="white-space: pre;"><a id="L162"></a></span><br />
+      <span style="white-space: pre;"><a id="L163"></a>        self._rows[:] = rows</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>        self.specific.refresh(rows)</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>        return rows</span><br />
+      <span style="white-space: pre;"><a id="L166"></a></span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>    def selected(self):</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>        """Return the row and its associated object if needed."""</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>        row = self._rows[self._selected]</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>        if self.can_associate:</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>            return (row, self._associations.get(id(row)))</span><br />
       <span style="white-space: pre;"><a id="L173"></a></span><br />
-      <span style="white-space: pre;"><a id="L174"></a>    @selected.setter</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>    def selected(self, row: Union[int, Row]):</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>        Select the given row or index.</span><br />
-      <span style="white-space: pre;"><a id="L178"></a></span><br />
-      <span style="white-space: pre;"><a id="L179"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L180"></a>            row (int or Row): the row to select.</span><br />
-      <span style="white-space: pre;"><a id="L181"></a></span><br />
-      <span style="white-space: pre;"><a id="L182"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L183"></a>        if isinstance(row, AbcRow):</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>            row = row.index</span><br />
-      <span style="white-space: pre;"><a id="L185"></a>        self._selected = row</span><br />
-      <span style="white-space: pre;"><a id="L186"></a>        self.specific.select_row(row)</span><br />
-      <span style="white-space: pre;"><a id="L187"></a></span><br />
-      <span style="white-space: pre;"><a id="L188"></a>    def _init(self):</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>        """Widget initialization."""</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>        for tag in self.leaf.children:</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>            if tag.tag_name == "col":</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>                self.cols.append((tag.id, tag.data))</span><br />
-      <span style="white-space: pre;"><a id="L193"></a></span><br />
-      <span style="white-space: pre;"><a id="L194"></a>        if len(self.cols) &lt; 2:</span><br />
-      <span style="white-space: pre;"><a id="L195"></a>            raise ValueError("a table must have at least two columns.  "</span><br />
-      <span style="white-space: pre;"><a id="L196"></a>                    "Represent a table with one column using the "</span><br />
-      <span style="white-space: pre;"><a id="L197"></a>                    "&lt;list&gt; tag instead.")</span><br />
-      <span style="white-space: pre;"><a id="L198"></a></span><br />
-      <span style="white-space: pre;"><a id="L199"></a>        self.factory = build_factory(self, self.cols)</span><br />
-      <span style="white-space: pre;"><a id="L200"></a>        return super()._init()</span><br />
-      <span style="white-space: pre;"><a id="L201"></a></span><br />
-      <span style="white-space: pre;"><a id="L202"></a>    def add_row(self, *args, **kwargs):</span><br />
-      <span style="white-space: pre;"><a id="L203"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L204"></a>        Add a new row with the specified arguments at the bottom of the table.</span><br />
-      <span style="white-space: pre;"><a id="L205"></a></span><br />
-      <span style="white-space: pre;"><a id="L206"></a>        You should specify all the table columns as positional or</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>        keyword arguments.</span><br />
-      <span style="white-space: pre;"><a id="L208"></a></span><br />
-      <span style="white-space: pre;"><a id="L209"></a>        For instance, with a table defining 3 columns (name,</span><br />
-      <span style="white-space: pre;"><a id="L210"></a>        price, and quantity):</span><br />
-      <span style="white-space: pre;"><a id="L211"></a></span><br />
-      <span style="white-space: pre;"><a id="L212"></a>            self.add_row("table", 30, 1)</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>        return row</span><br />
+      <span style="white-space: pre;"><a id="L175"></a></span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    @selected.setter</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    def selected(self, row: Union[int, Row]):</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>        Select the given row or index.</span><br />
+      <span style="white-space: pre;"><a id="L180"></a></span><br />
+      <span style="white-space: pre;"><a id="L181"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>            row (int or Row): the row to select.</span><br />
+      <span style="white-space: pre;"><a id="L183"></a></span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>        if isinstance(row, AbcRow):</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>            row = row.index</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>        self._selected = row</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>        self.specific.select_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L189"></a></span><br />
+      <span style="white-space: pre;"><a id="L190"></a>    def _init(self):</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>        """Widget initialization."""</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>        for tag in self.leaf.children:</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>            if tag.tag_name == "col":</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>                self.cols.append((tag.id, tag.data))</span><br />
+      <span style="white-space: pre;"><a id="L195"></a></span><br />
+      <span style="white-space: pre;"><a id="L196"></a>        if len(self.cols) &lt; 2:</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>            raise ValueError("a table must have at least two columns.  "</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>                    "Represent a table with one column using the "</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>                    "&lt;list&gt; tag instead.")</span><br />
+      <span style="white-space: pre;"><a id="L200"></a></span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        self.factory = build_factory(self, self.cols)</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>        return super()._init()</span><br />
+      <span style="white-space: pre;"><a id="L203"></a></span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    def add_row(self, *args, **kwargs):</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        Add a new row with the specified arguments at the bottom of the table.</span><br />
+      <span style="white-space: pre;"><a id="L207"></a></span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        You should specify all the table columns as positional or</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        keyword arguments.</span><br />
+      <span style="white-space: pre;"><a id="L210"></a></span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        For instance, with a table defining 3 columns (name,</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        price, and quantity):</span><br />
       <span style="white-space: pre;"><a id="L213"></a></span><br />
-      <span style="white-space: pre;"><a id="L214"></a>        Or:</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>            self.add_row("table", 30, 1)</span><br />
       <span style="white-space: pre;"><a id="L215"></a></span><br />
-      <span style="white-space: pre;"><a id="L216"></a>            self.add_row(name="table", price=30, quantity=1)</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>        Or:</span><br />
       <span style="white-space: pre;"><a id="L217"></a></span><br />
-      <span style="white-space: pre;"><a id="L218"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>        row = self.factory(len(self._rows), *args, **kwargs)</span><br />
-      <span style="white-space: pre;"><a id="L220"></a>        self.update_row(row)</span><br />
-      <span style="white-space: pre;"><a id="L221"></a>        return row</span><br />
-      <span style="white-space: pre;"><a id="L222"></a></span><br />
-      <span style="white-space: pre;"><a id="L223"></a>    def update_row(self, row):</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>        """Update the specified row."""</span><br />
-      <span style="white-space: pre;"><a id="L225"></a>        index = row.index</span><br />
-      <span style="white-space: pre;"><a id="L226"></a>        if index == len(self._rows):</span><br />
-      <span style="white-space: pre;"><a id="L227"></a>            # Append the row</span><br />
-      <span style="white-space: pre;"><a id="L228"></a>            self._rows.append(row)</span><br />
-      <span style="white-space: pre;"><a id="L229"></a>        elif index &gt; len(self._rows):</span><br />
-      <span style="white-space: pre;"><a id="L230"></a>            for i in range(len(self._rows), index + 1):</span><br />
-      <span style="white-space: pre;"><a id="L231"></a>                row = self._rows[i]</span><br />
-      <span style="white-space: pre;"><a id="L232"></a>                self.update_row(row)</span><br />
-      <span style="white-space: pre;"><a id="L233"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L234"></a>            old = self._rows[index]</span><br />
-      <span style="white-space: pre;"><a id="L235"></a>            for i, (new_value, old_value) in enumerate(zip(row, old)):</span><br />
-      <span style="white-space: pre;"><a id="L236"></a>                if new_value != old_value:</span><br />
-      <span style="white-space: pre;"><a id="L237"></a>                    old[i] = new_value</span><br />
-      <span style="white-space: pre;"><a id="L238"></a></span><br />
-      <span style="white-space: pre;"><a id="L239"></a>        self.specific.update_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>            self.add_row(name="table", price=30, quantity=1)</span><br />
+      <span style="white-space: pre;"><a id="L219"></a></span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        row = self.factory(len(self._rows), *args, **kwargs)</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>        self.update_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>        return row</span><br />
+      <span style="white-space: pre;"><a id="L224"></a></span><br />
+      <span style="white-space: pre;"><a id="L225"></a>    def update_row(self, row):</span><br />
+      <span style="white-space: pre;"><a id="L226"></a>        """Update the specified row."""</span><br />
+      <span style="white-space: pre;"><a id="L227"></a>        index = row.index</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>        if index == len(self._rows):</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>            # Append the row</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>            self._rows.append(row)</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>        elif index &gt; len(self._rows):</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>            for i in range(len(self._rows), index + 1):</span><br />
+      <span style="white-space: pre;"><a id="L233"></a>                row = self._rows[i]</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>                self.update_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L235"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L236"></a>            old = self._rows[index]</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>            for i, (new_value, old_value) in enumerate(zip(row, old)):</span><br />
+      <span style="white-space: pre;"><a id="L238"></a>                if new_value != old_value:</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>                    old[i] = new_value</span><br />
       <span style="white-space: pre;"><a id="L240"></a></span><br />
-      <span style="white-space: pre;"><a id="L241"></a>    def remove_row(self, row: Union[int, AbcRow]):</span><br />
-      <span style="white-space: pre;"><a id="L242"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L243"></a>        Remove a row in the table.</span><br />
-      <span style="white-space: pre;"><a id="L244"></a></span><br />
-      <span style="white-space: pre;"><a id="L245"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>            row (int or Row): the Row object to remove, or the</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>                    index of the row to remove.</span><br />
-      <span style="white-space: pre;"><a id="L248"></a></span><br />
-      <span style="white-space: pre;"><a id="L249"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>        if isinstance(row, int):</span><br />
-      <span style="white-space: pre;"><a id="L251"></a>            row = self._rows[row]</span><br />
-      <span style="white-space: pre;"><a id="L252"></a></span><br />
-      <span style="white-space: pre;"><a id="L253"></a>        index = row.index</span><br />
-      <span style="white-space: pre;"><a id="L254"></a>        del self._rows[index]</span><br />
-      <span style="white-space: pre;"><a id="L255"></a>        for row in self._rows[index:]:</span><br />
-      <span style="white-space: pre;"><a id="L256"></a>            row.index -= 1</span><br />
-      <span style="white-space: pre;"><a id="L257"></a></span><br />
-      <span style="white-space: pre;"><a id="L258"></a>        self.specific.remove_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L241"></a>        self.specific.update_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L242"></a></span><br />
+      <span style="white-space: pre;"><a id="L243"></a>    def remove_row(self, row: Union[int, AbcRow]):</span><br />
+      <span style="white-space: pre;"><a id="L244"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L245"></a>        Remove a row in the table.</span><br />
+      <span style="white-space: pre;"><a id="L246"></a></span><br />
+      <span style="white-space: pre;"><a id="L247"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>            row (int or Row): the Row object to remove, or the</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>                    index of the row to remove.</span><br />
+      <span style="white-space: pre;"><a id="L250"></a></span><br />
+      <span style="white-space: pre;"><a id="L251"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>        if isinstance(row, int):</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>            row = self._rows[row]</span><br />
+      <span style="white-space: pre;"><a id="L254"></a></span><br />
+      <span style="white-space: pre;"><a id="L255"></a>        index = row.index</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>        del self._rows[index]</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>        for row in self._rows[index:]:</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>            row.index -= 1</span><br />
       <span style="white-space: pre;"><a id="L259"></a></span><br />
-      <span style="white-space: pre;"><a id="L260"></a>        # Remove associations</span><br />
-      <span style="white-space: pre;"><a id="L261"></a>        self._associations.pop(id(row), None)</span><br />
-      <span style="white-space: pre;"><a id="L262"></a></span><br />
-      <span style="white-space: pre;"><a id="L263"></a>    def sort(self, key: Callable = None, reverse: bool = False):</span><br />
-      <span style="white-space: pre;"><a id="L264"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L265"></a>        Sort the table rows, given an optional key.</span><br />
-      <span style="white-space: pre;"><a id="L266"></a></span><br />
-      <span style="white-space: pre;"><a id="L267"></a>        This method is similar to the sort method of a list.  You</span><br />
-      <span style="white-space: pre;"><a id="L268"></a>        can use it to sort using, by default, the first column, or by</span><br />
-      <span style="white-space: pre;"><a id="L269"></a>        specifying a column key.</span><br />
-      <span style="white-space: pre;"><a id="L270"></a></span><br />
-      <span style="white-space: pre;"><a id="L271"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L272"></a>            key (callable, optional): the key to call on every row.</span><br />
-      <span style="white-space: pre;"><a id="L273"></a>            reverse (bool, optional): sort in reverse order.</span><br />
-      <span style="white-space: pre;"><a id="L274"></a></span><br />
-      <span style="white-space: pre;"><a id="L275"></a>        Example:</span><br />
-      <span style="white-space: pre;"><a id="L276"></a>            &gt;&gt;&gt; from operator import attrgetter</span><br />
-      <span style="white-space: pre;"><a id="L277"></a>            &gt;&gt;&gt; table.sort(key=attrgetter("grade"))</span><br />
-      <span style="white-space: pre;"><a id="L278"></a></span><br />
-      <span style="white-space: pre;"><a id="L279"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L280"></a>        if key is None:</span><br />
-      <span style="white-space: pre;"><a id="L281"></a>            key = itemgetter(0)</span><br />
-      <span style="white-space: pre;"><a id="L282"></a></span><br />
-      <span style="white-space: pre;"><a id="L283"></a>        selected = self._rows[self._selected]</span><br />
-      <span style="white-space: pre;"><a id="L284"></a>        self._rows.sort(key=key, reverse=reverse)</span><br />
-      <span style="white-space: pre;"><a id="L285"></a>        for index, row in zip(range(len(self._rows)), self._rows):</span><br />
-      <span style="white-space: pre;"><a id="L286"></a>            row.index = index</span><br />
-      <span style="white-space: pre;"><a id="L287"></a></span><br />
-      <span style="white-space: pre;"><a id="L288"></a>        self.specific.sort(key=key, reverse=reverse)</span><br />
-      <span style="white-space: pre;"><a id="L289"></a>        self.selected = selected</span><br />
-      <span style="white-space: pre;"><a id="L290"></a></span><br />
-      <span style="white-space: pre;"><a id="L291"></a>    def associate(self, row: AbcRow, obj: Any):</span><br />
-      <span style="white-space: pre;"><a id="L292"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L293"></a>        Associate the given row with an arbitrary object.</span><br />
-      <span style="white-space: pre;"><a id="L294"></a></span><br />
-      <span style="white-space: pre;"><a id="L295"></a>        The given object can contain extra information that won't</span><br />
-      <span style="white-space: pre;"><a id="L296"></a>        be displayed on the table, but can be useful for the developer.</span><br />
-      <span style="white-space: pre;"><a id="L297"></a>        You can associate a row to an object and retrieve it,</span><br />
-      <span style="white-space: pre;"><a id="L298"></a>        either using the `selected` property, or the `associations`</span><br />
-      <span style="white-space: pre;"><a id="L299"></a>        generator.</span><br />
-      <span style="white-space: pre;"><a id="L300"></a></span><br />
-      <span style="white-space: pre;"><a id="L301"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>            row (Row): the row to associate with the object.</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>            obj (any): the python object to associate with the row.</span><br />
-      <span style="white-space: pre;"><a id="L304"></a></span><br />
-      <span style="white-space: pre;"><a id="L305"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L306"></a>        self._associations[id(row)] = obj</span><br />
-      <span style="white-space: pre;"><a id="L307"></a></span><br />
-      <span style="white-space: pre;"><a id="L308"></a></span><br />
-      <span style="white-space: pre;"><a id="L309"></a>def build_factory(widget, cols):</span><br />
-      <span style="white-space: pre;"><a id="L310"></a>    """Build a factory (dynamic class) for the specified columns."""</span><br />
-      <span style="white-space: pre;"><a id="L311"></a>    def row__init__(self, index, *args, **kwargs):</span><br />
-      <span style="white-space: pre;"><a id="L312"></a>        self.index = index</span><br />
-      <span style="white-space: pre;"><a id="L313"></a>        self._cols = {}</span><br />
-      <span style="white-space: pre;"><a id="L314"></a>        used_args = 0</span><br />
-      <span style="white-space: pre;"><a id="L315"></a>        for col, value in zip(self.columns, args):</span><br />
-      <span style="white-space: pre;"><a id="L316"></a>            self._cols[col] = value</span><br />
-      <span style="white-space: pre;"><a id="L317"></a>            used_args += 1</span><br />
-      <span style="white-space: pre;"><a id="L318"></a></span><br />
-      <span style="white-space: pre;"><a id="L319"></a>        for col in self.columns:</span><br />
-      <span style="white-space: pre;"><a id="L320"></a>            if col in kwargs:</span><br />
-      <span style="white-space: pre;"><a id="L321"></a>                if col in self._cols:</span><br />
-      <span style="white-space: pre;"><a id="L322"></a>                    arg = self._cols[col]</span><br />
-      <span style="white-space: pre;"><a id="L323"></a>                    raise ValueError(f"two values were specified for column "</span><br />
-      <span style="white-space: pre;"><a id="L324"></a>                            f"{col!r}: {arg!r} in positional arguments, and "</span><br />
-      <span style="white-space: pre;"><a id="L325"></a>                            f"{kwargs[col]!r} in keyword arguments.  You "</span><br />
-      <span style="white-space: pre;"><a id="L326"></a>                            f"might be better off using either only "</span><br />
-      <span style="white-space: pre;"><a id="L327"></a>                            f"positional, or only keyword arguments when "</span><br />
-      <span style="white-space: pre;"><a id="L328"></a>                            f"creating a row")</span><br />
-      <span style="white-space: pre;"><a id="L329"></a>                else:</span><br />
-      <span style="white-space: pre;"><a id="L330"></a>                    self._cols[col] = kwargs[col]</span><br />
-      <span style="white-space: pre;"><a id="L331"></a></span><br />
-      <span style="white-space: pre;"><a id="L332"></a>        if not all(key in self._cols.keys() for key in self.columns):</span><br />
-      <span style="white-space: pre;"><a id="L333"></a>            forgotten = [key for key in self.columns if key not in self._cols.keys()]</span><br />
-      <span style="white-space: pre;"><a id="L334"></a>            raise ValueError(f"not all columns were specified: missing "</span><br />
-      <span style="white-space: pre;"><a id="L335"></a>                    f"{', '.join(forgotten)}")</span><br />
-      <span style="white-space: pre;"><a id="L336"></a></span><br />
-      <span style="white-space: pre;"><a id="L337"></a>        if len(args) &gt; used_args:</span><br />
-      <span style="white-space: pre;"><a id="L338"></a>            unused = args[used_args:]</span><br />
-      <span style="white-space: pre;"><a id="L339"></a>            unused = [str(arg) for arg in unused]</span><br />
-      <span style="white-space: pre;"><a id="L340"></a>            raise ValueError(f"too many position alguments: {', '.join(unused)}")</span><br />
-      <span style="white-space: pre;"><a id="L341"></a></span><br />
-      <span style="white-space: pre;"><a id="L342"></a>        if any(key not in self.columns for key in kwargs.keys()):</span><br />
-      <span style="white-space: pre;"><a id="L343"></a>            unused = [key for key in kwargs.keys() if key not in self.columns]</span><br />
-      <span style="white-space: pre;"><a id="L344"></a>            raise ValueError(f"unused keyword arguments: {', '.join(unused)}")</span><br />
-      <span style="white-space: pre;"><a id="L345"></a></span><br />
-      <span style="white-space: pre;"><a id="L346"></a>    def row__repr__(self):</span><br />
-      <span style="white-space: pre;"><a id="L347"></a>        args = [f"{key}={value!r}" for key, value in self._cols.items()]</span><br />
-      <span style="white-space: pre;"><a id="L348"></a>        return f"&lt;Row({', '.join(args)})&gt;"</span><br />
-      <span style="white-space: pre;"><a id="L349"></a></span><br />
-      <span style="white-space: pre;"><a id="L350"></a>    def row__str__(self):</span><br />
-      <span style="white-space: pre;"><a id="L351"></a>        args = [f"{key}={value}" for key, value in self._cols.items()]</span><br />
-      <span style="white-space: pre;"><a id="L352"></a>        return f"Row {', '.join(args)}"</span><br />
-      <span style="white-space: pre;"><a id="L353"></a></span><br />
-      <span style="white-space: pre;"><a id="L354"></a>    def row__iter__(self):</span><br />
-      <span style="white-space: pre;"><a id="L355"></a>        return iter(self._cols.values())</span><br />
-      <span style="white-space: pre;"><a id="L356"></a></span><br />
-      <span style="white-space: pre;"><a id="L357"></a>    def row__getattr__(self, attr):</span><br />
-      <span style="white-space: pre;"><a id="L358"></a>        cols = object.__getattribute__(self, "_cols")</span><br />
-      <span style="white-space: pre;"><a id="L359"></a>        value = cols.get(attr, NO_VALUE)</span><br />
-      <span style="white-space: pre;"><a id="L360"></a>        if value is NO_VALUE:</span><br />
-      <span style="white-space: pre;"><a id="L361"></a>            raise AttributeError(f"no {attr} column or attribute in this row")</span><br />
-      <span style="white-space: pre;"><a id="L362"></a></span><br />
-      <span style="white-space: pre;"><a id="L363"></a>        return value</span><br />
+      <span style="white-space: pre;"><a id="L260"></a>        self.specific.remove_row(row)</span><br />
+      <span style="white-space: pre;"><a id="L261"></a></span><br />
+      <span style="white-space: pre;"><a id="L262"></a>        # Remove associations</span><br />
+      <span style="white-space: pre;"><a id="L263"></a>        self._associations.pop(id(row), None)</span><br />
+      <span style="white-space: pre;"><a id="L264"></a></span><br />
+      <span style="white-space: pre;"><a id="L265"></a>    def sort(self, key: Callable = None, reverse: bool = False):</span><br />
+      <span style="white-space: pre;"><a id="L266"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>        Sort the table rows, given an optional key.</span><br />
+      <span style="white-space: pre;"><a id="L268"></a></span><br />
+      <span style="white-space: pre;"><a id="L269"></a>        This method is similar to the sort method of a list.  You</span><br />
+      <span style="white-space: pre;"><a id="L270"></a>        can use it to sort using, by default, the first column, or by</span><br />
+      <span style="white-space: pre;"><a id="L271"></a>        specifying a column key.</span><br />
+      <span style="white-space: pre;"><a id="L272"></a></span><br />
+      <span style="white-space: pre;"><a id="L273"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>            key (callable, optional): the key to call on every row.</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>            reverse (bool, optional): sort in reverse order.</span><br />
+      <span style="white-space: pre;"><a id="L276"></a></span><br />
+      <span style="white-space: pre;"><a id="L277"></a>        Example:</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>            &gt;&gt;&gt; from operator import attrgetter</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>            &gt;&gt;&gt; table.sort(key=attrgetter("grade"))</span><br />
+      <span style="white-space: pre;"><a id="L280"></a></span><br />
+      <span style="white-space: pre;"><a id="L281"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>        if key is None:</span><br />
+      <span style="white-space: pre;"><a id="L283"></a>            key = itemgetter(0)</span><br />
+      <span style="white-space: pre;"><a id="L284"></a></span><br />
+      <span style="white-space: pre;"><a id="L285"></a>        selected = self._rows[self._selected]</span><br />
+      <span style="white-space: pre;"><a id="L286"></a>        self._rows.sort(key=key, reverse=reverse)</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>        for index, row in zip(range(len(self._rows)), self._rows):</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>            row.index = index</span><br />
+      <span style="white-space: pre;"><a id="L289"></a></span><br />
+      <span style="white-space: pre;"><a id="L290"></a>        self.specific.sort(key=key, reverse=reverse)</span><br />
+      <span style="white-space: pre;"><a id="L291"></a>        self.selected = selected</span><br />
+      <span style="white-space: pre;"><a id="L292"></a></span><br />
+      <span style="white-space: pre;"><a id="L293"></a>    def associate(self, row: AbcRow, obj: Any):</span><br />
+      <span style="white-space: pre;"><a id="L294"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L295"></a>        Associate the given row with an arbitrary object.</span><br />
+      <span style="white-space: pre;"><a id="L296"></a></span><br />
+      <span style="white-space: pre;"><a id="L297"></a>        The given object can contain extra information that won't</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>        be displayed on the table, but can be useful for the developer.</span><br />
+      <span style="white-space: pre;"><a id="L299"></a>        You can associate a row to an object and retrieve it,</span><br />
+      <span style="white-space: pre;"><a id="L300"></a>        either using the `selected` property, or the `associations`</span><br />
+      <span style="white-space: pre;"><a id="L301"></a>        generator.</span><br />
+      <span style="white-space: pre;"><a id="L302"></a></span><br />
+      <span style="white-space: pre;"><a id="L303"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L304"></a>            row (Row): the row to associate with the object.</span><br />
+      <span style="white-space: pre;"><a id="L305"></a>            obj (any): the python object to associate with the row.</span><br />
+      <span style="white-space: pre;"><a id="L306"></a></span><br />
+      <span style="white-space: pre;"><a id="L307"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>        self._associations[id(row)] = obj</span><br />
+      <span style="white-space: pre;"><a id="L309"></a></span><br />
+      <span style="white-space: pre;"><a id="L310"></a></span><br />
+      <span style="white-space: pre;"><a id="L311"></a>def build_factory(widget, cols):</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>    """Build a factory (dynamic class) for the specified columns."""</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>    def row__init__(self, index, *args, **kwargs):</span><br />
+      <span style="white-space: pre;"><a id="L314"></a>        self.index = index</span><br />
+      <span style="white-space: pre;"><a id="L315"></a>        self._cols = {}</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>        used_args = 0</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>        for col, value in zip(self.columns, args):</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>            self._cols[col] = value</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>            used_args += 1</span><br />
+      <span style="white-space: pre;"><a id="L320"></a></span><br />
+      <span style="white-space: pre;"><a id="L321"></a>        for col in self.columns:</span><br />
+      <span style="white-space: pre;"><a id="L322"></a>            if col in kwargs:</span><br />
+      <span style="white-space: pre;"><a id="L323"></a>                if col in self._cols:</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>                    arg = self._cols[col]</span><br />
+      <span style="white-space: pre;"><a id="L325"></a>                    raise ValueError(f"two values were specified for column "</span><br />
+      <span style="white-space: pre;"><a id="L326"></a>                            f"{col!r}: {arg!r} in positional arguments, and "</span><br />
+      <span style="white-space: pre;"><a id="L327"></a>                            f"{kwargs[col]!r} in keyword arguments.  You "</span><br />
+      <span style="white-space: pre;"><a id="L328"></a>                            f"might be better off using either only "</span><br />
+      <span style="white-space: pre;"><a id="L329"></a>                            f"positional, or only keyword arguments when "</span><br />
+      <span style="white-space: pre;"><a id="L330"></a>                            f"creating a row")</span><br />
+      <span style="white-space: pre;"><a id="L331"></a>                else:</span><br />
+      <span style="white-space: pre;"><a id="L332"></a>                    self._cols[col] = kwargs[col]</span><br />
+      <span style="white-space: pre;"><a id="L333"></a></span><br />
+      <span style="white-space: pre;"><a id="L334"></a>        if not all(key in self._cols.keys() for key in self.columns):</span><br />
+      <span style="white-space: pre;"><a id="L335"></a>            forgotten = [key for key in self.columns if key not in self._cols.keys()]</span><br />
+      <span style="white-space: pre;"><a id="L336"></a>            raise ValueError(f"not all columns were specified: missing "</span><br />
+      <span style="white-space: pre;"><a id="L337"></a>                    f"{', '.join(forgotten)}")</span><br />
+      <span style="white-space: pre;"><a id="L338"></a></span><br />
+      <span style="white-space: pre;"><a id="L339"></a>        if len(args) &gt; used_args:</span><br />
+      <span style="white-space: pre;"><a id="L340"></a>            unused = args[used_args:]</span><br />
+      <span style="white-space: pre;"><a id="L341"></a>            unused = [str(arg) for arg in unused]</span><br />
+      <span style="white-space: pre;"><a id="L342"></a>            raise ValueError(f"too many position alguments: {', '.join(unused)}")</span><br />
+      <span style="white-space: pre;"><a id="L343"></a></span><br />
+      <span style="white-space: pre;"><a id="L344"></a>        if any(key not in self.columns for key in kwargs.keys()):</span><br />
+      <span style="white-space: pre;"><a id="L345"></a>            unused = [key for key in kwargs.keys() if key not in self.columns]</span><br />
+      <span style="white-space: pre;"><a id="L346"></a>            raise ValueError(f"unused keyword arguments: {', '.join(unused)}")</span><br />
+      <span style="white-space: pre;"><a id="L347"></a></span><br />
+      <span style="white-space: pre;"><a id="L348"></a>    def row__repr__(self):</span><br />
+      <span style="white-space: pre;"><a id="L349"></a>        args = [f"{key}={value!r}" for key, value in self._cols.items()]</span><br />
+      <span style="white-space: pre;"><a id="L350"></a>        return f"&lt;Row({', '.join(args)})&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L351"></a></span><br />
+      <span style="white-space: pre;"><a id="L352"></a>    def row__str__(self):</span><br />
+      <span style="white-space: pre;"><a id="L353"></a>        args = [f"{key}={value}" for key, value in self._cols.items()]</span><br />
+      <span style="white-space: pre;"><a id="L354"></a>        return f"Row {', '.join(args)}"</span><br />
+      <span style="white-space: pre;"><a id="L355"></a></span><br />
+      <span style="white-space: pre;"><a id="L356"></a>    def row__iter__(self):</span><br />
+      <span style="white-space: pre;"><a id="L357"></a>        return iter(self._cols.values())</span><br />
+      <span style="white-space: pre;"><a id="L358"></a></span><br />
+      <span style="white-space: pre;"><a id="L359"></a>    def row__getattr__(self, attr):</span><br />
+      <span style="white-space: pre;"><a id="L360"></a>        cols = object.__getattribute__(self, "_cols")</span><br />
+      <span style="white-space: pre;"><a id="L361"></a>        value = cols.get(attr, NO_VALUE)</span><br />
+      <span style="white-space: pre;"><a id="L362"></a>        if value is NO_VALUE:</span><br />
+      <span style="white-space: pre;"><a id="L363"></a>            raise AttributeError(f"no {attr} column or attribute in this row")</span><br />
       <span style="white-space: pre;"><a id="L364"></a></span><br />
-      <span style="white-space: pre;"><a id="L365"></a>    def row__setattr__(self, attr, value):</span><br />
-      <span style="white-space: pre;"><a id="L366"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L367"></a>            cols = object.__getattribute__(self, "_cols")</span><br />
-      <span style="white-space: pre;"><a id="L368"></a>        except AttributeError:</span><br />
-      <span style="white-space: pre;"><a id="L369"></a>            object.__setattr__(self, attr, value)</span><br />
-      <span style="white-space: pre;"><a id="L370"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L371"></a>            if attr in cols:</span><br />
-      <span style="white-space: pre;"><a id="L372"></a>                cols[attr] = value</span><br />
-      <span style="white-space: pre;"><a id="L373"></a>                self.widget.update_row(self)</span><br />
-      <span style="white-space: pre;"><a id="L374"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L375"></a>                object.__setattr__(self, attr, value)</span><br />
-      <span style="white-space: pre;"><a id="L376"></a></span><br />
-      <span style="white-space: pre;"><a id="L377"></a>    def row__getitem__(self, item):</span><br />
-      <span style="white-space: pre;"><a id="L378"></a>        if isinstance(item, int):</span><br />
-      <span style="white-space: pre;"><a id="L379"></a>            item = tuple(self._cols.keys())[item]</span><br />
-      <span style="white-space: pre;"><a id="L380"></a></span><br />
-      <span style="white-space: pre;"><a id="L381"></a>        return self._cols[item]</span><br />
+      <span style="white-space: pre;"><a id="L365"></a>        return value</span><br />
+      <span style="white-space: pre;"><a id="L366"></a></span><br />
+      <span style="white-space: pre;"><a id="L367"></a>    def row__setattr__(self, attr, value):</span><br />
+      <span style="white-space: pre;"><a id="L368"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L369"></a>            cols = object.__getattribute__(self, "_cols")</span><br />
+      <span style="white-space: pre;"><a id="L370"></a>        except AttributeError:</span><br />
+      <span style="white-space: pre;"><a id="L371"></a>            object.__setattr__(self, attr, value)</span><br />
+      <span style="white-space: pre;"><a id="L372"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L373"></a>            if attr in cols:</span><br />
+      <span style="white-space: pre;"><a id="L374"></a>                cols[attr] = value</span><br />
+      <span style="white-space: pre;"><a id="L375"></a>                self.widget.update_row(self)</span><br />
+      <span style="white-space: pre;"><a id="L376"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L377"></a>                object.__setattr__(self, attr, value)</span><br />
+      <span style="white-space: pre;"><a id="L378"></a></span><br />
+      <span style="white-space: pre;"><a id="L379"></a>    def row__getitem__(self, item):</span><br />
+      <span style="white-space: pre;"><a id="L380"></a>        if isinstance(item, int):</span><br />
+      <span style="white-space: pre;"><a id="L381"></a>            item = tuple(self._cols.keys())[item]</span><br />
       <span style="white-space: pre;"><a id="L382"></a></span><br />
-      <span style="white-space: pre;"><a id="L383"></a>    def row__setitem__(self, item, value):</span><br />
-      <span style="white-space: pre;"><a id="L384"></a>        if isinstance(item, int):</span><br />
-      <span style="white-space: pre;"><a id="L385"></a>            item = tuple(self._cols.keys())[item]</span><br />
-      <span style="white-space: pre;"><a id="L386"></a></span><br />
-      <span style="white-space: pre;"><a id="L387"></a>        self._cols[item] = value</span><br />
+      <span style="white-space: pre;"><a id="L383"></a>        return self._cols[item]</span><br />
+      <span style="white-space: pre;"><a id="L384"></a></span><br />
+      <span style="white-space: pre;"><a id="L385"></a>    def row__setitem__(self, item, value):</span><br />
+      <span style="white-space: pre;"><a id="L386"></a>        if isinstance(item, int):</span><br />
+      <span style="white-space: pre;"><a id="L387"></a>            item = tuple(self._cols.keys())[item]</span><br />
       <span style="white-space: pre;"><a id="L388"></a></span><br />
-      <span style="white-space: pre;"><a id="L389"></a>    def row__eq__(self, other):</span><br />
-      <span style="white-space: pre;"><a id="L390"></a>        if isinstance(other, (tuple, list)):</span><br />
-      <span style="white-space: pre;"><a id="L391"></a>            other = self.widget.factory(self.index, *other)</span><br />
-      <span style="white-space: pre;"><a id="L392"></a>        elif isinstance(other, dict):</span><br />
-      <span style="white-space: pre;"><a id="L393"></a>            other = self.widget.factory(self.index, **other)</span><br />
-      <span style="white-space: pre;"><a id="L394"></a>        elif not isinstance(other, self.widget.factory):</span><br />
-      <span style="white-space: pre;"><a id="L395"></a>            raise TypeError(f"cannot compare to {type(other)}")</span><br />
-      <span style="white-space: pre;"><a id="L396"></a></span><br />
-      <span style="white-space: pre;"><a id="L397"></a>        return self._cols == other._cols</span><br />
+      <span style="white-space: pre;"><a id="L389"></a>        self._cols[item] = value</span><br />
+      <span style="white-space: pre;"><a id="L390"></a></span><br />
+      <span style="white-space: pre;"><a id="L391"></a>    def row__eq__(self, other):</span><br />
+      <span style="white-space: pre;"><a id="L392"></a>        if isinstance(other, (tuple, list)):</span><br />
+      <span style="white-space: pre;"><a id="L393"></a>            other = self.widget.factory(self.index, *other)</span><br />
+      <span style="white-space: pre;"><a id="L394"></a>        elif isinstance(other, dict):</span><br />
+      <span style="white-space: pre;"><a id="L395"></a>            other = self.widget.factory(self.index, **other)</span><br />
+      <span style="white-space: pre;"><a id="L396"></a>        elif not isinstance(other, self.widget.factory):</span><br />
+      <span style="white-space: pre;"><a id="L397"></a>            raise TypeError(f"cannot compare to {type(other)}")</span><br />
       <span style="white-space: pre;"><a id="L398"></a></span><br />
-      <span style="white-space: pre;"><a id="L399"></a>    factory = type("Row", (AbcRow, ), {</span><br />
-      <span style="white-space: pre;"><a id="L400"></a>            "widget": widget,</span><br />
-      <span style="white-space: pre;"><a id="L401"></a>            "columns": [tup[0] for tup in cols],</span><br />
-      <span style="white-space: pre;"><a id="L402"></a>            "__init__": row__init__,</span><br />
-      <span style="white-space: pre;"><a id="L403"></a>            "__repr__": row__repr__,</span><br />
-      <span style="white-space: pre;"><a id="L404"></a>            "__str__": row__str__,</span><br />
-      <span style="white-space: pre;"><a id="L405"></a>            "__iter__": row__iter__,</span><br />
-      <span style="white-space: pre;"><a id="L406"></a>            "__getattr__": row__getattr__,</span><br />
-      <span style="white-space: pre;"><a id="L407"></a>            "__setattr__": row__setattr__,</span><br />
-      <span style="white-space: pre;"><a id="L408"></a>            "__getitem__": row__getitem__,</span><br />
-      <span style="white-space: pre;"><a id="L409"></a>            "__setitem__": row__setitem__,</span><br />
-      <span style="white-space: pre;"><a id="L410"></a>            "__eq__": row__eq__,</span><br />
-      <span style="white-space: pre;"><a id="L411"></a>    })</span><br />
-      <span style="white-space: pre;"><a id="L412"></a>    return factory</span><br />
+      <span style="white-space: pre;"><a id="L399"></a>        return self._cols == other._cols</span><br />
+      <span style="white-space: pre;"><a id="L400"></a></span><br />
+      <span style="white-space: pre;"><a id="L401"></a>    factory = type("Row", (AbcRow, ), {</span><br />
+      <span style="white-space: pre;"><a id="L402"></a>            "widget": widget,</span><br />
+      <span style="white-space: pre;"><a id="L403"></a>            "columns": [tup[0] for tup in cols],</span><br />
+      <span style="white-space: pre;"><a id="L404"></a>            "__init__": row__init__,</span><br />
+      <span style="white-space: pre;"><a id="L405"></a>            "__repr__": row__repr__,</span><br />
+      <span style="white-space: pre;"><a id="L406"></a>            "__str__": row__str__,</span><br />
+      <span style="white-space: pre;"><a id="L407"></a>            "__iter__": row__iter__,</span><br />
+      <span style="white-space: pre;"><a id="L408"></a>            "__getattr__": row__getattr__,</span><br />
+      <span style="white-space: pre;"><a id="L409"></a>            "__setattr__": row__setattr__,</span><br />
+      <span style="white-space: pre;"><a id="L410"></a>            "__getitem__": row__getitem__,</span><br />
+      <span style="white-space: pre;"><a id="L411"></a>            "__setitem__": row__setitem__,</span><br />
+      <span style="white-space: pre;"><a id="L412"></a>            "__eq__": row__eq__,</span><br />
+      <span style="white-space: pre;"><a id="L413"></a>    })</span><br />
+      <span style="white-space: pre;"><a id="L414"></a>    return factory</span><br />
     </div>
   </body>
 </html>

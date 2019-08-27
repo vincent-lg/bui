@@ -1,4 +1,4 @@
-# Window in [widget/window:62](../raw/widget/window.html#L62)
+# Window in [widget/window:63](../raw/widget/window.html#L63)
 
 The Window main class.
 
@@ -64,7 +64,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/window.html#L133)
+[See the source code](../raw/widget/window.html#L136)
 
 Return the screen size that can be used, in pixels.
 
@@ -82,7 +82,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/window.html#L258)
+[See the source code](../raw/widget/window.html#L261)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -109,7 +109,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/window.html#L311)
+[See the source code](../raw/widget/window.html#L314)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -122,7 +122,7 @@ The window closes.
 
 `mark(layout: str)`
 
-[See the source code](../raw/widget/window.html#L50)
+[See the source code](../raw/widget/window.html#L51)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -134,7 +134,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/window.html#L297)
+[See the source code](../raw/widget/window.html#L300)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -153,7 +153,7 @@ Args:
 
 `parse_layout(Window, tag_name='window')`
 
-[See the source code](../raw/widget/window.html#L149)
+[See the source code](../raw/widget/window.html#L152)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -169,7 +169,7 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/window.html#L262)
+[See the source code](../raw/widget/window.html#L265)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -189,7 +189,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/window.html#L286)
+[See the source code](../raw/widget/window.html#L289)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -218,7 +218,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sleep(self, seconds)`
 
-[See the source code](../raw/widget/window.html#L223)
+[See the source code](../raw/widget/window.html#L226)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

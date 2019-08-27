@@ -37,13 +37,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/list.html#L88)
+[See the source code](../raw/widget/list.html#L90)
 
 Return the list choices.
 
 #### Set
 
-[See the source code](../raw/widget/list.html#L93)
+[See the source code](../raw/widget/list.html#L95)
 
 Modify the choices in the list.
 
@@ -59,13 +59,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/list.html#L131)
+[See the source code](../raw/widget/list.html#L133)
 
 Return the currently-selected choice ID or position.
 
 #### Set
 
-[See the source code](../raw/widget/list.html#L136)
+[See the source code](../raw/widget/list.html#L138)
 
 Change the selected label.
 
@@ -75,7 +75,7 @@ Change the selected label.
 
 `add_choice(self, choice: Union[Any, Tuple[Hashable, Any]])`
 
-[See the source code](../raw/widget/list.html#L151)
+[See the source code](../raw/widget/list.html#L153)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -117,7 +117,7 @@ raise no exception.
 
 `remove_choice(self, identifier: Any)`
 
-[See the source code](../raw/widget/list.html#L187)
+[See the source code](../raw/widget/list.html#L189)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -146,7 +146,7 @@ Schedule the specified coroutine in the main event loop.
 
 `update_choice(self, i, choice)`
 
-[See the source code](../raw/widget/list.html#L182)
+[See the source code](../raw/widget/list.html#L184)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

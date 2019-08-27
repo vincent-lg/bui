@@ -36,13 +36,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/radio.html#L47)
+[See the source code](../raw/widget/radio.html#L49)
 
 Return the current choices.
 
 #### Set
 
-[See the source code](../raw/widget/radio.html#L52)
+[See the source code](../raw/widget/radio.html#L54)
 
 Modify the radio button choices.
 
@@ -57,13 +57,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/radio.html#L79)
+[See the source code](../raw/widget/radio.html#L81)
 
 Return the ID of the selected choice.
 
 #### Set
 
-[See the source code](../raw/widget/radio.html#L84)
+[See the source code](../raw/widget/radio.html#L86)
 
 Change the selected choice.
 

@@ -199,41 +199,58 @@
       <span style="white-space: pre;"><a id="L177"></a>    |                                 |              | displayed, but   |</span><br />
       <span style="white-space: pre;"><a id="L178"></a>    |                                 |              | is not displayed |</span><br />
       <span style="white-space: pre;"><a id="L179"></a>    |                                 |              | yet.             |</span><br />
-      <span style="white-space: pre;"><a id="L180"></a></span><br />
-      <span style="white-space: pre;"><a id="L181"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L182"></a></span><br />
-      <span style="white-space: pre;"><a id="L183"></a>            def on_checkk_checkbox(self, checked):</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>                print(f"You clicked on the checkbox of ID 'checkbox'.  Cecked? {checked}")</span><br />
-      <span style="white-space: pre;"><a id="L185"></a></span><br />
-      <span style="white-space: pre;"><a id="L186"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L187"></a></span><br />
-      <span style="white-space: pre;"><a id="L188"></a>    tag_name = "checkbox"</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L193"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L194"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L195"></a>        Attr("checked", help="Checked by default", default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L196"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L197"></a>    must_have_data = True</span><br />
-      <span style="white-space: pre;"><a id="L198"></a></span><br />
-      <span style="white-space: pre;"><a id="L199"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
-      <span style="white-space: pre;"><a id="L200"></a>            id="", checked=False):</span><br />
-      <span style="white-space: pre;"><a id="L201"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L202"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L203"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L204"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L205"></a>        self.height = height</span><br />
-      <span style="white-space: pre;"><a id="L206"></a>        self.name = ""</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L208"></a>        self.checked = checked</span><br />
-      <span style="white-space: pre;"><a id="L209"></a></span><br />
-      <span style="white-space: pre;"><a id="L210"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L211"></a>        """Complete the widget, when all the layout has been set."""</span><br />
-      <span style="white-space: pre;"><a id="L212"></a>        self.name = self.data</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>        if not self.id:</span><br />
-      <span style="white-space: pre;"><a id="L214"></a>            self.id = self.deduce_id(self.data)</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L197"></a></span><br />
+      <span style="white-space: pre;"><a id="L198"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L199"></a></span><br />
+      <span style="white-space: pre;"><a id="L200"></a>            def on_checkk_checkbox(self, checked):</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>                print(f"You clicked on the checkbox of ID 'checkbox'.  Cecked? {checked}")</span><br />
+      <span style="white-space: pre;"><a id="L202"></a></span><br />
+      <span style="white-space: pre;"><a id="L203"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L204"></a></span><br />
+      <span style="white-space: pre;"><a id="L205"></a>    tag_name = "checkbox"</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        Attr("checked", help="Checked by default", default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L215"></a></span><br />
+      <span style="white-space: pre;"><a id="L216"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>            id="", checked=False):</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>        self.name = ""</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>        self.checked = checked</span><br />
+      <span style="white-space: pre;"><a id="L226"></a></span><br />
+      <span style="white-space: pre;"><a id="L227"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>        """Complete the widget, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>        self.name = self.data</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>            self.id = self.deduce_id(self.data)</span><br />
     </div>
   </body>
 </html>

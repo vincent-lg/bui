@@ -123,6 +123,18 @@ class Window(Component):
     |                                 |              | keyboard. This   |
     |                                 |              | control can have |
     |                                 |              | sub-controls.    |
+    | [release](../../                | `on_release` | The user         |
+    | control/release.md)             |              | relases a key on |
+    |                                 |              | her keyboard.    |
+    |                                 |              | This control can |
+    |                                 |              | have sub-        |
+    |                                 |              | controls.        |
+    | [type](../../control/type.md)   | `on_type`    | The user types   |
+    |                                 |              | a character      |
+    |                                 |              | using her        |
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
 
     Notice that we don't specify the window identifier.  It would make
     no sense here.  Therefore, to use these events, you should just add a

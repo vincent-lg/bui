@@ -12,11 +12,11 @@ import wx
 from bui.specific.base import *
 from bui.specific.base.window import SpecificWindow
 from bui.specific.wx4.app import AsyncApp
-from bui.specific.wx4.constants import KEYMAP
+from bui.specific.wx4.shared import WXShared
 
 WX_APP = None
 
-class WX4Window(SpecificWindow):
+class WX4Window(WXShared, SpecificWindow):
 
     def __init__(self, generic):
         super().__init__(generic)
@@ -38,7 +38,7 @@ class WX4Window(SpecificWindow):
         elif WX_APP:
             self.wx_app = WX_APP
         elif not self.wx_app:
-            self.wx_app = AsyncApp()
+            self.wx_app = AsyncApp(self)
             WX_APP = self.wx_app
 
         if not self.wx_display:
@@ -65,7 +65,7 @@ class WX4Window(SpecificWindow):
 
         # Bind press and type controls
         if "press" in self.generic.controls:
-            self.wx_panel.Bind(wx.EVT_KEY_DOWN, self._OnKeyDown)
+            self.watch_keyboard(self.wx_panel)
         if "right_click" in self.generic.controls:
             self.wx_frame.Bind(wx.EVT_CONTEXT_MENU, self._OnContext)
 
@@ -125,50 +125,6 @@ class WX4Window(SpecificWindow):
         """Close this window, terminate loop if appropriate."""
         if self.wx_frame:
             self.wx_frame.Destroy()
-
-    def _OnKeyDown(self, e, widget=None):
-        """A KeyDown event has been sent, create a control."""
-        key_code = e.GetKeyCode()
-        key = KEYMAP.get(key_code)
-
-        if key is None:
-            if key_code < 256:
-                if key_code == 0:
-                    key = "nul"
-                elif key_code < 27:
-                    key = f"ctrl{chr(key_code + 64)}"
-                else:
-                    key = chr(key_code)
-            else:
-                key = str(key_code)
-
-        key = key.lower()
-
-        # Add modifiers
-        kwargs = {"raw_key": key}
-        modified = ""
-        modifiers = (
-                (e.ControlDown(), "ctrl"),
-                (e.AltDown(), "alt"),
-                (e.ShiftDown(), "shift"),
-        )
-
-        for on, attr in modifiers:
-            kwargs[attr] = on
-            if on:
-                if modified:
-                    modified += "_"
-                modified += attr
-
-        if modified:
-            key = f"{modified}_{key}"
-
-        kwargs["key"] = key
-        if widget:
-            widget.generic._process_control("press", kwargs)
-        else:
-            self.generic._process_control("press", kwargs)
-
 
     def _OnContext(self, e, widget=None):
         """On context menu."""

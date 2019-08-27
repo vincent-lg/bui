@@ -145,30 +145,42 @@
       <span style="white-space: pre;"><a id="L123"></a>    |                                 |              | keyboard. This   |</span><br />
       <span style="white-space: pre;"><a id="L124"></a>    |                                 |              | control can have |</span><br />
       <span style="white-space: pre;"><a id="L125"></a>    |                                 |              | sub-controls.    |</span><br />
-      <span style="white-space: pre;"><a id="L126"></a></span><br />
-      <span style="white-space: pre;"><a id="L127"></a>    Notice that we don't specify the window identifier.  It would make</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>    method in the window class with the control name and no identifier:</span><br />
-      <span style="white-space: pre;"><a id="L130"></a></span><br />
-      <span style="white-space: pre;"><a id="L131"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L132"></a></span><br />
-      <span style="white-space: pre;"><a id="L133"></a>            def on_focus(self):</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
-      <span style="white-space: pre;"><a id="L135"></a></span><br />
-      <span style="white-space: pre;"><a id="L136"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L137"></a></span><br />
-      <span style="white-space: pre;"><a id="L138"></a>    tag_name = "window"</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>        Attr("title", help="The window title"),</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>        Attr("width", help="The window width", type=int, default=6),</span><br />
-      <span style="white-space: pre;"><a id="L142"></a>        Attr("height", help="The window height", type=int, default=6),</span><br />
-      <span style="white-space: pre;"><a id="L143"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L138"></a></span><br />
+      <span style="white-space: pre;"><a id="L139"></a>    Notice that we don't specify the window identifier.  It would make</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    method in the window class with the control name and no identifier:</span><br />
+      <span style="white-space: pre;"><a id="L142"></a></span><br />
+      <span style="white-space: pre;"><a id="L143"></a>        class MainWindow(Window):</span><br />
       <span style="white-space: pre;"><a id="L144"></a></span><br />
-      <span style="white-space: pre;"><a id="L145"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />
-      <span style="white-space: pre;"><a id="L146"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>        self.title = title</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>            def on_focus(self):</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
+      <span style="white-space: pre;"><a id="L147"></a></span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L149"></a></span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    tag_name = "window"</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        Attr("title", help="The window title"),</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>        Attr("width", help="The window width", type=int, default=6),</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>        Attr("height", help="The window height", type=int, default=6),</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L156"></a></span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>        self.title = title</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>        self.height = height</span><br />
     </div>
   </body>
 </html>

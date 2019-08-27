@@ -146,11 +146,13 @@ The cursor also has some methods:
 
 ## Controls
 
-| Control                           | Method       | Description    |
-| --------------------------------- | ------------ | -------------- |
-| [change](../../control/change.md) | `on_change` | The text has been changed, either by the user or the program. |
+| Control                         | Method       | Description      |
+| ------------------------------- | ------------ | ---------------- |
+| [change](../../ control/change.md) | `on_change` | The text has been changed, either by the user or the program. |
 | [init](../../control/init.md) | `on_init` | The text is ready to be displayed, but is not displayed yet. |
 | [press](../../control/press.md) | `on_press` | The user pressed on a key of her keyboard while the text is focused. This control is triggered before the text is actually modified, and you can prevent the default change to the text. |
+| [release](../../ control/release.md) | `on_release` | The user relases a key on her keyboard. This control can have sub- controls. |
+| [type](../../control/type.md) | `on_type` | The user types a character using her keyboard. This control can have sub-controls. |
 
     class MainWindow(Window):
 

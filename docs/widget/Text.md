@@ -37,7 +37,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L76)
+[See the source code](../raw/widget/text.html#L78)
 
 Return the text Cursor object.
 
@@ -47,7 +47,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L71)
+[See the source code](../raw/widget/text.html#L73)
 
 Return whether the text is disabled or not.
 
@@ -57,7 +57,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L66)
+[See the source code](../raw/widget/text.html#L68)
 
 Return whether the text is enabled or not.
 
@@ -82,7 +82,7 @@ raise no exception.
 
 `disable(self)`
 
-[See the source code](../raw/widget/text.html#L85)
+[See the source code](../raw/widget/text.html#L87)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -94,7 +94,7 @@ Disable the text.
 
 `enable(self)`
 
-[See the source code](../raw/widget/text.html#L81)
+[See the source code](../raw/widget/text.html#L83)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

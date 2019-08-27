@@ -6,8 +6,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.text import SpecificText
+from bui.specific.wx4.shared import WXShared
 
-class WX4Text(SpecificText):
+class WX4Text(WXShared, SpecificText):
 
     @property
     def label(self):
@@ -63,7 +64,7 @@ class WX4Text(SpecificText):
         self.wx_sizer.Add(self.wx_label)
         self.wx_sizer.Add(self.wx_text, proportion=5)
         window.add_widget(self)
-        self.wx_text.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+        self.watch_keyboard(self.wx_text)
         self.wx_text.Bind(wx.EVT_TEXT, self.OnTextChanged)
         self.wx_text.Bind(wx.EVT_LEFT_UP, self.OnUpdateCursor)
         self.wx_text.Bind(wx.EVT_KEY_UP, self.OnUpdateCursor)
@@ -76,15 +77,6 @@ class WX4Text(SpecificText):
 
         # Update the cursor position
         self.UpdateCursorPosition(text)
-
-    def OnKeyDown(self, e):
-        window = self.parent
-        if "press" in self.generic.controls:
-            window._OnKeyDown(e, self)
-        else:
-            window._OnKeyDown(e)
-
-        e.Skip()
 
     def UpdateCursorPosition(self, text=None):
         """Check the cursor position."""

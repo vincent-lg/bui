@@ -168,33 +168,45 @@ class List(Component):
 
     ## Controls
 
-    | Control                           | Method       | Description    |
-    | --------------------------------- | ------------ | -------------- |
-    | [focus](../../control/focus.md)   | `on_focus`   | The list is    |
-    |                                   |              | focused or lose|
-    |                                   |              | focus.         |
-    | [init](../../control/init.md)     | `on_init`    | The list is    |
-    |                                   |              | ready to be    |
-    |                                   |              | displayed, but |
-    |                                   |              | is not         |
-    |                                   |              | displayed yet. |
-    | [press](../../control/press.md)   | `on_press`   | The user       |
-    |                                   |              | pressed on a   |
-    |                                   |              | key of her     |
-    |                                   |              | keyboard while |
-    |                                   |              | the list is    |
-    |                                   |              | focused. This  |
-    |                                   |              | control is     |
-    |                                   |              | triggered      |
-    |                                   |              | before the     |
-    |                                   |              | key has had    |
-    |                                   |              | any impact, so |
-    |                                   |              | you can cancel |
-    |                                   |              | the action at  |
-    |                                   |              | this point.    |
-    | [select](../../control/select.md] | `on_select`  | The list       |
-    |                                   |              | selection has  |
-    |                                   |              | changed.       |
+    | Control                         | Method       | Description      |
+    | ------------------------------- | ------------ | ---------------- |
+    | [focus](../../control/focus.md) | `on_focus`   | The list is      |
+    |                                 |              | focused or lose  |
+    |                                 |              | focus.           |
+    | [init](../../control/init.md)   | `on_init`    | The list is      |
+    |                                 |              | ready to be      |
+    |                                 |              | displayed, but   |
+    |                                 |              | is not           |
+    |                                 |              | displayed yet.   |
+    | [press](../../control/press.md) | `on_press`   | The user         |
+    |                                 |              | pressed on a     |
+    |                                 |              | key of her       |
+    |                                 |              | keyboard while   |
+    |                                 |              | the list is      |
+    |                                 |              | focused. This    |
+    |                                 |              | control is       |
+    |                                 |              | triggered        |
+    |                                 |              | before the       |
+    |                                 |              | key has had      |
+    |                                 |              | any impact, so   |
+    |                                 |              | you can cancel   |
+    |                                 |              | the action at    |
+    |                                 |              | this point.      |
+    | [release](../../                | `on_release` | The user         |
+    | control/release.md)             |              | relases a key on |
+    |                                 |              | her keyboard.    |
+    |                                 |              | This control can |
+    |                                 |              | have sub-        |
+    |                                 |              | controls.        |
+    | [select](../../                 | `on_select`  | The list         |
+    | control/select.md)              |              | selection has    |
+    |                                 |              | changed.         |
+    | [type](../../control/type.md)   | `on_type`    | The user types   |
+    |                                 |              | a character      |
+    |                                 |              | using her        |
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
 
         class MainWindow(Window):
 

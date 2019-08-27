@@ -166,54 +166,76 @@
       <span style="white-space: pre;"><a id="L144"></a></span><br />
       <span style="white-space: pre;"><a id="L145"></a>    | Control                           | Method       | Description    |</span><br />
       <span style="white-space: pre;"><a id="L146"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>    | [click](../../control/click.md)   | `on_click`   | The button is    |</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>    |                                 |              | being clicked on.  |</span><br />
-      <span style="white-space: pre;"><a id="L149"></a></span><br />
-      <span style="white-space: pre;"><a id="L150"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L151"></a></span><br />
-      <span style="white-space: pre;"><a id="L152"></a>            def on_click_button(self):</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>                print(f"You clicked on the button of ID 'button'.")</span><br />
-      <span style="white-space: pre;"><a id="L154"></a></span><br />
-      <span style="white-space: pre;"><a id="L155"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L156"></a></span><br />
-      <span style="white-space: pre;"><a id="L157"></a>    tag_name = "button"</span><br />
-      <span style="white-space: pre;"><a id="L158"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L159"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L160"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L161"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L162"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L164"></a>        Attr("set_true", help="Set the dialog to True and close it",</span><br />
-      <span style="white-space: pre;"><a id="L165"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L166"></a>        Attr("set_false", help="Set the dialog to False and close it",</span><br />
-      <span style="white-space: pre;"><a id="L167"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L168"></a>        Attr("set", help="Set the dialog to some value and close it",</span><br />
-      <span style="white-space: pre;"><a id="L169"></a>                default="")</span><br />
-      <span style="white-space: pre;"><a id="L170"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L171"></a>    must_have_data = True</span><br />
-      <span style="white-space: pre;"><a id="L172"></a></span><br />
-      <span style="white-space: pre;"><a id="L173"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
-      <span style="white-space: pre;"><a id="L174"></a>            id="", set_true=False, set_false=False, set=""):</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L178"></a>        self.name = ""</span><br />
-      <span style="white-space: pre;"><a id="L179"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L180"></a>        self.height = height</span><br />
-      <span style="white-space: pre;"><a id="L181"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L182"></a>        self.set_true = set_true</span><br />
-      <span style="white-space: pre;"><a id="L183"></a>        self.set_false = set_false</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>        self.set = set</span><br />
-      <span style="white-space: pre;"><a id="L185"></a></span><br />
-      <span style="white-space: pre;"><a id="L186"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L187"></a>        """Complete the widet, when all the layout has been set."""</span><br />
-      <span style="white-space: pre;"><a id="L188"></a>        self.name = self.data</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>        if not self.id:</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>            self.id = self.deduce_id(self.name)</span><br />
-      <span style="white-space: pre;"><a id="L191"></a></span><br />
-      <span style="white-space: pre;"><a id="L192"></a>        if self.parent.tag_name != "dialog" and (self.set_true or self.set_false or self.set):</span><br />
-      <span style="white-space: pre;"><a id="L193"></a>            raise ValueError("Can't yset set_true, set_false or set "</span><br />
-      <span style="white-space: pre;"><a id="L194"></a>                    "attributes on a button that doesn't belong in a dialog")</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    | [click](../../control/click.md)   | `on_click`   | The button is  |</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    |                                 |              | being clicked on.|</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>    | [init](../../control/init.md)   | `on_init`    | The button is    |</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>    |                                 |              | just yet.        |</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L166"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L171"></a></span><br />
+      <span style="white-space: pre;"><a id="L172"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L173"></a></span><br />
+      <span style="white-space: pre;"><a id="L174"></a>            def on_click_button(self):</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>                print(f"You clicked on the button of ID 'button'.")</span><br />
+      <span style="white-space: pre;"><a id="L176"></a></span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L178"></a></span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    tag_name = "button"</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>        Attr("set_true", help="Set the dialog to True and close it",</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>        Attr("set_false", help="Set the dialog to False and close it",</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>        Attr("set", help="Set the dialog to some value and close it",</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>                default="")</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L194"></a></span><br />
+      <span style="white-space: pre;"><a id="L195"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>            id="", set_true=False, set_false=False, set=""):</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>        self.name = ""</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L203"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>        self.set_true = set_true</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        self.set_false = set_false</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        self.set = set</span><br />
+      <span style="white-space: pre;"><a id="L207"></a></span><br />
+      <span style="white-space: pre;"><a id="L208"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        """Complete the widet, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>        self.name = self.data</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>            self.id = self.deduce_id(self.name)</span><br />
+      <span style="white-space: pre;"><a id="L213"></a></span><br />
+      <span style="white-space: pre;"><a id="L214"></a>        if self.parent.tag_name != "dialog" and (self.set_true or self.set_false or self.set):</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>            raise ValueError("Can't yset set_true, set_false or set "</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>                    "attributes on a button that doesn't belong in a dialog")</span><br />
     </div>
   </body>
 </html>

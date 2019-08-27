@@ -177,6 +177,23 @@ class Checkbox(Component):
     |                                 |              | displayed, but   |
     |                                 |              | is not displayed |
     |                                 |              | yet.             |
+    | [press](../../control/press.md) | `on_press`   | The user presses |
+    |                                 |              | on a key from her|
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
+    | [release](../../                | `on_release` | The user         |
+    | control/release.md)             |              | relases a key on |
+    |                                 |              | her keyboard.    |
+    |                                 |              | This control can |
+    |                                 |              | have sub-        |
+    |                                 |              | controls.        |
+    | [type](../../control/type.md)   | `on_type`    | The user types   |
+    |                                 |              | a character      |
+    |                                 |              | using her        |
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
 
         class MainWindow(Window):
 

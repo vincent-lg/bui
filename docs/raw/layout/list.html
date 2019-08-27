@@ -190,57 +190,69 @@
       <span style="white-space: pre;"><a id="L168"></a></span><br />
       <span style="white-space: pre;"><a id="L169"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L170"></a></span><br />
-      <span style="white-space: pre;"><a id="L171"></a>    | Control                           | Method       | Description    |</span><br />
-      <span style="white-space: pre;"><a id="L172"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
-      <span style="white-space: pre;"><a id="L173"></a>    | [focus](../../control/focus.md)   | `on_focus`   | The list is    |</span><br />
-      <span style="white-space: pre;"><a id="L174"></a>    |                                   |              | focused or lose|</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>    |                                   |              | focus.         |</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>    | [init](../../control/init.md)     | `on_init`    | The list is    |</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>    |                                   |              | ready to be    |</span><br />
-      <span style="white-space: pre;"><a id="L178"></a>    |                                   |              | displayed, but |</span><br />
-      <span style="white-space: pre;"><a id="L179"></a>    |                                   |              | is not         |</span><br />
-      <span style="white-space: pre;"><a id="L180"></a>    |                                   |              | displayed yet. |</span><br />
-      <span style="white-space: pre;"><a id="L181"></a>    | [press](../../control/press.md)   | `on_press`   | The user       |</span><br />
-      <span style="white-space: pre;"><a id="L182"></a>    |                                   |              | pressed on a   |</span><br />
-      <span style="white-space: pre;"><a id="L183"></a>    |                                   |              | key of her     |</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>    |                                   |              | keyboard while |</span><br />
-      <span style="white-space: pre;"><a id="L185"></a>    |                                   |              | the list is    |</span><br />
-      <span style="white-space: pre;"><a id="L186"></a>    |                                   |              | focused. This  |</span><br />
-      <span style="white-space: pre;"><a id="L187"></a>    |                                   |              | control is     |</span><br />
-      <span style="white-space: pre;"><a id="L188"></a>    |                                   |              | triggered      |</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>    |                                   |              | before the     |</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>    |                                   |              | key has had    |</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>    |                                   |              | any impact, so |</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>    |                                   |              | you can cancel |</span><br />
-      <span style="white-space: pre;"><a id="L193"></a>    |                                   |              | the action at  |</span><br />
-      <span style="white-space: pre;"><a id="L194"></a>    |                                   |              | this point.    |</span><br />
-      <span style="white-space: pre;"><a id="L195"></a>    | [select](../../control/select.md] | `on_select`  | The list       |</span><br />
-      <span style="white-space: pre;"><a id="L196"></a>    |                                   |              | selection has  |</span><br />
-      <span style="white-space: pre;"><a id="L197"></a>    |                                   |              | changed.       |</span><br />
-      <span style="white-space: pre;"><a id="L198"></a></span><br />
-      <span style="white-space: pre;"><a id="L199"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L200"></a></span><br />
-      <span style="white-space: pre;"><a id="L201"></a>            def on_select_actions(self, widget, choice):</span><br />
-      <span style="white-space: pre;"><a id="L202"></a>                print(f"The user selected the choice of ID {choice}.")</span><br />
-      <span style="white-space: pre;"><a id="L203"></a></span><br />
-      <span style="white-space: pre;"><a id="L204"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L205"></a></span><br />
-      <span style="white-space: pre;"><a id="L206"></a>    tag_name = "list"</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L208"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L209"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L210"></a>        Attr("id", help="The widget identifier"),</span><br />
-      <span style="white-space: pre;"><a id="L211"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L212"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L214"></a></span><br />
-      <span style="white-space: pre;"><a id="L215"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
-      <span style="white-space: pre;"><a id="L216"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L217"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L218"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L220"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L221"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>    | Control                         | Method       | Description      |</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>    | ------------------------------- | ------------ | ---------------- |</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>    | [focus](../../control/focus.md) | `on_focus`   | The list is      |</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>    |                                 |              | focused or lose  |</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>    |                                 |              | focus.           |</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    | [init](../../control/init.md)   | `on_init`    | The list is      |</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    |                                 |              | is not           |</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>    |                                 |              | displayed yet.   |</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>    | [press](../../control/press.md) | `on_press`   | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>    |                                 |              | pressed on a     |</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>    |                                 |              | key of her       |</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>    |                                 |              | keyboard while   |</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>    |                                 |              | the list is      |</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    |                                 |              | focused. This    |</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>    |                                 |              | control is       |</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>    |                                 |              | triggered        |</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>    |                                 |              | before the       |</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>    |                                 |              | key has had      |</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>    |                                 |              | any impact, so   |</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    |                                 |              | you can cancel   |</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>    |                                 |              | the action at    |</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>    |                                 |              | this point.      |</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>    | [select](../../                 | `on_select`  | The list         |</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>    | control/select.md)              |              | selection has    |</span><br />
+      <span style="white-space: pre;"><a id="L203"></a>    |                                 |              | changed.         |</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L210"></a></span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L212"></a></span><br />
+      <span style="white-space: pre;"><a id="L213"></a>            def on_select_actions(self, widget, choice):</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>                print(f"The user selected the choice of ID {choice}.")</span><br />
+      <span style="white-space: pre;"><a id="L215"></a></span><br />
+      <span style="white-space: pre;"><a id="L216"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L217"></a></span><br />
+      <span style="white-space: pre;"><a id="L218"></a>    tag_name = "list"</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>        Attr("id", help="The widget identifier"),</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L226"></a></span><br />
+      <span style="white-space: pre;"><a id="L227"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L233"></a>        self.height = height</span><br />
     </div>
   </body>
 </html>

@@ -39,13 +39,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L119)
+[See the source code](../raw/widget/table.html#L121)
 
 Return the table rows with optional associated objects.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L133)
+[See the source code](../raw/widget/table.html#L135)
 
 Modify the table rows.
 
@@ -60,13 +60,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L165)
+[See the source code](../raw/widget/table.html#L167)
 
 Return the row and its associated object if needed.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L174)
+[See the source code](../raw/widget/table.html#L176)
 
 Select the given row or index.
 
@@ -79,7 +79,7 @@ Args:
 
 `add_row(self, *args, **kwargs)`
 
-[See the source code](../raw/widget/table.html#L202)
+[See the source code](../raw/widget/table.html#L204)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -105,7 +105,7 @@ Or:
 
 `associate(self, row: bui.widget.table.AbcRow, obj: Any)`
 
-[See the source code](../raw/widget/table.html#L291)
+[See the source code](../raw/widget/table.html#L293)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -144,7 +144,7 @@ raise no exception.
 
 `remove_row(self, row: Union[int, bui.widget.table.AbcRow])`
 
-[See the source code](../raw/widget/table.html#L241)
+[See the source code](../raw/widget/table.html#L243)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -174,7 +174,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sort(self, key: Callable = None, reverse: bool = False)`
 
-[See the source code](../raw/widget/table.html#L263)
+[See the source code](../raw/widget/table.html#L265)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -200,7 +200,7 @@ Example:
 
 `update_row(self, row)`
 
-[See the source code](../raw/widget/table.html#L223)
+[See the source code](../raw/widget/table.html#L225)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

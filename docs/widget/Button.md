@@ -41,7 +41,7 @@ raise no exception.
 
 `handle_click(self, control)`
 
-[See the source code](../raw/widget/button.html#L53)
+[See the source code](../raw/widget/button.html#L56)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -54,7 +54,7 @@ Do nothing if a button is clicked.
 
 `handle_press(self, control)`
 
-[See the source code](../raw/widget/button.html#L65)
+[See the source code](../raw/widget/button.html#L68)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

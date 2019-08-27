@@ -28,6 +28,8 @@ class List(Widget):
         "init": "The window is initialized",
         "press": "The user presses on a key while the list is focused.",
         #"select": "The list selection changes.",
+        "release": "The user releases a key while the list is focused",
+        "type": "The user types a character while the list is focused",
     }
 
     def __init__(self, leaf):

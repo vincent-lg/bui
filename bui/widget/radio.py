@@ -28,6 +28,8 @@ class RadioButton(Widget):
         "init": "The window is initialized",
         "press": "The user presses on a key while the radio button is focused.",
         #"select": "The radio button selection changes.",
+        "release": "The user releases a key while the radio button is focused",
+        "type": "The user types a character while the radio button is focused",
     }
 
     def __init__(self, leaf):

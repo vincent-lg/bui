@@ -20,7 +20,10 @@ class Button(Widget):
     class_name = "Button"
     default_controls = {
         "click": "This button is being clicked on or activated from the keyboard",
+        "init": "This button is ready to be displayed",
         "press": "The user presses on a key while the button is focused.",
+        "release": "The user releases a key while the button is focused",
+        "type": "The user types a character while the button is focused",
     }
     implicit_control = "click"
 

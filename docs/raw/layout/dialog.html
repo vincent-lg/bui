@@ -266,30 +266,42 @@
       <span style="white-space: pre;"><a id="L244"></a>    |                                 |              | keyboard. This   |</span><br />
       <span style="white-space: pre;"><a id="L245"></a>    |                                 |              | control can have |</span><br />
       <span style="white-space: pre;"><a id="L246"></a>    |                                 |              | sub-controls.    |</span><br />
-      <span style="white-space: pre;"><a id="L247"></a></span><br />
-      <span style="white-space: pre;"><a id="L248"></a>    Notice that we don't specify the dialog identifier.  It would make</span><br />
-      <span style="white-space: pre;"><a id="L249"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>    method in the dialog class with the control name and no identifier:</span><br />
-      <span style="white-space: pre;"><a id="L251"></a></span><br />
-      <span style="white-space: pre;"><a id="L252"></a>        class ExampleDialog(Dialog):</span><br />
-      <span style="white-space: pre;"><a id="L253"></a></span><br />
-      <span style="white-space: pre;"><a id="L254"></a>            def on_focus(self):</span><br />
-      <span style="white-space: pre;"><a id="L255"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
-      <span style="white-space: pre;"><a id="L256"></a></span><br />
-      <span style="white-space: pre;"><a id="L257"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L258"></a></span><br />
-      <span style="white-space: pre;"><a id="L259"></a>    tag_name = "dialog"</span><br />
-      <span style="white-space: pre;"><a id="L260"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L261"></a>        Attr("title", help="The dialog title"),</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>        Attr("width", help="The dialog width", type=int, default=100),</span><br />
-      <span style="white-space: pre;"><a id="L263"></a>        Attr("height", help="The dialog height", type=int, default=100),</span><br />
-      <span style="white-space: pre;"><a id="L264"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L254"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L259"></a></span><br />
+      <span style="white-space: pre;"><a id="L260"></a>    Notice that we don't specify the dialog identifier.  It would make</span><br />
+      <span style="white-space: pre;"><a id="L261"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
+      <span style="white-space: pre;"><a id="L262"></a>    method in the dialog class with the control name and no identifier:</span><br />
+      <span style="white-space: pre;"><a id="L263"></a></span><br />
+      <span style="white-space: pre;"><a id="L264"></a>        class ExampleDialog(Dialog):</span><br />
       <span style="white-space: pre;"><a id="L265"></a></span><br />
-      <span style="white-space: pre;"><a id="L266"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />
-      <span style="white-space: pre;"><a id="L267"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L268"></a>        self.title = title</span><br />
-      <span style="white-space: pre;"><a id="L269"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L270"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L266"></a>            def on_focus(self):</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
+      <span style="white-space: pre;"><a id="L268"></a></span><br />
+      <span style="white-space: pre;"><a id="L269"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L270"></a></span><br />
+      <span style="white-space: pre;"><a id="L271"></a>    tag_name = "dialog"</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>        Attr("title", help="The dialog title"),</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>        Attr("width", help="The dialog width", type=int, default=100),</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>        Attr("height", help="The dialog height", type=int, default=100),</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L277"></a></span><br />
+      <span style="white-space: pre;"><a id="L278"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>        self.title = title</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>        self.height = height</span><br />
     </div>
   </body>
 </html>

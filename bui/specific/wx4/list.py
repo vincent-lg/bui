@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.list import SpecificList
+from bui.specific.wx4.shared import WXShared
 
-class WX4List(SpecificList):
+class WX4List(WXShared, SpecificList):
 
     """Wx-specific list widget."""
 
@@ -16,7 +17,7 @@ class WX4List(SpecificList):
                 window.wx_parent, style=wx.LB_SINGLE)
         window.add_widget(self)
         self.wx_list.Bind(wx.EVT_LISTBOX, self.OnSelectionChange)
-        self.wx_list.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+        self.watch_keyboard(self.wx_list)
 
     def refresh(self):
         """Refresh the list choices, using the generic widget."""
@@ -57,12 +58,3 @@ class WX4List(SpecificList):
         """When the selection changes."""
         indice = self.wx_list.GetSelection()
         self.generic.selected = indice
-
-    def OnKeyDown(self, e):
-        window = self.parent
-        if "press" in self.generic.controls:
-            window._OnKeyDown(e, self)
-        else:
-            window._OnKeyDown(e)
-
-        e.Skip()

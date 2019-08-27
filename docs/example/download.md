@@ -67,7 +67,6 @@ class DownloadExample(Window):
         """The start button has been clicked by the user."""
         self.downloading = not self.downloading
         widget.name = "Pause" if self.downloading else "Start"
-    on_press_space_start = on_start
 
     async def download_all(self):
         """Download all files asynchronously."""
@@ -145,6 +144,7 @@ class DownloadExample(Window):
             row = table.add_row(name, "Unknown", "Unknown", "Unknown")
             self.schedule(self.download(row, name, url))
     on_add_file = on_add
+    on_press_ctrl_a = on_add
     on_quit = close
     on_press_ctrl_q = close
 

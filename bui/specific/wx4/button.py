@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.button import SpecificButton
+from bui.specific.wx4.shared import WXShared
 
-class WX4Button(SpecificButton):
+class WX4Button(WXShared, SpecificButton):
 
     @property
     def name(self):
@@ -26,15 +27,8 @@ class WX4Button(SpecificButton):
         window.add_widget(self)
         self.wx_button.Bind(wx.EVT_BUTTON, self.OnClick)
 
-        self.wx_button.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
+        self.watch_keyboard(self.wx_button)
 
     def OnClick(self, e):
         """The menu is seslected, create a click control."""
         self.generic._process_control("click")
-
-    def OnKeyDown(self, e):
-        window = self.parent
-        if "press" in self.generic.controls:
-            window._OnKeyDown(e, self)
-        else:
-            window._OnKeyDown(e)

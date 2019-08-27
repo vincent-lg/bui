@@ -128,17 +128,39 @@ class RadioButton(Component):
 
     ## Controls
 
-    | Control                           | Method       | Description    |
-    | --------------------------------- | ------------ | -------------- |
-    | [focus](../../control/focus.md)   | `on_focus`   | The radio      |
-    |                                   |              | button is      |
-    |                                   |              | focused or     |
-    |                                   |              | loses focus.   |
-    | [select](../../control/select.md] | `on_select`  | The selected   |
-    |                                   |              | choice has     |
-    |                                   |              | changed for    |
-    |                                   |              | this radio     |
-    |                                   |              | button.        |
+    | Control                         | Method       | Description      |
+    | ------------------------------- | ------------ | ---------------- |
+    | [focus](../../control/focus.md) | `on_focus`   | The radio        |
+    |                                 |              | button is        |
+    |                                 |              | focused or       |
+    |                                 |              | loses focus.     |
+    | [init](../../control/init.md)   | `on_init`    | The radio is     |
+    |                                 |              | ready to be      |
+    |                                 |              | displayed, but   |
+    |                                 |              | is not displayed |
+    |                                 |              | just yet.        |
+    | [press](../../control/press.md) | `on_press`   | The user presses |
+    |                                 |              | on a key from her|
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
+    | [release](../../                | `on_release` | The user         |
+    | control/release.md)             |              | relases a key on |
+    |                                 |              | her keyboard.    |
+    |                                 |              | This control can |
+    |                                 |              | have sub-        |
+    |                                 |              | controls.        |
+    | [select](../../                 | `on_select`  | The selected     |
+    | control/select.md)              |              | choice has       |
+    |                                 |              | changed for      |
+    |                                 |              | this radio       |
+    |                                 |              | button.          |
+    | [type](../../control/type.md)   | `on_type`    | The user types   |
+    |                                 |              | a character      |
+    |                                 |              | using her        |
+    |                                 |              | keyboard. This   |
+    |                                 |              | control can have |
+    |                                 |              | sub-controls.    |
 
         class MainWindow(Window):
 

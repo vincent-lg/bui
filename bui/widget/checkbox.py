@@ -22,6 +22,8 @@ class Checkbox(Widget):
         "check": "This checkbox is being checked or unchecked.",
         "init": "This checkbox is ready to be displayed.",
         "press": "The user presses on a key while the checkbox is focused.",
+        "release": "The user releases a key while the checkbox is focused",
+        "type": "The user types a character while the checkbox is focused",
     }
     implicit_control = "click"
 

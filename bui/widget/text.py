@@ -25,6 +25,8 @@ class Text(Widget):
         "change": "This text area's value has changed.",
         "init": "This text area is ready to be displayed.",
         "press": "The user presses on a key while the text area is focused.",
+        "release": "The user releases a key while the text is focused",
+        "type": "The user types a character while the text is focused",
     }
 
     def __init__(self, leaf):

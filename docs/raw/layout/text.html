@@ -321,75 +321,87 @@
       <span style="white-space: pre;"><a id="L299"></a></span><br />
       <span style="white-space: pre;"><a id="L300"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L301"></a></span><br />
-      <span style="white-space: pre;"><a id="L302"></a>    | Control                           | Method       | Description    |</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
-      <span style="white-space: pre;"><a id="L304"></a>    | [change](../../control/change.md) | `on_change`  | The text has   |</span><br />
-      <span style="white-space: pre;"><a id="L305"></a>    |                                   |              | been changed,  |</span><br />
-      <span style="white-space: pre;"><a id="L306"></a>    |                                   |              | either by the  |</span><br />
-      <span style="white-space: pre;"><a id="L307"></a>    |                                   |              | user or the    |</span><br />
-      <span style="white-space: pre;"><a id="L308"></a>    |                                   |              | program.       |</span><br />
-      <span style="white-space: pre;"><a id="L309"></a>    | [init](../../control/init.md)     | `on_init`    | The text is    |</span><br />
-      <span style="white-space: pre;"><a id="L310"></a>    |                                   |              | ready to be    |</span><br />
-      <span style="white-space: pre;"><a id="L311"></a>    |                                   |              | displayed, but |</span><br />
-      <span style="white-space: pre;"><a id="L312"></a>    |                                   |              | is not         |</span><br />
-      <span style="white-space: pre;"><a id="L313"></a>    |                                   |              | displayed yet. |</span><br />
-      <span style="white-space: pre;"><a id="L314"></a>    | [press](../../control/press.md)   | `on_press`   | The user       |</span><br />
-      <span style="white-space: pre;"><a id="L315"></a>    |                                   |              | pressed on a   |</span><br />
-      <span style="white-space: pre;"><a id="L316"></a>    |                                   |              | key of her     |</span><br />
-      <span style="white-space: pre;"><a id="L317"></a>    |                                   |              | keyboard while |</span><br />
-      <span style="white-space: pre;"><a id="L318"></a>    |                                   |              | the text is    |</span><br />
-      <span style="white-space: pre;"><a id="L319"></a>    |                                   |              | focused. This  |</span><br />
-      <span style="white-space: pre;"><a id="L320"></a>    |                                   |              | control is     |</span><br />
-      <span style="white-space: pre;"><a id="L321"></a>    |                                   |              | triggered      |</span><br />
-      <span style="white-space: pre;"><a id="L322"></a>    |                                   |              | before the     |</span><br />
-      <span style="white-space: pre;"><a id="L323"></a>    |                                   |              | text is        |</span><br />
-      <span style="white-space: pre;"><a id="L324"></a>    |                                   |              | actually       |</span><br />
-      <span style="white-space: pre;"><a id="L325"></a>    |                                   |              | modified, and  |</span><br />
-      <span style="white-space: pre;"><a id="L326"></a>    |                                   |              | you can        |</span><br />
-      <span style="white-space: pre;"><a id="L327"></a>    |                                   |              | prevent the    |</span><br />
-      <span style="white-space: pre;"><a id="L328"></a>    |                                   |              | default change |</span><br />
-      <span style="white-space: pre;"><a id="L329"></a>    |                                   |              | to the text.   |</span><br />
-      <span style="white-space: pre;"><a id="L330"></a></span><br />
-      <span style="white-space: pre;"><a id="L331"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L332"></a></span><br />
-      <span style="white-space: pre;"><a id="L333"></a>            def on_init_first_name(self, widget):</span><br />
-      <span style="white-space: pre;"><a id="L334"></a>                widget.value = "Vincent"</span><br />
-      <span style="white-space: pre;"><a id="L335"></a></span><br />
-      <span style="white-space: pre;"><a id="L336"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L337"></a></span><br />
-      <span style="white-space: pre;"><a id="L338"></a>    tag_name = "text"</span><br />
-      <span style="white-space: pre;"><a id="L339"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L340"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L341"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L342"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L343"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L344"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L345"></a>        Attr("value", help="The text default value", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L346"></a>        Attr("multiline", help="The text is on multiple lines",</span><br />
-      <span style="white-space: pre;"><a id="L347"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L348"></a>        Attr("read-only", help="The text is read-only",</span><br />
-      <span style="white-space: pre;"><a id="L349"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L350"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L351"></a>    must_have_data = True</span><br />
-      <span style="white-space: pre;"><a id="L352"></a></span><br />
-      <span style="white-space: pre;"><a id="L353"></a>    def __init__(self, layout, parent, x, y, width=1, height=1, id="",</span><br />
-      <span style="white-space: pre;"><a id="L354"></a>            value="", multiline=False, read_only=False):</span><br />
-      <span style="white-space: pre;"><a id="L355"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L356"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L357"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L358"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L359"></a>        self.height = height</span><br />
-      <span style="white-space: pre;"><a id="L360"></a>        self.label = ""</span><br />
-      <span style="white-space: pre;"><a id="L361"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L362"></a>        self.value = value</span><br />
-      <span style="white-space: pre;"><a id="L363"></a>        self.multiline = multiline</span><br />
-      <span style="white-space: pre;"><a id="L364"></a>        self.read_only = read_only</span><br />
-      <span style="white-space: pre;"><a id="L365"></a></span><br />
-      <span style="white-space: pre;"><a id="L366"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L367"></a>        """Complete the widget, when all the layout has been set."""</span><br />
-      <span style="white-space: pre;"><a id="L368"></a>        self.label = self.data</span><br />
-      <span style="white-space: pre;"><a id="L369"></a>        if not self.id:</span><br />
-      <span style="white-space: pre;"><a id="L370"></a>            self.id = self.deduce_id(self.data)</span><br />
+      <span style="white-space: pre;"><a id="L302"></a>    | Control                         | Method       | Description      |</span><br />
+      <span style="white-space: pre;"><a id="L303"></a>    | ------------------------------- | ------------ | ---------------- |</span><br />
+      <span style="white-space: pre;"><a id="L304"></a>    | [change](../../                 | `on_change`  | The text has     |</span><br />
+      <span style="white-space: pre;"><a id="L305"></a>    | control/change.md)              |              | been changed,    |</span><br />
+      <span style="white-space: pre;"><a id="L306"></a>    |                                 |              | either by the    |</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>    |                                 |              | user or the      |</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>    |                                 |              | program.         |</span><br />
+      <span style="white-space: pre;"><a id="L309"></a>    | [init](../../control/init.md)   | `on_init`    | The text is      |</span><br />
+      <span style="white-space: pre;"><a id="L310"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L311"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>    |                                 |              | is not           |</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>    |                                 |              | displayed yet.   |</span><br />
+      <span style="white-space: pre;"><a id="L314"></a>    | [press](../../control/press.md) | `on_press`   | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L315"></a>    |                                 |              | pressed on a     |</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>    |                                 |              | key of her       |</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>    |                                 |              | keyboard while   |</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>    |                                 |              | the text is      |</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>    |                                 |              | focused. This    |</span><br />
+      <span style="white-space: pre;"><a id="L320"></a>    |                                 |              | control is       |</span><br />
+      <span style="white-space: pre;"><a id="L321"></a>    |                                 |              | triggered        |</span><br />
+      <span style="white-space: pre;"><a id="L322"></a>    |                                 |              | before the       |</span><br />
+      <span style="white-space: pre;"><a id="L323"></a>    |                                 |              | text is          |</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>    |                                 |              | actually         |</span><br />
+      <span style="white-space: pre;"><a id="L325"></a>    |                                 |              | modified, and    |</span><br />
+      <span style="white-space: pre;"><a id="L326"></a>    |                                 |              | you can          |</span><br />
+      <span style="white-space: pre;"><a id="L327"></a>    |                                 |              | prevent the      |</span><br />
+      <span style="white-space: pre;"><a id="L328"></a>    |                                 |              | default change   |</span><br />
+      <span style="white-space: pre;"><a id="L329"></a>    |                                 |              | to the text.     |</span><br />
+      <span style="white-space: pre;"><a id="L330"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L331"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L332"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L333"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L334"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L335"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L336"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L337"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L338"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L339"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L340"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L341"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L342"></a></span><br />
+      <span style="white-space: pre;"><a id="L343"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L344"></a></span><br />
+      <span style="white-space: pre;"><a id="L345"></a>            def on_init_first_name(self, widget):</span><br />
+      <span style="white-space: pre;"><a id="L346"></a>                widget.value = "Vincent"</span><br />
+      <span style="white-space: pre;"><a id="L347"></a></span><br />
+      <span style="white-space: pre;"><a id="L348"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L349"></a></span><br />
+      <span style="white-space: pre;"><a id="L350"></a>    tag_name = "text"</span><br />
+      <span style="white-space: pre;"><a id="L351"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L352"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L353"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L354"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L355"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L356"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L357"></a>        Attr("value", help="The text default value", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L358"></a>        Attr("multiline", help="The text is on multiple lines",</span><br />
+      <span style="white-space: pre;"><a id="L359"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L360"></a>        Attr("read-only", help="The text is read-only",</span><br />
+      <span style="white-space: pre;"><a id="L361"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L362"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L363"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L364"></a></span><br />
+      <span style="white-space: pre;"><a id="L365"></a>    def __init__(self, layout, parent, x, y, width=1, height=1, id="",</span><br />
+      <span style="white-space: pre;"><a id="L366"></a>            value="", multiline=False, read_only=False):</span><br />
+      <span style="white-space: pre;"><a id="L367"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L368"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L369"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L370"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L371"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L372"></a>        self.label = ""</span><br />
+      <span style="white-space: pre;"><a id="L373"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L374"></a>        self.value = value</span><br />
+      <span style="white-space: pre;"><a id="L375"></a>        self.multiline = multiline</span><br />
+      <span style="white-space: pre;"><a id="L376"></a>        self.read_only = read_only</span><br />
+      <span style="white-space: pre;"><a id="L377"></a></span><br />
+      <span style="white-space: pre;"><a id="L378"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L379"></a>        """Complete the widget, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L380"></a>        self.label = self.data</span><br />
+      <span style="white-space: pre;"><a id="L381"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L382"></a>            self.id = self.deduce_id(self.data)</span><br />
     </div>
   </body>
 </html>
