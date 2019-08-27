@@ -264,7 +264,7 @@ Running in 'debug controls' mode.
     Bound click as an implicit widget control of item(quit) to the 'on_quit' method
     Bound init as a widget control of table(download) to the 'on_init_download' method
     Bound click as an implicit widget control of button(start) to the 'on_start' method
-    Bound press as a widget control of button(start) with options={'key': 'space'} to the 'on_press_space_start' method
+    Bound press as a window control with options={'key': 'ctrl_a'} to the 'on_press_space_start' method
     Bound click as an implicit widget control of button(add) to the 'on_add' method
   Fire init control on window
   Fire init control on menubar

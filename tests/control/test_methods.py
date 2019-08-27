@@ -134,7 +134,7 @@ def test_sub_widget_controls():
         def on_press_count(self):
             self.pressed = 1
 
-        def on_press_a_count(self):
+        def on_press_a_in_count(self):
             self.pressed = 2
 
     window = start(Example)
@@ -143,7 +143,7 @@ def test_sub_widget_controls():
 
     # Check that the control method is registered into the widget object
     assert "press" in widget.controls
-    assert is_registered(widget, "press", window.on_press_a_count)
+    assert is_registered(widget, "press", window.on_press_a_in_count)
 
     # Check that the on_press_a_count method is called when firing the control
     widget._process_control("press", {"key": "a", "raw_key": "a"})
@@ -200,7 +200,7 @@ def test_alias_widget_control():
 
         def on_click_quit(self):
             self.pressed = True
-        on_press_b_quit = on_click_quit
+        on_press_b_in_quit = on_click_quit
 
     window = start(Example)
     window.pressed = False
@@ -216,7 +216,7 @@ def test_alias_widget_control():
     window.pressed = False
 
     # Check that the control method is registered into the window object
-    assert is_registered(widget, "press", window.on_press_b_quit)
+    assert is_registered(widget, "press", window.on_press_b_in_quit)
 
     # Check that the on_press_b method is called when firing the control
     widget._process_control("press", {"key": "b", "raw_key": "b"})
