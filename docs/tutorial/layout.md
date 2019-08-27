@@ -160,9 +160,9 @@ On the other hand, if you head over to [the text tag attributes](../layout/tag/t
 
       <text x=3 y=3 id=report>Report</text>
 
-#### Tags with no value
+#### Attributes with no value
 
-Some tags don't require a value.  Their presence is enough to know what to do.  Specify the attribute name, but no equal sign or value is necessary after that.  Again, checking the [text tag attributes](../layout/tag/text.md#attributes), you should see the `multiline` attribute:
+Some attributes don't require a value.  Their presence is enough to know what to do.  Specify the attribute name, but no equal sign or value is necessary after that.  Again, checking the [text tag attributes](../layout/tag/text.md#attributes), you should see the `multiline` attribute:
 
 > `multiline`: if present, set the text on multiple lines.
 
@@ -220,8 +220,9 @@ The first thing is to read the tag documentation.  It provides some examples and
 
 Now that you have a greater understanding of the BUI layout, it will be easier to play around with real windows.  The next tutorials show a greater range of examples of various widgets in various conditions.  If you are a window designer, not much interested in the Python code, you might only read the first section of each tutorial (which describes the layout).  The next section (describing control methods) is more a developer thing.  If you are a developer, however, you might want to read each tutorial, or at least, follow the ones you are interested in.
 
-- [Playing with buttons](buttons.md)
+- [Using buttons](buttons.md)
 - [A window with a menu bar](menubar.md)
+- [Handling keyboard shortcuts](keyboard.md)
 - [Checkboxes and radio buttons](choices.md)
 - [Lists and tables](lists.md)
 - [Dialogs](dialogs.md)
