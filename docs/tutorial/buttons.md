@@ -1,269 +1,274 @@
-# Button tutorial
+# Tutoriel : boutons
 
-This tutorial will present buttons in more details: how to create them in [layout](layout.md), how to have users interact with them and so on.  Starting with buttons is a good way to quickly see BUI's advantages, strengths and possible weaknesses.
+Ce tutoriel présentera les boutons de manière détaillée : comment les créer dans [le design de la fenêtre](layout.md), comment faire en sorte que les utilisateurs interagissent avec eux, etc. Commencer avec des boutons est un bon moyen de voir rapidement les avantages, les forces et les faiblesses de BUI.
 
-## Buttons in layout
+## Boutons dans le design
 
-To create a button in layout, use the [button](../layout/tag/button.md) tag.  This needs to be placed inside a [window](../layout/tag/window.md) tag.  Let's see a basic syntax of a button definition:
+Pour créer un bouton dans le design de la fenêtre, utilisez la balise [button](../layout/tag/button.md). Celle-ci doit se trouver à l'intérieur d'une balise [window](../layout/tag/window.md). Voyons la syntaxe de base d'une définition de bouton :
 
-    <button x=0 y=1>Name of the button</button>
+    <button x=0 y=1>Nom du bouton</button>
 
-As usual, you should specify at least the `x` and `y` attributes, as was discussed in the [previous tutorial](layout.md#the-window-as-a-grid).  The button name (or label) is specified as the [data](layout.md#tag-data) of the [button tag](../layout/tag/button.md).
+Comme toujours, vous devez spécifier au moins les attributs `x` et `y`, comme indiqué dans le [tutoriel précédent](layout.md#the-window-as-a-grid). Le nom du bouton (ou son "label") est spécifié en tant que [donnée](layout.md#tag-data) de la balise [button](../layout/tag/button.md).
 
-Here's a more complex example of layout creating several buttons on the window:
+Voici un exemple plus complet de design créant plusieurs boutons sur la fenêtre :
 
 ```
-<window title="Button demonstration in BUI">
-  <button x=2 y=1>Top button</button>
-  <button x=0 y=3>Left button</button>
-  <button x=5 y=3>Right button</button>
-  <button x=2 y=5>Bottom button</button>
+<window title="Présentation des boutons dans BUI">
+  <button x=2 y=1>Bouton en haut</button>
+  <button x=0 y=3>Bouton à gauche</button>
+  <button x=5 y=3>Bouton à droite</button>
+  <button x=2 y=5>Bouton en bas</button>
 </window>
 ```
 
-This will create a window with 4 buttons: one at the top, one at the left, one at the right and one at the bottom of the window.
+Cela créera une fenêtre avec 4 boutons: un en haut, un à gauche, un à droite et un en bas de la fenêtre.
 
-Buttons have more [attributes](../layout/tag/button.md#attributes), but perhaps the most important one is `id`.  As pointed out in the [previous tutorial](layout.md#widget-identifiers), identifiers are used to refer to widgets.  They are the point of contact between the layout and the user interactions and both the designer and developer should know these identifiers.
+Les boutons ont davantage d'[attributs](../layout/tag/button.md#attributs), mais le plus important est sans doute `id`. Comme indiqué dans le [tutoriel précédent](layout.md#widget-identifiers), les identifiants sont utilisés pour désigner les widgets. Ils constituent le point de contact entre le esign de la fenêtre et les interactions utilisateur. Le concepteur et le développeur doivent connaître ces identifiants.
 
-An identifier is a string describing the widget.  Two widgets cannot have the same identifier.  In the case of buttons, BUI will try to infer an identifier using the button name (label) if the `id` attribute is not specified.  Although it can be extremely useful, particularly on small dialogs or windows, specifying an `id` attribute for buttons is still advised:
+Un identifiant est une chaîne de caractères identifiant le widget de façon unique. Deux widgets ne peuvent pas avoir le même identifiant. Dans le cas de boutons, BUI essaiera d'inférer un identifiant en utilisant le nom du bouton (son "label") si l'attribut `id` n'est pas spécifié. Bien que cela puisse être extrêmement utile, en particulier dans de petites boîtes de dialogue ou fenêtres, il est toujours recommandé de spécifier un attribut `id` pour chaque bouton :
 
 ```
-<window title="Button demonstration in BUI">
-  <button x=2 y=1 id=top>Top button</button>
-  <button x=0 y=3 id=left>Left button</button>
-  <button x=5 y=3 id=right>Right button</button>
-  <button x=2 y=5 id=bottom>Bottom button</button>
+<window title="Présentation des boutons dans BUI">
+  <button x=2 y=1 id=haut>Bouton en haut</button>
+  <button x=0 y=3 id=gauche>Bouton à gauche</button>
+  <button x=5 y=3 id=droite>Bouton à droite</button>
+  <button x=2 y=5 id=bas>Bouton en bas</button>
 </window>
 ```
 
-All you need to tell the developer in charge of user interactions is that your layout defines 4 buttons: "top", "left", "right" and "bottom".  The developer doesn't need to know where they are and how they appear.
+Tout ce que vous avez besoin de dire au développeur en charge des interactions utilisateur, c'est que votre mise en page définit 4 boutons : "haut", "gauche", "droite" et "bas". Le développeur n'a pas besoin de savoir où ils se trouvent et comment ils apparaissent.
 
-To know and use the other button attributes, see the [button tag attributes](../layout/tag/button.md#attributes).
+Pour connaître et utiliser les autres attributs de `<button>`, voir les [attributs de la balise button](../layout/tag/button.md#attributs).
 
-## Control methods
+## Méthodes de contrôle
 
-As a developer, we would be more interested in how to interact with users and react to user input.  In this tutorial, we'll see how to handle clicks on buttons.
+En tant que développeur, nous serions plus intéressés par la manière d'interagir avec les utilisateurs et de réagir aux actions utilisateurs. Dans ce tutoriel, nous verrons comment gérer les clics sur les boutons.
 
-You can begin by creating a file named "buttons.py".  Inside of it, paste the following code:
-
-```python
-from bui import Window, start
-
-class Buttons(Window):
-
-    """A buttons demonstration in BUI."""
-
-    # Again, the layout is included here, but it's good practice
-    # to write it in a separate file (buttons.bui in this case)
-    layout = mark("""
-      <window title="Button demonstration in BUI">
-        <button x=2 y=1 id=top>Top button</button>
-        <button x=0 y=3 id=left>Left button</button>
-        <button x=5 y=3 id=right>Right button</button>
-        <button x=2 y=5 id=bottom>Bottom button</button>
-        <text x=2 y=3 id=report>Report</text>
-      </window>
-    """)
-
-    # ... we'll write our control methods here
-
-start(Buttons)
-```
-
-This is almost the exact same layout we used in the previous section.  The only thing we add is a text field in the middle of the window to report what we do.
-
-### Control methods
-
-To intercept user actions in BUI, the process is to create simple methods starting with `on_` in their name.  Let's code the first one:
+Vous pouvez commencer par créer un fichier nommé "boutons.py". À l'intérieur de celui-ci, collez le code suivant :
 
 ```python
 from bui import Window, start
 
-class Buttons(Window):
+class Boutons(Window):
 
-    """A buttons demonstration in BUI."""
+    """Exemple de boutons dans BUI."""
 
-    # Again, the layout is included here, but it's good practice
-    # to write it in a separate file (buttons.bui in this case)
+    # Une fois encore, le design de la fenêtre est inclu directement
+    # dans le code ici. Mais il serait préférable de l'écrire
+    # dans un fichier séparé (boutons.bui ici)
     layout = mark("""
-      <window title="Button demonstration in BUI">
-        <button x=2 y=1 id=top>Top button</button>
-        <button x=0 y=3 id=left>Left button</button>
-        <button x=5 y=3 id=right>Right button</button>
-        <button x=2 y=5 id=bottom>Bottom button</button>
-        <text x=2 y=3 id=report>Report</text>
+      <window title="Présentation des boutons dans BUI">
+        <button x=2 y=1 id=haut>Bouton en haut</button>
+        <button x=0 y=3 id=gauche>Bouton à gauche</button>
+        <button x=5 y=3 id=droite>Bouton à droite</button>
+        <button x=2 y=5 id=bas>Bouton en bas</button>
+        <text x=2 y=3 id=action>Action</text>
       </window>
     """)
 
-    def on_top(self):
-        """The top button was clicked."""
-        self["report"].value = "The top button was clicked."
+    # ... nous écrirons les méthodes de contrôle ici
 
-start(Buttons)
+start(Boutons)
 ```
 
-If you run this code, the window should appear.  Should you click (or press RETURN) on the top button, the text field will be updated: it should contain "The top button was clicked."
+C'est presque le même design utilisé dans la section précédente. La seule chose que nous ajoutons est un champ de texte au milieu de la fenêtre pour signaler ce que nous faisons.
 
-We've added only 3 lines (2 not counting the docstring).  Let's see what they do:
+### Méthodes de contrôle
 
-- We begin by creating a new method on the window, called `on_top`.  `on_` is the prefix of a control method, telling BUI that this method should be bound to a control.  `top` is the only remaining information.  BUI understands that we want to connect this control method to the action "the user clicks on the button of ID top".
-- Inside the method, we call `self["report"]`.  This will return the widget with ID "report".  Looking at our layout, this is the text widget.  We update its value (the text it contains) using a simple property (`self["report"].value = "text to display"`).
-
-We could link any other button in the same way.  For instance:
+Pour intercepter les actions des utilisateurs dans BUI, le processus consiste à créer des méthodes simples dont le nom commence par `on_`. Voyons un premier exemple :
 
 ```python
 from bui import Window, start
 
-class Buttons(Window):
+class Boutons(Window):
 
-    """A buttons demonstration in BUI."""
+    """Exemple de boutons dans BUI."""
 
-    # Again, the layout is included here, but it's good practice
-    # to write it in a separate file (buttons.bui in this case)
+    # Une fois encore, le design de la fenêtre est inclu directement
+    # dans le code ici. Mais il serait préférable de l'écrire
+    # dans un fichier séparé (boutons.bui ici)
     layout = mark("""
-      <window title="Button demonstration in BUI">
-        <button x=2 y=1 id=top>Top button</button>
-        <button x=0 y=3 id=left>Left button</button>
-        <button x=5 y=3 id=right>Right button</button>
-        <button x=2 y=5 id=bottom>Bottom button</button>
-        <text x=2 y=3 id=report>Report</text>
+      <window title="Présentation des boutons dans BUI">
+        <button x=2 y=1 id=haut>Bouton en haut</button>
+        <button x=0 y=3 id=gauche>Bouton à gauche</button>
+        <button x=5 y=3 id=droite>Bouton à droite</button>
+        <button x=2 y=5 id=bas>Bouton en bas</button>
+        <text x=2 y=3 id=action>Action</text>
       </window>
     """)
 
-    def on_top(self):
-        """The top button was clicked."""
-        self["report"].value = "The top button was clicked."
+    def on_haut(self):
+        """Le bouton en haut a été cliqué."""
+        self["action"].value = "Le bouton en haut a été cliqué."
 
-    def on_left(self):
-        """The left button was clicked."""
-        self["report"].value = "The left button was clicked."
-
-start(Buttons)
+start(Boutons)
 ```
 
-### Diving deeper inside control method binding
+Si vous exécutez ce code, la fenêtre devrait apparaître. Si vous cliquez (ou appuyez sur la touche RETOUR) sur le bouton du haut, le champ de texte sera mis à jour : il devrait contenir "Le bouton du haut a été cliqué".
 
-Let's examine in more details how BUI binds control methods to user actions.  We have seen that creating a method called `on_top` was enough to let BUI know we want to intercept user clicking on the button of ID "top".  But it seems to indicate we can only react to the click action, at least on buttons.  Fortunately, this is not true.
+Nous avons ajouté seulement 3 lignes (2 sans compter la docstring). Voyons ce qu'elles font :
 
-BUI has an interesting approach to binding user actions to control methods.  It examines the control method name and tries to infer information from there, with reason.  The more complete method name looks like this:
+- Nous commençons par créer une nouvelle méthode sur la fenêtre, appelée `on_haut`. `on_` est le préfixe d'une méthode de contrôle, indiquant à BUI que cette méthode doit être liée à un contrôle. `haut` est la seule information restante. BUI comprend que nous souhaitons associer cette méthode de contrôle à l'action "l'utilisateur clique sur le bouton de l'ID haut" ;
+- Dans cette méthode, nous appelons `self["action"]`. Ce code renvoie le widget d'ID "action". Si vous regardez notre design, vous verrez qu'il s'agit du widget de type texte. Nous mettons à jour sa valeur (le texte qu'il contient) en utilisant une propriété simple (`self["action"].value = "texte à afficher"`).
 
-- `on_`: the prefix for a control method.
-- `{control}`: the control type.
-- `_`: another underscore.
-- `{widget}`: the widget identifier.
-
-What are controls?  You can think of them as user actions.  When the user clicks on the top button, BUI generates a "click" control and fires it on the "top" widget.  So the way to intercept the "click" control on the widget of ID "top" would be to create a method named `on_click_top`.  You can try with the same layout to bind to the right button:
+Nous pourrions relier n'importe quel autre bouton de la même manière. Par exemple :
 
 ```python
-    def on_click_right(self):
-        """The 'right' button was clicked."""
-        self["report"].value = "The right button was clicked."
+from bui import Window, start
+
+class Boutons(Window):
+
+    """Exemple de boutons dans BUI."""
+
+    # Une fois encore, le design de la fenêtre est inclu directement
+    # dans le code ici. Mais il serait préférable de l'écrire
+    # dans un fichier séparé (boutons.bui ici)
+    layout = mark("""
+      <window title="Présentation des boutons dans BUI">
+        <button x=2 y=1 id=haut>Bouton en haut</button>
+        <button x=0 y=3 id=gauche>Bouton à gauche</button>
+        <button x=5 y=3 id=droite>Bouton à droite</button>
+        <button x=2 y=5 id=bas>Bouton en bas</button>
+        <text x=2 y=3 id=action>Action</text>
+      </window>
+    """)
+
+    def on_haut(self):
+        """Le bouton en haut a été cliqué."""
+        self["action"].value = "Le bouton en haut a été cliqué."
+
+    def on_gauche(self):
+        """Le bouton à gauche a été cliqué."""
+        self["action"].value = "Le bouton à gauche a été cliqué."
+
+start(Boutons)
 ```
 
-So then... `on_click_right` or `on_right` would do the same thing?  That's odd!
+### Plus loin dans les méthodes de contrôle
 
-BUI will use a system of implicit controls on different widgets.  When a method `on_top` is created, BUI will realize "top" is a button.  What's more likely?  Bui will answer: "I guess we want to intercept the user clicking on the button".  So `on_top` and `on_click_top` would do the same thing.
+Examinons plus en détail comment BUI lie les méthodes de contrôle aux actions de l'utilisateur. Nous avons vu que créer une méthode appelée `on_haut` suffisait à faire savoir à BUI que nous voulions intercepter l'action "un utilisateur clique sur le bouton de l'ID haut". Mais cela semble impliquer que nous ne pouvons réagir qu'au clic, du moins sur les boutons. Heureusement, ce n'est pas le cas.
 
-> Using implicit controls might sound dangerous.  Better to specify the explicit control name each time.  But on some widgets, explicitly writing the control name doesn't make things easier to read in the end.  You will have to decide on which strategy to use given a specific context.
+BUI utilise l'introspection pour lier les actions des utilisateurs aux méthodes de contrôle. Il examine le nom de la méthode de contrôle et essaie d'en déduire des informations, dans des limites raisonnables. Le nom complet de la méthode ressemble à cela :
 
-### Asynchronous control methods
+- `on_` : le préfixe d'une méthode de contrôle ;
+- `{contrôle}` : le type de contrôle ;
+- `_` : un autre trait de soulignement ;
+- `{widget}` : l'identifiant du widget.
 
-In the previous example, the control method reacts directly to the control.  The action is not complete until the control method ends.  But BUI implements a neat feature to allow a control method to run longer without blocking the window.
-
-Let's add a new method to see how it works:
+Que sont les contrôles ? Vous pouvez les imaginer comme des actions de l'utilisateur. Lorsque l'utilisateur clique sur le bouton du haut, BUI génère un contrôle "clic" et le déclenche sur le widget d'ID "haut". Ainsi, la solution pour intercepter le contrôle "clic" sur le widget d'ID "haut" serait de créer une méthode nommée `on_click_haut`. Vous pouvez essayer avec le même design de la fenêtre pour lier une méthode au bouton droit:
 
 ```python
-    async def on_bottom(self, widget):
-        """The bottom button was clicked."""
-        report = self["report"]
-        report.value = (
-                "Great!  Let's play hide-and-seek!  I'm counting, you hide!"
+    def on_click_droit(self):
+        """Le bouton à droite a été cliqué."""
+        self["action"].value = "Le bouton à droite a été cliqué."
+```
+
+Donc... `on_click_droit` ou `on_droit` font la même chose ? Étrange.
+
+BUI utilise un système de contrôles implicites sur différents widgets. Quand une méthode `on_haut` est définie, BUI réalise que "haut" est un bouton. Quel serait l'action la plus probable ? BUI répond : "Je suppose que nous voulons intercepter le moment où l'utilisateur clique sur le bouton". Donc `on_haut` et `on_click_haut` font la même chose.
+
+> L'utilisation de contrôles implicites peut sembler dangereuse. Mieux vaut spécifier le nom du contrôle explicitement à chaque fois. Cependant, sur certains widgets, l'écriture explicite du nom du contrôle ne facilite pas la lecture. Vous devrez décider de la stratégie à utiliser dans l'un ou l'autre cas.
+
+### Méthodes de contrôle asynchrones
+
+Dans l'exemple précédent, la méthode de contrôle réagit directement au contrôle. L'action n'est pas terminée jusqu'à la fin de l'exécution de la méthode de contrôle. Mais BUI implémente une fonctionnalité intéressante pour permettre à une méthode de contrôle de s'exécuter plus longtemps sans bloquer la fenêtre.
+
+Ajoutons une nouvelle méthode pour voir comment cela fonctionne :
+
+```python
+    async def on_bas(self, widget):
+        """Le bouton du bas a été cliqué."""
+        action = self["action"]
+        action.value = (
+                "Super ! Jouons à cache-cache ! Tu te caches et je compte."
         )
 
-        # Counting from 1 to 20 in 20 seconds
+        # Compter de 1 à 20 en 20 secondes
         for i in range(1, 21):
             widget.name = f"{i}"
             await self.sleep(1)
 
-        report.value = "Are you hidden?  I'm coming!"
+        action.value = "Tu es caché ? J'arrive !"
 ```
 
-Run the window and click on the bottom button.  You will see some text being written to the report and then the button changes its name (label) from "Bottom button" to "1".  After a second, the button becomes "2".  And so on.  This doesn't freeze the window.  You can click on other buttons.  For that matter, you can click on the bottom button once more which will create two parallel loops and might give odd results (we'll see how to handle this in the next section).
+Exécutez la fenêtre et cliquez sur le bouton du bas. Vous verrez du texte s'afficher au milieu de la fenêtre, puis le bouton change son nom (son "label") de "Bouton du bas" à "1". Après une seconde, le bouton devient "2". Etc. Cela ne bloque pas la fenêtre. Vous pouvez cliquer sur d'autres boutons. D'ailleurs, vous pouvez cliquer sur le bouton du bas une fois de plus, ce qui créera deux boucles parallèles et pourrait donner des résultats bizarres (nous verrons comment gérer cela dans la section suivante).
 
-For the time being, let's look at the code:
+Pour le moment, regardons le code :
 
-- First you have the `async` keyword in front of the method definition.  This has become a standard Python keyword to indicate the function (method in our case) is asynchronous (it can take awhile to process and its content shouldn't block the rest of the application).
-- The method name is similar.  It obeys the same rules (we use `on_bottom` here, as shown above, we could have written `on_click_bottom` with the same result).
-- We have an additional argument in the method, `widget`.  This is not specific to asynchronous methods.  It's just a shortcut (this argument will contain the button widget on which we clicked).  Control methods accept a wide range of arguments.
-- We first get hold of the text (of ID "report").  This will be used several times in our method, no need to query for it each time.
-- We update the content of the "report" widget.
-- Next is a loop running 20 times.  Inside are only two actions:
+- D'abord, vous avez le mot clé `async` devant la définition de la méthode. Il s'agit d'un mot-clé standard de Python pour indiquer que la fonction (méthode dans notre cas) est asynchrone (son traitement peut prendre un certain temps et son contenu ne doit pas bloquer le reste de l'application).
+- Le nom de la méthode est similaire. Il obéit aux mêmes règles (nous utilisons `on_bas` ici, comme indiqué ci-dessus, nous aurions pu écrire `on_click_bas` avec le même résultat).
+- Nous avons un argument supplémentaire dans la méthode, `widget`. Il n'est pas spécifique aux méthodes asynchrones. C'est juste un raccourci (cet argument contiendra le widget du bouton sur lequel nous avons cliqué). Les méthodes de contrôle acceptent une large gamme d'arguments.
+- Nous capturons d'abord le texte d'identifiant "action" dans une variable. Ce widget sera utilisé plusieurs fois dans notre méthode, pas besoin de le rechercher à chaque fois que nous voulons le modifier.
+- Nous mettons à jour le contenu du widget "action".
+- Ensuite se trouve une boucle qui doit tourner 20 fois. À l'intérieur, il n'y a que deux actions :
 
-   - First, we change the widget (the "bottom" button)'s name with a property.  This will update the button name (label) on the screen.
-   - We then use the `await` keyword and pause for one second.  In the meantime, the window resume its normal activity (you can click on other things for instance).  After the second is over, the loop begins again...
+   - Tout d'abord, nous modifions le nom du widget (le bouton "bas") avec une propriété. Ceci mettra à jour le nom du bouton (son "label") à l'écran.
+   - Nous utilisons ensuite le mot-clé `await` et faisons une pause d'une seconde. Pendant ce temps, la fenêtre reprend son activité normale (vous pouvez cliquer sur d'autres choses, par exemple). Après cette seconde, la boucle recommence...
 
-- ... until we reach `i > 20`.  At this point we exit the loop, update the report one last time and the method ends.
+- ... jusqu'à atteindre `i > 20`. À ce stade, nous sortons de la boucle, mettons à jour le texte une dernière fois et la méthode se termine.
 
-Although light to use, this feature might not sound exactly necessary at first glance.  But consider, for instance, that you could download a file (like the software update) without freezing the rest of the application, without running the update in a separate thread or process (which makes updating so much easier).
+Bien que légère, cette fonctionnalité peut ne pas sembler strictement nécessaire à première vue. Mais considérez, par exemple, que vous pouvez télécharger un fichier (comme la mise à jour du logiciel) sans bloquer le reste de l'application, sans exécuter la mise à jour dans un thread ou un processus séparé (ce qui facilite grandement la mise à jour).
 
-### The init control
+### Le contrôle init
 
-In the previous example, we have an asynchronous control method on which we can click several times while it's still running.  This leads to a lot of updates and confusing label changes.  Why, its counting 3, 4, then back to 1, then 6, then 2...  In this case, we would need to tell Python to not run the "hide-and-seek" counter if it's already running... and to wait for it to be over.
+Dans l'exemple précédent, nous avons une méthode de contrôle asynchrone, connectée à un bouton sur lequel nous pouvons cliquer plusieurs fois. Cela mène à beaucoup de mises à jour et à des changements confus dans le nom du bouton (son "label"). Par exemple, le bouton arrive sur "3", "4", puis reviens à "1", puis "6", puis "2"... Dans ce cas, nous aurions besoin de dire à Python de ne pas exécuter le compteur de "cache-cache" s'il est déjà en cours d'exécution... et d'attendre qu'il soit fini avant de l'autoriser à nouveau.
 
-There are different options.  But a good way would be to store the state in a variable and avoid running the "hide-and-seek" counter if this state indicates "running".  It would be easier to store this data in the window object itself, so we can access it under `self` in our control method.  But we need to create this variable (this instance attribute) before the control runs.
+Il y a différentes options. Mais un bon moyen serait de stocker l'état dans une variable et d'éviter d'exécuter le compteur de "cache-cache" si cet état indique qu'il est déjà en train de compter. Il serait plus facile de stocker cette information dans l'objet `window` lui-même, afin que nous puissions y accéder grâce à `self` dans notre méthode de contrôle. Mais nous devons créer cette variable (cet attribut d'instance) avant l'exécution du contrôle.
 
-The `init` control can be used for this very purpose.  It's called for every widget (including the window) when it's ready to be displayed, but before it's actually displayed.  You can think of `init` as somewhat equivalent to the `__init__` special method, although you shouldn't override the `__init__` special method in your window.
+Le contrôle `init` peut être utilisé à cette fin. Il est appelé pour chaque widget (y compris la fenêtre) lorsqu'il est prêt à être affiché, mais avant qu'il ne soit réellement affiché. Vous pouvez imaginer `init` comme une méthode équivalente à la méthode spéciale `__init__`, bien que vous ne deviez pas remplacer la méthode spéciale `__init__` dans votre fenêtre.
 
-`init` is a control.  So we just need to create a method to intercept it.  Know how?
+`init` est un contrôle. Il suffit donc de créer une méthode pour l'intercepter. Sauriez-vous le faire ?
 
 ```python
-    def on_init_bottom(self):
-        """The bottom button is ready to be displayed, but isn't displayed yet."""
-        self.hide_and_seek = False
+    def on_init_bas(self):
+        """Le bouton en bas est prêt à être affiché, mais n'est pas encore affiché."""
+        self.cache_cache = False
 ```
 
-So let's see a full example of how to use this feature:
+Voyons donc un exemple complet d'utilisation de cette fonctionnalité :
 
 ```python
-class Buttons(Window):
+class Boutons(Window):
 
-    """A buttons demonstration in BUI."""
+    """Exemple de boutons dans BUI."""
 
-    # ... layout and other controls
+    # ... design de la fenêtre et autres méthodes de contrôle
 
-    def on_init_bottom(self):
-        """The bottom button is ready to be displayed, but isn't displayed yet."""
-        self.hide_and_seek = False
+    def on_init_bas(self):
+        """Le bouton en bas est prêt à être affiché, mais n'est pas encore affiché."""
+        self.cache_cache = False
 
-    async def on_bottom(self, widget):
-        """The bottom button was clicked."""
-        report = self["report"]
-        if self.hide_and_seek:
-            report.value = "I'm already counting, hurry up and hide!"
+    async def on_bas(self, widget):
+        """Le bouton du bas a été cliqué."""
+        action = self["action"]
+        if self.cache_cache:
+            action.value = "Je compte déjà ! Dépêche-toi et va te cacher !"
             return
 
-        self.hide_and_seek = True
-        report.value = "Great!  Let's play hide-and-seek!  I'm counting, you hide!"
+        self.cache_cache = True
+        action.value = (
+                "Super ! Jouons à cache-cache ! Tu te caches et je compte."
+        )
 
-        # Counting from 1 to 20 in 20 seconds
+        # Compter de 1 à 20 en 20 secondes
         for i in range(1, 21):
             widget.name = f"{i}"
             await self.sleep(1)
 
-        report.value = "Are you hidden?  I'm coming!"
-        self.hide_and_seek = False
+        action.value = "Tu es caché ? J'arrive !"
+        self.cache_cache = False
 ```
 
-The added code is really short.  If you run this and click on the bottom button, the hide-and-seek counter begins again.  But if you click on the same button again while the counter is running, the middle text will indicate the counter is already running and won't run it again.  All thanks to an instance attribute to keep the state!
+Le code ajouté est vraiment court. Si vous exécutez ce code et cliquez sur le bouton du bas, le compteur de "cache-cache" commence. Mais si vous cliquez à nouveau sur le même bouton pendant que le compteur est en cours d'exécution, le texte du milieu indiquera que le compteur est déjà en cours d'exécution et ne l'exécutera pas. Tout cela grâce à un attribut d'instance pour conserver l'état !
 
 ## Conclusion
 
-That was a first taste of BUI's abilities and simplicity, but of its flexibility too.  Flexibility comes to a price.  Although this document addresses some pitfalls, you might have trouble navigating in the word of layout and control by yourself.  But fortunately, there are more tutorials and even more documentation to help you.
+C'était une première démonstration des capacités et de la simplicité de BUI, mais aussi de sa flexibilité. La flexibilité a un prix. Bien que ce document traite de certains pièges à éviter, vous pourriez avoir du mal à naviguer dans la logique du design de la fenêtre et de méthodes de contrôle par vous-même, pour l'heure. Mais heureusement, il existe davantage de tutoriels et encore plus de documentation pour vous aider.
 
-- [Read the full documentation of the button tag](../layout/tag/button.md)
-- [Learn more about controls](../control/overview.md)
-- [A window with a menu bar](menubar.md)
-- [Handling keyboard shortcuts](keyboard.md)
-- [Checkboxes and radio buttons](choices.md)
-- [Lists and tables](lists.md)
-- [Dialogs](dialogs.md)
+- [Lire la documentation complète de la balise button](../layout/tag/button.md)
+- [En savoir plus sur les contrôles](../control/overview.md)
+- [Une fenêtre avec une barre de menu](menubar.md)
+- [Gestion des raccourcis clavier](keyboard.md)
+- [Cases à cocher et boutons radio](choices.md)
+- [Listes et tableaux](lists.md)
+- [Boîtes de dialogue](dialogs.md)
