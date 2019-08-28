@@ -203,7 +203,7 @@ Pour le moment, regardons le code :
 - Ensuite se trouve une boucle qui doit tourner 20 fois. À l'intérieur, il n'y a que deux actions :
 
    - Tout d'abord, nous modifions le nom du widget (le bouton "bas") avec une propriété. Ceci mettra à jour le nom du bouton (son "label") à l'écran.
-   - Nous utilisons ensuite le mot-clé `await` et faisons une pause d'une seconde. Pendant ce temps, la fenêtre reprend son activité normale (vous pouvez cliquer sur d'autres choses, par exemple). Après cette seconde, la boucle recommence...
+   - Nous utilisons ensuite le mot-clé `await` et faisons une pause d'une seconde. Pour ce faire, nous appelons la méthode [sleep](../widget/Window.md#sleep) de la fenêtre qui crée une pause asynchrone. Pendant ce temps, la fenêtre reprend son activité normale (vous pouvez cliquer sur d'autres choses, par exemple). Après cette seconde, la boucle recommence...
 
 - ... jusqu'à atteindre `i > 20`. À ce stade, nous sortons de la boucle, mettons à jour le texte une dernière fois et la méthode se termine.
 
