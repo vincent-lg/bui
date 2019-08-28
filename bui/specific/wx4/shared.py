@@ -99,6 +99,6 @@ class WXShared:
             try:
                 widget.generic._process_control(control, options)
             except StopControl:
-                pass
-            else:
-                e.Skip()
+                return
+
+        e.Skip()

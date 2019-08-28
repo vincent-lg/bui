@@ -153,9 +153,9 @@ class Component:
         for char in deduce_from:
             if char.isalpha():
                 identifier += char.lower()
-            elif char == " ":
+            elif char == " " and not identifier.endswith("_"):
                 identifier += "_"
             elif char == "\t":
                 break
 
-        return identifier
+        return identifier.strip("_")
