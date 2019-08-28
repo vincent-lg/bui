@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - control/check.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="control/check.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="control/check.py" />
+    <meta property="og:description" content="control/check.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/control/check.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/control/check.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - control/check.py","url":"https://vincent-lg.github.io/bui/control/check.html","name":"control/check.py","description":"control/check.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Check control, triggered when a checkbox changes state."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>import re</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>from bui.control.base import Control</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>class Check(Control):</span><br />
+      <span style="white-space: pre;"><a id="L8"></a></span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    When the user checks or unchecks a checkbox.</span><br />
+      <span style="white-space: pre;"><a id="L11"></a></span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    This control, specific to [checkboxes](../layout/tag/checkbox.md),</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    is triggered when a user checks or unchecks a checkbox.  This control</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    has optional sub-controls to bind methods to the action of checking</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    or unchecking a checkbox.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    This control can only be bound with a widget.  The control type for</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    this control is "check", although "checked" and "unchecked" can be used</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    as sub-controls (see below).</span><br />
+      <span style="white-space: pre;"><a id="L22"></a></span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    ### Window control</span><br />
+      <span style="white-space: pre;"><a id="L24"></a></span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    This control cannot be set on a window.  Checking or unchecking an</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    entire window makes no sense, it should always be bound to a</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    [checkbox](../layout/tag/checkbox.md).</span><br />
+      <span style="white-space: pre;"><a id="L28"></a></span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    ### Widget control</span><br />
+      <span style="white-space: pre;"><a id="L30"></a></span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    To call a method when a checkbox of ID "option" is checked or</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    unchecked, you can create a method name with the control type "check"</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    like so:</span><br />
+      <span style="white-space: pre;"><a id="L34"></a></span><br />
+      <span style="white-space: pre;"><a id="L35"></a>        def on_check_option(self, ...):</span><br />
+      <span style="white-space: pre;"><a id="L36"></a></span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    This method will be called whenever the "option" checkbox changes</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    state.  It is quite common to explicitly require the "checked" argument</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    in the method:</span><br />
+      <span style="white-space: pre;"><a id="L40"></a></span><br />
+      <span style="white-space: pre;"><a id="L41"></a>        def on_check_option(self, checked):</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>            if checked:</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>                print(f"The option checkbox has been checked.")</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>                print(f"The option checkbox has been unchecked.")</span><br />
+      <span style="white-space: pre;"><a id="L46"></a></span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    If you want to call a specific method when the "option" checkbox is</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    checked, replace the "check" control type with "checked":</span><br />
+      <span style="white-space: pre;"><a id="L49"></a></span><br />
+      <span style="white-space: pre;"><a id="L50"></a>            def on_checked_option(self):</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>                print("The option checkbox was checked.")</span><br />
+      <span style="white-space: pre;"><a id="L52"></a></span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    Replace with "unchecked" to watch for this checkbox being unchecked:</span><br />
+      <span style="white-space: pre;"><a id="L54"></a></span><br />
+      <span style="white-space: pre;"><a id="L55"></a>            def on_unchecked_option(self):</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>                print("The option checkbox was unchecked.")</span><br />
+      <span style="white-space: pre;"><a id="L57"></a></span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    Using such a syntax allows to separate in two different methods the</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    actions to be called when the checkbox is checked and unchecked.</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    However, seeing as there are not so many possibilities, most developers</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    prefer to create a `on_check_...` method and do a simple condition on</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    the "checked" argument, like the second example in this section.</span><br />
+      <span style="white-space: pre;"><a id="L63"></a></span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    ### Sub-controls and main controls</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    Like the [press](./press.md) control, sub-controls takes precedence</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    over main controls.  If you have a method named `on_checked_option`, it</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    will be called whenver the "option" checkbox is checked.  However, if</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    you also have a `on_check_option` method, it will only be called</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    when the checkbox is unchecked, seeing as there is no specific method</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    to handle that situation.  In other words, `on_checked_...` and</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    `on_unchedked_...` always have precedence and `on_check_...` will</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    only be called if searching for the more specific method fails.</span><br />
+      <span style="white-space: pre;"><a id="L74"></a></span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    As a general rule, due to the slight different in naming that could</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    create confusion and the fact that there are only two states to watch,</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    it is advisable to use either a main control or sub-controls for each</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    checkbox you have to watch.</span><br />
+      <span style="white-space: pre;"><a id="L79"></a></span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    Here is a detail of what happens:</span><br />
+      <span style="white-space: pre;"><a id="L81"></a></span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    1. The user clicks on a checkbox of ID "option".  This checkbox is</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>        unchecked.</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    2. The control "check" is fired.</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    3. It first searches for a method named `on_checked_option` on the</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>        window.  If found, it calls it and stops.  If not...</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    4. It searches for a method named `on_check_option`.</span><br />
+      <span style="white-space: pre;"><a id="L88"></a></span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    Similarly, when the checkbox is unchecked:</span><br />
+      <span style="white-space: pre;"><a id="L90"></a></span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    1. The user clicks on a checkbox of ID "option".  This checkbox is</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>        checked.</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    2. The control "check" is fired.</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    3. It first searches for a method named `on_unchecked_option` on the</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>        window.  If found, it calls it and stops.  If not...</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    4. It searches for a method named `on_check_option`.</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    ## Control attributes</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    The control object has the following attributes:</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>    | Attribute | Type      | Note                                |</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>    | --------- | --------- | ----------------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>    | checked   | bool      | Whether the checkbox has been       |</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>    |           |           | checked or not.                     |</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    | state     | str       | Either 'checked' or 'unchecked'. In |</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>    |           |           | practice, using this state as       |</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    |           |           | argument is not often necessary     |</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    |           |           | (much better to use the `checked`   |</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    |           |           | boolean instead).                   |</span><br />
+      <span style="white-space: pre;"><a id="L111"></a></span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    Use these attributes as your control method argument.  For instance:</span><br />
+      <span style="white-space: pre;"><a id="L113"></a></span><br />
+      <span style="white-space: pre;"><a id="L114"></a>        def on_check(self, checked):</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>            if checked:</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>                print("The option checkbox was checked.")</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>                print("The option checkbox was unchecked.")</span><br />
+      <span style="white-space: pre;"><a id="L119"></a></span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    Alternatively you can specify the `control` keyword argument in your</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    method signature which will always contain the control object.  You</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    can also use the `widget` keyword argument that will contain your</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    specific widget.</span><br />
+      <span style="white-space: pre;"><a id="L124"></a></span><br />
+      <span style="white-space: pre;"><a id="L125"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L126"></a></span><br />
+      <span style="white-space: pre;"><a id="L127"></a>    name = "check"</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>    widgets = {</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>            "checkbox": "The checkbox was checked or unchecked.",</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L131"></a></span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    has_sub_controls = True</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    pattern_for_window = None</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>    pattern_for_widgets = (</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>        fr"^on_(?P&lt;state&gt;checked|unchecked)_{{id}}$")</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    options = ("state", "checked")</span><br />
+      <span style="white-space: pre;"><a id="L137"></a></span><br />
+      <span style="white-space: pre;"><a id="L138"></a>    def __init__(self, widget, state, checked):</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        super().__init__(widget)</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>        self.state = state</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>        self.checked = checked</span><br />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/menu.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/menu.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/menu.py" />
+    <meta property="og:description" content="layout/menu.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/menu.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/menu.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/menu.py","url":"https://vincent-lg.github.io/bui/layout/menu.html","name":"layout/menu.py","description":"layout/menu.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Menu object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class Menu(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Create a menu inside of a menu bar, toolbar or context menu.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A menu is a generic representation of a menu in a</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    [menu bar](menubar.md), [toolbar](toolbar.md) or</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    [context menu](context.md).  As a wrapper around other menus or items,</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    its shape can vary: in a [menu bar](menubar.md) for instance, menus</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    always are necessary as direct children and they should contain items</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    or other menus.</span><br />
+      <span style="white-space: pre;"><a id="L17"></a></span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>      ...</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L23"></a></span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L25"></a></span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    Menus can have several purposes depending on where they are used:</span><br />
+      <span style="white-space: pre;"><a id="L27"></a></span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    ### Menu bars</span><br />
+      <span style="white-space: pre;"><a id="L29"></a></span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    In [menu bars](menubar.md), a menu is a direct child of the</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    [menubar tag](menubar.md) and will represent the horizontal,</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    expandable menu of a given application:</span><br />
+      <span style="white-space: pre;"><a id="L33"></a></span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    &lt;menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>      &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>        &lt;item&gt;Quit&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>      &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    &lt;/menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L41"></a></span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    In this example, the "File" menu is the only menu in the menu bar.</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    If you click on it, the menu will expand and you will see the "Quit"</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    menu item.</span><br />
+      <span style="white-space: pre;"><a id="L45"></a></span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    Menus can also be used for sub-menus in menu bars:</span><br />
+      <span style="white-space: pre;"><a id="L47"></a></span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    &lt;menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>      &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>        &lt;item&gt;New...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>        &lt;item&gt;Open...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>        &lt;menu name="Import"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>          &lt;item&gt;From a file...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>          &lt;item&gt;From a URL...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>        &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>        &lt;item&gt;Quit&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>      &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    &lt;/menubar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L61"></a></span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    In this example, the "File" -&gt; "Import" item is a sub-menu: if you</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>    click on it you see two possible choices: import from a file or</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    from a URL.</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    ### In toolbars</span><br />
+      <span style="white-space: pre;"><a id="L67"></a></span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    Inside [toolbars](toolbar.md), menus are only used for sub-menus:</span><br />
+      <span style="white-space: pre;"><a id="L69"></a></span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    &lt;toolbar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>      &lt;item&gt;Cut&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>      &lt;item&gt;Copy&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>      &lt;item&gt;Paste&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>      &lt;menu name="Paste special"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        &lt;item&gt;Mix...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        &lt;item&gt;Merge...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>      &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>      &lt;item&gt;Property...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    &lt;/toolbar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    ### In context menus</span><br />
+      <span style="white-space: pre;"><a id="L84"></a></span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    In [context menus](context.md), as in [toolbars](toolbar.md), menus</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    are used for sub-menus.  The layout looks very similar to a toolbar's:</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    &lt;context id=music&gt;</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>      &lt;item&gt;Cut&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>      &lt;item&gt;Copy&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>      &lt;item&gt;Paste&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>      &lt;menu name="Paste special"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>        &lt;item&gt;Mix...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>        &lt;item&gt;Merge...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>      &lt;/menu&gt;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>      &lt;item&gt;Property...&lt;/item&gt;</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    &lt;/toolbar&gt;</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L100"></a></span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L102"></a></span><br />
+      <span style="white-space: pre;"><a id="L103"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>    | `name`       | Yes      | The menu name. This      | `&lt;menu       |</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    |              |          | attribute is mandatory.  | name=File&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L107"></a></span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    &gt; `name` is a mandatory attribute.  Notice that we don't specify an ID</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>      (identifier), most of the time we'll only place IDs on</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>      [menu items](item.md).</span><br />
+      <span style="white-space: pre;"><a id="L111"></a></span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L113"></a></span><br />
+      <span style="white-space: pre;"><a id="L114"></a>    This tag will be turned into a [Menu widget](../../widget/Menu.md).</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    This widget has no data per se.</span><br />
+      <span style="white-space: pre;"><a id="L116"></a></span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L118"></a></span><br />
+      <span style="white-space: pre;"><a id="L119"></a>    This widget has no control.  Use the controls on</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    [menu items](item.md#controls) instead.</span><br />
+      <span style="white-space: pre;"><a id="L121"></a></span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L123"></a></span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    tag_name = "menu"</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>        Attr("name", help="The menu name"),</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L128"></a></span><br />
+      <span style="white-space: pre;"><a id="L129"></a>    def __init__(self, layout, parent, name):</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>        self.name = name</span><br />
+    </div>
+  </body>
+</html>

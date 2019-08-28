@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/button.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/button.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/button.py" />
+    <meta property="og:description" content="layout/button.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/button.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/button.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/button.py","url":"https://vincent-lg.github.io/bui/layout/button.html","name":"layout/button.py","description":"layout/button.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Button object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class Button(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Create a clickable button on the interface.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A button is a very common widget, needing to be defined inside</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    of a [window](./window.md) tag.  The user can click on it and trigger</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    a control method in response, except if the button is disabled.</span><br />
+      <span style="white-space: pre;"><a id="L14"></a></span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title="Test"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>      &lt;button x=1 y=3&gt;My button&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>      ...</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L21"></a></span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    &gt; Notice that the button label is specified as the data for this</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>      tag.  This label cannot be empty.</span><br />
+      <span style="white-space: pre;"><a id="L24"></a></span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L26"></a></span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    |              |          | is left). This position  |             |</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    |              |          | is relative to the       |             |</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    |              |          | window width.            |             |</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    |              |          | is at the top). This     |             |</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    |              |          | position is relative to  |             |</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    |              |          | the window height.       |             |</span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    | `width`      | No       | The widget width, that   | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    |              |          | is, the number of        | width=2&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    |              |          | columns it will use in   |             |</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    |              |          | widget with a width of   |             |</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    |              |          | additional column to the |             |</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    |              |          | right. A widget with `x` |             |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    |              |          | set to 2 and `width` set |             |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    |              |          | to 3 will span `x=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    |              |          | `x=3`, and `x=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    |              |          | its `x` column.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    | `height`     | No       | The widget height, that  | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    |              |          | is, the number of        | height=2&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    |              |          | rows it will use in      |             |</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    |              |          | widget with a height of  |             |</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    |              |          | additional row downward. |             |</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    |              |          | A widget with `y` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    |              |          | to 2 and `height` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    |              |          | to 3 will span `y=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>    |              |          | `y=3`, and `y=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    |              |          | its `y` row.             |             |</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    | `id`         | No       | The button identifier    | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    |              |          | (ID). If not set, use    | id=quit&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    |              |          | the button label.        |             |</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    | `set_true`   | No       | If inside of a dialog,   | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    |              |          | set the dialog result to | set_true&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    |              |          | `True` and close the     |             |</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    |              |          | dialog. This field does  |             |</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    |              |          | not require value, its   |             |</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    |              |          | presence in the          |             |</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    |              |          | `&lt;dialog&gt;` tag is        |             |</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    |              |          | sufficient.              |             |</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    | `set_false`  | No       | If inside of a dialog,   | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    |              |          | set the dialog result to | set_false&gt;` |</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    |              |          | `False` and close the    |             |</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    |              |          | dialog. This field does  |             |</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    |              |          | not require value, its   |             |</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    |              |          | presence in the          |             |</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    |              |          | `&lt;dialog&gt;` tag is        |             |</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    |              |          | sufficient.              |             |</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    | `set`        | No       | If inside of a dialog,   | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    |              |          | set the dialog result to | set=ok&gt;`    |</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    |              |          | the specified value and  |             |</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    |              |          | close the dialog.        |             |</span><br />
+      <span style="white-space: pre;"><a id="L90"></a></span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    The required attributes are `x`, and `y`.  It is recommended</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    to also set an `id` although the shortened label (only lowercase</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    letters will be used, spaces turned into the underscore) will be</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    given if the `id` attribute is not set.</span><br />
+      <span style="white-space: pre;"><a id="L95"></a></span><br />
+      <span style="white-space: pre;"><a id="L96"></a>        &lt;button x=2 y=5&gt;Click on me!&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    (This will set a button with `id` of "click_on_me".)</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    &gt; The data is a translatable field.  If internationalization is</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>      set, it should contain the `ytranslate` path to the label and will</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>      be translated in the proper language as needed. Note that in this case,</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>      you absolutely need to set a proper ID, otherwise control methods</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>      won't be easy to bind to the button.</span><br />
+      <span style="white-space: pre;"><a id="L105"></a></span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    ### Inside of dialogs</span><br />
+      <span style="white-space: pre;"><a id="L107"></a></span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    If a button is defined inside of a [dialog](dialog.md) tag, it has three</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    additional attributes that can be used: `set_true`, `set_false` and</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    `set`.  All of them modify the dialog result and close the dialog</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    when the button is pressed.</span><br />
+      <span style="white-space: pre;"><a id="L112"></a></span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    It is very frequent to place `set_true` on a confirmation button</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>    (like "OK" or "Continue") and `set_false` on a cancellation button</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    (like "Cancel" or "Close without modification").  It is then very</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>    simple to test the dialog result in the control method that popped</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    the dialog (see [the page about custom dialogs](dialog.md)</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    for more information).</span><br />
+      <span style="white-space: pre;"><a id="L119"></a></span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L121"></a></span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    A button tag will be turned into a [Button](../widget/Button.md) object.</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    You can access and modify its attributes in a control method.</span><br />
+      <span style="white-space: pre;"><a id="L124"></a></span><br />
+      <span style="white-space: pre;"><a id="L125"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>    | `name`         | The name (str)   | `self.name = "Let's click"` |</span><br />
+      <span style="white-space: pre;"><a id="L128"></a></span><br />
+      <span style="white-space: pre;"><a id="L129"></a>    These attributes can be accessed and set using the standard Python</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    syntax for attributes.  Behind the scenes, these attributes are cached,</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    handled by an extended `property()`, but you don't really need to</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    worry about how it works.  Consider the following example:</span><br />
+      <span style="white-space: pre;"><a id="L133"></a></span><br />
+      <span style="white-space: pre;"><a id="L134"></a>        class Example(Window):</span><br />
+      <span style="white-space: pre;"><a id="L135"></a></span><br />
+      <span style="white-space: pre;"><a id="L136"></a>            def on_click_me(self, widget):</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>                \"\"\"The click me button has been clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>                widget.name = "Clicked on it"</span><br />
+      <span style="white-space: pre;"><a id="L139"></a></span><br />
+      <span style="white-space: pre;"><a id="L140"></a>    &gt; Changing the name will not change the button ID.  Once set</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>      in layout, the ID won't change.</span><br />
+      <span style="white-space: pre;"><a id="L142"></a></span><br />
+      <span style="white-space: pre;"><a id="L143"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L144"></a></span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    | [click](../../control/click.md)   | `on_click`   | The button is  |</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    |                                 |              | being clicked on.|</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>    | [init](../../control/init.md)   | `on_init`    | The button is    |</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>    |                                 |              | just yet.        |</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L166"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L171"></a></span><br />
+      <span style="white-space: pre;"><a id="L172"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L173"></a></span><br />
+      <span style="white-space: pre;"><a id="L174"></a>            def on_click_button(self):</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>                print(f"You clicked on the button of ID 'button'.")</span><br />
+      <span style="white-space: pre;"><a id="L176"></a></span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L178"></a></span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    tag_name = "button"</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L185"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>        Attr("set_true", help="Set the dialog to True and close it",</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>        Attr("set_false", help="Set the dialog to False and close it",</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>                default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>        Attr("set", help="Set the dialog to some value and close it",</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>                default="")</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>    must_have_data = True</span><br />
+      <span style="white-space: pre;"><a id="L194"></a></span><br />
+      <span style="white-space: pre;"><a id="L195"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>            id="", set_true=False, set_false=False, set=""):</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>        self.name = ""</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L203"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>        self.set_true = set_true</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        self.set_false = set_false</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        self.set = set</span><br />
+      <span style="white-space: pre;"><a id="L207"></a></span><br />
+      <span style="white-space: pre;"><a id="L208"></a>    def complete(self):</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>        """Complete the widet, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>        self.name = self.data</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        if not self.id:</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>            self.id = self.deduce_id(self.name)</span><br />
+      <span style="white-space: pre;"><a id="L213"></a></span><br />
+      <span style="white-space: pre;"><a id="L214"></a>        if self.parent.tag_name != "dialog" and (self.set_true or self.set_false or self.set):</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>            raise ValueError("Can't yset set_true, set_false or set "</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>                    "attributes on a button that doesn't belong in a dialog")</span><br />
+    </div>
+  </body>
+</html>
