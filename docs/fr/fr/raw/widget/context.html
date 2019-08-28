@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - widget/context.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="widget/context.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="widget/context.py" />
+    <meta property="og:description" content="widget/context.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/widget/context.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/widget/context.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - widget/context.py","url":"https://vincent-lg.github.io/bui/widget/context.html","name":"widget/context.py","description":"widget/context.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic Context class, a generic context widget."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.widget.base import Widget</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>class Context(Widget):</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    The generic context widget.</span><br />
+      <span style="white-space: pre;"><a id="L9"></a></span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    A context menu is a menu, containing items or other menus, meant</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    to be popped up (usually on right click, though other situations</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    may arise as well).</span><br />
+      <span style="white-space: pre;"><a id="L13"></a></span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    depending on the used GUI toolkit.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L18"></a></span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    widget = "context"</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    class_name = "Context"</span><br />
+      <span style="white-space: pre;"><a id="L21"></a></span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    def __init__(self, leaf):</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>        super().__init__(leaf)</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>        self.id = leaf.id</span><br />
+    </div>
+  </body>
+</html>

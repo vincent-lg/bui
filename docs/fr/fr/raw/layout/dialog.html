@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - layout/dialog.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="layout/dialog.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="layout/dialog.py" />
+    <meta property="og:description" content="layout/dialog.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/layout/dialog.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/layout/dialog.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - layout/dialog.py","url":"https://vincent-lg.github.io/bui/layout/dialog.html","name":"layout/dialog.py","description":"layout/dialog.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Dialog object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
+      <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
+      <span style="white-space: pre;"><a id="L5"></a></span><br />
+      <span style="white-space: pre;"><a id="L6"></a>class Dialog(Component):</span><br />
+      <span style="white-space: pre;"><a id="L7"></a></span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>    Custom dialog tag, to encompass widgets.</span><br />
+      <span style="white-space: pre;"><a id="L10"></a></span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    The dialog tag allows to create a custom dialog box.  Contrary to the</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    window tag, it doesn't describe a window and its elements.  Usually, a</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    dialog is created in a control method (in response to user action).</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    For instance, if a user presses on a button of a window, a dialog might</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    appear to ask for additional information.</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    Notice that this tag is reserved for custom dialogs.  BUI offers you</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    other ways to create default dialogs.</span><br />
+      <span style="white-space: pre;"><a id="L19"></a></span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    &lt;dialog title="Give me more info here"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>      ...</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    &lt;/dialog&gt;</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L25"></a></span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L27"></a></span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    There are two main usages of a dialog layout.  Both use a dialog</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    tag and can be spawned from a window control method.</span><br />
+      <span style="white-space: pre;"><a id="L30"></a></span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    ### Bare layout</span><br />
+      <span style="white-space: pre;"><a id="L32"></a></span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    The first approach is to call the `pop_dialog` method of the `Window`</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    class, giving it a string representation of the custom dialog layout.</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    This allows for very quick processing.  Here is an example that</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    creates a basic dialog box with a text input and two buttons: the</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    window control method that spawns this dialog also has to handle the</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    user input.</span><br />
+      <span style="white-space: pre;"><a id="L39"></a></span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    class Example(Window):</span><br />
+      <span style="white-space: pre;"><a id="L42"></a></span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        \"\"\"Example window.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L44"></a></span><br />
+      <span style="white-space: pre;"><a id="L45"></a>        def on_profile(self):</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>            \"\"\"The user clicked on the 'profile' button.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>            dialog = self.pop_dialog(\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>                &lt;dialog title="Enter your name"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>                  &lt;text x=2 y=3 id=name&gt;Enter your name here:&lt;/text&gt;</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>                  &lt;button x=1 y=5 set_true&gt;OK&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>                  &lt;button x=4 y=5 set_false&gt;Cancel&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>                &lt;/dialog&gt;</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>            \"\"\")</span><br />
+      <span style="white-space: pre;"><a id="L54"></a></span><br />
+      <span style="white-space: pre;"><a id="L55"></a>            # The call to the pop_dialog method will block until the user</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>            # has clicked on 'ok' or 'cancel'</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>            if dialog: # The user has pressed on OK</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>                name = dialog["name"].value</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                print(f"The user entered the name: {name!r}")</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>            else: # The user has clicked on cancel</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>                print("The user cancelled the operation, do nothing.")</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L63"></a></span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    The created dialog is contained inside a string representation.  This</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    string representation holds the dialog layout.  The root tag is not</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    [window](window.md) but `&lt;dialog&gt;`.  Inside of it is a normal window</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    definition.  We create a dialog with a title.  Inside of it are</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    three widgets: a text area and two buttons.</span><br />
+      <span style="white-space: pre;"><a id="L69"></a></span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    The 'OK' button has the attribute `set_true` and the 'cancel' button</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    has the attribute `set_false`.  This is a common shortcut that you will</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    see in dialogs: a button spawned inside a dialog, if it has a set value,</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    will close the dialog when pressed and set the value as a result of</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    the dialog.  So when the 'OK' button is clicked, the button sets</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    the dialog result to `True` and close the dialog.  That's why, in</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    the control method that created the dialog, you can do something like:</span><br />
+      <span style="white-space: pre;"><a id="L77"></a></span><br />
+      <span style="white-space: pre;"><a id="L78"></a>        if dialog: # 'ok' has been clicked</span><br />
+      <span style="white-space: pre;"><a id="L79"></a></span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    The `set_true` and `set_false`, along with the `set` attributes,</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    cannot be used except on a button inside of a dialog.</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    The `dialog` variable in the previous control method holds the</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    dialog result (that is, a set value and the list of the widgets in</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    the dialog), so you can get what the user entered in the 'name'</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    field in a very straightforward way.</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    ### Dialog class</span><br />
+      <span style="white-space: pre;"><a id="L89"></a></span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    BUI also lets you the option to define a dialog class.  This is</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>    a good solution if you want to use the same dialog in different</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    places of your program.  You have to set a</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    [Dialog](../../widget/dialog.md) class in your program:</span><br />
+      <span style="white-space: pre;"><a id="L94"></a></span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    ```python</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    import hashlib</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    from bui import Dialog</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    class Hashes(Dialog):</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>        \"\"\"Dialog to show the list of supported hashes in Python and let the user choose one.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L103"></a></span><br />
+      <span style="white-space: pre;"><a id="L104"></a>        # Note that you can (and maybe should) write the layout in a</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>        # separate .bui file.</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>        layout = mark(\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>            &lt;dialog title="Available hashes"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>              &lt;table x=1 y=2 id=hashes&gt;</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>                &lt;col&gt;Algorithm&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>                &lt;col&gt;Digest size&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>                &lt;col&gt;Guaranteed&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>              &lt;/table&gt;</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>              &lt;button x=1 y=5 set_true&gt;OK&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>              &lt;button x=4 y=5 set_false&gt;Cancel&lt;/button&gt;</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>            &lt;/dialog&gt;</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>        \"\"\")</span><br />
+      <span style="white-space: pre;"><a id="L117"></a></span><br />
+      <span style="white-space: pre;"><a id="L118"></a>        def on_init(self):</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>            \"\"\"The dialog will be popped up just after.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>            table = self["hashes"]</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>            for name in sorted(hashlib.algorithms_available):</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>                guaranteed = name in hashlib.algorithms_guaranteed</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>                algorithm = getattr(hashlib, name)()</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>                table.add_row(name, algorithm.digest_size,</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>                        'yes' if guaranteed else 'no')</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L127"></a></span><br />
+      <span style="white-space: pre;"><a id="L128"></a>    You can then use the window's `pop_dialog` method, giving it</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>    not the string layout, but the dialog class instead:</span><br />
+      <span style="white-space: pre;"><a id="L130"></a></span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    ```python</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    class Example(Window):</span><br />
+      <span style="white-space: pre;"><a id="L133"></a></span><br />
+      <span style="white-space: pre;"><a id="L134"></a>        def on_hash(self):</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>            \"\"\"The user pressed on the 'hash' button.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>            dialog = self.pop_dialog(Hashes)</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>            # Block until 'ok' or 'cancel' has been pressed</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>            if dialog:</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>                hash_name = dialog["hashes"].selected.name</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L141"></a></span><br />
+      <span style="white-space: pre;"><a id="L142"></a>    The advantage of this method is that you don't have to redefine the</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>    layout and some control methods in the dialog itself.  This is useful</span><br />
+      <span style="white-space: pre;"><a id="L144"></a>    if you want to pop the same dialog in different places of your program.</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    Also note that you can set control methods in your dialog class (like</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>    `on_init` in the previous example).</span><br />
+      <span style="white-space: pre;"><a id="L147"></a></span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L149"></a></span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>    | `title`      | Yes      | The dialog title.  This  | `&lt;dialog    |</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>    |              |          | attribute is mandatory.  | title="Tell |</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>    |              |          |                          | me more"&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>    | `rows`       | No       | The number of rows in    | `&lt;dialog    |</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>    |              |          | the dialog grid.         | rows=10&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    |              |          | Default is `6`.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    | `cols`       | No       | The number of columns    | `&lt;dialog    |</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>    |              |          | in the dialog grid.      | cols=5&gt;`    |</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    |              |          | Default is `6`.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L161"></a></span><br />
+      <span style="white-space: pre;"><a id="L162"></a>    You cannot set a window or dialog without a proper title.  Doing so</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>    would impair accessibility for screen readers.  If these tools can</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>    read anything at all on your window, it's the title bar, so be sure</span><br />
+      <span style="white-space: pre;"><a id="L165"></a>    it's not empty.</span><br />
+      <span style="white-space: pre;"><a id="L166"></a></span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    &gt; `title` is a translatable attribute.  If internationalization is</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>      set, it should contain the `ytranslate` path to the title and will</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>      be translated in the proper language as needed.</span><br />
+      <span style="white-space: pre;"><a id="L170"></a></span><br />
+      <span style="white-space: pre;"><a id="L171"></a>    The `rows` and `cols` attributes are used to set the dialog grid.  You</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>    can think of them as the height (in rows) and width (in columns) of the</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>    grid.  Changing this value won't make the window any bigger, but</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>    it will give you more control on how to place the widget in the window</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>    itself.  On the other hand, having a large grid can make designing not</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    so easy.  It all depends on your needs.</span><br />
+      <span style="white-space: pre;"><a id="L177"></a></span><br />
+      <span style="white-space: pre;"><a id="L178"></a>    &gt; Note: you don't have to set the same number of rows and columns.</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>      This is just the default value.  You can set different values with no</span><br />
+      <span style="white-space: pre;"><a id="L180"></a>      trap:</span><br />
+      <span style="white-space: pre;"><a id="L181"></a></span><br />
+      <span style="white-space: pre;"><a id="L182"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>    &lt;dialog cols=1 rows=8&gt;</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L185"></a></span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    This will set a dialog with only one column, but 8 rows.  If you place</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>    a widget in `x=0 y=0`, it will take all the window's width.  Again,</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>    this doesn't change the window size in any way, just the way widgets</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>    are placed on it.  You can picture the window to always be a</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>    square but sliced in different portions (squares or rectangles, more</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>    or less big depending on the height and width you set in the window</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    tag).</span><br />
+      <span style="white-space: pre;"><a id="L193"></a></span><br />
+      <span style="white-space: pre;"><a id="L194"></a>    ## Data</span><br />
+      <span style="white-space: pre;"><a id="L195"></a></span><br />
+      <span style="white-space: pre;"><a id="L196"></a>    A dialog is a specific graphical element since it only contains other</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>    elements and has no meaning by itself.  Therefore, you cannot send</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>    it data, it wouldn't make much sense.  Instead, you should</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>    send data to the dialog's graphical elements themselves.</span><br />
+      <span style="white-space: pre;"><a id="L200"></a></span><br />
+      <span style="white-space: pre;"><a id="L201"></a>    However, some dialog attributes can be changed on the fly.</span><br />
+      <span style="white-space: pre;"><a id="L202"></a></span><br />
+      <span style="white-space: pre;"><a id="L203"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>    | `title`        | The title (str)  | `self.title = "New title"`  |</span><br />
+      <span style="white-space: pre;"><a id="L206"></a></span><br />
+      <span style="white-space: pre;"><a id="L207"></a>    These attributes can be accessed and set using the standard Python</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>    syntax for attributes.  Behind the scenes, these attributes are cached,</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>    handled by an extended `property()`, but you don't really need to</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>    worry about how it works.  Suffice it to say that:</span><br />
+      <span style="white-space: pre;"><a id="L211"></a></span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        class Example(Dialog):</span><br />
+      <span style="white-space: pre;"><a id="L213"></a></span><br />
+      <span style="white-space: pre;"><a id="L214"></a>            def on_press_a(self):</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>                self.title = "You pressed A."</span><br />
+      <span style="white-space: pre;"><a id="L216"></a></span><br />
+      <span style="white-space: pre;"><a id="L217"></a>    ... will update the dialog title when the user presses the 'a' key</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>    on her keyboard.</span><br />
+      <span style="white-space: pre;"><a id="L219"></a></span><br />
+      <span style="white-space: pre;"><a id="L220"></a>    ## Controls</span><br />
+      <span style="white-space: pre;"><a id="L221"></a></span><br />
+      <span style="white-space: pre;"><a id="L222"></a>    The dialog tag is tied to the [Dialog](../../widget/Dialog.md)</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>    class.  Therefore, when you write controls on this class, you often</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>    want to catch controls on indidivual graphical elements in the dialog.</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>    There are a few exceptions however:</span><br />
+      <span style="white-space: pre;"><a id="L226"></a></span><br />
+      <span style="white-space: pre;"><a id="L227"></a>    | Control                           | Method       | Description    |</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>    | --------------------------------- | ------------ | -------------- |</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>    | [close](../../control/close.md) | `on_close`   | The dialog is    |</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>    |                                 |              | about to be      |</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>    |                                 |              | closed, but      |</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>    |                                 |              | isn't closed     |</span><br />
+      <span style="white-space: pre;"><a id="L233"></a>    |                                 |              | yet.             |</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>    | [focus](../../control/focus.md) | `on_focus`   | The dialog is    |</span><br />
+      <span style="white-space: pre;"><a id="L235"></a>    |                                 |              | focused or lose  |</span><br />
+      <span style="white-space: pre;"><a id="L236"></a>    |                                 |              | focus.           |</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>    | [init](../../control/init.md)   | `on_init`    | The dialog is    |</span><br />
+      <span style="white-space: pre;"><a id="L238"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L240"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L241"></a>    |                                 |              | just yet.        |</span><br />
+      <span style="white-space: pre;"><a id="L242"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L243"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L244"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L245"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L246"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L254"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L259"></a></span><br />
+      <span style="white-space: pre;"><a id="L260"></a>    Notice that we don't specify the dialog identifier.  It would make</span><br />
+      <span style="white-space: pre;"><a id="L261"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
+      <span style="white-space: pre;"><a id="L262"></a>    method in the dialog class with the control name and no identifier:</span><br />
+      <span style="white-space: pre;"><a id="L263"></a></span><br />
+      <span style="white-space: pre;"><a id="L264"></a>        class ExampleDialog(Dialog):</span><br />
+      <span style="white-space: pre;"><a id="L265"></a></span><br />
+      <span style="white-space: pre;"><a id="L266"></a>            def on_focus(self):</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
+      <span style="white-space: pre;"><a id="L268"></a></span><br />
+      <span style="white-space: pre;"><a id="L269"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L270"></a></span><br />
+      <span style="white-space: pre;"><a id="L271"></a>    tag_name = "dialog"</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>        Attr("title", help="The dialog title"),</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>        Attr("width", help="The dialog width", type=int, default=100),</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>        Attr("height", help="The dialog height", type=int, default=100),</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>    )</span><br />
+      <span style="white-space: pre;"><a id="L277"></a></span><br />
+      <span style="white-space: pre;"><a id="L278"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>        self.title = title</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>        self.height = height</span><br />
+    </div>
+  </body>
+</html>
