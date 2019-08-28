@@ -1,2 +1,7 @@
 theme: jekyll-theme-cayman
 encoding: UTF-8
+defaults:
+  - scope:
+    path: "fr"
+    values:
+      layout: "default_fr"
