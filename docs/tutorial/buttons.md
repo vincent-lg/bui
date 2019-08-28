@@ -200,7 +200,7 @@ For the time being, let's look at the code:
 - Next is a loop running 20 times.  Inside are only two actions:
 
    - First, we change the widget (the "bottom" button)'s name with a property.  This will update the button name (label) on the screen.
-   - We then use the `await` keyword and pause for one second.  In the meantime, the window resume its normal activity (you can click on other things for instance).  After the second is over, the loop begins again...
+   - We then use the `await` keyword and pause for one second.  We call the [sleep](../widget/Window.md#sleep) method which creates an asynchronous pause.  In the meantime, the window resume its normal activity (you can click on other things for instance).  After the second is over, the loop begins again...
 
 - ... until we reach `i > 20`.  At this point we exit the loop, update the report one last time and the method ends.
 

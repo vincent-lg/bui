@@ -120,7 +120,7 @@ So the first lines define a menu bar.  What about the last?  Try to guess which 
 
 If you've guessed `<window>`, you are correct.  The `<button>` tag is defined after the `menubar` tag has been closed.
 
-> Indentation allows to better understand the hierarchy of opening and closing tags.  This indentation, contrary to Python, is not mandatory, but it will help you distinguish the window structure and help you avoid opening tags and forget to close them when the time comes.
+> Indentation allows to better understand the hierarchy of opening and closing tags.  This indentation, contrary to Python code, is not mandatory, but it will help you distinguish the window structure and help you avoid opening tags and forget to close them when the time comes.
 
 ### Tag attributes
 
@@ -166,7 +166,7 @@ Some attributes don't require a value.  Their presence is enough to know what to
 
 > `multiline`: if present, set the text on multiple lines.
 
-This attribute doesn't require a value.  If it's present the text can contain several lines.  If not it's a single line widget.  To set our `report` text as a multiline text widget in your `basic` layout, we could do something like:
+This attribute doesn't require a value.  If it's present the text can contain several lines.  If not it's a single line widget.  To set our `report` text as a multiline text widget in our `basic` layout, we could do something like:
 
       <text x=3 y=3 id=report multiline>Report</text>
 
@@ -182,9 +182,9 @@ Finally, a last element about tags: their data.  Tag data is written outside the
 
 Here, "What is it?" is the data of the `item` tag.
 
-The tag data is a kind of attribute in some ways (it is actually documented as such): it has different meanings for various tags and some tags don't require data at all.  Inside [the item tag](../layout/tag/item.md), data should contain the menu item name.  It cannot be omitted.  if not present, BUI will generate an error.
+The tag data is a kind of attribute in some ways (it is actually documented as such): it has different meanings for various tags and some tags don't require data at all.  Inside [the item tag](../layout/tag/item.md), data should contain the menu item name.  It cannot be omitted.  If not present, BUI will generate an error.
 
-Tag data don't require quotation marks even if they span on several words.  The next less than sign (`<`) is just expected to be the end of the data.
+Tag data doesn't require quotation marks even if it spans on several words.  The next less than sign (`<`) is just expected to be the end of the data.
 
 As a rule, tags that contain sub-tags will not often have data.  Although the syntax would be understandable, it might not be so obvious, so that tags with data usually don't expect sub-tags of their own.
 
