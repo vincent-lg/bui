@@ -8,7 +8,7 @@ Pour créer un bouton dans le design de la fenêtre, utilisez la balise [button]
 
     <button x=0 y=1>Nom du bouton</button>
 
-Comme toujours, vous devez spécifier au moins les attributs `x` et `y`, comme indiqué dans le [tutoriel précédent](layout.md#the-window-as-a-grid). Le nom du bouton (ou son "label") est spécifié en tant que [donnée](layout.md#tag-data) de la balise [button](../layout/tag/button.md).
+Comme toujours, vous devez spécifier au moins les attributs `x` et `y`, comme indiqué dans le [tutoriel précédent](layout.md#la-fenêtre-en-grille). Le nom du bouton (ou son "label") est spécifié en tant que [donnée](layout.md#données-de-la-balise) de la balise [button](../layout/tag/button.md).
 
 Voici un exemple plus complet de design créant plusieurs boutons sur la fenêtre :
 
@@ -23,7 +23,7 @@ Voici un exemple plus complet de design créant plusieurs boutons sur la fenêtr
 
 Cela créera une fenêtre avec 4 boutons: un en haut, un à gauche, un à droite et un en bas de la fenêtre.
 
-Les boutons ont davantage d'[attributs](../layout/tag/button.md#attributs), mais le plus important est sans doute `id`. Comme indiqué dans le [tutoriel précédent](layout.md#widget-identifiers), les identifiants sont utilisés pour désigner les widgets. Ils constituent le point de contact entre le esign de la fenêtre et les interactions utilisateur. Le concepteur et le développeur doivent connaître ces identifiants.
+Les boutons ont davantage d'[attributs](../layout/tag/button.md#attributs), mais le plus important est sans doute `id`. Comme indiqué dans le [tutoriel précédent](layout.md#identifiants-de-widget), les identifiants sont utilisés pour désigner les widgets. Ils constituent le point de contact entre le esign de la fenêtre et les interactions utilisateur. Le concepteur et le développeur doivent connaître ces identifiants.
 
 Un identifiant est une chaîne de caractères identifiant le widget de façon unique. Deux widgets ne peuvent pas avoir le même identifiant. Dans le cas de boutons, BUI essaiera d'inférer un identifiant en utilisant le nom du bouton (son "label") si l'attribut `id` n'est pas spécifié. Bien que cela puisse être extrêmement utile, en particulier dans de petites boîtes de dialogue ou fenêtres, il est toujours recommandé de spécifier un attribut `id` pour chaque bouton :
 

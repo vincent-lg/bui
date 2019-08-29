@@ -1,228 +1,228 @@
-# BUI layout
+# Design de la fenêtre dans BUI
 
-As explained in the [previous tutorial](structure.md), BUI layout is meant to be independent from the code.  It is hoped that the layout will be maintained by designers that can use it with no programming background, while the user actions are implemented by developers through code.  This tutorial will elaborate on the layout: how to write it, its syntax of tags and attributes and its basic representation.
+Comme expliqué dans le [tutoriel précédent](structure.md), le design dans BUI est censé être indépendant du code. Il est ainsi espéré que la conception graphique sera assurée par les concepteurs n'ayant pas nécessairement des compétences de programmation, tandis que les actions de l’utilisateur sont interceptées par les développeurs au moyen du code. Ce tutoriel développe le design de la fenêtre dans BUI : comment l'écrire, sa syntaxe de balises et d'attributs et sa représentation de base dans la fenêtre.
 
-## Where to write it?
+## Où l'écrire ?
 
-BUI layout can be defined [in code](../layout/code.md).  Most examples in this documentation will actually do so, in order to be self-contained.  But layout can (and should) be written in a separate file: a `.bui` file with the same name as the Python file containing the `Window` class.
+Le design BUI peut être défini [dans le code de la fenêtre](../layout/code.md). La plupart des exemples de cette documentation le feront d'ailleurs, afin de rester autonomes. Mais le design peut (et devrait) être écrit dans un fichier séparé : un fichier `.bui` portant le même nom que le fichier Python contenant la classe `Window`.
 
-So to use the [basic example](../example/basic.md), let's see how that would work:
+Ainsi, utilisant [l'exemple basique](../example/basic.md), voyons comment cela pourrait fonctionner :
 
-1. Create a file, named `basic.bui`.  Open it with a standard editor (like notepad++ or Vim) and write the layout in it:
+1. Créez un fichier, nommé `basique.bui`. Ouvrez-le avec un éditeur standard (comme notepad++ ou Vim) et écrivez le design dedans :
 
    ```
-   <window title="A BUI demonstration">
+   <window title="Une démonstration avec BUI">
      <menubar>
-       <menu name=File>
-         <item>What is it?</item>
-         <item>Quit</item>
+       <menu name=Fichier>
+         <item>Qu'est-ce que c'est ?</item>
+         <item>Quitter</item>
        </menu>
      </menubar>
 
-     <button x=2 y=2>Click me!</button>
-     <text x=3 y=3 id=report>Report</text>
+     <button x=2 y=2>Cliquer ici !</button>
+     <text x=3 y=3 id=action>Action</text>
    </window>
    ```
 
-2. Create a file in the same folder, named `basic.py`.  In it write the Python code:
+2. Créez un fichier dans le même dossier, nommé `basique.py`. Dans celui-ci, écrire le code Python :
 
    ```python
    from bui import Window, start
 
    class HelloBUI(Window):
 
-       """Class to represent a basic hello world window."""
+       """Classe représentant un exemple basique avec BUI."""
 
-       def on_click_me(self):
-           """When the 'Click me!' button is pressed."""
-           self["report"].value = "The button was clicked!"
+       def on_cliquer_ici(self):
+           """Quand le bouton "Cliquer ici !" est cliqué."""
+           self["action"].value = "Le bouton a été cliqué !"
 
-       def on_quit(self):
-           """When the user press the quit menu item in the File menu."""
+       def on_quitter(self):
+           """Quand l'utilisateur sélectionner Quitter dans le menu Fichier."""
            self.close()
 
-       # Keyboard shortcuts
+       # Raccourcis claviers
        def on_press_alt_f4(self):
-           """When the user presses Alt + F4."""
+           """L'utilisateur appuie sur Alt + F4."""
            self.close()
 
-       # Linking an alias to a method is so simple
+       # Placer un alias sur une méthode est tellement simple
        on_press_ctrl_q = on_press_alt_f4
 
 
    start(HelloBUI)
    ```
 
-3. Execute this script with Python:
+3. Exécutez ce script avec Python :
 
-       python basic.py
+       python basique.py
 
-It should display the [basic example window](../example/basic.md).  The advantage here is that we've separated layout and code: the layout is in a file by itself, a file designers can edit without worrying about the code, while the code only contains Python, not the BUI layout.
+Il devrait afficher la [fenêtre de l'exemple basique](../example/basic.md). L'avantage ici est que nous avons séparé le design de la fenêtre et le code source : le design est dans un fichier, les concepteurs graphiques peuvent l'éditer sans se soucier du code, alors que le code ne contient que Python, pas le design BUI.
 
-## Syntax of the BUI layout
+## Syntaxe du design de fenêtre BUI
 
-The BUI layout is not defined in Python code.  It uses a kind of HTML syntax that might seem familiar to some but strange to others.  This section describes in more details the syntax of the BUI layout.  If what you've written in `basic.bui` seems obvious, you might skip this section.
+Le design dans BUI n'est pas définie comme code Python. Il utilise une sorte de syntaxe HTML qui peut sembler familière à certains, mais étrange à d'autres. Cette section décrit plus en détail la syntaxe du design dans BUI. Si ce que vous avez écrit dans `basique.bui` semble évident, vous pouvez passer cette section.
 
-### Tags
+### Balises
 
-Tags are the basic elements of the BUI layout.  They are placed between a less than sign (`<`) and a greater than sign (`>`).  More specifically, their name starts just after an opening less than sign (`<`).
+Les balises sont les éléments de base du design dans BUI. Elles se trouvent entre un signe inférieur (`<`) et un signe supérieur (`>`). En vérité, leur nom commence juste après un signe inférieur (`<`).
 
-For instance, consider the first line of the layout:
+Par exemple, considérons la première ligne du design :
 
-    <window title="A BUI demonstration">
+    <window title="Une démonstration avec BUI">
 
-In this context, the tag is `window`.  It's the first word after the opening less than sign (`<`).
+Dans ce contexte, la balise est `window`. C'est le premier mot après l'ouverture de la balise (après le signé inférieur).
 
-Or on the next line:
-
-    <menubar>
-
-`menubar` is the tag.  This time, the closing greater than sign (`>`) follows the tag name.  We'll see why when we talk about attributes.
-
-#### Opening and closing tags
-
-This syntax defines an opening tag.  A less than sign (`<`), the tag name, optionally a space and some information, then a greater than sign (`>`).  But there's another syntax to close the tag: a less than sign (`<`), a slash (`/`), the tag name, and the greater than sign (`>`).
-
-So the `menubar` tag begins at line 2:
+Ou bien, à  la ligne suivante :
 
     <menubar>
 
-And it ends at line 7:
+`menubar` est la balise. Cette fois, le signe de fin de balise (`>`) suit le nom de la balise. Nous verrons pourquoi lorsque nous parlerons des attributs.
+
+#### Balises d'ouverture et de fermeture
+
+Cette syntaxe définit une balise d'ouverture. Un signe inférieur (`<`), le nom de la balise, éventuellement un espace et des informations supplémentaires, puis un signe supérieur (`>`). Mais il existe une autre syntaxe pour fermer la balise : un signe inférieur (`<`), une barre oblique (`/`), le nom de la balise et le signe supérieur (`>`).
+
+Ainsi, la balise `menubar` est ouverte à la ligne 2 :
+
+    <menubar>
+
+Et elle est refermée à la ligne 7 :
 
     </menubar>
 
-What are between the opening and closing tags are sub-tags.  This allows to create a simple or complex hierarchy.  Let's elaborate on this.
+Entre la balise d'ouverture et celle de fermeture peuvent se trouver des balises imbriquées. Cela permet de créer une hiérarchie simple ou complexe de balises. Élaborons sur ce sujet.
 
-The `menubar` tag opens inside the `window` tag.  Look at these lines:
+La balise `menubar` s'ouvre à l'intérieur de la balise `window`. Regardez ces lignes :
 
-    <window title="A BUI demonstration">
+    <window title="Une démonstration avec BUI">
       <menubar>
 
-The `window` tag is not closed, the `menubar` tag opens inside of it.  Actually if you look at this layout, you will notice that the `window` tag is not closed before the very last line.  So everything else is contained inside the `window` tag.  Let's see what is contained inside the `menubar`:
+La balise `window` n'est pas refermée, la balise `menubar` s'ouvre à l'intérieur. En fait, si vous regardez ce design, vous remarquerez que la balise `window` n’est pas refermée avant la toute dernière ligne. Donc tout le reste est contenu dans la balise `window`. Voyons ce qui est contenu dans la balise `menubar` :
 
       <menubar>
-        <menu name=File>
-          <item>What is it?</item>
-          <item>Quit</item>
+        <menu name=Fichier>
+          <item>Qu'est-ce que c'est ?</item>
+          <item>Quitter</item>
         </menu>
       </menubar>
 
-The `menu` tag is defined inside of the `menubar`.  What about the `item` tags?  They are defined inside the `menu` tag.  There are two items in the `menu`:
+La balise `menu` est définie à l'intérieur de la balise `menubar`. Qu'en est-il des balises `item`? Elles sont définies à l'intérieur de la balise `menu`. Il y a deux éléments dans le menu :
 
-              <item>What is it?</item>
-              <item>Quit</item>
+          <item>Qu'est-ce que c'est ?</item>
+          <item>Quitter</item>
 
-For these tags, you'll notice that we close them right away, so they don't contain other tags.
+Pour ces balises, vous remarquerez que nous les fermons immédiatement, elles ne contiennent pas d'autres balises.
 
-This hierarchy is important.  All tags cannot be defined anywhere.  BUI will warn you if the layout is not correct.  Contrary to HTML, the syntax has to be correct and consistent: don't open a tag you don't close, close the tags in the same order that you opened them, sub-tags have to be specified in correct parent tags.
+Cette hiérarchie est importante. Toutes les balises ne peuvent pas être définies n'impore où. BUI vous avertira si le design n'est pas correcte. Contrairement au HTML, la syntaxe doit être correcte et cohérente : n'ouvrez pas une balise que vous ne fermez pas, fermez les balises dans le même ordre que vous les avez ouvert, les balises imbriquées doivent être spécifiées dans les balises-parentes correctes.
 
-So the first lines define a menu bar.  What about the last?  Try to guess which tag is the parent of `<button>`.
+Ainsi, les premières lignes définissent une barre de menus. Et les dernières ? Essayez de deviner quelle balise est le parent de `<button>`.
 
-If you've guessed `<window>`, you are correct.  The `<button>` tag is defined after the `menubar` tag has been closed.
+Si vous avez deviné `<window>`, vous avez raison. La balise `<button>` est définie après la fermeture de la balise `menubar`.
 
-> Indentation allows to better understand the hierarchy of opening and closing tags.  This indentation, contrary to Python code, is not mandatory, but it will help you distinguish the window structure and help you avoid opening tags and forget to close them when the time comes.
+> L'indentation permet de mieux comprendre la hiérarchie des balises d'ouverture et de fermeture. Contrairement à Python, cette indentation n’est pas obligatoire, mais elle vous aidera à distinguer la structure de la fenêtre et vous évitera d’ouvrir des balises et d’oublier de les refermer le moment venu.
 
-### Tag attributes
+### Attributs de balises
 
-Tags can have different attributes.  Attributes are defined after the tag name, between the less than sign and greater than sign.  A space separates them from the tag name and each other (a tag may have several attributes).  Attributes are used to give more information about the tag.  For instance:
+Les balises peuvent avoir différents attributs. Les attributs sont définis après le nom de la balise, entre le signe inférieur et le signe supérieur. Un espace les sépare du nom de la balise, ainsi que les uns des autres (une balise peut avoir plusieurs attributs). Les attributs sont utilisés pour donner plus d'informations sur la balise. Par exemple :
 
-        <menu name=File>
+        <menu name=Fichier>
 
-We say that the `menu` tag has an attribute `name` of value `File`.
+On dit que la balise `<menu>` a une attribut `name` ayant pour valeur `Fichier`.
 
-Let's see another example:
+Voyons un autre exemple:
 
-      <text x=3 y=3 id=report>Report</text>
+      <text x=3 y=3 id=action>Action</text>
 
-The `text` tag has three attributes: `x`, `y` and `id`, each with its own value.  Another example?
+La balise `text` a trois attributs : `x`, `y` et `id`, chacun avec sa propre valeur. Un autre exemple ?
 
-    <window title="A BUI demonstration">
+    <window title="Une démonstration avec BUI">
 
-The `window` tag has only one attribute: `title`.  Notice that we surround the title with double quotes (`"`).  This is due to the fact that the window title spans on multiple words (it contains spaces).  If we omit the double quotes, BUI will not be able to know where the attribute name beings and where the value ends.
+La balise `window` n’a qu’un seul attribut : `title` (le titre de la fenêtre). Notez que nous entourons le titre de guillemets doubles (`"`). Cela est dû au fait que le titre de la fenêtre contient plusieurs mots (il coomprend des espaces). Si nous omettons les guillemets doubles, BUI ne pourra pas savoir où le nom de l'attribut commence et où la valeur de l'attribut se termine.
 
-> In HTML, you will almost always find double quotes around attribute values, even if the attribute value is contained in a single word.  This is not mandatory but you can follow this convention if you're confused about when to use double quotes and when not to.  This doesn't change anything for BUI:
+> En HTML, vous trouverez presque toujours des guillemets doubles autour des valeurs d'attribut, même si la valeur de l'attribut est contenue dans un seul mot. Ce n'est pas obligatoire, mais vous pouvez suivre cette convention si vous ne savez pas quand utiliser des guillemets doubles ou non. Cela ne change rien pour BUI :
 
-        <menu name=File>
+        <menu name=Fichier>
 
-Is strictly equivalent to:
+Est strictement équivalent à :
 
-        <menu name="File">
+        <menu name="Fichier">
 
-So if you want to add double quotes around all attribute values, you can.
+Ainsi, si vous voulez ajouter des guillemets doubles autour de toutes les valeurs d'attribut, vous pouvez le faire.
 
-#### Mandatory or optional attributes
+#### Attributs obligatoires ou facultatifs
 
-Some attributes are mandatory, some optional.  BUI will help you determine which is which.  First of all, when you use a tag, check its documentation: BUI provides extensive documentation on each tag.  For instance, you see the `button` tag.  Just head over to the [button tag documentation](../layout/tag/button.md).  There's a section on tag attributes with a table.  For each attribute, the fact that the attribute is mandatory or optional is clearly stated.
+Certains attributs sont obligatoires, d'autres facultatifs. BUI vous aidera à déterminer lequel est lequel. Tout d’abord, lorsque vous utilisez une balise, vérifiez sa documentation : BUI fournit une documentation détaillée de chaque balise. Par exemple, vous voulez utiliser la balise `button`. Rendez-vous simplement dans la [documentation de la balise button](../layout/tag/button.md). Dedans se trouve une section sur les attributs de la balise avec un tableau listant ceux-ci. Pour chaque attribut, le fait qu'il soit obligatoire ou facultatif est clairement indiqué.
 
-For instance, if you read the [button attributes](../layout/tag/button.md#attributes), you will see that only `x` and `y` are mandatory, so you can't define a button without placing it on the window (which is somewhat logical).  If you try and remove one of these attributes, BUI will warn you about it and won't display the window at all.
+Par exemple, si vous consultez les [attributs de la balise button](../layout/tag/button.md#attributs), vous verrez que seuls `x` et `y` sont obligatoires. Vous ne pouvez donc pas définir un bouton sans le placer sur la fenêtre (ce qui est assez logique). Si vous essayez de supprimer l’un de ces attributs, BUI vous en avertira et n’affiche pas la fenêtre du tout.
 
-On the other hand, if you head over to [the text tag attributes](../layout/tag/text.md#attributes), you will see that `id` is not mandatory.  That doesn't mean we cannot use it in our layout, just we don't have to:
+D'un autre côté, si vous consultez les [attributs de la balise text](../layout/tag/text.md#attributs), vous verrez que l'attribut `id` n'est pas obligatoire. Cela ne signifie pas que nous ne pouvons pas l'utiliser dans notre balise, ce n'est simplement pas toujours nécessaire :
 
-      <text x=3 y=3 id=report>Report</text>
+      <text x=3 y=3 id=action>Action</text>
 
-#### Attributes with no value
+#### Attributs sans valeur
 
-Some attributes don't require a value.  Their presence is enough to know what to do.  Specify the attribute name, but no equal sign or value is necessary after that.  Again, checking the [text tag attributes](../layout/tag/text.md#attributes), you should see the `multiline` attribute:
+Certains attributs ne nécessitent pas de valeur. Leur présence suffit pour savoir quoi faire. Spécifiez le nom de l'attribut, mais aucun signe égal (`=`) ou valeur n'est nécessaire. Là encore, en consultant les [attributs de la balise text](../layout/tag/text.md#attributs), vous devriez voir l’attribut `multiline` :
 
-> `multiline`: if present, set the text on multiple lines.
+> `multiline`: si présent, place le texte sur plusieurs lignes.
 
-This attribute doesn't require a value.  If it's present the text can contain several lines.  If not it's a single line widget.  To set our `report` text as a multiline text widget in our `basic` layout, we could do something like:
+Cet attribut ne nécessite pas de valeur. S'il est présent, le texte peut contenir plusieurs lignes. Si ce n'est pas le cas, le texte reste écrit sur une seule ligne. Pour définir le widget `text` d'ID `action` dans notre design comme texte multiligne, on doit donc écrire quelque chose comme :
 
-      <text x=3 y=3 id=report multiline>Report</text>
+      <text x=3 y=3 id=action multiline>Action</text>
 
-Attributes with no value are traditionally written after the others.  This is absolutely not required but it might help others read your layout.
+Les attributs sans valeur sont généralement indiqués après les autres dans le corps de la balise. Ce n'est absolument pas nécessaire, mais cela pourrait aider les autres à lire votre design.
 
-For each attribute you will see a brief example of how to use it.  Don't dismiss this example as it might give you more information on how to use the attribute in context.
+Pour chaque attribut, vous verrez un bref exemple d'utilisation. Il vous est encouragé de lire cet exemple car il pourrait vous donner plus d'informations sur l'utilisation de l'attribut dans son contexte.
 
-### Tag data
+### Données de la balise
 
-Finally, a last element about tags: their data.  Tag data is written outside the less than and greater than sign, between the opening and closing tag:
+Enfin, un dernier élément concernant les balises : leurs données. Les données de balise sont écrites en dehors des signes inférieur et supérieur, entre les balises d'ouverture et de fermeture :
 
-          <item>What is it?</item>
+          <item>Qu'est-ce que c'est ?</item>
 
-Here, "What is it?" is the data of the `item` tag.
+Ici, "Qu'est-ce que c'est ?" forme les données de la balise `item`.
 
-The tag data is a kind of attribute in some ways (it is actually documented as such): it has different meanings for various tags and some tags don't require data at all.  Inside [the item tag](../layout/tag/item.md), data should contain the menu item name.  It cannot be omitted.  If not present, BUI will generate an error.
+Les données de balise sont en quelque sorte un type d'attribut (elles sont en fait documentées en tant que telles) : elles possèdent différentes significations pour différentes balises, certaines balises ne nécessitent aucune donnée. À l'intérieur de [la balise item](../layout/tag/item.md), les données doivent contenir le nom de l'élément de menu. Elles sont obligatoires. Si absentes, BUI générera une erreur.
 
-Tag data doesn't require quotation marks even if it spans on several words.  The next less than sign (`<`) is just expected to be the end of the data.
+Les données de balises ne nécessitent pas de guillemets, même si elles sont contenues dans plusieurs mots. Le signe inférieur (`<`) suivant devrait simplement indiquer la fin des données.
 
-As a rule, tags that contain sub-tags will not often have data.  Although the syntax would be understandable, it might not be so obvious, so that tags with data usually don't expect sub-tags of their own.
+En règle générale, les balises contenant des balises imbriquées ne contiennent souvent pas de données qui leur sont propres. Bien que la syntaxe reste compréhensible, elle n’est peut-être pas si claire, de sorte que les balises avec des données ne contiennent généralement pas de balises imbriquées en même temps.
 
-## The window as a grid
+## La fenêtre en grille
 
-BUI defines the window as a simple grid on which you can place widgets.  This concept is extremely important for the layout.  You might have noticed each widget needs to be placed on the window with `x` and `y` attributes.  So let's see what it is:
+BUI définit la fenêtre comme une simple grille sur laquelle vous pouvez placer des widgets. Ce concept est extrêmement important pour le design. Vous avez peut-être remarqué que chaque widget doit être placé sur la fenêtre avec les attributs `x` et `y`. Voyons donc ce que ces attributs signifient :
 
-By default, when BUI creates a window, it generates an invisible grid of 6 by 6.  `x` is the number of columns on this grid (starting from 0) and `y` is the number of rows on this grid (starting from 0 too).  The widget at `x=0`  `y=0` is positioned in the top-left corner of the window.  With a grid of 6 by 6 (the default), the widget placed on `x=5` `y=5` is in the bottom-right corner of the window.  `x=0` `y=5` is in the bottom-left corner, `x=5` `y=0` is in the top-right corner.  From there you can decide to place widgets on the grid with accuracy.
+Par défaut, lorsque BUI crée une fenêtre, il génère une grille invisible de 6 sur 6. `x` est le nombre de colonnes sur cette grille (à partir de 0) et `y` est le nombre de lignes sur cette grille (à partir de 0 également). Le widget situé à `x=0` `y=0` est placé dans le coin supérieur gauche de la fenêtre. Avec une grille de 6 par 6 (les valeurs par défaut), le widget placé sur `x=5` `y=5` est placé dans le coin inférieur droit de la fenêtre. `x=0` `y=5` se trouve dans le coin inférieur gauche, `x=5` `y=0` se trouve dans le coin supérieur droit. À partir de là, vous pouvez décider de placer les widgets sur la grille avec précision.
 
-A widget can use several columns and/or rows on this grid.  For instance, if you want to have a big text field taking 2 columns and 3 rows of this window, you could do something like this:
+Un widget peut utiliser plusieurs colonnes et / ou lignes sur cette grille. Par exemple, si vous voulez avoir un grand champ de texte prenant 2 colonnes et 3 lignes de cette fenêtre, vous pouvez faire quelque chose comme ceci :
 
     <text x=2 y=1 width=2 height=3 multiline>...</text>
 
-`width` and `height` are optional attributes.  They indicate how much you want to span this widget horizontally and vertically.  So in this case, the upper-left corner of the text area is `x=2` `y=1`, but the widget spans two columns and three rows.  So its upper-right corner is `x=3` `y=1`.  Its bottom-left corner is `x=2` `y=4` and its bottom-right corner is `x=3` `y=4`.
+`width` et `height` sont des attributs facultatifs sur la plupart des widgets. Ils indiquent à quel point vous souhaitez étirer ce widget horizontalement et verticalement. Ainsi, dans ce cas, le coin supérieur gauche de la zone de texte est `x=2` `y=1`, mais le widget s'étend sur deux colonnes et trois lignes. Ainsi, son coin supérieur droit est `x=3` `y=1`. Son coin inférieur gauche est `x=2` `y=4` et son coin inférieur droit est `x=3` `y=4`.
 
-This might need some getting-used to.  Describing the layout in this way is flexible and easy to extend, and not too complicated.  If you have to, draw a simple grid on paper with 6 columns and 6 rows and place your widgets in them, knowing that they can span in either (or both) directions.
+Placer les widgets de cette façon peut nécessiter un peu d'entraînement. Dessiner le design ainsi est flexible et facile à étendre, sans être trop abstrait. Si nécessaire, dessinez une grille simple sur une feuille avec 6 colonnes et 6 lignes et placez-y vos widgets, sachant qu'ils peuvent s'étendre dans l'une ou les deux directions.
 
-## Widget identifiers
+## Identifiants de widget
 
-A last concept on widget should be understood before going to the next section.  Widgets can have identifiers (specified in the `id` attribute of the widget tag).  This identifier will help retrieve the widget in code.
+Un dernier concept sur le widget doit être maîtrisé avant de passer à la section suivante. Les widgets peuvent avoir des identifiants (spécifiés dans l'attribut `id` de la balise du widget). Cet identifiant aidera à récupérer le widget dans le code.
 
-      <text x=3 y=3 id=report>Report</text>
+      <text x=3 y=3 id=action>Action</text>
 
-This text widget has an identifier of `report`.
+Ce widget `text` a "action" comme identifiant.
 
-Identifiers should be unique: no two widgets should have the same one.  In some cases, BUI will infer the identifier if you don't specify it.  This might be useful for some widgets (menu items or buttons, for instance), but this might lead to unexpected situations too.  And some widgets don't require identifiers anyway.
+Les identifiants doivent être uniques : deux widgets ne doivent pas avoir le même. Dans certains cas, BUI déduira l'identifiant si vous ne le spécifiez pas. Cela peut être utile pour certains widgets (éléments de menu ou boutons, par exemple), mais cela peut également conduire à des situations inattendues. Et certains widgets ne nécessitent de toute façon pas d'identifiant
 
-> How to know when to use identifiers and when not to?
+> Comment savoir quand utiliser les identifiants et quand ne pas le faire ?
 
-The first thing is to read the tag documentation.  It provides some examples and usually explains why the `id` attribute is necessary, why it is not, or why it could be inferred by BUI if it's missing.  If you are a designer, however, the rule of thumb is to place clear identifiers on widgets the user will happen to interact with (buttons, tables, radio buttons...).
+La première chose à faire est de lire la documentation de la balise. Elle fournit quelques exemples et explique généralement pourquoi l'attribut `id` est nécessaire, pourquoi il ne l'est pas ou pourquoi il peut être déduit par BUI s'il n'est pas spécifié. Si vous êtes un concepteur graphique, la règle de base est de placer des identifiants explicites sur les widgets avec lesquels l'utilisateur va interagir (boutons, tableaux, cases à cocher...).
 
-## What's next?
+## Et maintenant ?
 
-Now that you have a greater understanding of the BUI layout, it will be easier to play around with real windows.  The next tutorials show a greater range of examples of various widgets in various conditions.  If you are a window designer, not much interested in the Python code, you might only read the first section of each tutorial (which describes the layout).  The next section (describing control methods) is more a developer thing.  If you are a developer, however, you might want to read each tutorial, or at least, follow the ones you are interested in.
+Maintenant que vous avez une meilleure compréhension du design dans BUI, il sera plus facile de jouer avec de vraies fenêtres. Les prochains tutoriels montrent un plus grand nombre d’exemples de divers widgets dans diverses conditions. Si vous êtes un concepteur de fenêtres et que le code Python ne vous intéresse pas, vous pouvez ne lire que la première section de chaque tutoriel (qui décrit le design). La section suivante (décrivant les méthodes de contrôle) est davantage utile pour les développeurs. Toutefois, si vous êtes développeur, vous voudrez sans doute lire l'intégralité du tutoriel, ou du moins suivre ceux qui vous intéressent.
 
-- [Using buttons](buttons.md)
-- [A window with a menu bar](menubar.md)
-- [Handling keyboard shortcuts](keyboard.md)
-- [Checkboxes and radio buttons](choices.md)
-- [Lists and tables](lists.md)
-- [Dialogs](dialogs.md)
+- [Utiliser les boutons](buttons.md)
+- [Une fenêtre avec une barre de menu](menubar.md)
+- [Gestion des raccourcis clavier](keyboard.md)
+- [Cases à cocher et boutons radio](choices.md)
+- [Listes et tableaux](lists.md)
+- [Boîtes de dialogue](dialogs.md)
