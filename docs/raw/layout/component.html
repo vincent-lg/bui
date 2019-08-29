@@ -175,12 +175,12 @@
       <span style="white-space: pre;"><a id="L153"></a>        for char in deduce_from:</span><br />
       <span style="white-space: pre;"><a id="L154"></a>            if char.isalpha():</span><br />
       <span style="white-space: pre;"><a id="L155"></a>                identifier += char.lower()</span><br />
-      <span style="white-space: pre;"><a id="L156"></a>            elif char == " ":</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>            elif char == " " and not identifier.endswith("_"):</span><br />
       <span style="white-space: pre;"><a id="L157"></a>                identifier += "_"</span><br />
       <span style="white-space: pre;"><a id="L158"></a>            elif char == "\t":</span><br />
       <span style="white-space: pre;"><a id="L159"></a>                break</span><br />
       <span style="white-space: pre;"><a id="L160"></a></span><br />
-      <span style="white-space: pre;"><a id="L161"></a>        return identifier</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>        return identifier.strip("_")</span><br />
     </div>
   </body>
 </html>

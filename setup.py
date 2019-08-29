@@ -15,6 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     install_requires = [
+        'Logbook == 1.5.2',
         'wxPython == 4.0.6; platform_system=="Windows"',
     ],
     extras_require={

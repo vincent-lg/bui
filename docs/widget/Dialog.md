@@ -56,7 +56,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L262)
+[See the source code](../raw/widget/dialog.html#L261)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -83,7 +83,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L319)
+[See the source code](../raw/widget/dialog.html#L318)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -96,7 +96,7 @@ The window closes.
 
 `mark(layout: str)`
 
-[See the source code](../raw/widget/dialog.html#L53)
+[See the source code](../raw/widget/dialog.html#L54)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -108,7 +108,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L305)
+[See the source code](../raw/widget/dialog.html#L304)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -143,7 +143,7 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/dialog.html#L270)
+[See the source code](../raw/widget/dialog.html#L269)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -163,7 +163,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L294)
+[See the source code](../raw/widget/dialog.html#L293)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -192,7 +192,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sleep(self, seconds)`
 
-[See the source code](../raw/widget/dialog.html#L227)
+[See the source code](../raw/widget/dialog.html#L226)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -211,7 +211,7 @@ Args:
 
 `stop_control(self)`
 
-[See the source code](../raw/widget/dialog.html#L266)
+[See the source code](../raw/widget/dialog.html#L265)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
