@@ -174,11 +174,12 @@ class Control(metaclass=MetaControl):
         else:
             report += "a "
 
+        wid = ""
         if kind is _ControlScope.WINDOW:
             report += "window control "
         elif kind is _ControlScope.WIDGET:
             report += f"widget control of {widget.widget}"
-            wid = getattr(widget, "id", None)
+            wid = getattr(widget, "id", "")
             if wid:
                 report += f"({wid}) "
         else:
@@ -188,10 +189,12 @@ class Control(metaclass=MetaControl):
             report += f"with options={options} "
 
         report += f"to the {method!r} method"
-        cls.logger.debug(" " * 4 + report.strip())
+        report = report.replace("{", "{{").replace("}", "}}")
+        cls.logger.debug(" " * 4 + report.strip(), widget=wid)
 
     def process(self, options=None):
         """Process the control, calls a generic `on_` method if found."""
+        wid = getattr(self.widget, "id", "")
         self._report_fire(options)
 
         # Call on_{control} on the widget
@@ -209,7 +212,7 @@ class Control(metaclass=MetaControl):
                     to_test[key] = value
 
             if group and group == to_test:
-                self._report_call(method, child=True)
+                self._report_call(method, child=True, wid=wid)
                 return self._call_method(method)
 
         # At this point we consider no match was found in the options,
@@ -218,7 +221,7 @@ class Control(metaclass=MetaControl):
         methods = self.widget.controls.get(self.name, [])
         for group, method in methods:
             if group == options:
-                self._report_call(method)
+                self._report_call(method, wid=wid)
                 return self._call_method(method)
 
     def stop(self, reason=""):
@@ -237,7 +240,8 @@ class Control(metaclass=MetaControl):
             StopControl
 
         """
-        self._report_stop(reason)
+        wid = getattr(self.widget, "id", "")
+        self._report_stop(reason, wid=wid)
         raise StopControl()
 
     def _call_method(self, method):
@@ -270,9 +274,10 @@ class Control(metaclass=MetaControl):
             report += " "
         if options:
             report += f"with options={options}"
-        self.logger.debug("  " + report.strip())
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug("  " + report.strip(), widget=wid)
 
-    def _report_call(self, method: Callable, child: bool = False):
+    def _report_call(self, method: Callable, child: bool = False, wid: str = ""):
         report = "Match "
         if child:
             report += "child "
@@ -280,14 +285,16 @@ class Control(metaclass=MetaControl):
             report += "main "
 
         report += f"control to {method.__name__}, call it"
-        self.logger.debug(" " * 4 + report.strip())
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug(" " * 4 + report.strip(), widget=wid)
 
-    def _report_stop(self, reason=""):
+    def _report_stop(self, reason: str = "", wid: str = ""):
         if reason:
             report = f"Stopping: {reason}"
         else:
             report = f"Stopping"
-        self.logger.debug(6 * " " + report)
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug(6 * " " + report, widget=wid)
 
 
 class _ControlScope:

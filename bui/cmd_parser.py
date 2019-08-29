@@ -14,7 +14,7 @@ import code
 import queue
 import threading
 
-from bui.control.log import stream as control_stream
+from bui.control import log as control_log
 from bui.widget.window import Window
 
 def init_args():
@@ -30,13 +30,20 @@ def init_args():
             help="Start an interactive Python interpreeter in the console, "
             "won't block the BUI window.")
     parser.add_argument("-c", "--debug-controls",
-            help="Show subscribed control methods and fired controls",
-            action="store_true")
+            help="Show subscribed control methods and fired controls, "
+            "can take additional filters", nargs='*')
 
     args = parser.parse_args()
-    if args.debug_controls:
+    if args.debug_controls is not None:
         print("Running in 'debug controls' mode.")
-        control_stream.push_application()
+        control_log.stream.push_application()
+
+        # Handle optional filters
+        filters = []
+        for filter in args.debug_controls:
+            widget, _, control = filter.partition("@")
+            filters.append((widget, control))
+        control_log.filters[:] = filters
 
     return args
 
