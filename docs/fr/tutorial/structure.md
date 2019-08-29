@@ -4,7 +4,7 @@ The Blind User Interface has been designed to be a Python library linking simple
 
 ## Basic structure
 
-BUI is a bridge between Pythonic code and Graphical User Interface toolkits that are not, as a rule, designed to generate beautiful code in Python.  BUI makes some bold statements about User Interface designing and how to clearly separate it.  You will discover some principles in this tutorial and the rest of this series.
+BUI is a bridge between Pythonic code and Graphical User Interface toolkits that are not, as a rule, designed to generate beautiful code in Python.  BUI makes some bold statements about User Interface designing, development, and how to clearly separate them.  You will discover some principles in this tutorial and the rest of this series.
 
 But first of all, BUI is meant to be simple and Pythonic.  It uses Python introspection, properties and special methods in a way that will be familiar to the developers.  It also clearly separates between the user interface layout (how the window should appear) and what it should do in response to user actions.  In some ways, this is similar to the Model View Controller paradigm, though BUI doesn't use exactly the same strategy either.
 
@@ -41,10 +41,11 @@ class Address(Window):
         </window>
     """)
 
+
 start(Address)
 ```
 
-The details of the code will be explained later.  We just create a class and give the layout of the window in a class variable, then feed the window to the `start` function.  This is developer work and BUI recommends to place layouts in `.bui` files whenever possible.
+The details of the code will be explained later.  We just create a class and give the layout of the window in a class variable, then feed the window to the `start` function.  This is developer work and BUI recommends to place the layouts in `.bui` files whenever possible.
 
 You can learn more about the [BUI layout](../layout/overview.md) by following this link.
 
@@ -64,6 +65,7 @@ class Address(Window):
           <text id=address x=2 y=2 width=3>Enter the address here</text>
         </window>
     """)
+
 
 start(Address)
 ```
@@ -95,6 +97,7 @@ class PingPong(Window):
         contrary = "pong" if widget.name == "ping" else "ping"
         widget.name = contrary
 
+
 start(PingPong)
 ```
 
@@ -106,7 +109,7 @@ What happened here?  You created your first control method in BUI.  When the cen
 
 When the `start` function is called, it will do a number of things: read your window layout, check that it's correct, then examine your class to see if there are control methods.  Control methods are the ones starting with `on_`.  When it sees one, it will check the method name to see what the control means.  Here, the first part of the method name, after the `on_`, is `click`.  So the control type is "click".  Then another underscore (`_`) and the widget identifier ("central").  So BUI will connect the `on_click_central` to the control "click" of the "central" object.  When the button is clicked, it checks for its controls and call them.
 
-But control methods can be way more powerful than that.  They just don't make your life easier by connecting the control type and widget automatically.  Look at this example:
+But control methods can be way more powerful than that.  They don't only make your life easier by connecting the control type and widget automatically.  Look at this example:
 
 ```python
 from bui import Window, start
@@ -131,6 +134,7 @@ class PingPong(Window):
         central = self["central"]
         self.on_click_central(central)
 
+
 start(PingPong)
 ```
 
@@ -140,7 +144,7 @@ We just added a new method, named `on_press_p`.  This deserves some explanation:
 
 > Why didn't we specify a widget identifier in the method name?  Like "on_press_p_central"?
 
-Control methods can be specific to a widget or can be general to an entire window.  The first method we created, `on_click_central`, is specific to the "central" widget (that is, our button).  The second method, however, `on_press_p`, will fire when the user presses the 'p' key on her keyboard, no matter what widget is focused in the window.  But yes, we could have written a method named `on_press_p_central` which will only fire if the "central" widget is focused and the user presses 'p'.
+Control methods can be specific to a widget or can be general to an entire window.  The first method we created, `on_click_central`, is specific to the "central" widget (that is, our button).  The second method, however, `on_press_p`, will fire when the user presses the 'p' key on her keyboard, no matter what widget is focused in the window.  But yes, we could have written a method named `on_press_p_in_central` which will only fire if the "central" widget is focused and the user presses 'p'.
 
 You might also have noticed that the arguments we expected from our control methods vary.  In fact, the control will only give the control method the arguments it requires.  That is a more complex topic, discussed in details in the [documentation about controls](../control/overview.md).
 
@@ -179,7 +183,7 @@ And things get a little more complicated: a widget is a Python object representi
 
 but in order to actually display a window, BUI will have to "convert" this widget into something the window toolkit can use.  For instance, a BUI button might be converted to a [wx.Button](https://wxpython.org/Phoenix/docs/html/wx.Button.html).  BUI will establish the connection between the widget object in its library and the actual object used by the GUI toolkit.
 
-What does it mean?  When you enter `widget.name = ...` for instance, with `widget` being a BUI button, it will call the proper method on the [wx.Button](https://wxpython.org/Phoenix/docs/html/wx.Button.html) object to update the button name.
+What does it mean?  When you enter `widget.name = ...` for instance, with `widget` being a [BUI button](../widget/Button.md), it will call the proper method on the [wx.Button](https://wxpython.org/Phoenix/docs/html/wx.Button.html) object to update the button name.
 
 And when the [wx.Button](https://wxpython.org/Phoenix/docs/html/wx.Button.html) intercept events, it will send usable controls to BUI.
 
@@ -200,4 +204,3 @@ This tutorial attempted to explain with examples some of the concepts of BUI.  Y
 - [Generic and specific widgets](../widget/overview.md).
 
 If you have even a limited understanding of these concepts, you might head over to the [next section of this tutorial](layout.md).
-

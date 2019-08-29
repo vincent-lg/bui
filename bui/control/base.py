@@ -11,11 +11,30 @@ import re
 from typing import Callable
 
 from bui.control.exceptions import StopControl
+from bui.control.log import ControlLogger
 
 # Private constants
 _WINDOW = None
 
-class Control:
+# Dictionary of existing controls
+CONTROLS = {}
+
+class MetaControl(type):
+
+    """Control metaclass."""
+
+    def __new__(cls, name, bases, dct):
+        control = super().__new__(cls, name, bases, dct)
+        if control.name:
+            CONTROLS[control.name] = control
+
+        # Create a logger just for this class
+        control.logger = ControlLogger(control)
+
+        return control
+
+
+class Control(metaclass=MetaControl):
 
     """Base control, parent class of all controls."""
 
@@ -149,31 +168,33 @@ class Control:
     @classmethod
     def _report_bound(cls, kind: '_ControlScope', widget: 'Widget', method: str,
             options: dict = None, implicit: bool = False):
-        if _WINDOW._debug_controls:
-            report = f"Bound {cls.name} as "
-            if implicit:
-                report += "an implicit "
-            else:
-                report += "a "
+        report = f"Bound {cls.name} as "
+        if implicit:
+            report += "an implicit "
+        else:
+            report += "a "
 
-            if kind is _ControlScope.WINDOW:
-                report += "window control "
-            elif kind is _ControlScope.WIDGET:
-                report += f"widget control of {widget.widget}"
-                wid = getattr(widget, "id", None)
-                if wid:
-                    report += f"({wid}) "
-            else:
-                report += "unknown scope "
+        wid = ""
+        if kind is _ControlScope.WINDOW:
+            report += "window control "
+        elif kind is _ControlScope.WIDGET:
+            report += f"widget control of {widget.widget}"
+            wid = getattr(widget, "id", "")
+            if wid:
+                report += f"({wid}) "
+        else:
+            report += "unknown scope "
 
-            if options is not None:
-                report += f"with options={options} "
+        if options is not None:
+            report += f"with options={options} "
 
-            report += f"to the {method!r} method"
-            print(" " * 4 + report.strip())
+        report += f"to the {method!r} method"
+        report = report.replace("{", "{{").replace("}", "}}")
+        cls.logger.debug(" " * 4 + report.strip(), widget=wid)
 
     def process(self, options=None):
         """Process the control, calls a generic `on_` method if found."""
+        wid = getattr(self.widget, "id", "")
         self._report_fire(options)
 
         # Call on_{control} on the widget
@@ -191,7 +212,7 @@ class Control:
                     to_test[key] = value
 
             if group and group == to_test:
-                self._report_call(method, child=True)
+                self._report_call(method, child=True, wid=wid)
                 return self._call_method(method)
 
         # At this point we consider no match was found in the options,
@@ -200,7 +221,7 @@ class Control:
         methods = self.widget.controls.get(self.name, [])
         for group, method in methods:
             if group == options:
-                self._report_call(method)
+                self._report_call(method, wid=wid)
                 return self._call_method(method)
 
     def stop(self, reason=""):
@@ -219,7 +240,8 @@ class Control:
             StopControl
 
         """
-        self._report_stop(reason)
+        wid = getattr(self.widget, "id", "")
+        self._report_stop(reason, wid=wid)
         raise StopControl()
 
     def _call_method(self, method):
@@ -244,35 +266,35 @@ class Control:
         return result
 
     def _report_fire(self, options: dict = None):
-        if _WINDOW._debug_controls:
-            report = f"Fire {self.name} control on {self.widget.widget}"
-            wid = getattr(self.widget, "id", None)
-            if wid:
-                report += f"({wid}) "
-            else:
-                report += " "
-            if options:
-                report += f"with options={options}"
-            print("  " + report.strip())
+        report = f"Fire {self.name} control on {self.widget.widget}"
+        wid = getattr(self.widget, "id", None)
+        if wid:
+            report += f"({wid}) "
+        else:
+            report += " "
+        if options:
+            report += f"with options={options}"
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug("  " + report.strip(), widget=wid)
 
-    def _report_call(self, method: Callable, child: bool = False):
-        if _WINDOW._debug_controls:
-            report = "Match "
-            if child:
-                report += "child "
-            else:
-                report += "main "
+    def _report_call(self, method: Callable, child: bool = False, wid: str = ""):
+        report = "Match "
+        if child:
+            report += "child "
+        else:
+            report += "main "
 
-            report += f"control to {method.__name__}, call it"
-            print(" " * 4 + report.strip())
+        report += f"control to {method.__name__}, call it"
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug(" " * 4 + report.strip(), widget=wid)
 
-    def _report_stop(self, reason=""):
-        if _WINDOW._debug_controls:
-            if reason:
-                report = f"Stopping: {reason}"
-            else:
-                report = f"Stopping"
-            print(6 * " " + report)
+    def _report_stop(self, reason: str = "", wid: str = ""):
+        if reason:
+            report = f"Stopping: {reason}"
+        else:
+            report = f"Stopping"
+        report = report.replace("{", "{{").replace("}", "}}")
+        self.logger.debug(6 * " " + report, widget=wid)
 
 
 class _ControlScope:

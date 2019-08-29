@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - control/log.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="control/log.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="control/log.py" />
+    <meta property="og:description" content="control/log.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/control/log.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/control/log.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - control/log.py","url":"https://vincent-lg.github.io/bui/control/log.html","name":"control/log.py","description":"control/log.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>"""Log specific to controls."""</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>import sys</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>from logbook import Logger, StreamHandler</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>filters = []</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>stream = StreamHandler(sys.stdout, level="DEBUG", bubble=True)</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>stream.format_string = "{record.message}"</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>logger = Logger("bui.control")</span><br />
+      <span style="white-space: pre;"><a id="L11"></a></span><br />
+      <span style="white-space: pre;"><a id="L12"></a>def filter_record(record, handler):</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    """Check if the record can be logged."""</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    if not filters:</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>        return True</span><br />
+      <span style="white-space: pre;"><a id="L16"></a></span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    for widget, control in filters:</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>        wid = record.kwargs.get("widget", None)</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>        if wid is None:</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>            return True</span><br />
+      <span style="white-space: pre;"><a id="L21"></a></span><br />
+      <span style="white-space: pre;"><a id="L22"></a>        if widget:</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>            if widget == wid:</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>                if not control:</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>                    return True</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>                continue</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        if control:</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>            if control == record.extra["control"]:</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>                return True</span><br />
+      <span style="white-space: pre;"><a id="L31"></a></span><br />
+      <span style="white-space: pre;"><a id="L32"></a>            continue</span><br />
+      <span style="white-space: pre;"><a id="L33"></a></span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    return False</span><br />
+      <span style="white-space: pre;"><a id="L35"></a></span><br />
+      <span style="white-space: pre;"><a id="L36"></a>stream.filter = filter_record</span><br />
+      <span style="white-space: pre;"><a id="L37"></a></span><br />
+      <span style="white-space: pre;"><a id="L38"></a>class ControlLogger(Logger):</span><br />
+      <span style="white-space: pre;"><a id="L39"></a></span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    """Specific logger to work on a given control class."""</span><br />
+      <span style="white-space: pre;"><a id="L41"></a></span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    def __init__(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        name = f"bui.control.{control.name}"</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>        super().__init__(name)</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>        self.control = control</span><br />
+      <span style="white-space: pre;"><a id="L46"></a></span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    def process_record(self, record):</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>        super().process_record(record)</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        record.extra['control'] = self.control.name</span><br />
+    </div>
+  </body>
+</html>
