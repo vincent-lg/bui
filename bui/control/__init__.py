@@ -15,6 +15,7 @@ to be "click", since it's usually a good default).
 
 """
 
+from bui.control.base import CONTROLS
 from bui.control.change import Change
 from bui.control.check import Check
 from bui.control.click import Click
@@ -24,15 +25,3 @@ from bui.control.press import Press
 from bui.control.release import Release
 from bui.control.right_click import RightClick
 from bui.control.type import Type
-
-CONTROLS = {
-        "change": Change,
-        "check": Check,
-        "click": Click,
-        "close": Close,
-        "init": Init,
-        "press": Press,
-        "release": Release,
-        "right_click": RightClick,
-        "type": Type,
-}

@@ -19,6 +19,7 @@ import sys
 from typing import Type, Union
 
 from bui.control.exceptions import StopControl
+from bui.control.log import logger as control_logger
 from bui.layout.parser import BUILayoutParser
 from bui.tasks import cancel_all, run_remaining
 from bui.widget.base import Widget
@@ -111,7 +112,6 @@ class Window(Widget, metaclass=MetaWindow):
         "type": "The user types a character anywhere in the window",
     }
 
-    _debug_controls = False
     # Can be overrideen by subclasses
     layout = ""
     bui = ""
@@ -211,8 +211,7 @@ class Window(Widget, metaclass=MetaWindow):
         window._ids = ids
 
         # Call the `_init` method on all generic widgets
-        if window._debug_controls:
-            print("  Binding control methods...")
+        control_logger.debug("  Binding control methods...")
 
         for widget in widgets:
             widget._bind_controls(window)

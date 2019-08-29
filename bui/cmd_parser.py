@@ -14,6 +14,7 @@ import code
 import queue
 import threading
 
+from bui.control.log import stream as control_stream
 from bui.widget.window import Window
 
 def init_args():
@@ -35,7 +36,7 @@ def init_args():
     args = parser.parse_args()
     if args.debug_controls:
         print("Running in 'debug controls' mode.")
-        Window._debug_controls = True
+        control_stream.push_application()
 
     return args
 
