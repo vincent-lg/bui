@@ -28,7 +28,26 @@ class WX4Text(WXShared, SpecificText):
     @value.setter
     def value(self, value):
         """Set the text value status."""
-        self.wx_text.SetValue(value)
+        old_value = getattr(self.generic, "cached_value", "")
+        if old_value:
+            # Find the first different character, not updating everything
+            off_pos = pos = None
+            for i, (old_char, new_char) in enumerate(zip(old_value, value)):
+                if old_char != new_char:
+                    pos = i
+                    off_pos = pos + value[:i].count("\n") * (self._nl_offset - 1)
+                    break
+            else:
+                smaller = value if len(value) < len(old_value) else old_value
+                pos = len(smaller)
+                off_pos = pos + smaller.count("\n") * (self._nl_offset - 1)
+
+            self.wx_text.Remove(off_pos, self.wx_text.GetLastPosition())
+            to_add = value[pos:]
+            if to_add:
+                self.wx_text.AppendText(to_add)
+        else:
+            self.wx_text.SetValue(value)
 
     @property
     def enabled(self):
