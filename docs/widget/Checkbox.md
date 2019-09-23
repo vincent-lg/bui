@@ -18,7 +18,7 @@ This class offers 2 properties.
 | [disabled](#disabled) | Return whether the checkbox is disabled or not. | **Can't write** |
 | [enabled](#enabled) | Return whether the checkbox is enabled or not. | **Can't write** |
 
-This class offers 9 methods.
+This class offers 10 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -30,6 +30,7 @@ This class offers 9 methods.
 | [handle_init](#handle_init) | `handle_init(control)` | Do nothing if a checkbox is pressed. |
 | [handle_press](#handle_press) | `handle_press(control)` | Do nothing if a checkbox is pressed. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
+| [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 | [uncheck](#uncheck) | `uncheck()` | Force uncheck this checkbox. |
 
 ## Properties
@@ -158,6 +159,25 @@ Do nothing if a checkbox is pressed.
 | coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
+
+### sleep
+
+`sleep(self, seconds)`
+
+[See the source code](../raw/widget/checkbox.html#L79)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Checkbox` |  |
+| seconds | *Not set* |  |
+
+Asynchronous sleep during the specified number of seconds.
+
+This method should ONLY be called in an asynchronous control method.
+It is a shortcut to `asyncio.sleep`.
+
+Args:
+    seconds (int or float): the number of seconds to wait.
 
 ### uncheck
 

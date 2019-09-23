@@ -19,7 +19,7 @@ This class offers 2 properties.
 | [choices](#choices) | Return the list choices. | Modify the choices in the list. |
 | [selected](#selected) | Return the currently-selected choice ID or position. | Change the selected label. |
 
-This class offers 5 methods.
+This class offers 6 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -27,6 +27,7 @@ This class offers 5 methods.
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
 | [remove_choice](#remove_choice) | `remove_choice(identifier: Any)` | Remove a choice in the list. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
+| [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 | [update_choice](#update_choice) | `update_choice(i, choice)` | Update the specified choice. |
 
 ## Properties
@@ -141,6 +142,25 @@ Args:
 | coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
+
+### sleep
+
+`sleep(self, seconds)`
+
+[See the source code](../raw/widget/list.html#L79)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `List` |  |
+| seconds | *Not set* |  |
+
+Asynchronous sleep during the specified number of seconds.
+
+This method should ONLY be called in an asynchronous control method.
+It is a shortcut to `asyncio.sleep`.
+
+Args:
+    seconds (int or float): the number of seconds to wait.
 
 ### update_choice
 

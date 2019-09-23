@@ -76,6 +76,19 @@ class Widget:
         """Schedule the specified coroutine in the main event loop."""
         schedule(coroutine)
 
+    async def sleep(self, seconds):
+        """
+        Asynchronous sleep during the specified number of seconds.
+
+        This method should ONLY be called in an asynchronous control method.
+        It is a shortcut to `asyncio.sleep`.
+
+        Args:
+            seconds (int or float): the number of seconds to wait.
+
+        """
+        await asyncio.sleep(seconds)
+
 
 class CachedProperty(property):
 

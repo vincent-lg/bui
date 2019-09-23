@@ -37,11 +37,13 @@ class WX4Table(WXShared, SpecificTable):
 
         """
         num_items = self.wx_table.GetItemCount()
-        index = row.index
+        index = row._index
         if index == num_items:
             # Append the row
             self.wx_table.Append([str(cell) for cell in row])
-            self._wx_rows.append(self.generic.factory(index, *row))
+            row = self.generic.factory(index, *row)
+            row._should_update = False
+            self._wx_rows.append(row)
         else:
             old = self._wx_rows[index]
             for i, (new_value, old_value) in enumerate(zip(row, old)):
@@ -84,11 +86,11 @@ class WX4Table(WXShared, SpecificTable):
         at the end.
 
         """
-        index = row.index
+        index = row._index
         del self._wx_rows[index]
         self.wx_table.DeleteItem(index)
         for wx_row in self._wx_rows[index:]:
-            wx_row.index -= 1
+            wx_row._index -= 1
 
     def delete_additional(self):
         """Remove rows that are in generic, not in the wx table."""

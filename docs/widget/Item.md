@@ -13,13 +13,14 @@ depending on the used GUI toolkit.
 
 ## Class summary
 
-This class offers 3 methods.
+This class offers 4 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
 | [handle_click](#handle_click) | `handle_click(control)` | Do nothing if a menu item is clicked. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
+| [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 
 ## Methods
 
@@ -63,3 +64,22 @@ Do nothing if a menu item is clicked.
 | coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
+
+### sleep
+
+`sleep(self, seconds)`
+
+[See the source code](../raw/widget/item.html#L79)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Item` |  |
+| seconds | *Not set* |  |
+
+Asynchronous sleep during the specified number of seconds.
+
+This method should ONLY be called in an asynchronous control method.
+It is a shortcut to `asyncio.sleep`.
+
+Args:
+    seconds (int or float): the number of seconds to wait.

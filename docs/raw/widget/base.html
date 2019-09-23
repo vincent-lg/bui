@@ -98,62 +98,75 @@
       <span style="white-space: pre;"><a id="L76"></a>        """Schedule the specified coroutine in the main event loop."""</span><br />
       <span style="white-space: pre;"><a id="L77"></a>        schedule(coroutine)</span><br />
       <span style="white-space: pre;"><a id="L78"></a></span><br />
-      <span style="white-space: pre;"><a id="L79"></a></span><br />
-      <span style="white-space: pre;"><a id="L80"></a>class CachedProperty(property):</span><br />
-      <span style="white-space: pre;"><a id="L81"></a></span><br />
-      <span style="white-space: pre;"><a id="L82"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>    Cached property, to act like a property with inner cache.</span><br />
-      <span style="white-space: pre;"><a id="L84"></a></span><br />
-      <span style="white-space: pre;"><a id="L85"></a>    Use it like a standard property:</span><br />
-      <span style="white-space: pre;"><a id="L86"></a></span><br />
-      <span style="white-space: pre;"><a id="L87"></a>        class MyClass:</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    async def sleep(self, seconds):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        Asynchronous sleep during the specified number of seconds.</span><br />
+      <span style="white-space: pre;"><a id="L82"></a></span><br />
+      <span style="white-space: pre;"><a id="L83"></a>        This method should ONLY be called in an asynchronous control method.</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>        It is a shortcut to `asyncio.sleep`.</span><br />
+      <span style="white-space: pre;"><a id="L85"></a></span><br />
+      <span style="white-space: pre;"><a id="L86"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>            seconds (int or float): the number of seconds to wait.</span><br />
       <span style="white-space: pre;"><a id="L88"></a></span><br />
-      <span style="white-space: pre;"><a id="L89"></a>            @CachedProperty</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>            def x(self):</span><br />
-      <span style="white-space: pre;"><a id="L91"></a>                return 5</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>        await asyncio.sleep(seconds)</span><br />
+      <span style="white-space: pre;"><a id="L91"></a></span><br />
       <span style="white-space: pre;"><a id="L92"></a></span><br />
-      <span style="white-space: pre;"><a id="L93"></a>            @x.setter</span><br />
-      <span style="white-space: pre;"><a id="L94"></a>            def x(self, new_x):</span><br />
-      <span style="white-space: pre;"><a id="L95"></a>                print(f"Setting x = {new_x}")</span><br />
-      <span style="white-space: pre;"><a id="L96"></a></span><br />
-      <span style="white-space: pre;"><a id="L97"></a>    Internally, however, the property content is cached when it's</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>    modified.  This is useful to define widget properties, as</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>    we don't want to read the specific widget (which might call an</span><br />
-      <span style="white-space: pre;"><a id="L100"></a>    expensive method) each time we access the property.  However, when the</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>    property is modified, we both update the cache and send the required</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>    update to the specific widget.</span><br />
-      <span style="white-space: pre;"><a id="L103"></a></span><br />
-      <span style="white-space: pre;"><a id="L104"></a>    A CachedProperty, much like a property, can be read-only, or read and</span><br />
-      <span style="white-space: pre;"><a id="L105"></a>    write.  If the property cannot be written, the cache is not modified.</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>    However, if the generic object containing the property hasn't been</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>    linked to a specific object yet (setting is still done in layout at this</span><br />
-      <span style="white-space: pre;"><a id="L108"></a>    point, no window is created), a read-only property would still modify</span><br />
-      <span style="white-space: pre;"><a id="L109"></a>    the cached when written with no error.</span><br />
-      <span style="white-space: pre;"><a id="L110"></a></span><br />
-      <span style="white-space: pre;"><a id="L111"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L112"></a></span><br />
-      <span style="white-space: pre;"><a id="L113"></a>    def __get__(self, obj, type=None):</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>        """Get the cached value."""</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>        if obj is not None:</span><br />
-      <span style="white-space: pre;"><a id="L116"></a>            attr = self.fget.__name__</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>            cached_attr = f"cached_{attr}"</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>            if hasattr(obj, cached_attr):</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>                return getattr(obj, cached_attr)</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>                value = super().__get__(obj, type)</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>                setattr(obj, cached_attr, value)</span><br />
-      <span style="white-space: pre;"><a id="L123"></a>                return value</span><br />
-      <span style="white-space: pre;"><a id="L124"></a></span><br />
-      <span style="white-space: pre;"><a id="L125"></a>    def __set__(self, obj, value):</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>        """Set the cache and call the fset function."""</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>        attr = self.fget.__name__</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>        cached_attr = f"cached_{attr}"</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>        if obj.specific is not None:</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>            res = self.fset(obj, value)</span><br />
-      <span style="white-space: pre;"><a id="L131"></a>            if res is not None:</span><br />
-      <span style="white-space: pre;"><a id="L132"></a>                value = res</span><br />
-      <span style="white-space: pre;"><a id="L133"></a></span><br />
-      <span style="white-space: pre;"><a id="L134"></a>        setattr(obj, cached_attr, value)</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>class CachedProperty(property):</span><br />
+      <span style="white-space: pre;"><a id="L94"></a></span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    Cached property, to act like a property with inner cache.</span><br />
+      <span style="white-space: pre;"><a id="L97"></a></span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    Use it like a standard property:</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>        class MyClass:</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>            @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>            def x(self):</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>                return 5</span><br />
+      <span style="white-space: pre;"><a id="L105"></a></span><br />
+      <span style="white-space: pre;"><a id="L106"></a>            @x.setter</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>            def x(self, new_x):</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>                print(f"Setting x = {new_x}")</span><br />
+      <span style="white-space: pre;"><a id="L109"></a></span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    Internally, however, the property content is cached when it's</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    modified.  This is useful to define widget properties, as</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    we don't want to read the specific widget (which might call an</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    expensive method) each time we access the property.  However, when the</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>    property is modified, we both update the cache and send the required</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    update to the specific widget.</span><br />
+      <span style="white-space: pre;"><a id="L116"></a></span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    A CachedProperty, much like a property, can be read-only, or read and</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    write.  If the property cannot be written, the cache is not modified.</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>    However, if the generic object containing the property hasn't been</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    linked to a specific object yet (setting is still done in layout at this</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    point, no window is created), a read-only property would still modify</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    the cached when written with no error.</span><br />
+      <span style="white-space: pre;"><a id="L123"></a></span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L125"></a></span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    def __get__(self, obj, type=None):</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>        """Get the cached value."""</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>        if obj is not None:</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>            attr = self.fget.__name__</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            cached_attr = f"cached_{attr}"</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>            if hasattr(obj, cached_attr):</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>                return getattr(obj, cached_attr)</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>                value = super().__get__(obj, type)</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>                setattr(obj, cached_attr, value)</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>                return value</span><br />
+      <span style="white-space: pre;"><a id="L137"></a></span><br />
+      <span style="white-space: pre;"><a id="L138"></a>    def __set__(self, obj, value):</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        """Set the cache and call the fset function."""</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>        attr = self.fget.__name__</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>        cached_attr = f"cached_{attr}"</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>        if obj.specific is not None:</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>            res = self.fset(obj, value)</span><br />
+      <span style="white-space: pre;"><a id="L144"></a>            if res is not None:</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>                value = res</span><br />
+      <span style="white-space: pre;"><a id="L146"></a></span><br />
+      <span style="white-space: pre;"><a id="L147"></a>        setattr(obj, cached_attr, value)</span><br />
     </div>
   </body>
 </html>

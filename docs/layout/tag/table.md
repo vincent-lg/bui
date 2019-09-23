@@ -2,7 +2,8 @@
 
 Create a table with columns.
 
-A table is a list, except each item in the list is a row in the table.
+A table is a list, except each item in the list is a
+[row](../../topic/table-row.md) in the table.
 A table has several columns with names.  The user can scroll through
 this table and select either only row or several rows at the same time.
 
@@ -18,14 +19,16 @@ this table and select either only row or several rows at the same time.
 
 ## Usage
 
-Using the `<table>` landmark creates an empty table, which will
+Using the `<table>` tag creates an empty table, which will
 cause an error.  A table must at least have two columns (if one,
 use a simple [list](./list.html).  Use the `<col>` tag inside of the
 `<table>` to create a column in the table.
 
 Afterward, you will use methods on the
 [Table widget](../../widget/Table.md) directly to add, remove, sort
-rows, and associate objects to rows.
+[rows](./../topic/table-row.md), and optionally override the
+[row class](../../topic/table-row.md#customize-the-row-class)
+for this widget.
 
 ## Attributes
 
@@ -40,37 +43,35 @@ rows, and associate objects to rows.
 See also the [col](./col.md) tag to define the columns in a table.
 This tag will need more information.
 
-> Note : the table identifier is mandatory.  You cannot dcreate
-  a table without validt identifier.  The reason for this constraint
-  is due to the fact that this widget, in particular, will be edited
+> Note: the table identifier is mandatory.  You cannot create
+  a table without valid a identifier.  The reason for this constraint
+  is that this widget, in particular, will be edited
   in your application.  Lacking an identifier, you won't be able
   to do that.
 
 ## Data
 
 The [table widget](../../widget/Table.md) can be manipulated to add
-and remove rows and peform additional operations.
+and remove rows and perform additional operations.
 
 | Attribute      | Meaning and type | Example                     |
 | -------------- | ---------------- | --------------------------- |
 | `rows` | The rows (list) | `self.rows = (("col 1", "col 2"))` |
 | `selected` | The selected row. Use this property to query the selected row or change the current | `self.selected = 5` |
-| `can_associate` | A boolean (`False` by default).  If set to `True`, associating objects with rows is the default bheavior (see [row association](#row -association)). | `self.can_associate = True` |
 
 The [Table widget](../../widget/Table.md) also implements methods:
 
 | Method                            | Description                |
 | --------------------------------- | -------------------------- |
 | `add_row(*args, **kwargs)` | Add a new row. The arguments depend on the number of columns in the table and can be either positional or keyword arguments.  See [adding rows](#adding-rows) for more information. |
-| `remove_row(row)` | Remove an existing row. Specify either the row index (as an `int`) or the `Row` object to remove. See [removing rows](#removing-rows) for more information. arguments depend on the number of columns in the table and can be either positional or keyword arguments.  See [adding rows](#adding-rows) for more information. |
+| `remove_row(row)` | Remove an existing row. Specify either the row index (as an `int`) or the `Row` object to remove. See [removing rows](#removing-rows) for more information. |
 | `sort(key=None, reverse=False)` | Sort the table according to the given key, or the first column if no key is given. See [sorting rows](#sorting-rows) for more information. |
-| `associate(row, obj)` | Associate a row with an arbitrary object. See [row association](#row -association) for more information. |
 
 ### Resetting the table
 
-The table rows are not present in the layout.  As developer, you
+The table rows are not present in the layout.  As a developer, you
 will have to fill the table using methods, with
-[init](../../control/init.md) controls for instance.
+[init](../../control/init.md) control for instance.
 
 The most frequent way to reset an entire table is to use the
 `rows` property.  Just set the `rows` property on the
@@ -89,8 +90,8 @@ The most frequent way to reset an entire table is to use the
 The `rows` property can be a tuple of tuples (with each row being
 defined in an inside tuple).  It can be a list of lists as well,
 or another ordered sequence.  Rows can be
-[Row objects](../../widget/Row.md) or dict instances.  In either case,
-you should use the column name (or identifier) to represent
+[Row objects](../../topic/table-row.md) or dict instances.  In either
+case, you should use the column name (or identifier) to represent
 a column content.
 
     def on_click_update(self):
@@ -114,14 +115,14 @@ useful to query specific rows (or slices) from the table.
     rows = table[:4]
 
 Again, when updating a row, you can use a
-[row object](../../widget/Row.md), dictionary, tuple or list.
+[row object](../../topic/table-row.md), dictionary, tuple or list.
 
     table[2] = ("Lemon", 15, 2)
     # Or replace a row with another
     table[3] = table[1]
     # Now table[1] (row 2) and table[3] (row 4) will contain
     # the same data
-    # You can also update multiple rows with this notation
+    # You can also update multiple rows with the slice notation
     table[:2] = (
         ("Lemon", 15, 2),
         ("Apple", 20, 1),
@@ -141,8 +142,9 @@ You also can use the `add_row` instance method on the
         # Or, more rreadable
         table.add_row(name="Apple", quantity=25, cost=3.15)
 
-Use the method arguments to add a row (that is to say, if your table
-has 5 columsns, you should specify 5 arguments to the method).
+Use the method arguments to add a [row](../../topic/table-row.md)
+(that is to say, if your table has 5 columns, you should specify
+5 arguments to the method).
 Simiarly, you can use named arguments to add a row.  If you need
 to add a row from a list or dictionary, use the `*` or `**` syntax:
 
@@ -162,8 +164,8 @@ to add a row from a list or dictionary, use the `*` or `**` syntax:
 
 ### Removing rows
 
-To remove rows, you can use either the row indice (its position) or
-the [row object](../../widget/Row.md) itself.
+To remove rows, you can use either the row index (its position) or
+the [row object](../../topic/table-row.md) itself.
 
     def on_click_delete(self):
         """A button of ID 'delete' was clicked."""
@@ -186,7 +188,7 @@ method, very much like a list.  It can be used in a similar pattern:
 
 > Note: this method will make sure the selection in the table is
   not affected.  If the user was on the "Apple", then she will be on
-  the "Apple" after the call to  sort`, even though the "apple" might
+  the "Apple" after the call to `sort`, even though the "apple" might
   have changed position in the table.
 
 ### Row selection
@@ -206,77 +208,30 @@ You can also change the selection:
     row = table[3]
     table.selected = row
 
-### Row association
+### Custom row class
 
-BUI offers a quick way to associate a row with an object.  This
-is often very useful when the table rows represent objects (which,
-admittedly, can often be the case).  The concept of association
-allows you to associate an object with a row, but not display the
-said object to the user.
+Sometimes, beyond the data we want to display in the table, we would
+like to associate data that is not visible to the user, but
+can be useful for the developer.  An example can be found in the
+[download example](../example/download.md) window: the download
+table contains columns that should be displayed to the user.  But
+it also contains additional data (like the URL associated with
+each file) that shouldn't be displayed to the user but would
+be used by the developer.  It's a bit like associating a row
+with a given object.
 
-Consider this example from the [download
-example]../../example/download.md).  You have a list of files
-to download.  Files to download are objects of type `File`:
+BUI does it by allowing to override the default row class:
+each time a row is added in the table, a row object is created,
+behaving like a [namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple).
 
-    class File:
+By default, these row objects are created from a dynamic class
+(one per table widget) containing the table structure.  You can,
+however, override this row class to create your own rows: these rows
+must contain exactly the expected data by the table (each row
+column), but they can contain additional data for each row too.
 
-        def __init__(self, name, url):
-            self.name = name
-            self.url = url
-            self.progress = 0
-            self.status = "unknown"
-            # ...
-
-When creating rows on these objects, you can display part of
-the information, but keep the original objects because you will need
-them in your code:
-
-```python
-table = self["download"]
-for filename, url in FILES:
-    file = File(filename, url)
-    row = table.add_row(file.name, file.url, file.progress, file.status)
-    table.associate(row, file)
-```
-
-When you browse the list of rows in the table, you will also have
-access to their `File` object:
-
-```python
-table.can_associate = True # This is necessary
-for row, file in table.rows:
-    # file is the File object
-    # while row is the information displayed to the user
-```
-
-To use this feature, first set the `can_associate` attribute of
-table from `False` to `True`.  `can_associate` is `False` by
-default.  While this will not prevent you from using the `associate`
-method, it will affect return values of other methods.
-
-Then use `associate`, specifying as first argument the
-[row object](../../widget/Row.md) and as second argument, the
-object to associate with it.
-
-The `rows` property will return a list, not of rows, but of
-`(row, associated object)` for each row:
-
-    for row, file in table.rows:
-
-Similarly, the `selected` property will return the selected row
-and the associated object in a tuple:
-
-    row, file = table.selected
-
-When using the `rows` and `selected` property as setters (to
-change data), they will work as usual:
-
-    table.selected = 2
-
-If this concept sounds extremely odd, you might want to first
-associate a row with a dictionary: assuming you have some data,
-associated with your rows, but you don't want to display them to
-the user, how could you do it?
+This is a complex topic and is described in
+[its very own section](../../topic/table-row-class.md#customize-the-row-class).
 
 ## Controls
 

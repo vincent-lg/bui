@@ -7,19 +7,23 @@ Several files (heavy files on some connections) are downloaded at the
 same time.  Their status is updated and their downloading doesn't block
 the window in the slightest.  The overall code is quite easy to read as well.
 
-Installation: to run this, install the aiohttp and aiofiles packages:
+Internally, BUI handles this situation with a table (to display the
+download in progress) and custom rows (the row object of the table
+is altered).  Thus, most of the logic has been moved in the
+`DownloadRow` class, leaving the window quite sparse.  This example
+also illustrates buttons, menu bars and dialogs.
 
-    pip install aiohttp cchardet aiodns aiofiles
+Installation:
 
-Then simply run this script with BUI installed.
+    pip install bui[demo]
 
-> Note: if not already set, you should install a GUI toolkit.
+To run this example:
 
-    pip install wxPython
+    python download.py
 
 [Open raw](https://raw.githubusercontent.com/vincent-lg/bui/master/example/download.py) [Open in github](https://github.com/vincent-lg/bui/blob/master/example/download.py)
 
-## Source code (141 lines)
+## Source code (200 lines)
 
 ```python
 import asyncio
@@ -27,6 +31,7 @@ import asyncio
 import aiofiles
 import aiohttp
 from bui import Window, start
+from bui.widget.table import AbcRow
 
 ## Constants
 FILES = [
@@ -59,72 +64,15 @@ class DownloadExample(Window):
     """)
 
     def on_init_download(self, widget):
-        self.downloading = False
+        """The 'download' table is ready to be displayed."""
+        widget.row_class = DownloadRow
+        widget.downloading = False
         widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _ in FILES]
         self.schedule(self.download_all())
 
-    def on_start(self, widget):
-        """The start button has been clicked by the user."""
-        self.downloading = not self.downloading
-        widget.name = "Pause" if self.downloading else "Start"
-
-    async def download_all(self):
-        """Download all files asynchronously."""
-        self.session = aiohttp.ClientSession()
-        table = self["download"]
-        tasks = []
-        for i, (filename, url) in enumerate(FILES):
-            row = table.rows[i]
-            tasks.append(self.download(row, filename, url))
-
-        await asyncio.gather(*tasks)
-
-    async def download(self, row, filename, url):
-        """Download one file asynchronously."""
-        async with self.session.get(url) as response:
-            if response.status != 200:
-                row.status = "Error"
-                return
-
-            try:
-                length = response.headers["Content-Length"]
-            except KeyError:
-                row.size = "Unknownable"
-                size = -1
-            else:
-                try:
-                    length = int(length)
-                except ValueError:
-                    row.size = "Unknownable"
-                else:
-                    row.size = human_size(length)
-                    size = length
-
-            # Download the file
-            total = b""
-            async with aiofiles.open(filename, "wb") as file:
-                while response:
-                    if self.downloading:
-                        bytes = await response.content.read(1024)
-                        if not bytes:
-                            row.status = "Complete"
-                            if size < 0:
-                                size = len(total)
-                            row.downloaded = human_size(size)
-                            return
-
-                        total += bytes
-                        await file.write(bytes)
-                        row.downloaded = human_size(len(total))
-                        if size > 0:
-                            percent = round((len(total) / size) * 100, 1)
-                            row.status = f"{percent}%"
-                        else:
-                            row.status = "Downloading..."
-
-                        await self.sleep(0.1)
-                    else:
-                        await self.sleep(0.2)
+    async def on_close(self):
+        """Close the window, end the session."""
+        await self.session.close()
 
     def on_add(self):
         """The 'add' button was clicked."""
@@ -142,17 +90,132 @@ class DownloadExample(Window):
             url = dialog["url"].value
             table = self["download"]
             row = table.add_row(name, "Unknown", "Unknown", "Unknown")
-            self.schedule(self.download(row, name, url))
+            row.url = url
+            self.schedule(row.download(self.session))
     on_add_file = on_add
     on_press_ctrl_a = on_add
     on_quit = close
     on_press_ctrl_q = close
 
-    async def on_close(self):
-        """Close the window, end the session."""
-        print("Closing the session...")
-        await self.session.close()
-        print("... closed.")
+    def on_start(self, widget):
+        """The start button has been clicked by the user."""
+        table = self["download"]
+        table.downloading = not table.downloading
+        widget.name = "Pause" if table.downloading else "Start"
+
+    async def download_all(self):
+        """Download all files asynchronously."""
+        self.session = aiohttp.ClientSession()
+        table = self["download"]
+        tasks = []
+        for i, (filename, url) in enumerate(FILES):
+            row = table.rows[i]
+            row.url = url
+            tasks.append(row.download(self.session))
+
+        await asyncio.gather(*tasks)
+
+
+class DownloadRow(AbcRow):
+
+    """
+    Class to represent a row in the download table.
+
+    Columns:
+        file: the file name.
+        status: the status of the downloaded file.
+        downloaded: how many bytes were downloaded (human-readable).
+        size: the file size (human-readable).
+
+    Extra information is contained in these objects (but not displayed
+    in the row):
+        file_size: the total size of the file in bytes (as an int).
+        progress: the number of downloaded bytes (as an int).
+        url: the file URL.
+
+    Methods:
+        complete(size): mark the download as complete.
+        async download(session): start downloading the file.
+
+    """
+
+    columns = ("file", "status", "downloaded", "size")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._progress = 0
+        self._file_size = -1
+        self.url = ""
+
+    @property
+    def file_size(self):
+        return self._file_size
+
+    @file_size.setter
+    def file_size(self, file_size):
+        """Update the file size, and size column."""
+        self._file_size = file_size
+        if file_size >= 0:
+            self.size = human_size(file_size)
+
+    @property
+    def progress(self):
+        return self._progress
+
+    @progress.setter
+    def progress(self, progress):
+        """Update the progress and downloaded column."""
+        self._progress = progress
+        self.downloaded = human_size(progress)
+        size = self._file_size
+        if size >= 0:
+            pct = round((progress / size) * 100, 1)
+            self.status = f"{pct}%"
+        else:
+            self.status = "Downloading"
+
+    def complete(self, size):
+        """Mark as complete."""
+        self.file_size = size
+        self.progress = size
+        self.status = "Complete"
+
+    async def download(self, session):
+        """Download one file asynchronously."""
+        async with session.get(self.url) as response:
+            if response.status != 200:
+                self.status = "Error"
+                return
+
+            try:
+                length = response.headers["Content-Length"]
+            except KeyError:
+                self.size = "Unknownable"
+            else:
+                try:
+                    length = int(length)
+                except ValueError:
+                    self.size = "Unknownable"
+                else:
+                    self.file_size = length
+
+            # Download the file
+            total = 0
+            async with aiofiles.open(self.file, "wb") as file:
+                while response:
+                    if self.widget.downloading:
+                        bytes = await response.content.read(1024)
+                        if not bytes:
+                            self.complete(total)
+                            return
+
+                        total += len(bytes)
+                        await file.write(bytes)
+                        self.progress = total
+                        await self.widget.sleep(0.1)
+                    else:
+                        await self.widget.sleep(0.2)
+
 
 def human_size(num):
     for unit in ('', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi'):

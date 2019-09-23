@@ -30,422 +30,356 @@
       <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a table with columns.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
-      <span style="white-space: pre;"><a id="L11"></a>    A table is a list, except each item in the list is a row in the table.</span><br />
-      <span style="white-space: pre;"><a id="L12"></a>    A table has several columns with names.  The user can scroll through</span><br />
-      <span style="white-space: pre;"><a id="L13"></a>    this table and select either only row or several rows at the same time.</span><br />
-      <span style="white-space: pre;"><a id="L14"></a></span><br />
-      <span style="white-space: pre;"><a id="L15"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title="Table demonstration"&gt;</span><br />
-      <span style="white-space: pre;"><a id="L17"></a>      &lt;table id=products x=2 y=4&gt;</span><br />
-      <span style="white-space: pre;"><a id="L18"></a>        &lt;col&gt;Name&lt;/col&gt;</span><br />
-      <span style="white-space: pre;"><a id="L19"></a>        &lt;col&gt;Quantity&lt;/col&gt;</span><br />
-      <span style="white-space: pre;"><a id="L20"></a>        &lt;col&gt;Cost&lt;/col&gt;</span><br />
-      <span style="white-space: pre;"><a id="L21"></a>      &lt;/table&lt;</span><br />
-      <span style="white-space: pre;"><a id="L22"></a>    &lt;/window&gt;</span><br />
-      <span style="white-space: pre;"><a id="L23"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L24"></a></span><br />
-      <span style="white-space: pre;"><a id="L25"></a>    ## Usage</span><br />
-      <span style="white-space: pre;"><a id="L26"></a></span><br />
-      <span style="white-space: pre;"><a id="L27"></a>    Using the `&lt;table&gt;` landmark creates an empty table, which will</span><br />
-      <span style="white-space: pre;"><a id="L28"></a>    cause an error.  A table must at least have two columns (if one,</span><br />
-      <span style="white-space: pre;"><a id="L29"></a>    use a simple [list](./list.html).  Use the `&lt;col&gt;` tag inside of the</span><br />
-      <span style="white-space: pre;"><a id="L30"></a>    `&lt;table&gt;` to create a column in the table.</span><br />
-      <span style="white-space: pre;"><a id="L31"></a></span><br />
-      <span style="white-space: pre;"><a id="L32"></a>    Afterward, you will use methods on the</span><br />
-      <span style="white-space: pre;"><a id="L33"></a>    [Table widget](../../widget/Table.md) directly to add, remove, sort</span><br />
-      <span style="white-space: pre;"><a id="L34"></a>    rows, and associate objects to rows.</span><br />
-      <span style="white-space: pre;"><a id="L35"></a></span><br />
-      <span style="white-space: pre;"><a id="L36"></a>    ## Attributes</span><br />
-      <span style="white-space: pre;"><a id="L37"></a></span><br />
-      <span style="white-space: pre;"><a id="L38"></a>    | Name         | Required | Description              | Example     |</span><br />
-      <span style="white-space: pre;"><a id="L39"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
-      <span style="white-space: pre;"><a id="L40"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;table     |</span><br />
-      <span style="white-space: pre;"><a id="L41"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
-      <span style="white-space: pre;"><a id="L42"></a>    |              |          | is left). This position  |             |</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>    |              |          | is relative to the       |             |</span><br />
-      <span style="white-space: pre;"><a id="L44"></a>    |              |          | window width.            |             |</span><br />
-      <span style="white-space: pre;"><a id="L45"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;table     |</span><br />
-      <span style="white-space: pre;"><a id="L46"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
-      <span style="white-space: pre;"><a id="L47"></a>    |              |          | is at the top). This     |             |</span><br />
-      <span style="white-space: pre;"><a id="L48"></a>    |              |          | position is relative to  |             |</span><br />
-      <span style="white-space: pre;"><a id="L49"></a>    |              |          | the window height.       |             |</span><br />
-      <span style="white-space: pre;"><a id="L50"></a>    | `id`         | Yes      | The table identifier     | `&lt;table     |</span><br />
-      <span style="white-space: pre;"><a id="L51"></a>    |              |          | (ID). Contrary to most   | id=quit&gt;`   |</span><br />
-      <span style="white-space: pre;"><a id="L52"></a>    |              |          | other tags, you need to  |             |</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>    |              |          | set this attribute.      |             |</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>    | `width`      | No       | The widget width, that   | `&lt;table     |</span><br />
-      <span style="white-space: pre;"><a id="L55"></a>    |              |          | is, the number of        | width=2&gt;`   |</span><br />
-      <span style="white-space: pre;"><a id="L56"></a>    |              |          | columns it will use in   |             |</span><br />
-      <span style="white-space: pre;"><a id="L57"></a>    |              |          | the window grid. A       |             |</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>    |              |          | widget with a width of   |             |</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>    |              |          | 2 will stretch one       |             |</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>    |              |          | additional column to the |             |</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>    |              |          | right. A widget with `x` |             |</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>    |              |          | set to 2 and `width` set |             |</span><br />
-      <span style="white-space: pre;"><a id="L63"></a>    |              |          | to 3 will span `x=2`,    |             |</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>    |              |          | `x=3`, and `x=4`.  The   |             |</span><br />
-      <span style="white-space: pre;"><a id="L65"></a>    |              |          | default is 1, so a       |             |</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>    |              |          | widget will remain in    |             |</span><br />
-      <span style="white-space: pre;"><a id="L67"></a>    |              |          | its `x` column.          |             |</span><br />
-      <span style="white-space: pre;"><a id="L68"></a>    | `height`     | No       | The widget height, that  | `&lt;table     |</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>    |              |          | is, the number of        | height=2&gt;`  |</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>    |              |          | rows it will use in      |             |</span><br />
-      <span style="white-space: pre;"><a id="L71"></a>    |              |          | the window grid. A       |             |</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>    |              |          | widget with a height of  |             |</span><br />
-      <span style="white-space: pre;"><a id="L73"></a>    |              |          | 2 will stretch one       |             |</span><br />
-      <span style="white-space: pre;"><a id="L74"></a>    |              |          | additional row downward. |             |</span><br />
-      <span style="white-space: pre;"><a id="L75"></a>    |              |          | A widget with `y` set    |             |</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>    |              |          | to 2 and `height` set    |             |</span><br />
-      <span style="white-space: pre;"><a id="L77"></a>    |              |          | to 3 will span `y=2`,    |             |</span><br />
-      <span style="white-space: pre;"><a id="L78"></a>    |              |          | `y=3`, and `y=4`.  The   |             |</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>    |              |          | default is 1, so a       |             |</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>    |              |          | widget will remain in    |             |</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>    |              |          | its `y` row.             |             |</span><br />
-      <span style="white-space: pre;"><a id="L82"></a></span><br />
-      <span style="white-space: pre;"><a id="L83"></a>    See also the [col](./col.md) tag to define the columns in a table.</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>    This tag will need more information.</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    A table is a list, except each item in the list is a</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    [row](../../topic/table-row.md) in the table.</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    A table has several columns with names.  The user can scroll through</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    this table and select either only row or several rows at the same time.</span><br />
+      <span style="white-space: pre;"><a id="L15"></a></span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>    &lt;window title="Table demonstration"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>      &lt;table id=products x=2 y=4&gt;</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>        &lt;col&gt;Name&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>        &lt;col&gt;Quantity&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>        &lt;col&gt;Cost&lt;/col&gt;</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>      &lt;/table&lt;</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    &lt;/window&gt;</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    ```</span><br />
+      <span style="white-space: pre;"><a id="L25"></a></span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L27"></a></span><br />
+      <span style="white-space: pre;"><a id="L28"></a>    Using the `&lt;table&gt;` tag creates an empty table, which will</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    cause an error.  A table must at least have two columns (if one,</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    use a simple [list](./list.html).  Use the `&lt;col&gt;` tag inside of the</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    `&lt;table&gt;` to create a column in the table.</span><br />
+      <span style="white-space: pre;"><a id="L32"></a></span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    Afterward, you will use methods on the</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    [Table widget](../../widget/Table.md) directly to add, remove, sort</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    [rows](./../topic/table-row.md), and optionally override the</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    [row class](../../topic/table-row.md#customize-the-row-class)</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    for this widget.</span><br />
+      <span style="white-space: pre;"><a id="L38"></a></span><br />
+      <span style="white-space: pre;"><a id="L39"></a>    ## Attributes</span><br />
+      <span style="white-space: pre;"><a id="L40"></a></span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    | Name         | Required | Description              | Example     |</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;table     |</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>    |              |          | is left). This position  |             |</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    |              |          | is relative to the       |             |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    |              |          | window width.            |             |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;table     |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    |              |          | is at the top). This     |             |</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    |              |          | position is relative to  |             |</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    |              |          | the window height.       |             |</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    | `id`         | Yes      | The table identifier     | `&lt;table     |</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    |              |          | (ID). Contrary to most   | id=quit&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    |              |          | other tags, you need to  |             |</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    |              |          | set this attribute.      |             |</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    | `width`      | No       | The widget width, that   | `&lt;table     |</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    |              |          | is, the number of        | width=2&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    |              |          | columns it will use in   |             |</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    |              |          | widget with a width of   |             |</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>    |              |          | additional column to the |             |</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>    |              |          | right. A widget with `x` |             |</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>    |              |          | set to 2 and `width` set |             |</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    |              |          | to 3 will span `x=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    |              |          | `x=3`, and `x=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    |              |          | its `x` column.          |             |</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    | `height`     | No       | The widget height, that  | `&lt;table     |</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    |              |          | is, the number of        | height=2&gt;`  |</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    |              |          | rows it will use in      |             |</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    |              |          | the window grid. A       |             |</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    |              |          | widget with a height of  |             |</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    |              |          | 2 will stretch one       |             |</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>    |              |          | additional row downward. |             |</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    |              |          | A widget with `y` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>    |              |          | to 2 and `height` set    |             |</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    |              |          | to 3 will span `y=2`,    |             |</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    |              |          | `y=3`, and `y=4`.  The   |             |</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    |              |          | default is 1, so a       |             |</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    |              |          | widget will remain in    |             |</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    |              |          | its `y` row.             |             |</span><br />
       <span style="white-space: pre;"><a id="L85"></a></span><br />
-      <span style="white-space: pre;"><a id="L86"></a>    &gt; Note : the table identifier is mandatory.  You cannot dcreate</span><br />
-      <span style="white-space: pre;"><a id="L87"></a>      a table without validt identifier.  The reason for this constraint</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>      is due to the fact that this widget, in particular, will be edited</span><br />
-      <span style="white-space: pre;"><a id="L89"></a>      in your application.  Lacking an identifier, you won't be able</span><br />
-      <span style="white-space: pre;"><a id="L90"></a>      to do that.</span><br />
-      <span style="white-space: pre;"><a id="L91"></a></span><br />
-      <span style="white-space: pre;"><a id="L92"></a>    ## Data</span><br />
-      <span style="white-space: pre;"><a id="L93"></a></span><br />
-      <span style="white-space: pre;"><a id="L94"></a>    The [table widget](../../widget/Table.md) can be manipulated to add</span><br />
-      <span style="white-space: pre;"><a id="L95"></a>    and remove rows and peform additional operations.</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    See also the [col](./col.md) tag to define the columns in a table.</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    This tag will need more information.</span><br />
+      <span style="white-space: pre;"><a id="L88"></a></span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    &gt; Note: the table identifier is mandatory.  You cannot create</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>      a table without valid a identifier.  The reason for this constraint</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>      is that this widget, in particular, will be edited</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>      in your application.  Lacking an identifier, you won't be able</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>      to do that.</span><br />
+      <span style="white-space: pre;"><a id="L94"></a></span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    ## Data</span><br />
       <span style="white-space: pre;"><a id="L96"></a></span><br />
-      <span style="white-space: pre;"><a id="L97"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L99"></a>    | `rows`         | The rows (list)  | `self.rows = (("col 1",     |</span><br />
-      <span style="white-space: pre;"><a id="L100"></a>    |                |                  | "col 2"))`                  |</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>    | `selected`     | The selected     | `self.selected = 5`         |</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>    |                | row. Use this    |                             |</span><br />
-      <span style="white-space: pre;"><a id="L103"></a>    |                | property to      |                             |</span><br />
-      <span style="white-space: pre;"><a id="L104"></a>    |                | query the        |                             |</span><br />
-      <span style="white-space: pre;"><a id="L105"></a>    |                | selected row or  |                             |</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>    |                | change the       |                             |</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>    |                | current          |                             |</span><br />
-      <span style="white-space: pre;"><a id="L108"></a>    |                | selection.</span><br />
-      <span style="white-space: pre;"><a id="L109"></a>    | `can_associate`| A boolean        | `self.can_associate = True` |</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>    |                | (`False` by      |                             |</span><br />
-      <span style="white-space: pre;"><a id="L111"></a>    |                | default).  If    |                             |</span><br />
-      <span style="white-space: pre;"><a id="L112"></a>    |                | set to `True`,   |                             |</span><br />
-      <span style="white-space: pre;"><a id="L113"></a>    |                | associating      |                             |</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>    |                | objects with     |                             |</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>    |                | rows is the      |                             |</span><br />
-      <span style="white-space: pre;"><a id="L116"></a>    |                | default bheavior |                             |</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>    |                | (see [row        |                             |</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>    |                | association](#row|                             |</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>    |                | -association)).  |                             |</span><br />
-      <span style="white-space: pre;"><a id="L120"></a></span><br />
-      <span style="white-space: pre;"><a id="L121"></a>    The [Table widget](../../widget/Table.md) also implements methods:</span><br />
-      <span style="white-space: pre;"><a id="L122"></a></span><br />
-      <span style="white-space: pre;"><a id="L123"></a>    | Method                            | Description                |</span><br />
-      <span style="white-space: pre;"><a id="L124"></a>    | --------------------------------- | -------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L125"></a>    | `add_row(*args, **kwargs)`        | Add a new row. The         |</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>    |                                   | arguments depend on the    |</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>    |                                   | number of columns in the   |</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>    |                                   | table and can be either    |</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>    |                                   | positional or keyword      |</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>    |                                   | arguments.  See [adding    |</span><br />
-      <span style="white-space: pre;"><a id="L131"></a>    |                                   | rows](#adding-rows) for    |</span><br />
-      <span style="white-space: pre;"><a id="L132"></a>    |                                   | more information.          |</span><br />
-      <span style="white-space: pre;"><a id="L133"></a>    | `remove_row(row)`                 | Remove an existing row.    |</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>    |                                   | Specify either the row     |</span><br />
-      <span style="white-space: pre;"><a id="L135"></a>    |                                   | index (as an `int`) or the |</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>    |                                   | `Row` object to remove.    |</span><br />
-      <span style="white-space: pre;"><a id="L137"></a>    |                                   | See [removing              |</span><br />
-      <span style="white-space: pre;"><a id="L138"></a>    |                                   | rows](#removing-rows) for  |</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>    |                                   | more information.          |</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>    |                                   | arguments depend on the    |</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>    |                                   | number of columns in the   |</span><br />
-      <span style="white-space: pre;"><a id="L142"></a>    |                                   | table and can be either    |</span><br />
-      <span style="white-space: pre;"><a id="L143"></a>    |                                   | positional or keyword      |</span><br />
-      <span style="white-space: pre;"><a id="L144"></a>    |                                   | arguments.  See [adding    |</span><br />
-      <span style="white-space: pre;"><a id="L145"></a>    |                                   | rows](#adding-rows) for    |</span><br />
-      <span style="white-space: pre;"><a id="L146"></a>    |                                   | more information.          |</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>    | `sort(key=None, reverse=False)`   | Sort the table according   |</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>    |                                   | to the given key, or the   |</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>    |                                   | first column if no key is  |</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>    |                                   | given. See [sorting        |</span><br />
-      <span style="white-space: pre;"><a id="L151"></a>    |                                   | rows](#sorting-rows) for   |</span><br />
-      <span style="white-space: pre;"><a id="L152"></a>    |                                   | more information.          |</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>    | `associate(row, obj)`             | Associate a row with an    |</span><br />
-      <span style="white-space: pre;"><a id="L154"></a>    |                                   | arbitrary object. See [row |</span><br />
-      <span style="white-space: pre;"><a id="L155"></a>    |                                   | association](#row          |</span><br />
-      <span style="white-space: pre;"><a id="L156"></a>    |                                   | -association) for more     |</span><br />
-      <span style="white-space: pre;"><a id="L157"></a>    |                                   | information.               |</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>    The [table widget](../../widget/Table.md) can be manipulated to add</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    and remove rows and perform additional operations.</span><br />
+      <span style="white-space: pre;"><a id="L99"></a></span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>    | `rows`         | The rows (list)  | `self.rows = (("col 1",     |</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>    |                |                  | "col 2"))`                  |</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>    | `selected`     | The selected     | `self.selected = 5`         |</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>    |                | row. Use this    |                             |</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    |                | property to      |                             |</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>    |                | query the        |                             |</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>    |                | selected row or  |                             |</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>    |                | change the       |                             |</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    |                | current          |                             |</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>    |                | selection.</span><br />
+      <span style="white-space: pre;"><a id="L112"></a></span><br />
+      <span style="white-space: pre;"><a id="L113"></a>    The [Table widget](../../widget/Table.md) also implements methods:</span><br />
+      <span style="white-space: pre;"><a id="L114"></a></span><br />
+      <span style="white-space: pre;"><a id="L115"></a>    | Method                            | Description                |</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>    | --------------------------------- | -------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    | `add_row(*args, **kwargs)`        | Add a new row. The         |</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    |                                   | arguments depend on the    |</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>    |                                   | number of columns in the   |</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    |                                   | table and can be either    |</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>    |                                   | positional or keyword      |</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    |                                   | arguments.  See [adding    |</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>    |                                   | rows](#adding-rows) for    |</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    |                                   | more information.          |</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>    | `remove_row(row)`                 | Remove an existing row.    |</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>    |                                   | Specify either the row     |</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>    |                                   | index (as an `int`) or the |</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>    |                                   | `Row` object to remove.    |</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>    |                                   | See [removing              |</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    |                                   | rows](#removing-rows) for  |</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    |                                   | more information.          |</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    | `sort(key=None, reverse=False)`   | Sort the table according   |</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    |                                   | to the given key, or the   |</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>    |                                   | first column if no key is  |</span><br />
+      <span style="white-space: pre;"><a id="L135"></a>    |                                   | given. See [sorting        |</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    |                                   | rows](#sorting-rows) for   |</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>    |                                   | more information.          |</span><br />
+      <span style="white-space: pre;"><a id="L138"></a></span><br />
+      <span style="white-space: pre;"><a id="L139"></a>    ### Resetting the table</span><br />
+      <span style="white-space: pre;"><a id="L140"></a></span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    The table rows are not present in the layout.  As a developer, you</span><br />
+      <span style="white-space: pre;"><a id="L142"></a>    will have to fill the table using methods, with</span><br />
+      <span style="white-space: pre;"><a id="L143"></a>    [init](../../control/init.md) control for instance.</span><br />
+      <span style="white-space: pre;"><a id="L144"></a></span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    The most frequent way to reset an entire table is to use the</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>    `rows` property.  Just set the `rows` property on the</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>    [table widget](../../widget/Table.md) instance:</span><br />
+      <span style="white-space: pre;"><a id="L148"></a></span><br />
+      <span style="white-space: pre;"><a id="L149"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>            # There is a table of ID 'products' in the window</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>            table = self["products"]</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>            table.rows = (</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>                ("Pear", 10, 3.22),</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>                ("Minced beef", 2, 8.5),</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>                # ...</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>            )</span><br />
       <span style="white-space: pre;"><a id="L158"></a></span><br />
-      <span style="white-space: pre;"><a id="L159"></a>    ### Resetting the table</span><br />
-      <span style="white-space: pre;"><a id="L160"></a></span><br />
-      <span style="white-space: pre;"><a id="L161"></a>    The table rows are not present in the layout.  As developer, you</span><br />
-      <span style="white-space: pre;"><a id="L162"></a>    will have to fill the table using methods, with</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>    [init](../../control/init.md) controls for instance.</span><br />
-      <span style="white-space: pre;"><a id="L164"></a></span><br />
-      <span style="white-space: pre;"><a id="L165"></a>    The most frequent way to reset an entire table is to use the</span><br />
-      <span style="white-space: pre;"><a id="L166"></a>    `rows` property.  Just set the `rows` property on the</span><br />
-      <span style="white-space: pre;"><a id="L167"></a>    [table widget](../../widget/Table.md) instance:</span><br />
-      <span style="white-space: pre;"><a id="L168"></a></span><br />
-      <span style="white-space: pre;"><a id="L169"></a>        def on_click_update(self):</span><br />
-      <span style="white-space: pre;"><a id="L170"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L171"></a>            # There is a table of ID 'products' in the window</span><br />
-      <span style="white-space: pre;"><a id="L172"></a>            table = self["products"]</span><br />
-      <span style="white-space: pre;"><a id="L173"></a>            table.rows = (</span><br />
-      <span style="white-space: pre;"><a id="L174"></a>                ("Pear", 10, 3.22),</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>                ("Minced beef", 2, 8.5),</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>                # ...</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>            )</span><br />
-      <span style="white-space: pre;"><a id="L178"></a></span><br />
-      <span style="white-space: pre;"><a id="L179"></a>    The `rows` property can be a tuple of tuples (with each row being</span><br />
-      <span style="white-space: pre;"><a id="L180"></a>    defined in an inside tuple).  It can be a list of lists as well,</span><br />
-      <span style="white-space: pre;"><a id="L181"></a>    or another ordered sequence.  Rows can be</span><br />
-      <span style="white-space: pre;"><a id="L182"></a>    [Row objects](../../widget/Row.md) or dict instances.  In either case,</span><br />
-      <span style="white-space: pre;"><a id="L183"></a>    you should use the column name (or identifier) to represent</span><br />
-      <span style="white-space: pre;"><a id="L184"></a>    a column content.</span><br />
+      <span style="white-space: pre;"><a id="L159"></a>    The `rows` property can be a tuple of tuples (with each row being</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>    defined in an inside tuple).  It can be a list of lists as well,</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>    or another ordered sequence.  Rows can be</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>    [Row objects](../../topic/table-row.md) or dict instances.  In either</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>    case, you should use the column name (or identifier) to represent</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>    a column content.</span><br />
+      <span style="white-space: pre;"><a id="L165"></a></span><br />
+      <span style="white-space: pre;"><a id="L166"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>            # There is a table of ID 'products' in the window</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>            table = self["products"]</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>            table.rows = (</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>                {"name": "Pear", "quantity": 10, "cost": 3.22},</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>                {"name": "Minced beef", "quantity": 2, "cost": 8.5},</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>                # ...</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>            )</span><br />
+      <span style="white-space: pre;"><a id="L175"></a></span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    ### Updating rows</span><br />
+      <span style="white-space: pre;"><a id="L177"></a></span><br />
+      <span style="white-space: pre;"><a id="L178"></a>    To update a row, you can use the `[]` operator.  This is also</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    useful to query specific rows (or slices) from the table.</span><br />
+      <span style="white-space: pre;"><a id="L180"></a></span><br />
+      <span style="white-space: pre;"><a id="L181"></a>        row = table[0]</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>        print(row)</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>        # Or all the rows before table[4]</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>        rows = table[:4]</span><br />
       <span style="white-space: pre;"><a id="L185"></a></span><br />
-      <span style="white-space: pre;"><a id="L186"></a>        def on_click_update(self):</span><br />
-      <span style="white-space: pre;"><a id="L187"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L188"></a>            # There is a table of ID 'products' in the window</span><br />
-      <span style="white-space: pre;"><a id="L189"></a>            table = self["products"]</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>            table.rows = (</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>                {"name": "Pear", "quantity": 10, "cost": 3.22},</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>                {"name": "Minced beef", "quantity": 2, "cost": 8.5},</span><br />
-      <span style="white-space: pre;"><a id="L193"></a>                # ...</span><br />
-      <span style="white-space: pre;"><a id="L194"></a>            )</span><br />
-      <span style="white-space: pre;"><a id="L195"></a></span><br />
-      <span style="white-space: pre;"><a id="L196"></a>    ### Updating rows</span><br />
-      <span style="white-space: pre;"><a id="L197"></a></span><br />
-      <span style="white-space: pre;"><a id="L198"></a>    To update a row, you can use the `[]` operator.  This is also</span><br />
-      <span style="white-space: pre;"><a id="L199"></a>    useful to query specific rows (or slices) from the table.</span><br />
+      <span style="white-space: pre;"><a id="L186"></a>    Again, when updating a row, you can use a</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>    [row object](../../topic/table-row.md), dictionary, tuple or list.</span><br />
+      <span style="white-space: pre;"><a id="L188"></a></span><br />
+      <span style="white-space: pre;"><a id="L189"></a>        table[2] = ("Lemon", 15, 2)</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>        # Or replace a row with another</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>        table[3] = table[1]</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>        # Now table[1] (row 2) and table[3] (row 4) will contain</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>        # the same data</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>        # You can also update multiple rows with the slice notation</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>        table[:2] = (</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>            ("Lemon", 15, 2),</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>            ("Apple", 20, 1),</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>        )</span><br />
+      <span style="white-space: pre;"><a id="L199"></a>        # However, this might not be as easy to read.</span><br />
       <span style="white-space: pre;"><a id="L200"></a></span><br />
-      <span style="white-space: pre;"><a id="L201"></a>        row = table[0]</span><br />
-      <span style="white-space: pre;"><a id="L202"></a>        print(row)</span><br />
-      <span style="white-space: pre;"><a id="L203"></a>        # Or all the rows before table[4]</span><br />
-      <span style="white-space: pre;"><a id="L204"></a>        rows = table[:4]</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>    ### Adding rows</span><br />
+      <span style="white-space: pre;"><a id="L202"></a></span><br />
+      <span style="white-space: pre;"><a id="L203"></a>    You also can use the `add_row` instance method on the</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    [table widget](../../widget/Table.md) to add one row:</span><br />
       <span style="white-space: pre;"><a id="L205"></a></span><br />
-      <span style="white-space: pre;"><a id="L206"></a>    Again, when updating a row, you can use a</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>    [row object](../../widget/Row.md), dictionary, tuple or list.</span><br />
-      <span style="white-space: pre;"><a id="L208"></a></span><br />
-      <span style="white-space: pre;"><a id="L209"></a>        table[2] = ("Lemon", 15, 2)</span><br />
-      <span style="white-space: pre;"><a id="L210"></a>        # Or replace a row with another</span><br />
-      <span style="white-space: pre;"><a id="L211"></a>        table[3] = table[1]</span><br />
-      <span style="white-space: pre;"><a id="L212"></a>        # Now table[1] (row 2) and table[3] (row 4) will contain</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>        # the same data</span><br />
-      <span style="white-space: pre;"><a id="L214"></a>        # You can also update multiple rows with this notation</span><br />
-      <span style="white-space: pre;"><a id="L215"></a>        table[:2] = (</span><br />
-      <span style="white-space: pre;"><a id="L216"></a>            ("Lemon", 15, 2),</span><br />
-      <span style="white-space: pre;"><a id="L217"></a>            ("Apple", 20, 1),</span><br />
-      <span style="white-space: pre;"><a id="L218"></a>        )</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>        # However, this might not be as easy to read.</span><br />
-      <span style="white-space: pre;"><a id="L220"></a></span><br />
-      <span style="white-space: pre;"><a id="L221"></a>    ### Adding rows</span><br />
-      <span style="white-space: pre;"><a id="L222"></a></span><br />
-      <span style="white-space: pre;"><a id="L223"></a>    You also can use the `add_row` instance method on the</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>    [table widget](../../widget/Table.md) to add one row:</span><br />
-      <span style="white-space: pre;"><a id="L225"></a></span><br />
-      <span style="white-space: pre;"><a id="L226"></a>        def on_click_update(self):</span><br />
-      <span style="white-space: pre;"><a id="L227"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L228"></a>            # There is a table of ID 'products' in the window</span><br />
-      <span style="white-space: pre;"><a id="L229"></a>            table = self["products"]</span><br />
-      <span style="white-space: pre;"><a id="L230"></a>            table.add_row("Apple", 25, 3.15)</span><br />
-      <span style="white-space: pre;"><a id="L231"></a>            # Or, more rreadable</span><br />
-      <span style="white-space: pre;"><a id="L232"></a>            table.add_row(name="Apple", quantity=25, cost=3.15)</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L208"></a>            # There is a table of ID 'products' in the window</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>            table = self["products"]</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>            table.add_row("Apple", 25, 3.15)</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>            # Or, more rreadable</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>            table.add_row(name="Apple", quantity=25, cost=3.15)</span><br />
+      <span style="white-space: pre;"><a id="L213"></a></span><br />
+      <span style="white-space: pre;"><a id="L214"></a>    Use the method arguments to add a [row](../../topic/table-row.md)</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>    (that is to say, if your table has 5 columns, you should specify</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>    5 arguments to the method).</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>    Simiarly, you can use named arguments to add a row.  If you need</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>    to add a row from a list or dictionary, use the `*` or `**` syntax:</span><br />
+      <span style="white-space: pre;"><a id="L219"></a></span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        def on_click_update(self):</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>            # There is a table of ID 'products' in the window</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>            table = self["products"]</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>            row = ("Apple", 25, 3.15)</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>            table.add_row(*row)</span><br />
+      <span style="white-space: pre;"><a id="L226"></a>            # Or, more readable</span><br />
+      <span style="white-space: pre;"><a id="L227"></a>            row = {"name": "Apple", "quantity": 25, "cost": 3.15}</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>            table.add_row(**row)</span><br />
+      <span style="white-space: pre;"><a id="L229"></a></span><br />
+      <span style="white-space: pre;"><a id="L230"></a>    &gt; Note: you cannot add columns to the table.  This constraint is</span><br />
+      <span style="white-space: pre;"><a id="L231"></a>      made more logicial by the clear separation (columns are</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>      defined in layout, rows in code).</span><br />
       <span style="white-space: pre;"><a id="L233"></a></span><br />
-      <span style="white-space: pre;"><a id="L234"></a>    Use the method arguments to add a row (that is to say, if your table</span><br />
-      <span style="white-space: pre;"><a id="L235"></a>    has 5 columsns, you should specify 5 arguments to the method).</span><br />
-      <span style="white-space: pre;"><a id="L236"></a>    Simiarly, you can use named arguments to add a row.  If you need</span><br />
-      <span style="white-space: pre;"><a id="L237"></a>    to add a row from a list or dictionary, use the `*` or `**` syntax:</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>    ### Removing rows</span><br />
+      <span style="white-space: pre;"><a id="L235"></a></span><br />
+      <span style="white-space: pre;"><a id="L236"></a>    To remove rows, you can use either the row index (its position) or</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>    the [row object](../../topic/table-row.md) itself.</span><br />
       <span style="white-space: pre;"><a id="L238"></a></span><br />
-      <span style="white-space: pre;"><a id="L239"></a>        def on_click_update(self):</span><br />
-      <span style="white-space: pre;"><a id="L240"></a>            \"\"\"A button of ID 'update' was clicked.\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>        def on_click_delete(self):</span><br />
+      <span style="white-space: pre;"><a id="L240"></a>            \"\"\"A button of ID 'delete' was clicked.\"\"\"</span><br />
       <span style="white-space: pre;"><a id="L241"></a>            # There is a table of ID 'products' in the window</span><br />
       <span style="white-space: pre;"><a id="L242"></a>            table = self["products"]</span><br />
-      <span style="white-space: pre;"><a id="L243"></a>            row = ("Apple", 25, 3.15)</span><br />
-      <span style="white-space: pre;"><a id="L244"></a>            table.add_row(*row)</span><br />
-      <span style="white-space: pre;"><a id="L245"></a>            # Or, more readable</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>            row = {"name": "Apple", "quantity": 25, "cost": 3.15}</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>            table.add_row(**row)</span><br />
+      <span style="white-space: pre;"><a id="L243"></a>            # Remove the first row</span><br />
+      <span style="white-space: pre;"><a id="L244"></a>            table.remove_row(0)</span><br />
+      <span style="white-space: pre;"><a id="L245"></a>            # Or use the row object</span><br />
+      <span style="white-space: pre;"><a id="L246"></a>            row = table[0]</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>            table.remove_row(row)</span><br />
       <span style="white-space: pre;"><a id="L248"></a></span><br />
-      <span style="white-space: pre;"><a id="L249"></a>    &gt; Note: you cannot add columns to the table.  This constraint is</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>      made more logicial by the clear separation (columns are</span><br />
-      <span style="white-space: pre;"><a id="L251"></a>      defined in layout, rows in code).</span><br />
-      <span style="white-space: pre;"><a id="L252"></a></span><br />
-      <span style="white-space: pre;"><a id="L253"></a>    ### Removing rows</span><br />
-      <span style="white-space: pre;"><a id="L254"></a></span><br />
-      <span style="white-space: pre;"><a id="L255"></a>    To remove rows, you can use either the row indice (its position) or</span><br />
-      <span style="white-space: pre;"><a id="L256"></a>    the [row object](../../widget/Row.md) itself.</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>    ### Sorting rows</span><br />
+      <span style="white-space: pre;"><a id="L250"></a></span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    The [table widget](../../widget/Table.md) also offers a `sort`</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>    method, very much like a list.  It can be used in a similar pattern:</span><br />
+      <span style="white-space: pre;"><a id="L253"></a></span><br />
+      <span style="white-space: pre;"><a id="L254"></a>        from operator import attrgetter</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>        table.sort(key=attrgetter("price"), reverse=True)</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>        # Sort with the more expensive objects above</span><br />
       <span style="white-space: pre;"><a id="L257"></a></span><br />
-      <span style="white-space: pre;"><a id="L258"></a>        def on_click_delete(self):</span><br />
-      <span style="white-space: pre;"><a id="L259"></a>            \"\"\"A button of ID 'delete' was clicked.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L260"></a>            # There is a table of ID 'products' in the window</span><br />
-      <span style="white-space: pre;"><a id="L261"></a>            table = self["products"]</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>            # Remove the first row</span><br />
-      <span style="white-space: pre;"><a id="L263"></a>            table.remove_row(0)</span><br />
-      <span style="white-space: pre;"><a id="L264"></a>            # Or use the row object</span><br />
-      <span style="white-space: pre;"><a id="L265"></a>            row = table[0]</span><br />
-      <span style="white-space: pre;"><a id="L266"></a>            table.remove_row(row)</span><br />
-      <span style="white-space: pre;"><a id="L267"></a></span><br />
-      <span style="white-space: pre;"><a id="L268"></a>    ### Sorting rows</span><br />
-      <span style="white-space: pre;"><a id="L269"></a></span><br />
-      <span style="white-space: pre;"><a id="L270"></a>    The [table widget](../../widget/Table.md) also offers a `sort`</span><br />
-      <span style="white-space: pre;"><a id="L271"></a>    method, very much like a list.  It can be used in a similar pattern:</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>    &gt; Note: this method will make sure the selection in the table is</span><br />
+      <span style="white-space: pre;"><a id="L259"></a>      not affected.  If the user was on the "Apple", then she will be on</span><br />
+      <span style="white-space: pre;"><a id="L260"></a>      the "Apple" after the call to `sort`, even though the "apple" might</span><br />
+      <span style="white-space: pre;"><a id="L261"></a>      have changed position in the table.</span><br />
+      <span style="white-space: pre;"><a id="L262"></a></span><br />
+      <span style="white-space: pre;"><a id="L263"></a>    ### Row selection</span><br />
+      <span style="white-space: pre;"><a id="L264"></a></span><br />
+      <span style="white-space: pre;"><a id="L265"></a>    The [table widget](../../widget/Table.md) has a `selected`</span><br />
+      <span style="white-space: pre;"><a id="L266"></a>    property which you should use to know and change the</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>    current selection.</span><br />
+      <span style="white-space: pre;"><a id="L268"></a></span><br />
+      <span style="white-space: pre;"><a id="L269"></a>    By default, use this property to query the selected row in the table:</span><br />
+      <span style="white-space: pre;"><a id="L270"></a></span><br />
+      <span style="white-space: pre;"><a id="L271"></a>        row = table.selected</span><br />
       <span style="white-space: pre;"><a id="L272"></a></span><br />
-      <span style="white-space: pre;"><a id="L273"></a>        from operator import attrgetter</span><br />
-      <span style="white-space: pre;"><a id="L274"></a>        table.sort(key=attrgetter("price"), reverse=True)</span><br />
-      <span style="white-space: pre;"><a id="L275"></a>        # Sort with the more expensive objects above</span><br />
-      <span style="white-space: pre;"><a id="L276"></a></span><br />
-      <span style="white-space: pre;"><a id="L277"></a>    &gt; Note: this method will make sure the selection in the table is</span><br />
-      <span style="white-space: pre;"><a id="L278"></a>      not affected.  If the user was on the "Apple", then she will be on</span><br />
-      <span style="white-space: pre;"><a id="L279"></a>      the "Apple" after the call to  sort`, even though the "apple" might</span><br />
-      <span style="white-space: pre;"><a id="L280"></a>      have changed position in the table.</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>    You can also change the selection:</span><br />
+      <span style="white-space: pre;"><a id="L274"></a></span><br />
+      <span style="white-space: pre;"><a id="L275"></a>        table.selected = 8 # select the ninth row</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>        # Or, using the row object</span><br />
+      <span style="white-space: pre;"><a id="L277"></a>        row = table[3]</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>        table.selected = row</span><br />
+      <span style="white-space: pre;"><a id="L279"></a></span><br />
+      <span style="white-space: pre;"><a id="L280"></a>    ### Custom row class</span><br />
       <span style="white-space: pre;"><a id="L281"></a></span><br />
-      <span style="white-space: pre;"><a id="L282"></a>    ### Row selection</span><br />
-      <span style="white-space: pre;"><a id="L283"></a></span><br />
-      <span style="white-space: pre;"><a id="L284"></a>    The [table widget](../../widget/Table.md) has a `selected`</span><br />
-      <span style="white-space: pre;"><a id="L285"></a>    property which you should use to know and change the</span><br />
-      <span style="white-space: pre;"><a id="L286"></a>    current selection.</span><br />
-      <span style="white-space: pre;"><a id="L287"></a></span><br />
-      <span style="white-space: pre;"><a id="L288"></a>    By default, use this property to query the selected row in the table:</span><br />
-      <span style="white-space: pre;"><a id="L289"></a></span><br />
-      <span style="white-space: pre;"><a id="L290"></a>        row = table.selected</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>    Sometimes, beyond the data we want to display in the table, we would</span><br />
+      <span style="white-space: pre;"><a id="L283"></a>    like to associate data that is not visible to the user, but</span><br />
+      <span style="white-space: pre;"><a id="L284"></a>    can be useful for the developer.  An example can be found in the</span><br />
+      <span style="white-space: pre;"><a id="L285"></a>    [download example](../example/download.md) window: the download</span><br />
+      <span style="white-space: pre;"><a id="L286"></a>    table contains columns that should be displayed to the user.  But</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>    it also contains additional data (like the URL associated with</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>    each file) that shouldn't be displayed to the user but would</span><br />
+      <span style="white-space: pre;"><a id="L289"></a>    be used by the developer.  It's a bit like associating a row</span><br />
+      <span style="white-space: pre;"><a id="L290"></a>    with a given object.</span><br />
       <span style="white-space: pre;"><a id="L291"></a></span><br />
-      <span style="white-space: pre;"><a id="L292"></a>    You can also change the selection:</span><br />
-      <span style="white-space: pre;"><a id="L293"></a></span><br />
-      <span style="white-space: pre;"><a id="L294"></a>        table.selected = 8 # select the ninth row</span><br />
-      <span style="white-space: pre;"><a id="L295"></a>        # Or, using the row object</span><br />
-      <span style="white-space: pre;"><a id="L296"></a>        row = table[3]</span><br />
-      <span style="white-space: pre;"><a id="L297"></a>        table.selected = row</span><br />
-      <span style="white-space: pre;"><a id="L298"></a></span><br />
-      <span style="white-space: pre;"><a id="L299"></a>    ### Row association</span><br />
-      <span style="white-space: pre;"><a id="L300"></a></span><br />
-      <span style="white-space: pre;"><a id="L301"></a>    BUI offers a quick way to associate a row with an object.  This</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>    is often very useful when the table rows represent objects (which,</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>    admittedly, can often be the case).  The concept of association</span><br />
-      <span style="white-space: pre;"><a id="L304"></a>    allows you to associate an object with a row, but not display the</span><br />
-      <span style="white-space: pre;"><a id="L305"></a>    said object to the user.</span><br />
+      <span style="white-space: pre;"><a id="L292"></a>    BUI does it by allowing to override the default row class:</span><br />
+      <span style="white-space: pre;"><a id="L293"></a>    each time a row is added in the table, a row object is created,</span><br />
+      <span style="white-space: pre;"><a id="L294"></a>    behaving like a [namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple).</span><br />
+      <span style="white-space: pre;"><a id="L295"></a></span><br />
+      <span style="white-space: pre;"><a id="L296"></a>    By default, these row objects are created from a dynamic class</span><br />
+      <span style="white-space: pre;"><a id="L297"></a>    (one per table widget) containing the table structure.  You can,</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>    however, override this row class to create your own rows: these rows</span><br />
+      <span style="white-space: pre;"><a id="L299"></a>    must contain exactly the expected data by the table (each row</span><br />
+      <span style="white-space: pre;"><a id="L300"></a>    column), but they can contain additional data for each row too.</span><br />
+      <span style="white-space: pre;"><a id="L301"></a></span><br />
+      <span style="white-space: pre;"><a id="L302"></a>    This is a complex topic and is described in</span><br />
+      <span style="white-space: pre;"><a id="L303"></a>    [its very own section](../../topic/table-row-class.md#customize-the-row-class).</span><br />
+      <span style="white-space: pre;"><a id="L304"></a></span><br />
+      <span style="white-space: pre;"><a id="L305"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L306"></a></span><br />
-      <span style="white-space: pre;"><a id="L307"></a>    Consider this example from the [download</span><br />
-      <span style="white-space: pre;"><a id="L308"></a>    example]../../example/download.md).  You have a list of files</span><br />
-      <span style="white-space: pre;"><a id="L309"></a>    to download.  Files to download are objects of type `File`:</span><br />
-      <span style="white-space: pre;"><a id="L310"></a></span><br />
-      <span style="white-space: pre;"><a id="L311"></a>        class File:</span><br />
-      <span style="white-space: pre;"><a id="L312"></a></span><br />
-      <span style="white-space: pre;"><a id="L313"></a>            def __init__(self, name, url):</span><br />
-      <span style="white-space: pre;"><a id="L314"></a>                self.name = name</span><br />
-      <span style="white-space: pre;"><a id="L315"></a>                self.url = url</span><br />
-      <span style="white-space: pre;"><a id="L316"></a>                self.progress = 0</span><br />
-      <span style="white-space: pre;"><a id="L317"></a>                self.status = "unknown"</span><br />
-      <span style="white-space: pre;"><a id="L318"></a>                # ...</span><br />
-      <span style="white-space: pre;"><a id="L319"></a></span><br />
-      <span style="white-space: pre;"><a id="L320"></a>    When creating rows on these objects, you can display part of</span><br />
-      <span style="white-space: pre;"><a id="L321"></a>    the information, but keep the original objects because you will need</span><br />
-      <span style="white-space: pre;"><a id="L322"></a>    them in your code:</span><br />
-      <span style="white-space: pre;"><a id="L323"></a></span><br />
-      <span style="white-space: pre;"><a id="L324"></a>    ```python</span><br />
-      <span style="white-space: pre;"><a id="L325"></a>    table = self["download"]</span><br />
-      <span style="white-space: pre;"><a id="L326"></a>    for filename, url in FILES:</span><br />
-      <span style="white-space: pre;"><a id="L327"></a>        file = File(filename, url)</span><br />
-      <span style="white-space: pre;"><a id="L328"></a>        row = table.add_row(file.name, file.url, file.progress, file.status)</span><br />
-      <span style="white-space: pre;"><a id="L329"></a>        table.associate(row, file)</span><br />
-      <span style="white-space: pre;"><a id="L330"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L331"></a></span><br />
-      <span style="white-space: pre;"><a id="L332"></a>    When you browse the list of rows in the table, you will also have</span><br />
-      <span style="white-space: pre;"><a id="L333"></a>    access to their `File` object:</span><br />
-      <span style="white-space: pre;"><a id="L334"></a></span><br />
-      <span style="white-space: pre;"><a id="L335"></a>    ```python</span><br />
-      <span style="white-space: pre;"><a id="L336"></a>    table.can_associate = True # This is necessary</span><br />
-      <span style="white-space: pre;"><a id="L337"></a>    for row, file in table.rows:</span><br />
-      <span style="white-space: pre;"><a id="L338"></a>        # file is the File object</span><br />
-      <span style="white-space: pre;"><a id="L339"></a>        # while row is the information displayed to the user</span><br />
-      <span style="white-space: pre;"><a id="L340"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L341"></a></span><br />
-      <span style="white-space: pre;"><a id="L342"></a>    To use this feature, first set the `can_associate` attribute of</span><br />
-      <span style="white-space: pre;"><a id="L343"></a>    table from `False` to `True`.  `can_associate` is `False` by</span><br />
-      <span style="white-space: pre;"><a id="L344"></a>    default.  While this will not prevent you from using the `associate`</span><br />
-      <span style="white-space: pre;"><a id="L345"></a>    method, it will affect return values of other methods.</span><br />
-      <span style="white-space: pre;"><a id="L346"></a></span><br />
-      <span style="white-space: pre;"><a id="L347"></a>    Then use `associate`, specifying as first argument the</span><br />
-      <span style="white-space: pre;"><a id="L348"></a>    [row object](../../widget/Row.md) and as second argument, the</span><br />
-      <span style="white-space: pre;"><a id="L349"></a>    object to associate with it.</span><br />
-      <span style="white-space: pre;"><a id="L350"></a></span><br />
-      <span style="white-space: pre;"><a id="L351"></a>    The `rows` property will return a list, not of rows, but of</span><br />
-      <span style="white-space: pre;"><a id="L352"></a>    `(row, associated object)` for each row:</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>    | Control                         | Method       | Description      |</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>    | ------------------------------- | ------------ | ---------------- |</span><br />
+      <span style="white-space: pre;"><a id="L309"></a>    | [focus](../../control/focus.md) | `on_focus`   | The table is     |</span><br />
+      <span style="white-space: pre;"><a id="L310"></a>    |                                 |              | focused or lose  |</span><br />
+      <span style="white-space: pre;"><a id="L311"></a>    |                                 |              | focus.           |</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>    | [init](../../control/init.md)   | `on_init`    | The table is     |</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>    |                                 |              | ready to be      |</span><br />
+      <span style="white-space: pre;"><a id="L314"></a>    |                                 |              | displayed, but   |</span><br />
+      <span style="white-space: pre;"><a id="L315"></a>    |                                 |              | is not displayed |</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>    |                                 |              | just yet.        |</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>    |                                 |              | on a key from her|</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L320"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L321"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L322"></a>    | [release](../../                | `on_release` | The user         |</span><br />
+      <span style="white-space: pre;"><a id="L323"></a>    | control/release.md)             |              | relases a key on |</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>    |                                 |              | her keyboard.    |</span><br />
+      <span style="white-space: pre;"><a id="L325"></a>    |                                 |              | This control can |</span><br />
+      <span style="white-space: pre;"><a id="L326"></a>    |                                 |              | have sub-        |</span><br />
+      <span style="white-space: pre;"><a id="L327"></a>    |                                 |              | controls.        |</span><br />
+      <span style="white-space: pre;"><a id="L328"></a>    | [select](../../                 | `on_select`  | The table        |</span><br />
+      <span style="white-space: pre;"><a id="L329"></a>    | control/select.md)              |              | selection has    |</span><br />
+      <span style="white-space: pre;"><a id="L330"></a>    |                                 |              | changed.         |</span><br />
+      <span style="white-space: pre;"><a id="L331"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
+      <span style="white-space: pre;"><a id="L332"></a>    |                                 |              | a character      |</span><br />
+      <span style="white-space: pre;"><a id="L333"></a>    |                                 |              | using her        |</span><br />
+      <span style="white-space: pre;"><a id="L334"></a>    |                                 |              | keyboard. This   |</span><br />
+      <span style="white-space: pre;"><a id="L335"></a>    |                                 |              | control can have |</span><br />
+      <span style="white-space: pre;"><a id="L336"></a>    |                                 |              | sub-controls.    |</span><br />
+      <span style="white-space: pre;"><a id="L337"></a></span><br />
+      <span style="white-space: pre;"><a id="L338"></a>        class MainWindow(Window):</span><br />
+      <span style="white-space: pre;"><a id="L339"></a></span><br />
+      <span style="white-space: pre;"><a id="L340"></a>            def on_select_products(self, widget, row):</span><br />
+      <span style="white-space: pre;"><a id="L341"></a>                print(f"The user selected the row {row} in the table.")</span><br />
+      <span style="white-space: pre;"><a id="L342"></a></span><br />
+      <span style="white-space: pre;"><a id="L343"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L344"></a></span><br />
+      <span style="white-space: pre;"><a id="L345"></a>    tag_name = "table"</span><br />
+      <span style="white-space: pre;"><a id="L346"></a>    attrs = (</span><br />
+      <span style="white-space: pre;"><a id="L347"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L348"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
+      <span style="white-space: pre;"><a id="L349"></a>        Attr("id", help="The widget identifier"),</span><br />
+      <span style="white-space: pre;"><a id="L350"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L351"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L352"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L353"></a></span><br />
-      <span style="white-space: pre;"><a id="L354"></a>        for row, file in table.rows:</span><br />
-      <span style="white-space: pre;"><a id="L355"></a></span><br />
-      <span style="white-space: pre;"><a id="L356"></a>    Similarly, the `selected` property will return the selected row</span><br />
-      <span style="white-space: pre;"><a id="L357"></a>    and the associated object in a tuple:</span><br />
-      <span style="white-space: pre;"><a id="L358"></a></span><br />
-      <span style="white-space: pre;"><a id="L359"></a>        row, file = table.selected</span><br />
-      <span style="white-space: pre;"><a id="L360"></a></span><br />
-      <span style="white-space: pre;"><a id="L361"></a>    When using the `rows` and `selected` property as setters (to</span><br />
-      <span style="white-space: pre;"><a id="L362"></a>    change data), they will work as usual:</span><br />
-      <span style="white-space: pre;"><a id="L363"></a></span><br />
-      <span style="white-space: pre;"><a id="L364"></a>        table.selected = 2</span><br />
-      <span style="white-space: pre;"><a id="L365"></a></span><br />
-      <span style="white-space: pre;"><a id="L366"></a>    If this concept sounds extremely odd, you might want to first</span><br />
-      <span style="white-space: pre;"><a id="L367"></a>    associate a row with a dictionary: assuming you have some data,</span><br />
-      <span style="white-space: pre;"><a id="L368"></a>    associated with your rows, but you don't want to display them to</span><br />
-      <span style="white-space: pre;"><a id="L369"></a>    the user, how could you do it?</span><br />
-      <span style="white-space: pre;"><a id="L370"></a></span><br />
-      <span style="white-space: pre;"><a id="L371"></a>    ## Controls</span><br />
-      <span style="white-space: pre;"><a id="L372"></a></span><br />
-      <span style="white-space: pre;"><a id="L373"></a>    | Control                         | Method       | Description      |</span><br />
-      <span style="white-space: pre;"><a id="L374"></a>    | ------------------------------- | ------------ | ---------------- |</span><br />
-      <span style="white-space: pre;"><a id="L375"></a>    | [focus](../../control/focus.md) | `on_focus`   | The table is     |</span><br />
-      <span style="white-space: pre;"><a id="L376"></a>    |                                 |              | focused or lose  |</span><br />
-      <span style="white-space: pre;"><a id="L377"></a>    |                                 |              | focus.           |</span><br />
-      <span style="white-space: pre;"><a id="L378"></a>    | [init](../../control/init.md)   | `on_init`    | The table is     |</span><br />
-      <span style="white-space: pre;"><a id="L379"></a>    |                                 |              | ready to be      |</span><br />
-      <span style="white-space: pre;"><a id="L380"></a>    |                                 |              | displayed, but   |</span><br />
-      <span style="white-space: pre;"><a id="L381"></a>    |                                 |              | is not displayed |</span><br />
-      <span style="white-space: pre;"><a id="L382"></a>    |                                 |              | just yet.        |</span><br />
-      <span style="white-space: pre;"><a id="L383"></a>    | [press](../../control/press.md) | `on_press`   | The user presses |</span><br />
-      <span style="white-space: pre;"><a id="L384"></a>    |                                 |              | on a key from her|</span><br />
-      <span style="white-space: pre;"><a id="L385"></a>    |                                 |              | keyboard. This   |</span><br />
-      <span style="white-space: pre;"><a id="L386"></a>    |                                 |              | control can have |</span><br />
-      <span style="white-space: pre;"><a id="L387"></a>    |                                 |              | sub-controls.    |</span><br />
-      <span style="white-space: pre;"><a id="L388"></a>    | [release](../../                | `on_release` | The user         |</span><br />
-      <span style="white-space: pre;"><a id="L389"></a>    | control/release.md)             |              | relases a key on |</span><br />
-      <span style="white-space: pre;"><a id="L390"></a>    |                                 |              | her keyboard.    |</span><br />
-      <span style="white-space: pre;"><a id="L391"></a>    |                                 |              | This control can |</span><br />
-      <span style="white-space: pre;"><a id="L392"></a>    |                                 |              | have sub-        |</span><br />
-      <span style="white-space: pre;"><a id="L393"></a>    |                                 |              | controls.        |</span><br />
-      <span style="white-space: pre;"><a id="L394"></a>    | [select](../../                 | `on_select`  | The table        |</span><br />
-      <span style="white-space: pre;"><a id="L395"></a>    | control/select.md)              |              | selection has    |</span><br />
-      <span style="white-space: pre;"><a id="L396"></a>    |                                 |              | changed.         |</span><br />
-      <span style="white-space: pre;"><a id="L397"></a>    | [type](../../control/type.md)   | `on_type`    | The user types   |</span><br />
-      <span style="white-space: pre;"><a id="L398"></a>    |                                 |              | a character      |</span><br />
-      <span style="white-space: pre;"><a id="L399"></a>    |                                 |              | using her        |</span><br />
-      <span style="white-space: pre;"><a id="L400"></a>    |                                 |              | keyboard. This   |</span><br />
-      <span style="white-space: pre;"><a id="L401"></a>    |                                 |              | control can have |</span><br />
-      <span style="white-space: pre;"><a id="L402"></a>    |                                 |              | sub-controls.    |</span><br />
-      <span style="white-space: pre;"><a id="L403"></a></span><br />
-      <span style="white-space: pre;"><a id="L404"></a>        class MainWindow(Window):</span><br />
-      <span style="white-space: pre;"><a id="L405"></a></span><br />
-      <span style="white-space: pre;"><a id="L406"></a>            def on_select_products(self, widget, row):</span><br />
-      <span style="white-space: pre;"><a id="L407"></a>                print(f"The user selected the row {row} in the table.")</span><br />
-      <span style="white-space: pre;"><a id="L408"></a></span><br />
-      <span style="white-space: pre;"><a id="L409"></a>    """</span><br />
-      <span style="white-space: pre;"><a id="L410"></a></span><br />
-      <span style="white-space: pre;"><a id="L411"></a>    tag_name = "table"</span><br />
-      <span style="white-space: pre;"><a id="L412"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L413"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L414"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L415"></a>        Attr("id", help="The widget identifier"),</span><br />
-      <span style="white-space: pre;"><a id="L416"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L417"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L418"></a>    )</span><br />
-      <span style="white-space: pre;"><a id="L419"></a></span><br />
-      <span style="white-space: pre;"><a id="L420"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
-      <span style="white-space: pre;"><a id="L421"></a>        super().__init__(layout, parent)</span><br />
-      <span style="white-space: pre;"><a id="L422"></a>        self.x = x</span><br />
-      <span style="white-space: pre;"><a id="L423"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L424"></a>        self.id = id</span><br />
-      <span style="white-space: pre;"><a id="L425"></a>        self.width = width</span><br />
-      <span style="white-space: pre;"><a id="L426"></a>        self.height = height</span><br />
+      <span style="white-space: pre;"><a id="L354"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />
+      <span style="white-space: pre;"><a id="L355"></a>        super().__init__(layout, parent)</span><br />
+      <span style="white-space: pre;"><a id="L356"></a>        self.x = x</span><br />
+      <span style="white-space: pre;"><a id="L357"></a>        self.y = y</span><br />
+      <span style="white-space: pre;"><a id="L358"></a>        self.id = id</span><br />
+      <span style="white-space: pre;"><a id="L359"></a>        self.width = width</span><br />
+      <span style="white-space: pre;"><a id="L360"></a>        self.height = height</span><br />
     </div>
   </body>
 </html>

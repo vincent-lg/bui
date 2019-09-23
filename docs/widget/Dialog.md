@@ -38,7 +38,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/dialog.html#L137)
+[See the source code](../raw/widget/dialog.html#L136)
 
 Return the screen size that can be used, in pixels.
 
@@ -56,7 +56,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L261)
+[See the source code](../raw/widget/dialog.html#L247)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -83,7 +83,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L318)
+[See the source code](../raw/widget/dialog.html#L304)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -96,7 +96,7 @@ The window closes.
 
 `mark(layout: str)`
 
-[See the source code](../raw/widget/dialog.html#L54)
+[See the source code](../raw/widget/dialog.html#L53)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -108,7 +108,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L304)
+[See the source code](../raw/widget/dialog.html#L290)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -127,7 +127,7 @@ Args:
 
 `parse_layout(Window, tag_name='window')`
 
-[See the source code](../raw/widget/dialog.html#L153)
+[See the source code](../raw/widget/dialog.html#L152)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -143,7 +143,7 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/dialog.html#L269)
+[See the source code](../raw/widget/dialog.html#L255)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -163,7 +163,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L293)
+[See the source code](../raw/widget/dialog.html#L279)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -192,7 +192,7 @@ Schedule the specified coroutine in the main event loop.
 
 `sleep(self, seconds)`
 
-[See the source code](../raw/widget/dialog.html#L226)
+[See the source code](../raw/widget/dialog.html#L79)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -211,7 +211,7 @@ Args:
 
 `stop_control(self)`
 
-[See the source code](../raw/widget/dialog.html#L265)
+[See the source code](../raw/widget/dialog.html#L251)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

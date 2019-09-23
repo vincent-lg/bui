@@ -20,7 +20,7 @@ This class offers 3 properties.
 | [disabled](#disabled) | Return whether the text is disabled or not. | **Can't write** |
 | [enabled](#enabled) | Return whether the text is enabled or not. | **Can't write** |
 
-This class offers 4 methods.
+This class offers 5 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -28,6 +28,7 @@ This class offers 4 methods.
 | [disable](#disable) | `disable()` | Disable the text. |
 | [enable](#enable) | `enable()` | Force-enable the text. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
+| [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 
 ## Properties
 
@@ -114,3 +115,22 @@ Force-enable the text.
 | coroutine | *Not set* |  |
 
 Schedule the specified coroutine in the main event loop.
+
+### sleep
+
+`sleep(self, seconds)`
+
+[See the source code](../raw/widget/text.html#L79)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Text` |  |
+| seconds | *Not set* |  |
+
+Asynchronous sleep during the specified number of seconds.
+
+This method should ONLY be called in an asynchronous control method.
+It is a shortcut to `asyncio.sleep`.
+
+Args:
+    seconds (int or float): the number of seconds to wait.

@@ -12,7 +12,6 @@ layout in a separate [file](../layout/file.md).
 
 """
 
-import asyncio
 import inspect
 from pathlib import Path
 import sys
@@ -222,19 +221,6 @@ class Window(Widget, metaclass=MetaWindow):
             widget._process_control("init")
 
         return window
-
-    async def sleep(self, seconds):
-        """
-        Asynchronous sleep during the specified number of seconds.
-
-        This method should ONLY be called in an asynchronous control method.
-        It is a shortcut to `asyncio.sleep`.
-
-        Args:
-            seconds (int or float): the number of seconds to wait.
-
-        """
-        await asyncio.sleep(seconds)
 
     def _init(self):
         """Private method to initialize the generic and specific window."""

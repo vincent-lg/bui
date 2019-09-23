@@ -1,4 +1,4 @@
-# Table in [widget/table:29](../raw/widget/table.html#L29)
+# Table in [widget/table:143](../raw/widget/table.html#L143)
 
 The generic table widget.
 
@@ -12,26 +12,37 @@ depending on the used GUI toolkit.
 
 ## Class summary
 
-This class offers 2 properties.
+This class offers 3 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [rows](#rows) | Return the table rows with optional associated objects. | Modify the table rows. |
-| [selected](#selected) | Return the row and its associated object if needed. | Select the given row or index. |
+| [row_classes](#row_classes) | Return a tuple of the valid row classes for this widget. | **Can't write** |
+| [rows](#rows) | Return the table rows. | Modify the table rows. |
+| [selected](#selected) | Return the currently selected row. | Select the given row or index. |
 
 This class offers 7 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
 | [add_row](#add_row) | `add_row(*args, **kwargs)` | Add a new row with the specified arguments at the bottom of the table. |
-| [associate](#associate) | `associate(row: bui.widget.table.AbcRow, obj: Any)` | Associate the given row with an arbitrary object. |
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
 | [remove_row](#remove_row) | `remove_row(row: Union[int, bui.widget.table.AbcRow])` | Remove a row in the table. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
+| [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 | [sort](#sort) | `sort(key: Callable = None, reverse: bool = False)` | Sort the table rows, given an optional key. |
 | [update_row](#update_row) | `update_row(row)` | Update the specified row. |
 
 ## Properties
+
+### row_classes
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/table.html#L194)
+
+Return a tuple of the valid row classes for this widget.
 
 ### rows
 
@@ -39,13 +50,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L121)
+[See the source code](../raw/widget/table.html#L248)
 
-Return the table rows with optional associated objects.
+Return the table rows.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L135)
+[See the source code](../raw/widget/table.html#L253)
 
 Modify the table rows.
 
@@ -60,13 +71,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L167)
+[See the source code](../raw/widget/table.html#L285)
 
-Return the row and its associated object if needed.
+Return the currently selected row.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L176)
+[See the source code](../raw/widget/table.html#L291)
 
 Select the given row or index.
 
@@ -79,7 +90,7 @@ Args:
 
 `add_row(self, *args, **kwargs)`
 
-[See the source code](../raw/widget/table.html#L204)
+[See the source code](../raw/widget/table.html#L340)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -101,30 +112,6 @@ Or:
 
     self.add_row(name="table", price=30, quantity=1)
 
-### associate
-
-`associate(self, row: bui.widget.table.AbcRow, obj: Any)`
-
-[See the source code](../raw/widget/table.html#L293)
-
-| Parameter | Type | Default |
-| --------- | ---- | ------- |
-| self | `Table` |  |
-| row | `bui.widget.table.AbcRow` |  |
-| obj | `Any` |  |
-
-Associate the given row with an arbitrary object.
-
-The given object can contain extra information that won't
-be displayed on the table, but can be useful for the developer.
-You can associate a row to an object and retrieve it,
-either using the `selected` property, or the `associations`
-generator.
-
-Args:
-    row (Row): the row to associate with the object.
-    obj (any): the python object to associate with the row.
-
 ### create_specific
 
 `create_specific(self)`
@@ -144,7 +131,7 @@ raise no exception.
 
 `remove_row(self, row: Union[int, bui.widget.table.AbcRow])`
 
-[See the source code](../raw/widget/table.html#L243)
+[See the source code](../raw/widget/table.html#L379)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -170,11 +157,30 @@ Args:
 
 Schedule the specified coroutine in the main event loop.
 
+### sleep
+
+`sleep(self, seconds)`
+
+[See the source code](../raw/widget/table.html#L79)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Table` |  |
+| seconds | *Not set* |  |
+
+Asynchronous sleep during the specified number of seconds.
+
+This method should ONLY be called in an asynchronous control method.
+It is a shortcut to `asyncio.sleep`.
+
+Args:
+    seconds (int or float): the number of seconds to wait.
+
 ### sort
 
 `sort(self, key: Callable = None, reverse: bool = False)`
 
-[See the source code](../raw/widget/table.html#L265)
+[See the source code](../raw/widget/table.html#L398)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -200,7 +206,7 @@ Example:
 
 `update_row(self, row)`
 
-[See the source code](../raw/widget/table.html#L225)
+[See the source code](../raw/widget/table.html#L361)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

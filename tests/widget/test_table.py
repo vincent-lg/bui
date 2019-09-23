@@ -246,39 +246,6 @@ def test_table_with_0_or_1_column():
     with pytest.raises(ValueError):
         start(TestWindow)
 
-def test_with_association(table):
-    """Use the association on tables."""
-    table.can_associate = True
-    o0 = object()
-    o1 = object()
-    o2 = object()
-    rows = (
-            ("Magalie", 21, "B+"),
-            ("Viktor", 20, "A-"),
-            ("Vanessa", 21, "B"),
-    )
-
-    for (name, age, grade), obj in zip(rows, (o0, o1, o2)):
-        row = table.add_row(name, age, grade)
-        table.associate(row, obj)
-
-    # Check the three rows
-    assert table[0][0].name == rows[0][0]
-    assert table[0][1] is o0
-    assert table[0][1] is not o1
-    assert table[0][1] is not o2
-    assert table[1][0].name == rows[1][0]
-    assert table[1][1] is not o0
-    assert table[1][1] is o1
-    assert table[1][1] is not o2
-    assert table[2][0].name == rows[2][0]
-    assert table[2][1] is not o0
-    assert table[2][1] is not o1
-    assert table[2][1] is o2
-
-    for row, obj in table[:2]:
-        assert obj in (o0, o1)
-
 def test_selected(table):
     """Test selected rows."""
     rows = (
@@ -304,21 +271,6 @@ def test_selected(table):
     assert table.selected.index == 0
     assert table.selected.name == "Magalie"
 
-    # Do the same checks but with associations
-    rows = table._rows
-    table.can_associate = True
-    table.associate(rows[0], [0, 1, 2])
-    table.associate(rows[1], [3, 4, 5])
-    table.associate(rows[2], [6, 7, 8])
-
-    # Change the selection
-    table.selected = 1
-    assert table.selected == (rows[1], [3, 4, 5])
-
-    # Select the first row
-    table.selected = rows[0]
-    assert table.selected == (rows[0], [0, 1, 2])
-
 def test_sort(table):
     """Try to sort the table using different criteria."""
     rows = (
@@ -326,6 +278,68 @@ def test_sort(table):
             ("Viktor", 20, "A-"),
             ("Vanessa", 21, "B"),
             ("Arold", 23, "C+"),
+    )
+
+    for name, age, grade in rows:
+        row = table.add_row(name, age, grade)
+
+    # Sort by name
+    table.sort()
+    assert table[0].name == "Arold"
+
+    # Reverse
+    table.sort(reverse=True)
+    assert table[3].name == "Arold"
+
+    # Sort by age
+    table.sort(key=attrgetter("age"))
+    assert table[0].name == "Viktor"
+
+    # Sort by reverse grades
+    table.sort(key=attrgetter("grade"), reverse=True)
+    assert table[0].name == "Arold"
+
+def test_row_class(table):
+    """Test and mofiy the generic row class for the table."""
+    class StudentRow(AbcRow):
+        """A student row."""
+        columns = ("name", "age", "grade")
+
+        def __init__(self, *args, **kwargs):
+            self.numeric = 0
+            super().__init__(*args, **kwargs)
+
+        def update_grade(self, grade):
+            """When the grade is updated."""
+            self.numeric = 100 - 20 * "ABCDF".index(grade)
+
+    table.row_class = StudentRow
+    rows = (
+            ("Magalie", 21, "B"),
+            ("Viktor", 20, "F"),
+            ("Vanessa", 21, "C"),
+            ("Arold", 23, "A"),
+    )
+
+    for name, age, grade in rows:
+        row = table.add_row(name, age, grade)
+
+    assert table.rows[0].name == "Magalie"
+    assert table.rows[0].numeric == 80 # B
+    assert table.rows[1].name == "Viktor"
+    assert table.rows[1].numeric == 20 # F
+    assert table.rows[2].name == "Vanessa"
+    assert table.rows[2].numeric == 60 # C
+    assert table.rows[3].name == "Arold"
+    assert table.rows[3].numeric == 100 # A
+
+def test_sort(table):
+    """Test to sort a table, according to a key."""
+    rows = (
+            ("Magalie", 21, "B"),
+            ("Viktor", 20, "A"),
+            ("Vanessa", 21, "C"),
+            ("Arold", 23, "F+"),
     )
 
     for name, age, grade in rows:

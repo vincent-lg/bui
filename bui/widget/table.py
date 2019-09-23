@@ -15,13 +15,127 @@ class AbcRow:
     When a table widget is created, it holds a definition of a row
     (expected information in the table, deduced from the list of columns).
     A row object is a generic object representation of a table row.
-    Each table has a different row object.  Do not create row objects
-    manually, use the table methods to do so.
+    Each table has a different row class.  Do not create row objects
+    manually, use the table methods to do so.  You can override the default
+    row class for a table, but in this case, your row class should
+    inherit `AbcRow`.
 
     """
 
-    def __init__(self):
-        raise TypeError("cannot instantiate abstract row")
+    widget = None
+    columns = ()
+
+    def __init__(self, index, *args, **kwargs):
+        if type(self) is AbcRow:
+            raise TypeError("cannot instantiate abstract row")
+
+        self._index = index
+        self._cols = {}
+        self._should_update = True
+        used_args = 0
+        for col, value in zip(self.columns, args):
+            self._update(col, value)
+            self._cols[col] = value
+            used_args += 1
+
+        for col in self.columns:
+            if col in kwargs:
+                if col in self._cols:
+                    arg = self._cols[col]
+                    raise ValueError(f"two values were specified for column "
+                            f"{col!r}: {arg!r} in positional arguments, and "
+                            f"{kwargs[col]!r} in keyword arguments.  You "
+                            f"might be better off using either only "
+                            f"positional, or only keyword arguments when "
+                            f"creating a row")
+                else:
+                    value = kwargs[col]
+                    self._update(col, value)
+                    self._cols[col] = value
+
+        if not all(key in self._cols.keys() for key in self.columns):
+            forgotten = [key for key in self.columns if key not in self._cols]
+            raise ValueError(f"not all columns were specified: missing "
+                    f"{', '.join(forgotten)}")
+
+        if len(args) > used_args:
+            unused = args[used_args:]
+            unused = [str(arg) for arg in unused]
+            raise ValueError(f"too many position arguments: {', '.join(unused)}")
+
+        if any(key not in self.columns for key in kwargs.keys()):
+            unused = [key for key in kwargs.keys() if key not in self.columns]
+            raise ValueError(f"unused keyword arguments: {', '.join(unused)}")
+
+    @property
+    def index(self):
+        return self._index
+
+    def __repr__(self):
+        args = [f"{key}={value!r}" for key, value in self._cols.items()]
+        return f"<{type(self).__name__}({', '.join(args)})>"
+
+    def __str__(self):
+        args = [f"{key}={value}" for key, value in self._cols.items()]
+        return f"{type(self).__name__} {', '.join(args)}"
+
+    def __iter__(self):
+        return iter(self._cols.values())
+
+    def __getattr__(self, attr):
+        cols = object.__getattribute__(self, "_cols")
+        value = cols.get(attr, NO_VALUE)
+        if value is NO_VALUE:
+            raise AttributeError(f"no {attr} column or attribute in this row")
+
+        return value
+
+    def __setattr__(self, attr, value):
+        try:
+            cols = object.__getattribute__(self, "_cols")
+        except AttributeError:
+            object.__setattr__(self, attr, value)
+        else:
+            if attr in cols:
+                self._update(attr, value)
+                cols[attr] = value
+                if self._should_update:
+                    self.widget.update_row(self)
+            else:
+                object.__setattr__(self, attr, value)
+
+    def __getitem__(self, item):
+        if isinstance(item, int):
+            item = tuple(self._cols.keys())[item]
+
+        return self._cols[item]
+
+    def __setitem__(self, item, value):
+        if isinstance(item, int):
+            item = tuple(self._cols.keys())[item]
+
+        self._update(item, value)
+        self._cols[item] = value
+        if self._should_update:
+            self.widget.update_row(self)
+
+    def __eq__(self, other):
+        if isinstance(other, (tuple, list)):
+            other = self.widget.factory(self._index, *other)
+        elif isinstance(other, dict):
+            other = self.widget.factory(self._index, **other)
+        elif not isinstance(other, self.widget.row_classes):
+            raise TypeError(f"cannot compare to {type(other)}")
+
+        return self._cols == other._cols
+
+    def _update(self, column: str, value: Any):
+        if not self._should_update:
+            return
+
+        method = getattr(self, f"update_{column}", None)
+        if method:
+            method(value)
 
 
 Row = Union[dict, list, tuple, AbcRow]
@@ -61,10 +175,29 @@ class Table(Widget):
         self.height = leaf.height
         self.cols = []
         self.factory = None
+        self.row_class = None
         self._rows = []
-        self._associations = {}
         self._selected = 0
-        self.can_associate = False
+
+    def __str__(self):
+        """Return a nice display of the table."""
+        desc = super().__str__()
+        rows = self.rows
+        if rows:
+            desc += "\nrows ("
+            for row in rows:
+                desc += f"\n    {row}"
+            desc += "\n)"
+
+        return desc
+
+    @property
+    def row_classes(self):
+        """Return a tuple of the valid row classes for this widget."""
+        if self.row_class:
+            return (self.factory, self.row_class)
+
+        return (self.factory, )
 
     def __len__(self):
         return len(self._rows)
@@ -72,20 +205,14 @@ class Table(Widget):
     def __getitem__(self, item):
         row = self._rows[item]
         if isinstance(row, AbcRow):
-            if self.can_associate:
-                return (row, self._associations.get(id(row)))
-            else:
-                return row
+            return row
 
-        associations = []
+        ret = []
         rows = row
         for row in rows:
-            if self.can_associate:
-                associations.append((row, self._associations.get(id(row))))
-            else:
-                associations.append(row)
+            ret.append(row)
 
-        return associations
+        return ret
 
     def __setitem__(self, item, row: Union[Row, Sequence[Row]]):
         if isinstance(item, int):
@@ -105,13 +232,13 @@ class Table(Widget):
                     "the speicified indices") from None
 
         for cur_row, row in zip(cur_rows, rows):
-            if isinstance(row, AbcRow) and not isinstance(row, self.factory):
+            if isinstance(row, AbcRow) and not isinstance(row, self.row_classes):
                 raise TypeError("the specified row isn't of the proper table")
             elif isinstance(row, dict):
-                row = self.factory(cur_row.index, **row)
+                row = self.factory(cur_row._index, **row)
             else:
-                row = self.factory(cur_row.index, *row)
-            row.index = cur_row.index
+                row = self.factory(cur_row._index, *row)
+            row._index = cur_row._index
             self.update_row(row)
 
     @CachedProperty
@@ -120,17 +247,8 @@ class Table(Widget):
 
     @property
     def rows(self):
-        """Return the table rows with optional associated objects."""
-        rows = self._rows
-        associations = []
-        can_associate = self.can_associate
-        for row in rows:
-            if can_associate:
-                associations.append((row, self._associations.get(id(row))))
-            else:
-                associations.append(row)
-
-        return associations
+        """Return the table rows."""
+        return list(self._rows)
 
     @rows.setter
     def rows(self, rows: Iterable[Row]):
@@ -153,10 +271,10 @@ class Table(Widget):
 
         for i, row in enumerate(rows):
             if isinstance(row, (tuple, list)):
-                row = self.factory(i, *row)
+                row = self._create_row(i, *row)
             elif isinstance(row, (dict)):
-                row = self.factory(i, **row)
-            elif not isinstance(row, self.factory):
+                row = self._create_row(i, **row)
+            elif not isinstance(row, self.row_classes):
                 raise TypeError(f"invalid row type ({type(row)})")
             rows[i] = row
 
@@ -166,11 +284,8 @@ class Table(Widget):
 
     @property
     def selected(self):
-        """Return the row and its associated object if needed."""
+        """Return the currently selected row."""
         row = self._rows[self._selected]
-        if self.can_associate:
-            return (row, self._associations.get(id(row)))
-
         return row
 
     @selected.setter
@@ -183,7 +298,7 @@ class Table(Widget):
 
         """
         if isinstance(row, AbcRow):
-            row = row.index
+            row = row._index
         self._selected = row
         self.specific.select_row(row)
 
@@ -200,6 +315,27 @@ class Table(Widget):
 
         self.factory = build_factory(self, self.cols)
         return super()._init()
+
+    def _create_row(self, index, *args, **kwargs):
+        """
+        Return a new row, either using the row factory or row class.
+
+        The row factory is used to create generic rows without extra information beyond their column.  The row class, however, can be specified to change the default row class used by the rows.  If the row class hasn't been specified, use the factory.
+
+        Args:
+            index (int): the row index, mandatory no matter the row class.
+            Extra arguments (either positional or optional) hold the
+                    row columns.
+
+        Raises:
+            ValueError: the row couldn't be created.
+
+        """
+        if self.row_class:
+            self.row_class.widget = self
+
+        row_class = self.row_class or self.factory
+        return row_class(index, *args, **kwargs)
 
     def add_row(self, *args, **kwargs):
         """
@@ -218,13 +354,13 @@ class Table(Widget):
             self.add_row(name="table", price=30, quantity=1)
 
         """
-        row = self.factory(len(self._rows), *args, **kwargs)
+        row = self._create_row(len(self._rows), *args, **kwargs)
         self.update_row(row)
         return row
 
     def update_row(self, row):
         """Update the specified row."""
-        index = row.index
+        index = row._index
         if index == len(self._rows):
             # Append the row
             self._rows.append(row)
@@ -252,15 +388,12 @@ class Table(Widget):
         if isinstance(row, int):
             row = self._rows[row]
 
-        index = row.index
+        index = row._index
         del self._rows[index]
         for row in self._rows[index:]:
-            row.index -= 1
+            row._index -= 1
 
         self.specific.remove_row(row)
-
-        # Remove associations
-        self._associations.pop(id(row), None)
 
     def sort(self, key: Callable = None, reverse: bool = False):
         """
@@ -285,130 +418,16 @@ class Table(Widget):
         selected = self._rows[self._selected]
         self._rows.sort(key=key, reverse=reverse)
         for index, row in zip(range(len(self._rows)), self._rows):
-            row.index = index
+            row._index = index
 
         self.specific.sort(key=key, reverse=reverse)
         self.selected = selected
 
-    def associate(self, row: AbcRow, obj: Any):
-        """
-        Associate the given row with an arbitrary object.
-
-        The given object can contain extra information that won't
-        be displayed on the table, but can be useful for the developer.
-        You can associate a row to an object and retrieve it,
-        either using the `selected` property, or the `associations`
-        generator.
-
-        Args:
-            row (Row): the row to associate with the object.
-            obj (any): the python object to associate with the row.
-
-        """
-        self._associations[id(row)] = obj
-
 
 def build_factory(widget, cols):
     """Build a factory (dynamic class) for the specified columns."""
-    def row__init__(self, index, *args, **kwargs):
-        self.index = index
-        self._cols = {}
-        used_args = 0
-        for col, value in zip(self.columns, args):
-            self._cols[col] = value
-            used_args += 1
-
-        for col in self.columns:
-            if col in kwargs:
-                if col in self._cols:
-                    arg = self._cols[col]
-                    raise ValueError(f"two values were specified for column "
-                            f"{col!r}: {arg!r} in positional arguments, and "
-                            f"{kwargs[col]!r} in keyword arguments.  You "
-                            f"might be better off using either only "
-                            f"positional, or only keyword arguments when "
-                            f"creating a row")
-                else:
-                    self._cols[col] = kwargs[col]
-
-        if not all(key in self._cols.keys() for key in self.columns):
-            forgotten = [key for key in self.columns if key not in self._cols.keys()]
-            raise ValueError(f"not all columns were specified: missing "
-                    f"{', '.join(forgotten)}")
-
-        if len(args) > used_args:
-            unused = args[used_args:]
-            unused = [str(arg) for arg in unused]
-            raise ValueError(f"too many position alguments: {', '.join(unused)}")
-
-        if any(key not in self.columns for key in kwargs.keys()):
-            unused = [key for key in kwargs.keys() if key not in self.columns]
-            raise ValueError(f"unused keyword arguments: {', '.join(unused)}")
-
-    def row__repr__(self):
-        args = [f"{key}={value!r}" for key, value in self._cols.items()]
-        return f"<Row({', '.join(args)})>"
-
-    def row__str__(self):
-        args = [f"{key}={value}" for key, value in self._cols.items()]
-        return f"Row {', '.join(args)}"
-
-    def row__iter__(self):
-        return iter(self._cols.values())
-
-    def row__getattr__(self, attr):
-        cols = object.__getattribute__(self, "_cols")
-        value = cols.get(attr, NO_VALUE)
-        if value is NO_VALUE:
-            raise AttributeError(f"no {attr} column or attribute in this row")
-
-        return value
-
-    def row__setattr__(self, attr, value):
-        try:
-            cols = object.__getattribute__(self, "_cols")
-        except AttributeError:
-            object.__setattr__(self, attr, value)
-        else:
-            if attr in cols:
-                cols[attr] = value
-                self.widget.update_row(self)
-            else:
-                object.__setattr__(self, attr, value)
-
-    def row__getitem__(self, item):
-        if isinstance(item, int):
-            item = tuple(self._cols.keys())[item]
-
-        return self._cols[item]
-
-    def row__setitem__(self, item, value):
-        if isinstance(item, int):
-            item = tuple(self._cols.keys())[item]
-
-        self._cols[item] = value
-
-    def row__eq__(self, other):
-        if isinstance(other, (tuple, list)):
-            other = self.widget.factory(self.index, *other)
-        elif isinstance(other, dict):
-            other = self.widget.factory(self.index, **other)
-        elif not isinstance(other, self.widget.factory):
-            raise TypeError(f"cannot compare to {type(other)}")
-
-        return self._cols == other._cols
-
     factory = type("Row", (AbcRow, ), {
             "widget": widget,
             "columns": [tup[0] for tup in cols],
-            "__init__": row__init__,
-            "__repr__": row__repr__,
-            "__str__": row__str__,
-            "__iter__": row__iter__,
-            "__getattr__": row__getattr__,
-            "__setattr__": row__setattr__,
-            "__getitem__": row__getitem__,
-            "__setitem__": row__setitem__,
-            "__eq__": row__eq__,
     })
     return factory
