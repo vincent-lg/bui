@@ -15,7 +15,7 @@ layout in a separate [file](../layout/file.md).
 import inspect
 from pathlib import Path
 import sys
-from typing import Sequence, Type, Union
+from typing import Optional, Sequence, Tuple, Type, Union
 
 from bui.control.exceptions import StopControl
 from bui.control.log import logger as control_logger
@@ -253,7 +253,7 @@ class Window(Widget, metaclass=MetaWindow):
         raise StopControl()
 
     def pop_open_file(self, message: str, location: Path = None,
-            filters: Sequence[Union[str, Tuple[str, str]], ...] = (),
+            filters: Sequence[Union[str, Tuple[str, str]]] = (),
             default: str = None, multiple: bool = False,
             preview: bool = True, hidden: bool = False
             ) -> Optional[Union[Path, Tuple[Path]]]:
