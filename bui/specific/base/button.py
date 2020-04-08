@@ -19,3 +19,24 @@ class SpecificButton(SpecificWidget):
     def name(self, name):
         """Set the button name."""
         pass
+
+    @property
+    @abstractmethod
+    def enabled(self):
+        """Return whether the button is enabled or not."""
+        pass
+
+    @property
+    def disabled(self):
+        """Return whether the button is disabled or not."""
+        return not self.enabled
+
+    @abstractmethod
+    def enable(self):
+        """Force-enable the button."""
+        pass
+
+    @abstractmethod
+    def disable(self):
+        """Disable the button."""
+        pass

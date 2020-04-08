@@ -67,6 +67,9 @@ class Button(Component):
     | `id`         | No       | The button identifier    | `<button    |
     |              |          | (ID). If not set, use    | id=quit>`   |
     |              |          | the button label.        |             |
+    | `disabled`   | No       | If present, the button   | `<button    |
+    |              |          | will be disabled by      | disabled>`  |
+    |              |          | default.                 |             |
     | `set_true`   | No       | If inside of a dialog,   | `<button    |
     |              |          | set the dialog result to | set_true>`  |
     |              |          | `True` and close the     |             |
@@ -125,6 +128,13 @@ class Button(Component):
     | Attribute      | Meaning and type | Example                     |
     | -------------- | ---------------- | --------------------------- |
     | `name`         | The name (str)   | `self.name = "Let's click"` |
+    | `enabled`      | Whether the      | `if button.enabled:`        |
+    |                | button is        |                             |
+    |                | enabled (bool).  |                             |
+    |                | This attribute   |                             |
+    |                | cannot be set.   |                             |
+    | `disabled`     | On or off (bool) | `print(self.disabled)`      |
+    |                | Cannot be set.   |                             |
 
     These attributes can be accessed and set using the standard Python
     syntax for attributes.  Behind the scenes, these attributes are cached,
@@ -139,6 +149,28 @@ class Button(Component):
 
     > Changing the name will not change the button ID.  Once set
       in layout, the ID won't change.
+
+    A button also offers the following methods:
+
+    | Name                     | Description                            |
+    | ------------------------ | -------------------------------------- |
+    | `enable()`               | Force the button to be enabled.        |
+    | `disable`                | Force the button to be disabled.       |
+
+    For instance:
+
+        def on_init(self):
+            '''The window initializes.'''
+            restart = window["restart"]
+            restart.disable()
+
+    > Note: the `enabled` and `disabled` properties, along with the
+      `enable()` and `disable()` methods, allow to change whether
+      a button can be clicked by the user.  A disabled button (usually
+      grayed out or marked unavailable) cannot be changed by the user.
+      **However**, notice that some screen readers will skip over
+      unavailable buttons and won't even signal them, so make sure
+      no vital information is found in a disabled button.
 
     ## Controls
 
@@ -183,6 +215,7 @@ class Button(Component):
         Attr("width", help="The widget width", type=int, default=1),
         Attr("height", help="The widget height", type=int, default=1),
         Attr("id", help="The widget identifier", default=""),
+        Attr("disabled", help="Disabled by default", default=False, if_present=True),
         Attr("set_true", help="Set the dialog to True and close it",
                 default=False, if_present=True),
         Attr("set_false", help="Set the dialog to False and close it",
@@ -193,7 +226,7 @@ class Button(Component):
     must_have_data = True
 
     def __init__(self, layout, parent, x, y, width=1, height=1,
-            id="", set_true=False, set_false=False, set=""):
+            id="", disabled=False, set_true=False, set_false=False, set=""):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
@@ -201,6 +234,7 @@ class Button(Component):
         self.width = width
         self.height = height
         self.id = id
+        self.disabled = disabled
         self.set_true = set_true
         self.set_false = set_false
         self.set = set

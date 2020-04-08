@@ -25,6 +25,7 @@ a control method in response, except if the button is disabled.
 | `width` | No | The widget width, that is, the number of columns it will use in the window grid. A widget with a width of 2 will stretch one additional column to the right. A widget with `x` set to 2 and `width` set to 3 will span `x=2`, `x=3`, and `x=4`.  The default is 1, so a widget will remain in its `x` column. | `<button width=2>` |
 | `height` | No | The widget height, that is, the number of rows it will use in the window grid. A widget with a height of 2 will stretch one additional row downward. A widget with `y` set to 2 and `height` set to 3 will span `y=2`, `y=3`, and `y=4`.  The default is 1, so a widget will remain in its `y` row. | `<button height=2>` |
 | `id` | No | The button identifier (ID). If not set, use the button label. | `<button id=quit>` |
+| `disabled` | No | If present, the button will be disabled by default. | `<button disabled>` |
 | `set_true` | No | If inside of a dialog, set the dialog result to `True` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_true>` |
 | `set_false` | No | If inside of a dialog, set the dialog result to `False` and close the dialog. This field does not require value, its presence in the `<dialog>` tag is sufficient. | `<button set_false>` |
 | `set` | No | If inside of a dialog, set the dialog result to the specified value and close the dialog. | `<button set=ok>` |
@@ -66,6 +67,8 @@ You can access and modify its attributes in a control method.
 | Attribute      | Meaning and type | Example                     |
 | -------------- | ---------------- | --------------------------- |
 | `name` | The name (str) | `self.name = "Let's click"` |
+| `enabled` | Whether the button is enabled (bool). This attribute cannot be set. | `if button.enabled:` |
+| `disabled` | On or off (bool) Cannot be set. | `print(self.disabled)` |
 
 These attributes can be accessed and set using the standard Python
 syntax for attributes.  Behind the scenes, these attributes are cached,
@@ -80,6 +83,28 @@ worry about how it works.  Consider the following example:
 
 > Changing the name will not change the button ID.  Once set
   in layout, the ID won't change.
+
+A button also offers the following methods:
+
+| Name                     | Description                            |
+| ------------------------ | -------------------------------------- |
+| `enable()` | Force the button to be enabled. |
+| `disable` | Force the button to be disabled. |
+
+For instance:
+
+    def on_init(self):
+        '''The window initializes.'''
+        restart = window["restart"]
+        restart.disable()
+
+> Note: the `enabled` and `disabled` properties, along with the
+  `enable()` and `disable()` methods, allow to change whether
+  a button can be clicked by the user.  A disabled button (usually
+  grayed out or marked unavailable) cannot be changed by the user.
+  **However**, notice that some screen readers will skip over
+  unavailable buttons and won't even signal them, so make sure
+  no vital information is found in a disabled button.
 
 ## Controls
 

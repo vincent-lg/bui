@@ -37,7 +37,7 @@
       <span style="white-space: pre;"><a id="L15"></a>import inspect</span><br />
       <span style="white-space: pre;"><a id="L16"></a>from pathlib import Path</span><br />
       <span style="white-space: pre;"><a id="L17"></a>import sys</span><br />
-      <span style="white-space: pre;"><a id="L18"></a>from typing import Type, Union</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>from typing import Optional, Sequence, Tuple, Type, Union</span><br />
       <span style="white-space: pre;"><a id="L19"></a></span><br />
       <span style="white-space: pre;"><a id="L20"></a>from bui.control.exceptions import StopControl</span><br />
       <span style="white-space: pre;"><a id="L21"></a>from bui.control.log import logger as control_logger</span><br />
@@ -274,58 +274,101 @@
       <span style="white-space: pre;"><a id="L252"></a>        """Stop the control, and the control method that called it."""</span><br />
       <span style="white-space: pre;"><a id="L253"></a>        raise StopControl()</span><br />
       <span style="white-space: pre;"><a id="L254"></a></span><br />
-      <span style="white-space: pre;"><a id="L255"></a>    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]</span><br />
-      <span style="white-space: pre;"><a id="L256"></a>            ) -&gt; 'wg.dialog.Dialog':</span><br />
-      <span style="white-space: pre;"><a id="L257"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L258"></a>        Pop up a dialog, blocks until the dialog has been closed.</span><br />
-      <span style="white-space: pre;"><a id="L259"></a></span><br />
-      <span style="white-space: pre;"><a id="L260"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L261"></a>            dialog (str or Dialog): the dialog layout (as a str) or the</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>                    Dialog class to instantiate from.</span><br />
-      <span style="white-space: pre;"><a id="L263"></a></span><br />
-      <span style="white-space: pre;"><a id="L264"></a>        Returns:</span><br />
-      <span style="white-space: pre;"><a id="L265"></a>            dialog (Dialog): the dialog object.</span><br />
-      <span style="white-space: pre;"><a id="L266"></a></span><br />
-      <span style="white-space: pre;"><a id="L267"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L268"></a>        from bui.widget.dialog import Dialog</span><br />
-      <span style="white-space: pre;"><a id="L269"></a>        if isinstance(dialog, str):</span><br />
-      <span style="white-space: pre;"><a id="L270"></a>            class NewDialog(Dialog):</span><br />
-      <span style="white-space: pre;"><a id="L271"></a>                layout = mark(dialog)</span><br />
-      <span style="white-space: pre;"><a id="L272"></a>            dialog = NewDialog</span><br />
-      <span style="white-space: pre;"><a id="L273"></a>        assert issubclass(dialog, wg.dialog.Dialog)</span><br />
-      <span style="white-space: pre;"><a id="L274"></a>        dialog.window = self</span><br />
-      <span style="white-space: pre;"><a id="L275"></a>        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")</span><br />
-      <span style="white-space: pre;"><a id="L276"></a>        self.specific.pop_dialog(dialog_obj.specific)</span><br />
-      <span style="white-space: pre;"><a id="L277"></a>        return dialog_obj</span><br />
-      <span style="white-space: pre;"><a id="L278"></a></span><br />
-      <span style="white-space: pre;"><a id="L279"></a>    def pop_menu(self, context_id: str):</span><br />
-      <span style="white-space: pre;"><a id="L280"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L281"></a>        Pop a context menu, blocks until the menu is closed.</span><br />
+      <span style="white-space: pre;"><a id="L255"></a>    def pop_open_file(self, message: str, location: Path = None,</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>            filters: Sequence[Union[str, Tuple[str, str]]] = (),</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>            default: str = None, multiple: bool = False,</span><br />
+      <span style="white-space: pre;"><a id="L258"></a>            preview: bool = True, hidden: bool = False</span><br />
+      <span style="white-space: pre;"><a id="L259"></a>            ) -&gt; Optional[Union[Path, Tuple[Path]]]:</span><br />
+      <span style="white-space: pre;"><a id="L260"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L261"></a>        Display a system dialog to select one or several files.</span><br />
+      <span style="white-space: pre;"><a id="L262"></a></span><br />
+      <span style="white-space: pre;"><a id="L263"></a>        This method displays a file system dialog, where the user can browse directories and select one or several files.  The selected file(s) will be returned if the user presses on the 'open' button in the dialog.  You can catch the result of this dialog to perform whatever operation you need.</span><br />
+      <span style="white-space: pre;"><a id="L264"></a></span><br />
+      <span style="white-space: pre;"><a id="L265"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L266"></a>            message (str): the message to display to the user.</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>            location (Path, optional): if not set, use the current</span><br />
+      <span style="white-space: pre;"><a id="L268"></a>                    directory.  Otherwise, you need to specify a</span><br />
+      <span style="white-space: pre;"><a id="L269"></a>                    `pathlib.Path` object.</span><br />
+      <span style="white-space: pre;"><a id="L270"></a>            filters (sequence): a sequence of filters to apply to the file</span><br />
+      <span style="white-space: pre;"><a id="L271"></a>                    system list.  Each filter can be a string containing,</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>                    between parenthesis, the pattern to apply.  Optionally</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>                    a filter can be a tuple of two information:</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>                    the pattern, and what to display to the user.  See</span><br />
+      <span style="white-space: pre;"><a id="L275"></a>                    the examples below of valid filters.</span><br />
+      <span style="white-space: pre;"><a id="L276"></a>            default (str, optional): the default (selected) file, if any.</span><br />
+      <span style="white-space: pre;"><a id="L277"></a>            multiple (bool, optional): allow to select several files</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>                    (default False).</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>            preview (bool, optional): display a previoew of the file (default</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>                    True).</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>            hidden (bool, optional): display hidden files (default False).</span><br />
       <span style="white-space: pre;"><a id="L282"></a></span><br />
-      <span style="white-space: pre;"><a id="L283"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L284"></a>            context_id (str): the registered ID of the context menu.</span><br />
-      <span style="white-space: pre;"><a id="L285"></a></span><br />
-      <span style="white-space: pre;"><a id="L286"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L287"></a>        context = self[context_id]</span><br />
-      <span style="white-space: pre;"><a id="L288"></a>        self.specific.pop_menu(context.specific)</span><br />
-      <span style="white-space: pre;"><a id="L289"></a></span><br />
-      <span style="white-space: pre;"><a id="L290"></a>    def open_window(self, window: "Window", child=False):</span><br />
-      <span style="white-space: pre;"><a id="L291"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L292"></a>        Open a new window.</span><br />
-      <span style="white-space: pre;"><a id="L293"></a></span><br />
-      <span style="white-space: pre;"><a id="L294"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L295"></a>            window (Window): the window class.</span><br />
-      <span style="white-space: pre;"><a id="L296"></a>            child (bool): if True, the new window will be a child of the</span><br />
-      <span style="white-space: pre;"><a id="L297"></a>                    current window (closing self will close the new window).</span><br />
-      <span style="white-space: pre;"><a id="L298"></a></span><br />
+      <span style="white-space: pre;"><a id="L283"></a>        Returns:</span><br />
+      <span style="white-space: pre;"><a id="L284"></a>            If `multiple` is not set, returns either `None` or the</span><br />
+      <span style="white-space: pre;"><a id="L285"></a>            selected file, as a `pathlib.Path` object.</span><br />
+      <span style="white-space: pre;"><a id="L286"></a>            If `multiple` is set to `True`, returns either an empty tuple,</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>            or a tuple of selected files, where each file is a</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>            `pathlib.Path` object.</span><br />
+      <span style="white-space: pre;"><a id="L289"></a>            Returning `None` or an empty tuple indicates the user</span><br />
+      <span style="white-space: pre;"><a id="L290"></a>            cancelled the operation (pressed on the Cancel button in</span><br />
+      <span style="white-space: pre;"><a id="L291"></a>            the file system dialog).</span><br />
+      <span style="white-space: pre;"><a id="L292"></a></span><br />
+      <span style="white-space: pre;"><a id="L293"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L294"></a></span><br />
+      <span style="white-space: pre;"><a id="L295"></a></span><br />
+      <span style="white-space: pre;"><a id="L296"></a></span><br />
+      <span style="white-space: pre;"><a id="L297"></a>    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>            ) -&gt; 'wg.dialog.Dialog':</span><br />
       <span style="white-space: pre;"><a id="L299"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L300"></a>        window = window.parse_layout(window)</span><br />
-      <span style="white-space: pre;"><a id="L301"></a>        self.specific.open_window(window.specific, child=child)</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>        return window</span><br />
-      <span style="white-space: pre;"><a id="L303"></a></span><br />
-      <span style="white-space: pre;"><a id="L304"></a>    def handle_close(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L305"></a>        """The window closes."""</span><br />
-      <span style="white-space: pre;"><a id="L306"></a>        pass</span><br />
+      <span style="white-space: pre;"><a id="L300"></a>        Pop up a custom dialog, blocks until the dialog has been closed.</span><br />
+      <span style="white-space: pre;"><a id="L301"></a></span><br />
+      <span style="white-space: pre;"><a id="L302"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L303"></a>            dialog (str or Dialog): the dialog layout (as a str) or the</span><br />
+      <span style="white-space: pre;"><a id="L304"></a>                    Dialog class to instantiate from.</span><br />
+      <span style="white-space: pre;"><a id="L305"></a></span><br />
+      <span style="white-space: pre;"><a id="L306"></a>        Returns:</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>            dialog (Dialog): the dialog object.  This object could</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>                    contain "filled" information by the user.</span><br />
+      <span style="white-space: pre;"><a id="L309"></a></span><br />
+      <span style="white-space: pre;"><a id="L310"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L311"></a>        from bui.widget.dialog import Dialog</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>        if isinstance(dialog, str):</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>            class NewDialog(Dialog):</span><br />
+      <span style="white-space: pre;"><a id="L314"></a>                layout = mark(dialog)</span><br />
+      <span style="white-space: pre;"><a id="L315"></a>            dialog = NewDialog</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>        assert issubclass(dialog, wg.dialog.Dialog)</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>        dialog.window = self</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>        self.specific.pop_dialog(dialog_obj.specific)</span><br />
+      <span style="white-space: pre;"><a id="L320"></a>        return dialog_obj</span><br />
+      <span style="white-space: pre;"><a id="L321"></a></span><br />
+      <span style="white-space: pre;"><a id="L322"></a>    def pop_menu(self, context_id: str):</span><br />
+      <span style="white-space: pre;"><a id="L323"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>        Pop a context menu, blocks until the menu is closed.</span><br />
+      <span style="white-space: pre;"><a id="L325"></a></span><br />
+      <span style="white-space: pre;"><a id="L326"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L327"></a>            context_id (str): the registered ID of the context menu.</span><br />
+      <span style="white-space: pre;"><a id="L328"></a></span><br />
+      <span style="white-space: pre;"><a id="L329"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L330"></a>        context = self[context_id]</span><br />
+      <span style="white-space: pre;"><a id="L331"></a>        self.specific.pop_menu(context.specific)</span><br />
+      <span style="white-space: pre;"><a id="L332"></a></span><br />
+      <span style="white-space: pre;"><a id="L333"></a>    def open_window(self, window: "Window", child=False):</span><br />
+      <span style="white-space: pre;"><a id="L334"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L335"></a>        Open a new window.</span><br />
+      <span style="white-space: pre;"><a id="L336"></a></span><br />
+      <span style="white-space: pre;"><a id="L337"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L338"></a>            window (Window): the window class.</span><br />
+      <span style="white-space: pre;"><a id="L339"></a>            child (bool): if True, the new window will be a child of the</span><br />
+      <span style="white-space: pre;"><a id="L340"></a>                    current window (closing self will close the new window).</span><br />
+      <span style="white-space: pre;"><a id="L341"></a></span><br />
+      <span style="white-space: pre;"><a id="L342"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L343"></a>        window = window.parse_layout(window)</span><br />
+      <span style="white-space: pre;"><a id="L344"></a>        self.specific.open_window(window.specific, child=child)</span><br />
+      <span style="white-space: pre;"><a id="L345"></a>        return window</span><br />
+      <span style="white-space: pre;"><a id="L346"></a></span><br />
+      <span style="white-space: pre;"><a id="L347"></a>    def handle_close(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L348"></a>        """The window closes."""</span><br />
+      <span style="white-space: pre;"><a id="L349"></a>        pass</span><br />
     </div>
   </body>
 </html>

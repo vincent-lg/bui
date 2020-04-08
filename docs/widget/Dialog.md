@@ -14,7 +14,7 @@ This class offers 1 property.
 | -------- | --- | --- |
 | [usable_surface](#usable_surface) | Return the screen size that can be used, in pixels. | **Can't write** |
 
-This class offers 11 methods.
+This class offers 12 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -24,8 +24,9 @@ This class offers 11 methods.
 | [mark](#mark) | `mark(layout: str)` | Mark layout in the window. |
 | [open_window](#open_window) | `open_window(window: 'Window', child=False)` | Open a new window. |
 | [parse_layout](#parse_layout) | `parse_layout(Window, tag_name='window')` | Determine where the layout is and try to parse it, return a window. |
-| [pop_dialog](#pop_dialog) | `pop_dialog(dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])` | Pop up a dialog, blocks until the dialog has been closed. |
+| [pop_dialog](#pop_dialog) | `pop_dialog(dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])` | Pop up a custom dialog, blocks until the dialog has been closed. |
 | [pop_menu](#pop_menu) | `pop_menu(context_id: str)` | Pop a context menu, blocks until the menu is closed. |
+| [pop_open_file](#pop_open_file) | `pop_open_file(message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)` | Display a system dialog to select one or several files. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
 | [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 | [stop_control](#stop_control) | `stop_control()` | Stop the control, and the control method that called it. |
@@ -83,7 +84,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L304)
+[See the source code](../raw/widget/dialog.html#L347)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -108,7 +109,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L290)
+[See the source code](../raw/widget/dialog.html#L333)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -143,27 +144,28 @@ Raises:
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
 
-[See the source code](../raw/widget/dialog.html#L255)
+[See the source code](../raw/widget/dialog.html#L297)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
 | dialog | `Union[str, Type[ForwardRef('wg.dialog.Dialog')]]` |  |
 
-Pop up a dialog, blocks until the dialog has been closed.
+Pop up a custom dialog, blocks until the dialog has been closed.
 
 Args:
     dialog (str or Dialog): the dialog layout (as a str) or the
             Dialog class to instantiate from.
 
 Returns:
-    dialog (Dialog): the dialog object.
+    dialog (Dialog): the dialog object.  This object could
+            contain "filled" information by the user.
 
 ### pop_menu
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L279)
+[See the source code](../raw/widget/dialog.html#L322)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -174,6 +176,55 @@ Pop a context menu, blocks until the menu is closed.
 
 Args:
     context_id (str): the registered ID of the context menu.
+
+### pop_open_file
+
+`pop_open_file(self, message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)`
+
+[See the source code](../raw/widget/dialog.html#L255)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Dialog` |  |
+| message | `str` |  |
+| location | `pathlib.Path` | `None` |
+| filters | `Sequence[Union[str, Tuple[str, str]]]` | `()` |
+| default | `str` | `None` |
+| multiple | `bool` | `False` |
+| preview | `bool` | `True` |
+| hidden | `bool` | `False` |
+
+Display a system dialog to select one or several files.
+
+This method displays a file system dialog, where the user can browse directories and select one or several files.  The selected file(s) will be returned if the user presses on the 'open' button in the dialog.  You can catch the result of this dialog to perform whatever operation you need.
+
+Args:
+    message (str): the message to display to the user.
+    location (Path, optional): if not set, use the current
+            directory.  Otherwise, you need to specify a
+            `pathlib.Path` object.
+    filters (sequence): a sequence of filters to apply to the file
+            system list.  Each filter can be a string containing,
+            between parenthesis, the pattern to apply.  Optionally
+            a filter can be a tuple of two information:
+            the pattern, and what to display to the user.  See
+            the examples below of valid filters.
+    default (str, optional): the default (selected) file, if any.
+    multiple (bool, optional): allow to select several files
+            (default False).
+    preview (bool, optional): display a previoew of the file (default
+            True).
+    hidden (bool, optional): display hidden files (default False).
+
+Returns:
+    If `multiple` is not set, returns either `None` or the
+    selected file, as a `pathlib.Path` object.
+    If `multiple` is set to `True`, returns either an empty tuple,
+    or a tuple of selected files, where each file is a
+    `pathlib.Path` object.
+    Returning `None` or an empty tuple indicates the user
+    cancelled the operation (pressed on the Cancel button in
+    the file system dialog).
 
 ### schedule
 

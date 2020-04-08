@@ -11,15 +11,46 @@ depending on the used GUI toolkit.
 
 ## Class summary
 
-This class offers 5 methods.
+This class offers 2 properties.
+
+| Property | Get | Set |
+| -------- | --- | --- |
+| [disabled](#disabled) | Return whether the checkbox is disabled or not. | **Can't write** |
+| [enabled](#enabled) | Return whether the checkbox is enabled or not. | **Can't write** |
+
+This class offers 7 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
+| [disable](#disable) | `disable()` | Disable the checkbox. |
+| [enable](#enable) | `enable()` | Force-enable the checkbox. |
 | [handle_click](#handle_click) | `handle_click(control)` | Do nothing if a button is clicked. |
 | [handle_press](#handle_press) | `handle_press(control)` | Do nothing if a button is pressed. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
 | [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
+
+## Properties
+
+### disabled
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/button.html#L61)
+
+Return whether the checkbox is disabled or not.
+
+### enabled
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/button.html#L56)
+
+Return whether the checkbox is enabled or not.
 
 ## Methods
 
@@ -38,11 +69,35 @@ Create the specific widget, using the `specific_package` attribute.
 If the specific object has already been created, don't recreate it and
 raise no exception.
 
+### disable
+
+`disable(self)`
+
+[See the source code](../raw/widget/button.html#L70)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Button` |  |
+
+Disable the checkbox.
+
+### enable
+
+`enable(self)`
+
+[See the source code](../raw/widget/button.html#L66)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Button` |  |
+
+Force-enable the checkbox.
+
 ### handle_click
 
 `handle_click(self, control)`
 
-[See the source code](../raw/widget/button.html#L56)
+[See the source code](../raw/widget/button.html#L74)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -55,7 +110,7 @@ Do nothing if a button is clicked.
 
 `handle_press(self, control)`
 
-[See the source code](../raw/widget/button.html#L68)
+[See the source code](../raw/widget/button.html#L86)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

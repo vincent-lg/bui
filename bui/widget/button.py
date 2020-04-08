@@ -53,6 +53,24 @@ class Button(Widget):
     def id(self):
         return self.leaf.id
 
+    @property
+    def enabled(self):
+        """Return whether the checkbox is enabled or not."""
+        return self.specific.enabled
+
+    @property
+    def disabled(self):
+        """Return whether the checkbox is disabled or not."""
+        return self.specific.disabled
+
+    def enable(self):
+        """Force-enable the checkbox."""
+        self.specific.enable()
+
+    def disable(self):
+        """Disable the checkbox."""
+        self.specific.disable()
+
     def handle_click(self, control):
         """Do nothing if a button is clicked."""
         if self.parent.widget == "dialog":

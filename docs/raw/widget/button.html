@@ -75,21 +75,39 @@
       <span style="white-space: pre;"><a id="L53"></a>    def id(self):</span><br />
       <span style="white-space: pre;"><a id="L54"></a>        return self.leaf.id</span><br />
       <span style="white-space: pre;"><a id="L55"></a></span><br />
-      <span style="white-space: pre;"><a id="L56"></a>    def handle_click(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L57"></a>        """Do nothing if a button is clicked."""</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>        if self.parent.widget == "dialog":</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>            if self.set_true or self.set_false or self.set:</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>                if self.set:</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>                    self.parent.set = self.set</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>                elif self.set_true:</span><br />
-      <span style="white-space: pre;"><a id="L63"></a>                    self.parent.set = True</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>                elif self.set_true:</span><br />
-      <span style="white-space: pre;"><a id="L65"></a>                    self.parent.set = False</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>                self.parent.close()</span><br />
-      <span style="white-space: pre;"><a id="L67"></a></span><br />
-      <span style="white-space: pre;"><a id="L68"></a>    def handle_press(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>        """Do nothing if a button is pressed."""</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>        pass</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    def enabled(self):</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>        """Return whether the checkbox is enabled or not."""</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>        return self.specific.enabled</span><br />
+      <span style="white-space: pre;"><a id="L60"></a></span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    def disabled(self):</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>        """Return whether the checkbox is disabled or not."""</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        return self.specific.disabled</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    def enable(self):</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        """Force-enable the checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>        self.specific.enable()</span><br />
+      <span style="white-space: pre;"><a id="L69"></a></span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    def disable(self):</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>        """Disable the checkbox."""</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>        self.specific.disable()</span><br />
+      <span style="white-space: pre;"><a id="L73"></a></span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    def handle_click(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>        """Do nothing if a button is clicked."""</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        if self.parent.widget == "dialog":</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>            if self.set_true or self.set_false or self.set:</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>                if self.set:</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>                    self.parent.set = self.set</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>                elif self.set_true:</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>                    self.parent.set = True</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>                elif self.set_true:</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>                    self.parent.set = False</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>                self.parent.close()</span><br />
+      <span style="white-space: pre;"><a id="L85"></a></span><br />
+      <span style="white-space: pre;"><a id="L86"></a>    def handle_press(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L87"></a>        """Do nothing if a button is pressed."""</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>        pass</span><br />
     </div>
   </body>
 </html>
