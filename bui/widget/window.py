@@ -15,7 +15,7 @@ layout in a separate [file](../layout/file.md).
 import inspect
 from pathlib import Path
 import sys
-from typing import Type, Union
+from typing import Sequence, Type, Union
 
 from bui.control.exceptions import StopControl
 from bui.control.log import logger as control_logger
@@ -252,17 +252,60 @@ class Window(Widget, metaclass=MetaWindow):
         """Stop the control, and the control method that called it."""
         raise StopControl()
 
+    def pop_open_file(self, message: str, location: Path = None,
+            filters: Sequence[Union[str, Tuple[str, str]], ...] = (),
+            default: str = None, multiple: bool = False,
+            preview: bool = True, hidden: bool = False
+            ) -> Optional[Union[Path, Tuple[Path]]]:
+        """
+        Display a system dialog to select one or several files.
+
+        This method displays a file system dialog, where the user can browse directories and select one or several files.  The selected file(s) will be returned if the user presses on the 'open' button in the dialog.  You can catch the result of this dialog to perform whatever operation you need.
+
+        Args:
+            message (str): the message to display to the user.
+            location (Path, optional): if not set, use the current
+                    directory.  Otherwise, you need to specify a
+                    `pathlib.Path` object.
+            filters (sequence): a sequence of filters to apply to the file
+                    system list.  Each filter can be a string containing,
+                    between parenthesis, the pattern to apply.  Optionally
+                    a filter can be a tuple of two information:
+                    the pattern, and what to display to the user.  See
+                    the examples below of valid filters.
+            default (str, optional): the default (selected) file, if any.
+            multiple (bool, optional): allow to select several files
+                    (default False).
+            preview (bool, optional): display a previoew of the file (default
+                    True).
+            hidden (bool, optional): display hidden files (default False).
+
+        Returns:
+            If `multiple` is not set, returns either `None` or the
+            selected file, as a `pathlib.Path` object.
+            If `multiple` is set to `True`, returns either an empty tuple,
+            or a tuple of selected files, where each file is a
+            `pathlib.Path` object.
+            Returning `None` or an empty tuple indicates the user
+            cancelled the operation (pressed on the Cancel button in
+            the file system dialog).
+
+        """
+
+
+
     def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]
             ) -> 'wg.dialog.Dialog':
         """
-        Pop up a dialog, blocks until the dialog has been closed.
+        Pop up a custom dialog, blocks until the dialog has been closed.
 
         Args:
             dialog (str or Dialog): the dialog layout (as a str) or the
                     Dialog class to instantiate from.
 
         Returns:
-            dialog (Dialog): the dialog object.
+            dialog (Dialog): the dialog object.  This object could
+                    contain "filled" information by the user.
 
         """
         from bui.widget.dialog import Dialog
