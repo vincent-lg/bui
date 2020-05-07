@@ -43,6 +43,12 @@ class SpecificText(SpecificWidget):
         """Return whether the text is disabled or not."""
         return not self.enabled
 
+    @property
+    @abstractmethod
+    def hidden(self):
+        """Return whether the text is hidden or not."""
+        pass
+
     @abstractmethod
     def enable(self):
         """Force-enable the text."""

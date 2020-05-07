@@ -54,6 +54,11 @@ class WX4Text(WXShared, SpecificText):
         """Return whether the text is enabled or not."""
         return self.wx_text.Enabled
 
+    @property
+    def hidden(self):
+        """Return whether the text is hidden or not."""
+        return self.wx_text.GetStyle(0, wx.TE_PASSWORD)
+
     def enable(self):
         """Force-enable the text."""
         self.wx_text.Enable()
@@ -75,6 +80,8 @@ class WX4Text(WXShared, SpecificText):
         style = 0
         if self.generic.multiline:
             style |= wx.TE_MULTILINE
+        if self.generic._hidden:
+            style |= wx.TE_PASSWORD
         if self.generic.read_only:
             style |= wx.TE_READONLY
 
@@ -143,7 +150,8 @@ class WX4Text(WXShared, SpecificText):
             cursor._col = col
 
     async def AsyncUpdateCursor(self, text=None):
-        self.UpdateCursorPosition(text)
+        if self.wx_text:
+            self.UpdateCursorPosition(text)
 
     def OnUpdateCursor(self, e):
         self.generic.schedule(self.AsyncUpdateCursor())

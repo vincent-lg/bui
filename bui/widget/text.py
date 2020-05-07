@@ -40,6 +40,7 @@ class Text(Widget):
         self.value = leaf.value
         self.multiline = leaf.multiline
         self.read_only = leaf.read_only
+        self._hidden = leaf.hidden
         self._cursor = Cursor(self)
 
     def __len__(self):
@@ -79,6 +80,11 @@ class Text(Widget):
     def cursor(self):
         """Return the text Cursor object."""
         return self._cursor
+
+    @property
+    def hidden(self):
+        """Return whether the text is hidden or not."""
+        return self.specific.hidden
 
     def enable(self):
         """Force-enable the text."""

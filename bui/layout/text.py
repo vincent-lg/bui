@@ -98,6 +98,9 @@ class Text(Component):
     |              |          | make sure this field     |             |
     |              |          | doesn't contain vital    |             |
     |              |          | information.             |             |
+    | `hidden`     | No       | If present, hide the     | `<text      |
+    |              |          | text, creating a         | hidden>`    |
+    |              |          | password field.          |             |
 
     The required attributes are `x`, and `y`.  It is recommended to also
     set an `id` although the shortened label (only lowercase
@@ -126,6 +129,10 @@ class Text(Component):
     | `disabled`     | On or off (bool) | `print(self.disabled)`      |
     |                | Cannot be set.   |                             |
     | `cursor`       | Cursor object.   | `print(self.cursor.pos)`    |
+    | `hidden`       | Is the text      | `print(self.hidden)`        |
+    |                | field hidden?    |                             |
+    |                | Cannot be set.   |                             |
+
 
     > Use the `value` attribute to read or modify the text content:
 
@@ -359,11 +366,13 @@ class Text(Component):
                 default=False, if_present=True),
         Attr("read-only", help="The text is read-only",
                 default=False, if_present=True),
+        Attr("hidden", help="The text is hidden (as a passord)",
+                default=False, if_present=True),
     )
     must_have_data = True
 
     def __init__(self, layout, parent, x, y, width=1, height=1, id="",
-            value="", multiline=False, read_only=False):
+            value="", multiline=False, read_only=False, hidden=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
@@ -374,6 +383,7 @@ class Text(Component):
         self.value = value
         self.multiline = multiline
         self.read_only = read_only
+        self.hidden = hidden
 
     def complete(self):
         """Complete the widget, when all the layout has been set."""
