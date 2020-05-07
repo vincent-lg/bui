@@ -57,8 +57,10 @@ class WX4Window(WXShared, SpecificWindow):
     def _init(self):
         """Initialize the specific widget."""
         self._wx_init()
+        area = self.usable_surface
         title = self.generic.title
-        self.wx_frame = wx.Frame(None, title=title, name=title)
+        self.wx_frame = wx.Frame(None, title=title, name=title,
+                size=tuple(area.bottom_right))
         #self.wx_app.top_windows.append(self.wx_frame)
         self.wx_parent = self.wx_panel = wx.Panel(self.wx_frame)
         self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
