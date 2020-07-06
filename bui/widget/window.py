@@ -169,7 +169,6 @@ class Window(Widget, metaclass=MetaWindow):
         else:
             bui = cls.bui
             if not bui:
-                breakpoint()
                 filename = Path(inspect.getsourcefile(cls))
                 relative = filename.relative_to(Path().absolute())
                 bui = f"{relative.parent}/{relative.stem}.bui"
