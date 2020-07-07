@@ -36,7 +36,7 @@ class WX4Button(WXShared, SpecificButton):
         window = self.parent
         label = self.generic.name
         self.wx_add = self.wx_obj = self.wx_button = wx.Button(
-                window.wx_parent,label=label, name=label)
+                window.wx_parent, label=label)
         window.add_widget(self)
         if self.generic.leaf.disabled:
             self.wx_button.Disable()

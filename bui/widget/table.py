@@ -1,7 +1,8 @@
 """Module containing the generic Table class, a generic table widget."""
 
 from operator import itemgetter
-from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, Union
+from typing import (Any, Callable, Dict, Iterable, List, Optional,
+        Sequence, Tuple, Union)
 
 from bui.widget.base import Widget, CachedProperty
 
@@ -285,7 +286,11 @@ class Table(Widget):
     @property
     def selected(self):
         """Return the currently selected row."""
-        row = self._rows[self._selected]
+        try:
+            row = self._rows[self._selected]
+        except IndexError:
+            row = None
+
         return row
 
     @selected.setter
@@ -376,7 +381,7 @@ class Table(Widget):
 
         self.specific.update_row(row)
 
-    def remove_row(self, row: Union[int, AbcRow]):
+    def remove_row(self, row: Optional[Union[int, AbcRow]]):
         """
         Remove a row in the table.
 
@@ -385,13 +390,16 @@ class Table(Widget):
                     index of the row to remove.
 
         """
+        if row is None:
+            return
+
         if isinstance(row, int):
             row = self._rows[row]
 
         index = row._index
         del self._rows[index]
-        for row in self._rows[index:]:
-            row._index -= 1
+        for next_row in self._rows[index:]:
+            next_row._index -= 1
 
         self.specific.remove_row(row)
 

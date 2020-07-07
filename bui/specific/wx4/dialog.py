@@ -12,6 +12,7 @@ class WX4Dialog(WX4Window, SpecificDialog):
         self.wx_parent = self.wx_dialog = wx.Dialog(self.generic.window.specific.wx_parent)
         self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
         self.wx_dialog.SetSizer(self.wx_sizer)
+        self.wx_sizer.Fit(self.wx_dialog)
 
     def pop(self):
         self.wx_sizer.Fit(self.wx_dialog)

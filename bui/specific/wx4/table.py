@@ -91,6 +91,8 @@ class WX4Table(WXShared, SpecificTable):
         self.wx_table.DeleteItem(index)
         for wx_row in self._wx_rows[index:]:
             wx_row._index -= 1
+        self.wx_table.Select(index)
+        self.wx_table.Focus(index)
 
     def delete_additional(self):
         """Remove rows that are in generic, not in the wx table."""
