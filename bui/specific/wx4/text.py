@@ -86,7 +86,9 @@ class WX4Text(WXShared, SpecificText):
             style |= wx.TE_READONLY
 
         self.wx_obj = self.wx_text = wx.TextCtrl(window.wx_parent,
-                value=self.generic.value, style=style, name=label)
+                size=window.size_for(self), value=self.generic.value,
+                style=style, name=label)
+        self.wx_text.SetPosition(window.position_for(self))
         self.wx_sizer.Add(self.wx_label)
         self.wx_sizer.Add(self.wx_text, proportion=5)
         window.add_widget(self)

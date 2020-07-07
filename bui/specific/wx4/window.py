@@ -74,6 +74,42 @@ class WX4Window(WXShared, SpecificWindow):
         self.wx_panel.SetSizerAndFit(self.wx_sizer)
         self.wx_frame.SetClientSize(self.wx_panel.GetSize())
 
+    def position_for(self, widget):
+        """
+        Return the position for this widget.
+
+        Args:
+            widget (SpecificWidget): the specific widget.
+
+        Returns:
+            (x, y): position in pixels.
+
+        """
+        generic = widget.generic
+        window = self.generic
+        (top_x, top_y), (bottom_x, bottom_y) = self.usable_surface
+        x = top_x + (generic.x / (window.width + 1)) * (bottom_x - top_x)
+        y = top_y + (generic.y / (window.height + 1)) * (bottom_y - top_y)
+        return (x, y)
+
+    def size_for(self, widget):
+        """
+        Return the size for this widget.
+
+        Args:
+            widget (SpecificWidget): the specific widget to add.
+
+        Returns:
+            (x, y): size in pixels.
+
+        """
+        generic = widget.generic
+        window = self.generic
+        (top_x, top_y), (bottom_x, bottom_y) = self.usable_surface
+        width = (bottom_x - top_x) * (generic.width / (window.width + 1)) - 5
+        height = (bottom_y - top_y) * (generic.height / (window.height + 1)) - 5
+        return (int(width), int(height))
+
     def add_widget(self, widget: SpecificWidget):
         """
         Add a widget on the window.
@@ -83,12 +119,14 @@ class WX4Window(WXShared, SpecificWindow):
 
         """
         generic = widget.generic
+        window = self.generic
         (top_x, top_y), (bottom_x, bottom_y) = self.usable_surface
-        x = top_x + (generic.x / (self.generic.width + 1)) * (bottom_x - top_x)
-        y = top_y + (generic.y / (self.generic.height + 1)) * (bottom_y - top_y)
-        width = (bottom_x - top_x) * (generic.width / (self.generic.width + 1)) - 5
-        height = (bottom_y - top_y) * (generic.height / (self.generic.height + 1)) - 5
-        widget.wx_obj.SetSize(int(x), int(y), int(width), int(height))
+        x = top_x + (generic.x / (window.width + 1)) * (bottom_x - top_x)
+        y = top_y + (generic.y / (window.height + 1)) * (bottom_y - top_y)
+        width = (bottom_x - top_x) * (generic.width / (window.width + 1)) - 5
+        height = (bottom_y - top_y) * (generic.height / (window.height + 1)) - 5
+        widget.wx_obj.SetPosition((int(x), int(y)))
+        widget.wx_obj.SetSize(int(width), int(height))
         self.wx_sizer.Add(widget.wx_add)
 
     def show(self):
