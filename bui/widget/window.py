@@ -150,7 +150,7 @@ class Window(Widget, metaclass=MetaWindow):
         return self.specific.usable_surface
 
     @classmethod
-    def parse_layout(cls, Window, tag_name="window"):
+    def parse_layout(cls, Window, tag_name="window", **kwargs):
         """
         Determine where the layout is and try to parse it, return a window.
 
@@ -198,6 +198,9 @@ class Window(Widget, metaclass=MetaWindow):
                 Generic = WIDGETS[leaf.tag_name]
 
             widget = Generic(leaf)
+            for key, value in kwargs.items():
+                setattr(widget, key, value)
+
             leaf.widget = widget
             widget.create_specific()
             widgets.append(widget)
@@ -295,8 +298,8 @@ class Window(Widget, metaclass=MetaWindow):
 
 
 
-    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']]
-            ) -> 'wg.dialog.Dialog':
+    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']],
+            **kwargs) -> 'wg.dialog.Dialog':
         """
         Pop up a custom dialog, blocks until the dialog has been closed.
 
@@ -316,7 +319,7 @@ class Window(Widget, metaclass=MetaWindow):
             dialog = NewDialog
         assert issubclass(dialog, wg.dialog.Dialog)
         dialog.window = self
-        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog")
+        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog", **kwargs)
         self.specific.pop_dialog(dialog_obj.specific)
         return dialog_obj
 

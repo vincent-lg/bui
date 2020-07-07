@@ -271,8 +271,8 @@ class Dialog(Component):
     tag_name = "dialog"
     attrs = (
         Attr("title", help="The dialog title"),
-        Attr("width", help="The dialog width", type=int, default=100),
-        Attr("height", help="The dialog height", type=int, default=100),
+        Attr("width", help="The dialog width", type=int, default=6),
+        Attr("height", help="The dialog height", type=int, default=6),
     )
 
     def __init__(self, layout, parent, title, width=0, height=0):
