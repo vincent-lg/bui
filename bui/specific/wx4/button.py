@@ -47,4 +47,4 @@ class WX4Button(WXShared, SpecificButton):
 
     def OnClick(self, e):
         """The menu is seslected, create a click control."""
-        self.generic._process_control("click")
+        self.process_control(e, "click")

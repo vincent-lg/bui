@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Dict, Optional, Union
 
 from bui.specific.base import *
 
@@ -77,4 +78,21 @@ class SpecificWindow(SpecificWidget):
     @abstractmethod
     def pop_menu(self, context: SpecificWidget):
         """Pop a context menu, blocks until the menu is closed."""
+        pass
+
+    @abstractmethod
+    def pop_alert(self, title: str, message: str,
+            danger: str, buttons: Dict[str, Union[bool, str]],
+            default: str):
+        """
+        Display an alert message.
+
+        Args:
+            title (str): the alert title.
+            message (str): the alert message.
+            danger (str): the alert danger (dialog type).
+            buttons (dict): the buttons of this dialog.
+            default (str): the default button for this dialog.
+
+        """
         pass

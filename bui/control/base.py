@@ -18,6 +18,7 @@ _WINDOW = None
 
 # Dictionary of existing controls
 CONTROLS = {}
+NOT_SET = object()
 
 class MetaControl(type):
 
@@ -197,7 +198,7 @@ class Control(metaclass=MetaControl):
         wid = getattr(self.widget, "id", "")
         self._report_fire(options)
 
-        # Call on_{control} on the widget
+        # Call handle_{control} on the widget
         method = getattr(self.widget, f"handle_{self.name}", None)
         if method:
             method(self)
@@ -205,7 +206,11 @@ class Control(metaclass=MetaControl):
         # Call the `on_...` method on the window
         options = options or {}
         methods = self.widget.controls.get(self.name, [])
+        res = NOT_SET
         for group, method in methods:
+            if res is not NOT_SET:
+                continue
+
             to_test = {}
             for key, value in options.items():
                 if key in group.keys():
@@ -213,16 +218,28 @@ class Control(metaclass=MetaControl):
 
             if group and group == to_test:
                 self._report_call(method, child=True, wid=wid)
-                return self._call_method(method)
+                res = self._call_method(method)
+                break
 
         # At this point we consider no match was found in the options,
         # so we call the parent control if appropriate.
         options = {}
         methods = self.widget.controls.get(self.name, [])
         for group, method in methods:
+            if res is not NOT_SET:
+                continue
+
             if group == options:
                 self._report_call(method, wid=wid)
-                return self._call_method(method)
+                res = self._call_method(method)
+                break
+
+        # Call after_{control} on the widget
+        method = getattr(self.widget, f"after_{self.name}", None)
+        if method:
+            method(self)
+
+        return res
 
     def stop(self, reason=""):
         """

@@ -7,6 +7,8 @@ account for spanning that might occur.
 
 """
 
+from typing import Dict, Union
+
 import wx
 
 from bui.specific.base import *
@@ -180,6 +182,54 @@ class WX4Window(WXShared, SpecificWindow):
     def pop_menu(self, context: SpecificWidget):
         """Pop a context menu, blocks until the menu is closed."""
         self.wx_frame.PopupMenu(context.wx_menu)
+
+    def pop_alert(self, title: str, message: str,
+            danger: str, buttons: Dict[str, Union[bool, str]],
+            default: str):
+        """
+        Display an alert message.
+
+        Args:
+            title (str): the alert title.
+            message (str): the alert message.
+            danger (str): the alert danger (dialog type).
+            buttons (dict): the buttons of this dialog.
+            default (str): the default button for this dialog.
+
+        """
+        # Look for the icon
+        icons = {
+                "info": wx.ICON_INFORMATION,
+                "warning": wx.ICON_WARNING,
+                "error": wx.ICON_ERROR,
+                "question": wx.ICON_QUESTION,
+        }
+        style = icons.get(danger, 0)
+        if style == 0:
+            raise ValueError(f"unknown danger: {danger!r}")
+
+        button_styles = {
+                "ok": wx.OK,
+                "cancel": wx.CANCEL,
+        }
+
+        for button, button_style in button_styles.items():
+            if button in buttons:
+                style |= style
+
+        if "yes" in buttons or "no" in buttons:
+            style |= wx.YES_NO
+
+        default_buttons = {
+                "ok": wx.OK_DEFAULT,
+                "cancel": wx.CANCEL_DEFAULT,
+                "yes": wx.YES_DEFAULT,
+                "no": wx.NO_DEFAULT,
+        }
+        style |= default_buttons[default]
+        style |= wx.CENTRE
+        parent = self.generic.window.specific.wx_parent
+        return wx.MessageBox(message, caption=title, style=style)
 
     def prepare_other_window(self, window):
         """Prepare another window."""

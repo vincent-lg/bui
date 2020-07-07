@@ -298,6 +298,45 @@ class Window(Widget, metaclass=MetaWindow):
 
 
 
+    def pop_alert(self, title: str, message: str,
+            danger: Optional[str] = "error",
+            ok: Optional[Union[bool, str]] = True,
+            cancel: Optional[Union[bool, str]] = False,
+            yes: Optional[Union[bool, str]] = False,
+            no: Optional[Union[bool, str]] = False,
+            default: Optional[str] = "ok"):
+        """
+        Display a default message box for inforiation or errors.
+
+        Args:
+            title (str): the dialog title.
+            message (str): the message title, can be on several lines.
+            danger (str): the type of the dialog which will influence how noisy it is, what icon it displays and so on.  Possible values are:
+                    "info": informative dialog, just to be polite.
+                    "warning": warning message, danger increases.
+                    "error": error message, probably can't go on.
+                    "quesiton": just a question to ask the user.
+            ok (bool or str, optional): should a OK butotn appear?
+            cancel (bool or str, optional): should a cancel button appear?
+            yes (bool or str, optional): should a yes butotn appear?
+            no (bool or str, optional): should a no butotn appear?
+            default (str, optional): the name of the default button.
+
+        The button can either be set to True (only ok is set to True
+        by default), or contain a string of the button label to display.
+
+        """
+        buttons = {}
+        if ok: buttons["ok"] = ok
+        if cancel: buttons["cancel"] = cancel
+        if yes: buttons["yes"] = yes
+        if no: buttons["no"] = no
+        if default not in buttons.keys():
+            raise ValueError(f"{default!r} isn't in this alert box buttons")
+
+        self.specific.pop_alert(title=title, message=message,
+                danger=danger, buttons=buttons, default=default)
+
     def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']],
             **kwargs) -> 'wg.dialog.Dialog':
         """
@@ -321,7 +360,8 @@ class Window(Widget, metaclass=MetaWindow):
         dialog.window = self
         dialog_obj = dialog.parse_layout(dialog, tag_name="dialog", **kwargs)
         self.specific.pop_dialog(dialog_obj.specific)
-        return dialog_obj
+        res = dialog_obj
+        return res
 
     def pop_menu(self, context_id: str):
         """

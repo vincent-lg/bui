@@ -90,7 +90,7 @@ class WXShared:
 
         """
         widget = self
-        while control not in widget.generic.controls:
+        while control not in widget.generic.default_controls:
             widget = widget.parent
             if widget is None:
                 break

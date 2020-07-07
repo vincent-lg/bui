@@ -71,8 +71,8 @@ class Button(Widget):
         """Disable the checkbox."""
         self.specific.disable()
 
-    def handle_click(self, control):
-        """Do nothing if a button is clicked."""
+    def after_click(self, control):
+        """Close the dialog if the button was set."""
         if self.parent.widget == "dialog":
             if self.set_true or self.set_false or self.set:
                 if self.set:
