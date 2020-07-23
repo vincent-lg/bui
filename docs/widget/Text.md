@@ -12,13 +12,14 @@ depending on the used GUI toolkit.
 
 ## Class summary
 
-This class offers 3 properties.
+This class offers 4 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
 | [cursor](#cursor) | Return the text Cursor object. | **Can't write** |
 | [disabled](#disabled) | Return whether the text is disabled or not. | **Can't write** |
 | [enabled](#enabled) | Return whether the text is enabled or not. | **Can't write** |
+| [hidden](#hidden) | Return whether the text is hidden or not. | **Can't write** |
 
 This class offers 5 methods.
 
@@ -38,7 +39,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L78)
+[See the source code](../raw/widget/text.html#L79)
 
 Return the text Cursor object.
 
@@ -48,7 +49,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L73)
+[See the source code](../raw/widget/text.html#L74)
 
 Return whether the text is disabled or not.
 
@@ -58,9 +59,19 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L68)
+[See the source code](../raw/widget/text.html#L69)
 
 Return whether the text is enabled or not.
+
+### hidden
+
+This property can only get (read-only).
+
+#### Get
+
+[See the source code](../raw/widget/text.html#L84)
+
+Return whether the text is hidden or not.
 
 ## Methods
 
@@ -83,7 +94,7 @@ raise no exception.
 
 `disable(self)`
 
-[See the source code](../raw/widget/text.html#L87)
+[See the source code](../raw/widget/text.html#L93)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -95,7 +106,7 @@ Disable the text.
 
 `enable(self)`
 
-[See the source code](../raw/widget/text.html#L83)
+[See the source code](../raw/widget/text.html#L89)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

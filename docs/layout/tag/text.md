@@ -36,6 +36,7 @@ the text label will be used.
 | `value` | No | The default value of the text widget. | `<text value=Me>` |
 | `multiline` | No | If present, set the text on multiple lines. | `<text multiline>` |
 | `read-only` | No | If present, the text field will be read-only, forbiding the user to edit it. The text value will still be editable through code. Due to system constraints, this behavior cannot be altered, once set, a read-only text cannot be turned back into an editable one. Also note that screen readers will probably ignore a read-only text field and forbid to focus one, so make sure this field doesn't contain vital information. | `<text read-only>` |
+| `hidden` | No | If present, hide the text, creating a password field. | `<text hidden>` |
 
 The required attributes are `x`, and `y`.  It is recommended to also
 set an `id` although the shortened label (only lowercase
@@ -61,6 +62,8 @@ object.  You can access and modify its attributes in a control method.
 | `enabled` | On or off (bool) Cannot be set. | `print(self.enabled)` |
 | `disabled` | On or off (bool) Cannot be set. | `print(self.disabled)` |
 | `cursor` | Cursor object. | `print(self.cursor.pos)` |
+| `hidden` | Is the text field hidden? Cannot be set. | `print(self.hidden)` |
+
 
 > Use the `value` attribute to read or modify the text content:
 

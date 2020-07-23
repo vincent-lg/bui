@@ -93,8 +93,8 @@
       <span style="white-space: pre;"><a id="L71"></a>        """Disable the checkbox."""</span><br />
       <span style="white-space: pre;"><a id="L72"></a>        self.specific.disable()</span><br />
       <span style="white-space: pre;"><a id="L73"></a></span><br />
-      <span style="white-space: pre;"><a id="L74"></a>    def handle_click(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L75"></a>        """Do nothing if a button is clicked."""</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    def after_click(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>        """Close the dialog if the button was set."""</span><br />
       <span style="white-space: pre;"><a id="L76"></a>        if self.parent.widget == "dialog":</span><br />
       <span style="white-space: pre;"><a id="L77"></a>            if self.set_true or self.set_false or self.set:</span><br />
       <span style="white-space: pre;"><a id="L78"></a>                if self.set:</span><br />

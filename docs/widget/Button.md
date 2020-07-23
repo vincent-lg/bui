@@ -22,10 +22,10 @@ This class offers 7 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
+| [after_click](#after_click) | `after_click(control)` | Close the dialog if the button was set. |
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
 | [disable](#disable) | `disable()` | Disable the checkbox. |
 | [enable](#enable) | `enable()` | Force-enable the checkbox. |
-| [handle_click](#handle_click) | `handle_click(control)` | Do nothing if a button is clicked. |
 | [handle_press](#handle_press) | `handle_press(control)` | Do nothing if a button is pressed. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
 | [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
@@ -53,6 +53,19 @@ This property can only get (read-only).
 Return whether the checkbox is enabled or not.
 
 ## Methods
+
+### after_click
+
+`after_click(self, control)`
+
+[See the source code](../raw/widget/button.html#L74)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Button` |  |
+| control | *Not set* |  |
+
+Close the dialog if the button was set.
 
 ### create_specific
 
@@ -92,19 +105,6 @@ Disable the checkbox.
 | self | `Button` |  |
 
 Force-enable the checkbox.
-
-### handle_click
-
-`handle_click(self, control)`
-
-[See the source code](../raw/widget/button.html#L74)
-
-| Parameter | Type | Default |
-| --------- | ---- | ------- |
-| self | `Button` |  |
-| control | *Not set* |  |
-
-Do nothing if a button is clicked.
 
 ### handle_press
 

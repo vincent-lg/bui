@@ -189,7 +189,7 @@ class Press(Control):
 
     With all this flexibility, sometimes you just need to know the real
     key the user pressed.  This information is contained inside the
-    control object.  You can easily access it as a method argument?
+    control object.  You can easily access it as a method argument.
 
         def on_press(self, key):
             print(f"The user pressed {key!r}.")
@@ -201,8 +201,35 @@ class Press(Control):
     The `key` argument is actually filled by the control manager.  When
     it examines your method signature and sees you want extra information,
     it looks at the control.  `key` is an attribute on the control, so
-    it knows where it should come from.  You can also use the control
-    itself:
+    it knows where it should come from.
+
+    > Why is that useful?  I should know what key was pressed,
+      it's right in the method name!
+
+    In most cases, that's true.  In sub-controls, where you don't
+    know the key that was pressed, this can be useful.  But most
+    importantly, if you set a control method to intercept different
+    key presses but you still need to know which key was pressed,
+    this can be useful:
+
+        class Example(Window):
+
+            def move_around(self, key):
+                print(f"Move around the map.  The user pressed {key!r}")
+            on_press_left = move_around
+            on_press_right = move_around
+            on_press_up = move_around
+            on_press_down = move_around
+            # And if you don't mind, you can shorten that to a single
+            # line, thanks to Python syntax.  Shorter is not always clearer.
+            on_press_left = on_press_right = on_press_up = on_press_down = move_around
+
+    In this example, you set the `move_around` method to be called
+    if the user presses either the left, right, up or down arrow key.
+    But if you need to know which key was pressed inside the method,
+    then having the `key` in the control method argument is handy.
+
+    You can also use the control itself to obtain this information:
 
         def on_press(self, control):
 

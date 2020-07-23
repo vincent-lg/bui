@@ -211,7 +211,7 @@
       <span style="white-space: pre;"><a id="L189"></a></span><br />
       <span style="white-space: pre;"><a id="L190"></a>    With all this flexibility, sometimes you just need to know the real</span><br />
       <span style="white-space: pre;"><a id="L191"></a>    key the user pressed.  This information is contained inside the</span><br />
-      <span style="white-space: pre;"><a id="L192"></a>    control object.  You can easily access it as a method argument?</span><br />
+      <span style="white-space: pre;"><a id="L192"></a>    control object.  You can easily access it as a method argument.</span><br />
       <span style="white-space: pre;"><a id="L193"></a></span><br />
       <span style="white-space: pre;"><a id="L194"></a>        def on_press(self, key):</span><br />
       <span style="white-space: pre;"><a id="L195"></a>            print(f"The user pressed {key!r}.")</span><br />
@@ -223,69 +223,96 @@
       <span style="white-space: pre;"><a id="L201"></a>    The `key` argument is actually filled by the control manager.  When</span><br />
       <span style="white-space: pre;"><a id="L202"></a>    it examines your method signature and sees you want extra information,</span><br />
       <span style="white-space: pre;"><a id="L203"></a>    it looks at the control.  `key` is an attribute on the control, so</span><br />
-      <span style="white-space: pre;"><a id="L204"></a>    it knows where it should come from.  You can also use the control</span><br />
-      <span style="white-space: pre;"><a id="L205"></a>    itself:</span><br />
-      <span style="white-space: pre;"><a id="L206"></a></span><br />
-      <span style="white-space: pre;"><a id="L207"></a>        def on_press(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    it knows where it should come from.</span><br />
+      <span style="white-space: pre;"><a id="L205"></a></span><br />
+      <span style="white-space: pre;"><a id="L206"></a>    &gt; Why is that useful?  I should know what key was pressed,</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>      it's right in the method name!</span><br />
       <span style="white-space: pre;"><a id="L208"></a></span><br />
-      <span style="white-space: pre;"><a id="L209"></a>    `control` is a reserved name that will always contain the control object.</span><br />
-      <span style="white-space: pre;"><a id="L210"></a>    Read on control attributes in the next section to know what to use as</span><br />
-      <span style="white-space: pre;"><a id="L211"></a>    your control method argument.  Of course, your control method can</span><br />
-      <span style="white-space: pre;"><a id="L212"></a>    receive, beyond `self`, none, one or more argument depending on your</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>    needs.</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>    In most cases, that's true.  In sub-controls, where you don't</span><br />
+      <span style="white-space: pre;"><a id="L210"></a>    know the key that was pressed, this can be useful.  But most</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>    importantly, if you set a control method to intercept different</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>    key presses but you still need to know which key was pressed,</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>    this can be useful:</span><br />
       <span style="white-space: pre;"><a id="L214"></a></span><br />
-      <span style="white-space: pre;"><a id="L215"></a>    ## Control attributes</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>        class Example(Window):</span><br />
       <span style="white-space: pre;"><a id="L216"></a></span><br />
-      <span style="white-space: pre;"><a id="L217"></a>    The control object has the following attributes:</span><br />
-      <span style="white-space: pre;"><a id="L218"></a></span><br />
-      <span style="white-space: pre;"><a id="L219"></a>    | Attribute | Type      | Note                                |</span><br />
-      <span style="white-space: pre;"><a id="L220"></a>    | --------- | --------- | ----------------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L221"></a>    | key       | str       | The name of the key being pressed.  |</span><br />
-      <span style="white-space: pre;"><a id="L222"></a>    | raw_key   | str       | The raw key with no control keys.   |</span><br />
-      <span style="white-space: pre;"><a id="L223"></a>    | ctrl      | bool      | Is the CTRL key being pressed too?     |</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>    | meta      | bool      | Is the Meta key being pressed too?     |</span><br />
-      <span style="white-space: pre;"><a id="L225"></a>    | alt       | bool      | Is the Alt key being pressed too?      |</span><br />
-      <span style="white-space: pre;"><a id="L226"></a>    | shift     | bool      | Is the Shift key being pressed too?    |</span><br />
-      <span style="white-space: pre;"><a id="L227"></a></span><br />
-      <span style="white-space: pre;"><a id="L228"></a>    &gt; The `raw_key` attribute is useful if you want to intercept 'a' but</span><br />
-      <span style="white-space: pre;"><a id="L229"></a>      don't care if CTRL or Alt or all of the control keys is being pressed</span><br />
-      <span style="white-space: pre;"><a id="L230"></a>      at the time.</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>            def move_around(self, key):</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>                print(f"Move around the map.  The user pressed {key!r}")</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>            on_press_left = move_around</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>            on_press_right = move_around</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>            on_press_up = move_around</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>            on_press_down = move_around</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>            # And if you don't mind, you can shorten that to a single</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>            # line, thanks to Python syntax.  Shorter is not always clearer.</span><br />
+      <span style="white-space: pre;"><a id="L225"></a>            on_press_left = on_press_right = on_press_up = on_press_down = move_around</span><br />
+      <span style="white-space: pre;"><a id="L226"></a></span><br />
+      <span style="white-space: pre;"><a id="L227"></a>    In this example, you set the `move_around` method to be called</span><br />
+      <span style="white-space: pre;"><a id="L228"></a>    if the user presses either the left, right, up or down arrow key.</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>    But if you need to know which key was pressed inside the method,</span><br />
+      <span style="white-space: pre;"><a id="L230"></a>    then having the `key` in the control method argument is handy.</span><br />
       <span style="white-space: pre;"><a id="L231"></a></span><br />
-      <span style="white-space: pre;"><a id="L232"></a>    Use these attributes as your control method argument.  For instance:</span><br />
+      <span style="white-space: pre;"><a id="L232"></a>    You can also use the control itself to obtain this information:</span><br />
       <span style="white-space: pre;"><a id="L233"></a></span><br />
-      <span style="white-space: pre;"><a id="L234"></a>        def on_press(self, raw_key, shift):</span><br />
+      <span style="white-space: pre;"><a id="L234"></a>        def on_press(self, control):</span><br />
       <span style="white-space: pre;"><a id="L235"></a></span><br />
-      <span style="white-space: pre;"><a id="L236"></a>    Alternatively you can specify the `control` keyword argument in your</span><br />
-      <span style="white-space: pre;"><a id="L237"></a>    method signature which will always contain the control object.</span><br />
-      <span style="white-space: pre;"><a id="L238"></a></span><br />
-      <span style="white-space: pre;"><a id="L239"></a>        def on_press(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L240"></a>            print(f"The user pressed on {control.key}.")</span><br />
+      <span style="white-space: pre;"><a id="L236"></a>    `control` is a reserved name that will always contain the control object.</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>    Read on control attributes in the next section to know what to use as</span><br />
+      <span style="white-space: pre;"><a id="L238"></a>    your control method argument.  Of course, your control method can</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>    receive, beyond `self`, none, one or more argument depending on your</span><br />
+      <span style="white-space: pre;"><a id="L240"></a>    needs.</span><br />
       <span style="white-space: pre;"><a id="L241"></a></span><br />
-      <span style="white-space: pre;"><a id="L242"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L242"></a>    ## Control attributes</span><br />
       <span style="white-space: pre;"><a id="L243"></a></span><br />
-      <span style="white-space: pre;"><a id="L244"></a>    name = "press"</span><br />
-      <span style="white-space: pre;"><a id="L245"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>            "window": "The user presses on her keyboard anywhere in the window",</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>    }</span><br />
-      <span style="white-space: pre;"><a id="L248"></a></span><br />
-      <span style="white-space: pre;"><a id="L249"></a>    has_sub_controls = True</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>    pattern_for_window = (</span><br />
-      <span style="white-space: pre;"><a id="L251"></a>        fr"^on_press_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
-      <span style="white-space: pre;"><a id="L252"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))$")</span><br />
-      <span style="white-space: pre;"><a id="L253"></a>    pattern_for_widgets = (</span><br />
-      <span style="white-space: pre;"><a id="L254"></a>        fr"^on_press_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
-      <span style="white-space: pre;"><a id="L255"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))_in_{{id}}$")</span><br />
-      <span style="white-space: pre;"><a id="L256"></a>    options = ("key", "raw_key", "ctrl", "meta", "alt", "shift")</span><br />
-      <span style="white-space: pre;"><a id="L257"></a></span><br />
-      <span style="white-space: pre;"><a id="L258"></a>    def __init__(self, widget, key, raw_key, ctrl=False, meta=False,</span><br />
-      <span style="white-space: pre;"><a id="L259"></a>            alt=False, shift=False):</span><br />
-      <span style="white-space: pre;"><a id="L260"></a>        super().__init__(widget)</span><br />
-      <span style="white-space: pre;"><a id="L261"></a>        self.key = key</span><br />
-      <span style="white-space: pre;"><a id="L262"></a>        self.raw_key = raw_key</span><br />
-      <span style="white-space: pre;"><a id="L263"></a>        self.ctrl = ctrl</span><br />
-      <span style="white-space: pre;"><a id="L264"></a>        self.meta = meta</span><br />
-      <span style="white-space: pre;"><a id="L265"></a>        self.alt = alt</span><br />
-      <span style="white-space: pre;"><a id="L266"></a>        self.shift = shift</span><br />
+      <span style="white-space: pre;"><a id="L244"></a>    The control object has the following attributes:</span><br />
+      <span style="white-space: pre;"><a id="L245"></a></span><br />
+      <span style="white-space: pre;"><a id="L246"></a>    | Attribute | Type      | Note                                |</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>    | --------- | --------- | ----------------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>    | key       | str       | The name of the key being pressed.  |</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>    | raw_key   | str       | The raw key with no control keys.   |</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>    | ctrl      | bool      | Is the CTRL key being pressed too?     |</span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    | meta      | bool      | Is the Meta key being pressed too?     |</span><br />
+      <span style="white-space: pre;"><a id="L252"></a>    | alt       | bool      | Is the Alt key being pressed too?      |</span><br />
+      <span style="white-space: pre;"><a id="L253"></a>    | shift     | bool      | Is the Shift key being pressed too?    |</span><br />
+      <span style="white-space: pre;"><a id="L254"></a></span><br />
+      <span style="white-space: pre;"><a id="L255"></a>    &gt; The `raw_key` attribute is useful if you want to intercept 'a' but</span><br />
+      <span style="white-space: pre;"><a id="L256"></a>      don't care if CTRL or Alt or all of the control keys is being pressed</span><br />
+      <span style="white-space: pre;"><a id="L257"></a>      at the time.</span><br />
+      <span style="white-space: pre;"><a id="L258"></a></span><br />
+      <span style="white-space: pre;"><a id="L259"></a>    Use these attributes as your control method argument.  For instance:</span><br />
+      <span style="white-space: pre;"><a id="L260"></a></span><br />
+      <span style="white-space: pre;"><a id="L261"></a>        def on_press(self, raw_key, shift):</span><br />
+      <span style="white-space: pre;"><a id="L262"></a></span><br />
+      <span style="white-space: pre;"><a id="L263"></a>    Alternatively you can specify the `control` keyword argument in your</span><br />
+      <span style="white-space: pre;"><a id="L264"></a>    method signature which will always contain the control object.</span><br />
+      <span style="white-space: pre;"><a id="L265"></a></span><br />
+      <span style="white-space: pre;"><a id="L266"></a>        def on_press(self, control):</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>            print(f"The user pressed on {control.key}.")</span><br />
+      <span style="white-space: pre;"><a id="L268"></a></span><br />
+      <span style="white-space: pre;"><a id="L269"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L270"></a></span><br />
+      <span style="white-space: pre;"><a id="L271"></a>    name = "press"</span><br />
+      <span style="white-space: pre;"><a id="L272"></a>    widgets = {</span><br />
+      <span style="white-space: pre;"><a id="L273"></a>            "window": "The user presses on her keyboard anywhere in the window",</span><br />
+      <span style="white-space: pre;"><a id="L274"></a>    }</span><br />
+      <span style="white-space: pre;"><a id="L275"></a></span><br />
+      <span style="white-space: pre;"><a id="L276"></a>    has_sub_controls = True</span><br />
+      <span style="white-space: pre;"><a id="L277"></a>    pattern_for_window = (</span><br />
+      <span style="white-space: pre;"><a id="L278"></a>        fr"^on_press_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
+      <span style="white-space: pre;"><a id="L279"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))$")</span><br />
+      <span style="white-space: pre;"><a id="L280"></a>    pattern_for_widgets = (</span><br />
+      <span style="white-space: pre;"><a id="L281"></a>        fr"^on_press_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
+      <span style="white-space: pre;"><a id="L282"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))_in_{{id}}$")</span><br />
+      <span style="white-space: pre;"><a id="L283"></a>    options = ("key", "raw_key", "ctrl", "meta", "alt", "shift")</span><br />
+      <span style="white-space: pre;"><a id="L284"></a></span><br />
+      <span style="white-space: pre;"><a id="L285"></a>    def __init__(self, widget, key, raw_key, ctrl=False, meta=False,</span><br />
+      <span style="white-space: pre;"><a id="L286"></a>            alt=False, shift=False):</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>        super().__init__(widget)</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>        self.key = key</span><br />
+      <span style="white-space: pre;"><a id="L289"></a>        self.raw_key = raw_key</span><br />
+      <span style="white-space: pre;"><a id="L290"></a>        self.ctrl = ctrl</span><br />
+      <span style="white-space: pre;"><a id="L291"></a>        self.meta = meta</span><br />
+      <span style="white-space: pre;"><a id="L292"></a>        self.alt = alt</span><br />
+      <span style="white-space: pre;"><a id="L293"></a>        self.shift = shift</span><br />
     </div>
   </body>
 </html>

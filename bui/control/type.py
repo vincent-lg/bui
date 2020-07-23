@@ -128,6 +128,7 @@ class Type(Control):
 
     has_sub_controls = True
     pattern_for_window = fr"^on_type_(?P<unicode>.)$"
+    name_for_widgets_without_options = "on_{control}_in_{wid}"
     pattern_for_widgets = fr"^on_type_(?P<unicode>.)_in_{{id}}$"
     options = ("unicode", )
 

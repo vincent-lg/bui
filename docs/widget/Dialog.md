@@ -14,7 +14,7 @@ This class offers 1 property.
 | -------- | --- | --- |
 | [usable_surface](#usable_surface) | Return the screen size that can be used, in pixels. | **Can't write** |
 
-This class offers 12 methods.
+This class offers 13 methods.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
@@ -23,8 +23,9 @@ This class offers 12 methods.
 | [handle_close](#handle_close) | `handle_close(control)` | The window closes. |
 | [mark](#mark) | `mark(layout: str)` | Mark layout in the window. |
 | [open_window](#open_window) | `open_window(window: 'Window', child=False)` | Open a new window. |
-| [parse_layout](#parse_layout) | `parse_layout(Window, tag_name='window')` | Determine where the layout is and try to parse it, return a window. |
-| [pop_dialog](#pop_dialog) | `pop_dialog(dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])` | Pop up a custom dialog, blocks until the dialog has been closed. |
+| [parse_layout](#parse_layout) | `parse_layout(Window, tag_name='window', **kwargs)` | Determine where the layout is and try to parse it, return a window. |
+| [pop_alert](#pop_alert) | `pop_alert(title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')` | Display a default message box for inforiation or errors. |
+| [pop_dialog](#pop_dialog) | `pop_dialog(dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]], **kwargs)` | Pop up a custom dialog, blocks until the dialog has been closed. |
 | [pop_menu](#pop_menu) | `pop_menu(context_id: str)` | Pop a context menu, blocks until the menu is closed. |
 | [pop_open_file](#pop_open_file) | `pop_open_file(message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)` | Display a system dialog to select one or several files. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
@@ -57,7 +58,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L247)
+[See the source code](../raw/widget/dialog.html#L251)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -84,7 +85,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L347)
+[See the source code](../raw/widget/dialog.html#L391)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -109,7 +110,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L333)
+[See the source code](../raw/widget/dialog.html#L377)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -126,7 +127,7 @@ Args:
 
 ### parse_layout
 
-`parse_layout(Window, tag_name='window')`
+`parse_layout(Window, tag_name='window', **kwargs)`
 
 [See the source code](../raw/widget/dialog.html#L152)
 
@@ -134,22 +135,61 @@ Args:
 | --------- | ---- | ------- |
 | Window | *Not set* |  |
 | tag_name | *Not set* | `'window'` |
+| kwargs | *Not set* |  |
 
 Determine where the layout is and try to parse it, return a window.
 
 Raises:
     ValueError: the layout couldn't be parsed.
 
+### pop_alert
+
+`pop_alert(self, title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')`
+
+[See the source code](../raw/widget/dialog.html#L301)
+
+| Parameter | Type | Default |
+| --------- | ---- | ------- |
+| self | `Dialog` |  |
+| title | `str` |  |
+| message | `str` |  |
+| danger | `Union[str, NoneType]` | `'error'` |
+| ok | `Union[bool, str, NoneType]` | `True` |
+| cancel | `Union[bool, str, NoneType]` | `False` |
+| yes | `Union[bool, str, NoneType]` | `False` |
+| no | `Union[bool, str, NoneType]` | `False` |
+| default | `Union[str, NoneType]` | `'ok'` |
+
+Display a default message box for inforiation or errors.
+
+Args:
+    title (str): the dialog title.
+    message (str): the message title, can be on several lines.
+    danger (str): the type of the dialog which will influence how noisy it is, what icon it displays and so on.  Possible values are:
+            "info": informative dialog, just to be polite.
+            "warning": warning message, danger increases.
+            "error": error message, probably can't go on.
+            "quesiton": just a question to ask the user.
+    ok (bool or str, optional): should a OK butotn appear?
+    cancel (bool or str, optional): should a cancel button appear?
+    yes (bool or str, optional): should a yes butotn appear?
+    no (bool or str, optional): should a no butotn appear?
+    default (str, optional): the name of the default button.
+
+The button can either be set to True (only ok is set to True
+by default), or contain a string of the button label to display.
+
 ### pop_dialog
 
-`pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]])`
+`pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]], **kwargs)`
 
-[See the source code](../raw/widget/dialog.html#L297)
+[See the source code](../raw/widget/dialog.html#L340)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Dialog` |  |
 | dialog | `Union[str, Type[ForwardRef('wg.dialog.Dialog')]]` |  |
+| kwargs | *Not set* |  |
 
 Pop up a custom dialog, blocks until the dialog has been closed.
 
@@ -165,7 +205,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L322)
+[See the source code](../raw/widget/dialog.html#L366)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -181,7 +221,7 @@ Args:
 
 `pop_open_file(self, message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)`
 
-[See the source code](../raw/widget/dialog.html#L255)
+[See the source code](../raw/widget/dialog.html#L259)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -262,7 +302,7 @@ Args:
 
 `stop_control(self)`
 
-[See the source code](../raw/widget/dialog.html#L251)
+[See the source code](../raw/widget/dialog.html#L255)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

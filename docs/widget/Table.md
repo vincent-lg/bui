@@ -1,4 +1,4 @@
-# Table in [widget/table:143](../raw/widget/table.html#L143)
+# Table in [widget/table:144](../raw/widget/table.html#L144)
 
 The generic table widget.
 
@@ -26,7 +26,7 @@ This class offers 7 methods.
 | ------ | --------- | ----------- |
 | [add_row](#add_row) | `add_row(*args, **kwargs)` | Add a new row with the specified arguments at the bottom of the table. |
 | [create_specific](#create_specific) | `create_specific()` | Create the specific widget, using the `specific_package` attribute. |
-| [remove_row](#remove_row) | `remove_row(row: Union[int, bui.widget.table.AbcRow])` | Remove a row in the table. |
+| [remove_row](#remove_row) | `remove_row(row: Union[int, bui.widget.table.AbcRow, NoneType])` | Remove a row in the table. |
 | [schedule](#schedule) | `schedule(coroutine)` | Schedule the specified coroutine in the main event loop. |
 | [sleep](#sleep) | `sleep(seconds)` | Asynchronous sleep during the specified number of seconds. |
 | [sort](#sort) | `sort(key: Callable = None, reverse: bool = False)` | Sort the table rows, given an optional key. |
@@ -40,7 +40,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L194)
+[See the source code](../raw/widget/table.html#L195)
 
 Return a tuple of the valid row classes for this widget.
 
@@ -50,13 +50,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L248)
+[See the source code](../raw/widget/table.html#L249)
 
 Return the table rows.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L253)
+[See the source code](../raw/widget/table.html#L254)
 
 Modify the table rows.
 
@@ -71,13 +71,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L285)
+[See the source code](../raw/widget/table.html#L286)
 
 Return the currently selected row.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L291)
+[See the source code](../raw/widget/table.html#L296)
 
 Select the given row or index.
 
@@ -90,7 +90,7 @@ Args:
 
 `add_row(self, *args, **kwargs)`
 
-[See the source code](../raw/widget/table.html#L340)
+[See the source code](../raw/widget/table.html#L345)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -129,14 +129,14 @@ raise no exception.
 
 ### remove_row
 
-`remove_row(self, row: Union[int, bui.widget.table.AbcRow])`
+`remove_row(self, row: Union[int, bui.widget.table.AbcRow, NoneType])`
 
-[See the source code](../raw/widget/table.html#L379)
+[See the source code](../raw/widget/table.html#L384)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
 | self | `Table` |  |
-| row | `Union[int, bui.widget.table.AbcRow]` |  |
+| row | `Union[int, bui.widget.table.AbcRow, NoneType]` |  |
 
 Remove a row in the table.
 
@@ -180,7 +180,7 @@ Args:
 
 `sort(self, key: Callable = None, reverse: bool = False)`
 
-[See the source code](../raw/widget/table.html#L398)
+[See the source code](../raw/widget/table.html#L406)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -206,7 +206,7 @@ Example:
 
 `update_row(self, row)`
 
-[See the source code](../raw/widget/table.html#L361)
+[See the source code](../raw/widget/table.html#L366)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

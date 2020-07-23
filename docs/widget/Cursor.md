@@ -1,4 +1,4 @@
-# Cursor in [widget/text:92](../raw/widget/text.html#L92)
+# Cursor in [widget/text:98](../raw/widget/text.html#L98)
 
 Class to represent a cursor in a text field.
 
@@ -34,7 +34,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L123)
+[See the source code](../raw/widget/text.html#L129)
 
 Return True if the cursor is at the beginning of the text field.
 
@@ -44,7 +44,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L128)
+[See the source code](../raw/widget/text.html#L134)
 
 Return True if the cursor is at the end of the text field.
 
@@ -54,7 +54,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L118)
+[See the source code](../raw/widget/text.html#L124)
 
 Return the current column (horizontal position of the cursor).
 
@@ -64,7 +64,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L143)
+[See the source code](../raw/widget/text.html#L149)
 
 Return the current line of text.
 
@@ -74,7 +74,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L113)
+[See the source code](../raw/widget/text.html#L119)
 
 Return the current line number (vertical position of the cursor).
 
@@ -84,7 +84,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L108)
+[See the source code](../raw/widget/text.html#L114)
 
 Return the current position as an indice.
 
@@ -94,7 +94,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L138)
+[See the source code](../raw/widget/text.html#L144)
 
 Return the text after the cursor.
 
@@ -104,7 +104,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/text.html#L133)
+[See the source code](../raw/widget/text.html#L139)
 
 Return the text before the cursor.
 
@@ -114,7 +114,7 @@ Return the text before the cursor.
 
 `move(self, pos: int, col: Union[int, NoneType] = None)`
 
-[See the source code](../raw/widget/text.html#L148)
+[See the source code](../raw/widget/text.html#L154)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

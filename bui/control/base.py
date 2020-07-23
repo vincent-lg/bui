@@ -44,6 +44,7 @@ class Control(metaclass=MetaControl):
     widget_control = True
     has_sub_controls = False
     pattern_for_window = ""
+    name_for_widgets_without_options = "on_{control}_{wid}"
     pattern_for_widgets = ""
     options = ()
 
@@ -88,7 +89,8 @@ class Control(metaclass=MetaControl):
                                 cls._report_bound(_ControlScope.WINDOW,
                                         window, content, options=group)
             elif cls.widget_control:
-                method_name = f"on_{cls.name}_{widget.id}"
+                method_name = cls.name_for_widgets_without_options.format(
+                        control=cls.name, wid=widget.id)
                 bound = cls._register_method(widget, window, method_name)
                 if bound:
                     cls._report_bound(_ControlScope.WIDGET, widget,
