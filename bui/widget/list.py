@@ -149,6 +149,7 @@ class List(Widget):
             raise IndexError(f"{selected!r} isn't a valid indice or key")
         else:
             self._selected = selected
+            self.specific.select(selected)
 
     def add_choice(self, choice: Choice):
         """

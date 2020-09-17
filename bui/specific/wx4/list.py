@@ -12,6 +12,7 @@ class WX4List(WXShared, SpecificList):
 
     def _init(self):
         self.wx_choices = []
+        self.wx_selected = 0
         window = self.parent
         self.wx_add = self.wx_obj = self.wx_list = wx.ListBox(
                 window.wx_parent, style=wx.LB_SINGLE)
@@ -32,6 +33,13 @@ class WX4List(WXShared, SpecificList):
 
         self.wx_list.Select(0)
         self.wx_list.Thaw()
+        self.wx_selected = 0
+
+    def select(self, choice: int):
+        """Select the specific choice."""
+        if self.wx_selected != choice:
+            self.wx_list.Select(choice)
+            self.wx_selected = choice
 
     def update_choice(self, pos: int, choice: str):
         """
@@ -57,4 +65,5 @@ class WX4List(WXShared, SpecificList):
     def OnSelectionChange(self, e):
         """When the selection changes."""
         indice = self.wx_list.GetSelection()
+        self.wx_selected = indice
         self.generic.selected = indice

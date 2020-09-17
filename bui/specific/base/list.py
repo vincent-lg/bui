@@ -13,6 +13,10 @@ class SpecificList(SpecificWidget):
         """Refresh the list choices, using the generic widget."""
         pass
 
+    def select(self, choice: int):
+        """Select the specific choice."""
+        pass
+
     @abstractmethod
     def update_choice(self, pos: int, choice: str):
         """
