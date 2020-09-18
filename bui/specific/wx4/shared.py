@@ -4,6 +4,7 @@ from collections import namedtuple
 
 import wx
 
+from bui.control.base import NOT_SET
 from bui.control.exceptions import StopControl
 from bui.specific.wx4.constants import KEYMAP
 
@@ -90,15 +91,18 @@ class WXShared:
 
         """
         widget = self
-        while control not in widget.generic.default_controls:
-            widget = widget.parent
-            if widget is None:
-                break
-
-        if widget:
+        options = options or {}
+        while widget:
             try:
-                widget.generic._process_control(control, options)
+                result = widget.generic._process_control(control, options)
             except StopControl:
-                return
+                return None
+
+            if result is NOT_SET:
+                widget = widget.parent
+                if widget is None:
+                    break
+            else:
+                break
 
         e.Skip()

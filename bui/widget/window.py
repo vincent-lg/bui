@@ -117,6 +117,7 @@ class Window(Widget, metaclass=MetaWindow):
 
     # Class attributes, to be overridden by instance attributes
     parsed_layout = None
+    _bui_parent = None
 
     def __init__(self, leaf):
         super().__init__(leaf)
@@ -384,6 +385,9 @@ class Window(Widget, metaclass=MetaWindow):
                     current window (closing self will close the new window).
 
         """
+        if child:
+            window._bui_parent = self
+
         window = window.parse_layout(window)
         self.specific.open_window(window.specific, child=child)
         return window

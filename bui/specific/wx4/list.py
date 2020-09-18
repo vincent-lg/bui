@@ -1,5 +1,6 @@
 """The wxPython implementation of a BUI list widget."""
 
+from typing import Sequence, Union
 import wx
 
 from bui.specific.base import *
@@ -12,10 +13,11 @@ class WX4List(WXShared, SpecificList):
 
     def _init(self):
         self.wx_choices = []
-        self.wx_selected = 0
+        self.wx_selected = (0, ) if self.generic.multisel else 0
         window = self.parent
+        style = wx.LB_MULTIPLE if self.generic.multisel else wx.LB_SINGLE
         self.wx_add = self.wx_obj = self.wx_list = wx.ListBox(
-                window.wx_parent, style=wx.LB_SINGLE)
+                window.wx_parent, style=style)
         window.add_widget(self)
         self.wx_list.Bind(wx.EVT_LISTBOX, self.OnSelectionChange)
         self.watch_keyboard(self.wx_list)
@@ -33,13 +35,20 @@ class WX4List(WXShared, SpecificList):
 
         self.wx_list.Select(0)
         self.wx_list.Thaw()
-        self.wx_selected = 0
+        self.wx_selected = (0, ) if self.generic.multisel else 0
 
-    def select(self, choice: int):
-        """Select the specific choice."""
-        if self.wx_selected != choice:
+    def select(self, choice: Union[int, Sequence[int]]):
+        """Select the specific choice(s)."""
+        if self.generic.multisel:
+            for deselect in (index for index in self.wx_selected
+                    if index not in choice):
+                self.wx_list.Deselect(deselect)
+
+            for select in choice:
+                self.wx_list.Select(select)
+        else:
             self.wx_list.Select(choice)
-            self.wx_selected = choice
+        self.wx_selected = choice
 
     def update_choice(self, pos: int, choice: str):
         """
@@ -64,6 +73,7 @@ class WX4List(WXShared, SpecificList):
 
     def OnSelectionChange(self, e):
         """When the selection changes."""
-        indice = self.wx_list.GetSelection()
-        self.wx_selected = indice
-        self.generic.selected = indice
+        indexes = self.wx_list.GetSelections()
+        index = indexes[0] if indexes else None
+        self.wx_selected = indexes if self.generic.multisel else index
+        self.generic.selected = self.wx_selected

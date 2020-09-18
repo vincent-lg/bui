@@ -39,10 +39,12 @@ class List(Widget):
         self.id = leaf.id
         self.width = leaf.width
         self.height = leaf.height
+        self.name = leaf.name
+        self.multisel = leaf.multisel
         self._choices = []
         self._ids = {}
         self._pos = {}
-        self._selected = 0
+        self._selected = (0, ) if self.multisel else 0
 
     def __len__(self):
         return len(self._choices)
@@ -127,29 +129,41 @@ class List(Widget):
         self._choices[:] = new_choices
         self._ids = ids
         self._pos = pos
-        self._selected = 0
+        self._selected = (0, ) if self.multisel else 0
         self.specific.refresh()
 
     @property
     def selected(self):
         """Return the currently-selected choice ID or position."""
-        return self._pos[self._selected]
+        selected = self._selected
+        if self.multisel:
+            return tuple(self._pos[index] for index in selected)
+
+        return self._pos[selected]
 
     @selected.setter
     def selected(self, selected):
         """Change the selected label."""
-        try:
-            selected = self._ids[selected]
-        except KeyError:
-            pass
-
-        try:
-            self._choices[selected]
-        except IndexError:
-            raise IndexError(f"{selected!r} isn't a valid indice or key")
+        if self.multisel:
+            choices = selected
         else:
-            self._selected = selected
-            self.specific.select(selected)
+            choices = (selected, )
+
+        self._selected = ()
+        for selected in choices:
+            try:
+                selected = self._ids[selected]
+            except KeyError:
+                pass
+
+            try:
+                self._choices[selected]
+            except IndexError:
+                raise IndexError(f"{selected!r} isn't a valid indice or key")
+            else:
+                self._selected += (selected, )
+
+        self.specific.select(self._selected)
 
     def add_choice(self, choice: Choice):
         """

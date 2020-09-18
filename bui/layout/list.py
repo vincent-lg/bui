@@ -222,12 +222,19 @@ class List(Component):
         Attr("id", help="The widget identifier"),
         Attr("width", help="The widget width", type=int, default=1),
         Attr("height", help="The widget height", type=int, default=1),
+        Attr("name", help="The name of the list", default=""),
+        Attr("multisel",
+                help="The list can contain multiple selected choices",
+                default=False, if_present=True),
     )
 
-    def __init__(self, layout, parent, x, y, id, width=1, height=1):
+    def __init__(self, layout, parent, x, y, id, width=1, height=1, name="",
+            multisel=False):
         super().__init__(layout, parent)
         self.x = x
         self.y = y
         self.id = id
         self.width = width
         self.height = height
+        self.name = name
+        self.multisel = multisel

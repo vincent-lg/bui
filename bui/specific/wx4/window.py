@@ -61,7 +61,15 @@ class WX4Window(WXShared, SpecificWindow):
         self._wx_init()
         area = self.usable_surface
         title = self.generic.title
-        self.wx_frame = wx.Frame(None, title=title, name=title,
+
+        # Determine the optional parent
+        if self.generic._bui_parent:
+            parent = self.generic._bui_parent.specific.wx_frame
+        else:
+            parent = None
+
+        print("init", self, "with parent", parent)
+        self.wx_frame = wx.Frame(parent, title=title, name=title,
                 size=tuple(area.bottom_right))
         #self.wx_app.top_windows.append(self.wx_frame)
         self.wx_parent = self.wx_panel = wx.Panel(self.wx_frame)
@@ -243,5 +251,8 @@ class WX4Window(WXShared, SpecificWindow):
         window.wx_app = app
         app.top_windows.append(window.wx_frame)
         if child:
-            window.specific.wx_frame.SetParent(self.wx_frame)
+            print("child")
+            window.wx_frame.CenterOnParent()
+            window.wx_frame.GetParent().Hide()
+
         window.show()
