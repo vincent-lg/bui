@@ -13,17 +13,17 @@ class WX4Text(WXShared, SpecificText):
     @property
     def label(self):
         """Get the text label."""
-        return self.wx_label.GetLabel()
+        raise ValueError("can't read the label")
 
     @label.setter
     def label(self, label):
         """Set the text label."""
-        self.wx_label.SetLabel(label)
+        self.in_main_thread(self.wx_label.SetLabel, label)
 
     @property
     def value(self):
         """Get the text value status."""
-        return self.wx_text.GetValue()
+        raise ValueError("can't read the value")
 
     @value.setter
     def value(self, value):
@@ -42,12 +42,12 @@ class WX4Text(WXShared, SpecificText):
                 pos = len(smaller)
                 off_pos = pos + smaller.count("\n") * (self._nl_offset - 1)
 
-            self.wx_text.Remove(off_pos, self.wx_text.GetLastPosition())
+            self.in_main_thread(self.wx_text.Remove, off_pos, self.wx_text.GetLastPosition())
             to_add = value[pos:]
             if to_add:
-                self.wx_text.AppendText(to_add)
+                self.in_main_thread(self.wx_text.AppendText, to_add)
         else:
-            self.wx_text.SetValue(value)
+            self.in_main_thread(self.wx_text.SetValue, value)
 
     @property
     def enabled(self):
@@ -86,9 +86,18 @@ class WX4Text(WXShared, SpecificText):
             style |= wx.TE_READONLY
 
         self.wx_obj = self.wx_text = wx.TextCtrl(window.wx_parent,
-                size=window.size_for(self), value=self.generic.value,
-                style=style, name=label)
+                size=window.size_for(self), style=style, name=label)
         self.wx_text.SetPosition(window.position_for(self))
+
+        # Try to infer the NL offset by a simple update
+        self.wx_text.Freeze()
+        if self.generic.multiline:
+            self.wx_text.SetValue("\n")
+            self._nl_offset = self.wx_text.GetLastPosition()
+        else:
+            self._nl_offset = 1
+        self.wx_text.SetValue(self.generic.value)
+        self.wx_text.Thaw()
         self.wx_sizer.Add(self.wx_label)
         self.wx_sizer.Add(self.wx_text, proportion=5)
         window.add_widget(self)
@@ -113,17 +122,7 @@ class WX4Text(WXShared, SpecificText):
         if self._last_updated != self._last_checked:
             self._last_updated = self._last_checked
             self.cached_position = position
-            # Calculate line offset if necessary
-            # wxPython coupled with Windows break the one-character-per-line-break
-            # convention, so BUI tries to apply a patch.
             num_nl = text.count("\n")
-            if not self._nl_offset:
-                last = self.wx_text.GetLastPosition()
-                if num_nl > 0:
-                    self._nl_offset = int((last - len(text)) / num_nl) + 1
-
-            # If the text contains new lines, we should have a valid NL offset
-            # (usually 1 for Linux or Mac, 2 for Windows)
             lineno, col = 0, 0
             if num_nl > 0:
                 offset_pos = pos = 0

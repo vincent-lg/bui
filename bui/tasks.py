@@ -28,7 +28,6 @@ def done(task):
         RUNNING.remove(task)
     except ValueError:
         pass
-
 def cancel_all():
     """Cancel all tasks."""
     pending = asyncio.Task.all_tasks()

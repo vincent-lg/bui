@@ -17,6 +17,7 @@ setuptools.setup(
     install_requires = [
         'Logbook == 1.5.2',
         'wxPython == 4.0.7; platform_system=="Windows"',
+        'Pypubsub == 4.0.3; platform_system=="Windows"',
     ],
     extras_require={
         'demo':  [

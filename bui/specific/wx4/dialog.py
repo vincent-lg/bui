@@ -1,5 +1,7 @@
 """The wxPython implementation of a BUI custom dialog box."""
 
+import asyncio
+
 import wx
 
 from bui.specific.base import *
@@ -14,9 +16,23 @@ class WX4Dialog(WX4Window, SpecificDialog):
         self.wx_dialog.SetSizer(self.wx_sizer)
         self.wx_sizer.Fit(self.wx_dialog)
 
-    def pop(self):
+    async def pop(self, **kwargs):
+        self.dlg_event = asyncio.Event()
+        self.in_main_thread(self.wx_pop, **kwargs)
+        await self.dlg_event.wait()
+
+    def wx_pop(self, **kwargs):
+        """Pop the dialog in the main thread."""
         self.wx_sizer.Fit(self.wx_dialog)
-        return self.wx_dialog.ShowModal()
+        self.wx_dialog.ShowModal()
+        self.dlg_event._loop.call_soon_threadsafe(
+                self.dlg_event.set())
 
     def close(self):
+        print("Destroying in sub-thread")
+        self.in_main_thread(self.destroy)
+
+    def destroy(self):
+        print("Destroying in main thread")
         self.wx_dialog.Destroy()
+

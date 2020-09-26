@@ -171,8 +171,11 @@ class Window(Widget, metaclass=MetaWindow):
             bui = cls.bui
             if not bui:
                 filename = Path(inspect.getsourcefile(cls))
-                relative = filename.relative_to(Path().absolute())
-                bui = f"{relative.parent}/{relative.stem}.bui"
+                if filename.is_absolute():
+                    relative = filename.relative_to(Path().absolute())
+                    bui = f"{relative.parent}/{relative.stem}.bui"
+                else:
+                    bui = f"{filename.parent}/{filename.stem}.bui"
 
             with open(bui, 'r', encoding="utf-8") as file:
                 layout = file.read()
@@ -223,7 +226,7 @@ class Window(Widget, metaclass=MetaWindow):
 
         window.parsed_layout = parsed_layout
         for widget in widgets:
-            widget._process_control("init")
+            widget.specific.process_control(None, "init")
 
         return window
 
@@ -338,7 +341,7 @@ class Window(Widget, metaclass=MetaWindow):
         self.specific.pop_alert(title=title, message=message,
                 danger=danger, buttons=buttons, default=default)
 
-    def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']],
+    async def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']],
             **kwargs) -> 'wg.dialog.Dialog':
         """
         Pop up a custom dialog, blocks until the dialog has been closed.
@@ -359,10 +362,7 @@ class Window(Widget, metaclass=MetaWindow):
             dialog = NewDialog
         assert issubclass(dialog, wg.dialog.Dialog)
         dialog.window = self
-        dialog_obj = dialog.parse_layout(dialog, tag_name="dialog", **kwargs)
-        self.specific.pop_dialog(dialog_obj.specific)
-        res = dialog_obj
-        return res
+        return await self.specific.pop_dialog(dialog)
 
     def pop_menu(self, context_id: str):
         """
@@ -388,8 +388,7 @@ class Window(Widget, metaclass=MetaWindow):
         if child:
             window._bui_parent = self
 
-        window = window.parse_layout(window)
-        self.specific.open_window(window.specific, child=child)
+        self.specific.open_window(window, child=child)
         return window
 
     def handle_close(self, control):

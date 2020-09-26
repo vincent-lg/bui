@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.menubar import SpecificMenubar
+from bui.specific.wx4.shared import WXShared
 
-class WX4Menubar(SpecificMenubar):
+class WX4Menubar(WXShared, SpecificMenubar):
 
     def _init(self):
         """Create a menu bar."""

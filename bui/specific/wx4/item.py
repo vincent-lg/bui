@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.item import SpecificItem
+from bui.specific.wx4.shared import WXShared
 
-class WX4Item(SpecificItem):
+class WX4Item(WXShared, SpecificItem):
 
     def _init(self):
         """Initialize the menu."""
@@ -21,4 +22,4 @@ class WX4Item(SpecificItem):
 
     def OnItem(self, e):
         """The menu is seslected, create a click control."""
-        self.generic._process_control("click")
+        self.process_control(e, "click")

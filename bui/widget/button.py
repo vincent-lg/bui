@@ -34,7 +34,8 @@ class Button(Widget):
         self.width = leaf.width
         self.height = leaf.height
         self.id = leaf.id
-        self.name = leaf.name
+        self.name = self.cached_name = leaf.name
+        self._enabled = not leaf.disabled
 
         # Dialog-specific attributes
         self.set_true = leaf.set_true
@@ -55,13 +56,13 @@ class Button(Widget):
 
     @property
     def enabled(self):
-        """Return whether the checkbox is enabled or not."""
-        return self.specific.enabled
+        """Return whether the button is enabled or not."""
+        return self._enabled
 
     @property
     def disabled(self):
-        """Return whether the checkbox is disabled or not."""
-        return self.specific.disabled
+        """Return whether the button is disabled or not."""
+        return not self._enabled
 
     def enable(self):
         """Force-enable the checkbox."""

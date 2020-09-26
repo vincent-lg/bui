@@ -1,6 +1,7 @@
 """The wxPython implementation of a BUI list widget."""
 
 from typing import Sequence, Union
+import threading
 import wx
 
 from bui.specific.base import *
@@ -12,8 +13,10 @@ class WX4List(WXShared, SpecificList):
     """Wx-specific list widget."""
 
     def _init(self):
+        self.lock = threading.RLock()
         self.wx_choices = []
         self.wx_selected = (0, ) if self.generic.multisel else 0
+        self.wx_old_selected = self.wx_selected
         window = self.parent
         style = wx.LB_MULTIPLE if self.generic.multisel else wx.LB_SINGLE
         self.wx_add = self.wx_obj = self.wx_list = wx.ListBox(
@@ -24,31 +27,35 @@ class WX4List(WXShared, SpecificList):
 
     def refresh(self):
         """Refresh the list choices, using the generic widget."""
-        self.wx_list.Freeze()
-        if self.wx_choices:
-            self.wx_choices[:] = []
-            self.wx_list.Clear()
+        with self.lock:
+            self.in_main_thread(self.wx_list.Freeze)
+            if self.wx_choices:
+                self.wx_choices[:] = []
+                self.in_main_thread(self.wx_list.Clear)
 
-        for label in self.generic._choices:
-            self.wx_choices.append(label)
-            self.wx_list.Append(label)
+            for label in self.generic._choices:
+                self.wx_choices.append(label)
+                self.in_main_thread(self.wx_list.Append, label)
 
-        self.wx_list.Select(0)
-        self.wx_list.Thaw()
-        self.wx_selected = (0, ) if self.generic.multisel else 0
+            self.in_main_thread(self.wx_list.Select, 0)
+            self.in_main_thread(self.wx_list.Thaw)
+            self.wx_selected = (0, ) if self.generic.multisel else 0
+            self.wx_old_selected = self.wx_selected
 
     def select(self, choice: Union[int, Sequence[int]]):
         """Select the specific choice(s)."""
-        if self.generic.multisel:
-            for deselect in (index for index in self.wx_selected
-                    if index not in choice):
-                self.wx_list.Deselect(deselect)
+        with self.lock:
+            if self.generic.multisel:
+                for deselect in (index for index in self.wx_selected
+                        if index not in choice):
+                    self.in_main_thread(self.wx_list.Deselect, deselect)
 
-            for select in choice:
-                self.wx_list.Select(select)
-        else:
-            self.wx_list.Select(choice)
-        self.wx_selected = choice
+                for select in choice:
+                    self.in_main_thread(self.wx_list.Select, select)
+            else:
+                self.in_main_thread(self.wx_list.Select, choice)
+            self.wx_selected = choice
+            self.wx_old_selected = self.wx_selected
 
     def update_choice(self, pos: int, choice: str):
         """
@@ -73,7 +80,27 @@ class WX4List(WXShared, SpecificList):
 
     def OnSelectionChange(self, e):
         """When the selection changes."""
-        indexes = self.wx_list.GetSelections()
-        index = indexes[0] if indexes else None
-        self.wx_selected = indexes if self.generic.multisel else index
-        self.generic.selected = self.wx_selected
+        with self.lock:
+            indexes = self.wx_list.GetSelections()
+            selected = tuple(self.generic._pos[index] for index in indexes)
+            self.wx_selected = indexes if self.generic.multisel else index
+            if not self.generic.multisel:
+                selected = selected[0] if selected else None
+
+        # Skip the event, no matter what
+        e.Skip()
+
+        # Call the control asynchronously.  The control can be stopped.
+        self.process_control(None, "select", {"selected": selected})
+
+    def process_control_in_thread(self, event, control, options):
+        """Sub-classing, processing the control in the async thread."""
+        result = super().process_control_in_thread(event, control, options)
+        if control == "select":
+            selected = options["selected"]
+            if result:
+                self.generic.selected = selected
+            else:
+                self.select(self.wx_old_selected)
+
+        return result

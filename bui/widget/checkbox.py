@@ -34,8 +34,9 @@ class Checkbox(Widget):
         self.width = leaf.width
         self.height = leaf.height
         self.id = leaf.id
-        self.name = leaf.name
-        self.checked = leaf.checked
+        self.name = self.cached_name = leaf.name
+        self.cached_checked = leaf.checked
+        self._enabled = True
 
     def __bool__(self):
         return self.checked
@@ -63,12 +64,12 @@ class Checkbox(Widget):
     @property
     def enabled(self):
         """Return whether the checkbox is enabled or not."""
-        return self.specific.enabled
+        return self._enabled
 
     @property
     def disabled(self):
         """Return whether the checkbox is disabled or not."""
-        return self.specific.disabled
+        return not self._enabled
 
     def check(self):
         """Force check this checkbox."""

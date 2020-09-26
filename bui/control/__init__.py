@@ -24,4 +24,5 @@ from bui.control.init import Init
 from bui.control.press import Press
 from bui.control.release import Release
 from bui.control.right_click import RightClick
+from bui.control.select import Select
 from bui.control.type import Type

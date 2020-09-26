@@ -162,7 +162,7 @@ class Table(Widget):
         #"focus": "The table gets or loses focus",
         "init": "The window is initialized",
         "press": "The user presses on a key while the table is focused.",
-        #"select": "The table selection changes.",
+        "select": "The table selection changes.",
         "release": "The user releases a key while the table is focused.",
         "type": "The user types a character while the table is focused.",
     }

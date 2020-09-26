@@ -7,14 +7,17 @@ account for spanning that might occur.
 
 """
 
+import asyncio
 from typing import Dict, Union
 
+from pubsub import pub
 import wx
 
 from bui.specific.base import *
 from bui.specific.base.window import SpecificWindow
-from bui.specific.wx4.app import AsyncApp
 from bui.specific.wx4.shared import WXShared
+from bui.specific.wx4.thread import WX_THREAD
+from bui.tasks import cancel_all
 
 WX_APP = None
 
@@ -40,7 +43,7 @@ class WX4Window(WXShared, SpecificWindow):
         elif WX_APP:
             self.wx_app = WX_APP
         elif not self.wx_app:
-            self.wx_app = AsyncApp(self)
+            self.wx_app = wx.App(False)
             WX_APP = self.wx_app
 
         if not self.wx_display:
@@ -68,7 +71,6 @@ class WX4Window(WXShared, SpecificWindow):
         else:
             parent = None
 
-        print("init", self, "with parent", parent)
         self.wx_frame = wx.Frame(parent, title=title, name=title,
                 size=tuple(area.bottom_right))
         #self.wx_app.top_windows.append(self.wx_frame)
@@ -83,6 +85,11 @@ class WX4Window(WXShared, SpecificWindow):
 
         self.wx_panel.SetSizerAndFit(self.wx_sizer)
         self.wx_frame.SetClientSize(self.wx_panel.GetSize())
+
+        # Start a WXThread if none exists
+        if not WX_THREAD.is_alive():
+            pub.subscribe(self.call, "callable")
+            WX_THREAD.start()
 
     def position_for(self, widget):
         """
@@ -146,7 +153,7 @@ class WX4Window(WXShared, SpecificWindow):
 
         self.wx_frame.Show()
 
-    def _start(self, loop):
+    async def _start(self, loop):
         """
         Start the window, watch events and allow async loop.
 
@@ -154,9 +161,10 @@ class WX4Window(WXShared, SpecificWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
-        self.wx_app.top_windows.append(self.wx_frame)
-        self.wx_app.loop = loop
-        return self.wx_app.MainLoop()
+        #self.wx_app.top_windows.append(self.wx_frame)
+        #self.wx_app.loop = loop
+        self.wx_app.MainLoop()
+        WX_THREAD.loop.call_soon_threadsafe(cancel_all)
 
     def create_menubar(self, menubar):
         """Create a menu bar."""
@@ -174,7 +182,11 @@ class WX4Window(WXShared, SpecificWindow):
     def close(self):
         """Close this window, terminate loop if appropriate."""
         if self.wx_frame:
-            self.wx_frame.Destroy()
+            # Show the parent window, if any
+            if (parent := self.generic._bui_parent) is not None:
+                self.in_main_thread(parent.specific.wx_frame.Show)
+
+            self.in_main_thread(self.wx_frame.Destroy)
 
     def _OnContext(self, e, widget=None):
         """On context menu."""
@@ -183,9 +195,20 @@ class WX4Window(WXShared, SpecificWindow):
         else:
             self.generic._process_control("right_click")
 
-    def pop_dialog(self, dialog: SpecificWidget):
+    async def pop_dialog(self, dialog: SpecificWidget, **kwargs):
         """Pop up a dialog."""
-        return dialog.pop()
+        dlg_queue = asyncio.Queue()
+        self.in_main_thread(self.wx_pop_dialog, dialog, dlg_queue, **kwargs)
+        return await dlg_queue.get()
+
+    def wx_pop_dialog(self, dialog, bui_queue, **kwargs):
+        """Pop the dialog in the main thread."""
+        dialog = dialog.parse_layout(dialog, tag_name="dialog", **kwargs)
+        wx_dialog = dialog.specific
+        wx_dialog.wx_sizer.Fit(wx_dialog.wx_dialog)
+        wx_dialog.wx_dialog.ShowModal()
+        bui_queue._loop.call_soon_threadsafe(
+                bui_queue.put_nowait, dialog)
 
     def pop_menu(self, context: SpecificWidget):
         """Pop a context menu, blocks until the menu is closed."""
@@ -247,12 +270,26 @@ class WX4Window(WXShared, SpecificWindow):
     def open_window(self, window, child):
         """Open another window."""
         #self._wx_init()
-        app = self.wx_app
-        window.wx_app = app
-        app.top_windows.append(window.wx_frame)
-        if child:
-            print("child")
-            window.wx_frame.CenterOnParent()
-            window.wx_frame.GetParent().Hide()
+        self.in_main_thread(self.wx_open_window, window, child)
 
-        window.show()
+    def wx_open_window(self, window, child):
+        window = window.parse_layout(window)
+        app = self.wx_app
+        window.specific.wx_app = app
+        #app.top_windows.append(window.wx_frame)
+        if child:
+            window.specific.wx_frame.CenterOnParent()
+            window.specific.wx_frame.GetParent().Hide()
+
+        window.specific.show()
+
+    def call(self, callback, args=None, kwargs=None):
+        """Execute the given callable."""
+        args = args or ()
+        kwargs = kwargs or {}
+        try:
+            callback(*args, **kwargs)
+        except RuntimeError:
+            # Although not perfect, this will catch errors raised by
+            # wxPython if the object was deleted.
+            pass

@@ -23,6 +23,7 @@ class WX4Table(WXShared, SpecificTable):
         window.add_widget(self)
         self.watch_keyboard(self.wx_table)
         self.wx_table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._OnSelected)
+        self._wx_selected = -1
 
     def update_row(self, row: AbcRow):
         """
@@ -36,11 +37,11 @@ class WX4Table(WXShared, SpecificTable):
         is expected.
 
         """
-        num_items = self.wx_table.GetItemCount()
+        num_items = len(self._wx_rows)
         index = row._index
         if index == num_items:
             # Append the row
-            self.wx_table.Append([str(cell) for cell in row])
+            self.in_main_thread(self.wx_table.Append, [str(cell) for cell in row])
             row = self.generic.factory(index, *row)
             row._should_update = False
             self._wx_rows.append(row)
@@ -48,7 +49,7 @@ class WX4Table(WXShared, SpecificTable):
             old = self._wx_rows[index]
             for i, (new_value, old_value) in enumerate(zip(row, old)):
                 if new_value != old_value:
-                    self.wx_table.SetItem(index, i, str(new_value))
+                    self.in_main_thread(self.wx_table.SetItem, index, i, str(new_value))
                     old[i] = new_value
 
     def refresh(self, rows):
@@ -71,9 +72,9 @@ class WX4Table(WXShared, SpecificTable):
         self.delete_additional()
 
         # Select the first item if nothing is selected
-        if len(self._wx_rows) > 0 and self.wx_table.GetFirstSelected() < 0:
-            self.wx_table.Select(0)
-            self.wx_table.Focus(0)
+        if len(self._wx_rows) > 0 and self._wx_selected < 0:
+            self.in_main_thread(self.wx_table.Select, 0)
+            self.in_main_thread(self.wx_table.Focus, 0)
 
     def remove_row(self, row: AbcRow):
         """
@@ -88,21 +89,22 @@ class WX4Table(WXShared, SpecificTable):
         """
         index = row._index
         del self._wx_rows[index]
-        self.wx_table.DeleteItem(index)
+        self.in_main_thread(self.wx_table.DeleteItem, index)
         for wx_row in self._wx_rows[index:]:
             wx_row._index -= 1
-        self.wx_table.Select(index)
-        self.wx_table.Focus(index)
+        self.in_main_thread(self.wx_table.Select, index)
+        self.in_main_thread(self.wx_table.Focus, index)
 
     def delete_additional(self):
         """Remove rows that are in generic, not in the wx table."""
         while len(self._wx_rows) > len(self.generic._rows):
-            self.wx_table.DeleteItem(len(self._wx_rows) - 1)
+            self.in_main_thread(self.wx_table.DeleteItem, len(self._wx_rows) - 1)
             del self._wx_rows[-1]
+
     def select_row(self, row: int):
         """Select the specified row."""
-        self.wx_table.Select(row)
-        self.wx_table.Focus(row)
+        self.in_main_thread(self.wx_table.Select, row)
+        self.in_main_thread(self.wx_table.Focus, row)
 
     def sort(self, key: Callable = None, reverse=False):
         """Sort the table."""

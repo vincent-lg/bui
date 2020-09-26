@@ -197,6 +197,7 @@ class Control(metaclass=MetaControl):
 
     def process(self, options=None):
         """Process the control, calls a generic `on_` method if found."""
+        #if self.name == "select": breakpoint()
         wid = getattr(self.widget, "id", "")
         self._report_fire(options)
 

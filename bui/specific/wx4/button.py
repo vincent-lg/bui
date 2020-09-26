@@ -11,25 +11,22 @@ class WX4Button(WXShared, SpecificButton):
     @property
     def name(self):
         """Get the button name."""
-        return self.wx_button.GetLabel()
+        raise ValueError("cannot modify the label like this")
 
     @name.setter
     def name(self, name):
         """Set the button name."""
-        self.wx_button.SetLabel(name)
-
-    @property
-    def enabled(self):
-        """Return whether the button is enabled or not."""
-        return self.wx_button.Enabled
+        self.in_main_thread(self.wx_button.SetLabel, name)
 
     def enable(self):
         """Force-enable the button."""
-        self.wx_button.Enable()
+        self.generic._enabled = True
+        self.in_main_thread(self.wx_button.Enable)
 
     def disable(self):
         """Force-disable the button."""
-        self.wx_button.Disable()
+        self.generic._enabled = True
+        self.in_main_thread(self.wx_button.Disable)
 
     def _init(self):
         """Initialize the specific widget."""

@@ -11,35 +11,30 @@ class WX4Checkbox(WXShared, SpecificCheckbox):
     @property
     def name(self):
         """Get the checkbox name."""
-        return self.wx_checkbox.GetName()
+        raise ValueError("cannot get the name")
 
     @name.setter
     def name(self, name):
         """Set the checkbox name."""
-        self.wx_checkbox.SetName(name)
+        self.in_main_thread(self.wx_checkbox.SetName, name)
 
     @property
     def checked(self):
         """Get the checkbox checked status."""
-        return self.wx_checkbox.GetValue()
+        raise ValueError("cannot query the checked status")
 
     @checked.setter
     def checked(self, checked):
         """Set the checkbox checked status."""
-        self.wx_checkbox.SetValue(checked)
-
-    @property
-    def enabled(self):
-        """Return whether the checkbox is enabled or not."""
-        return self.wx_checkbox.Enabled
+        self.in_main_thread(self.wx_checkbox.SetValue, checked)
 
     def enable(self):
         """Force-enable the checkbox."""
-        self.wx_checkbox.Enable()
+        self.in_main_thread(self.wx_checkbox.Enable)
 
     def disable(self):
         """Force-disable the checkbox."""
-        self.wx_checkbox.Disable()
+        self.in_main_thread(self.wx_checkbox.Disable)
 
     def _init(self):
         """Initialize the specific widget."""
@@ -47,7 +42,7 @@ class WX4Checkbox(WXShared, SpecificCheckbox):
         label = self.generic.name
         self.wx_add = self.wx_obj = self.wx_checkbox = wx.CheckBox(
                 window.wx_parent, label=label, name=label)
-        self.wx_checkbox.SetValue(self.generic.checked)
+        self.wx_checkbox.SetValue(self.generic.cached_checked)
         window.add_widget(self)
         self.wx_checkbox.Bind(wx.EVT_CHECKBOX, self.OnCheck)
         self.watch_keyboard(self.wx_checkbox)
@@ -55,5 +50,5 @@ class WX4Checkbox(WXShared, SpecificCheckbox):
     def OnCheck(self, e):
         """The checkbox is clicked, create a click control."""
         state = 'checked' if e.IsChecked() else 'unchecked'
-        self.generic._process_control("check", {'checked': e.IsChecked(), 'state': state})
+        self.process_control(e, "check", {'checked': e.IsChecked(), 'state': state})
         self.generic.cached_checked = e.IsChecked()

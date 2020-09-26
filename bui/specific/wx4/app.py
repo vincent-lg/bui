@@ -52,7 +52,7 @@ class AsyncApp(wx.App):
                         evtloop.Dispatch()
 
                 # We don't stop more than necessary, doing otherwise will create latency
-                await asyncio.sleep(0)
+                await asyncio.sleep(0.0000000000001)
                 self.ProcessPendingEvents()
                 evtloop.ProcessIdle()
 

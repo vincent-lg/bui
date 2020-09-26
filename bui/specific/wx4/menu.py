@@ -4,8 +4,9 @@ import wx
 
 from bui.specific.base import *
 from bui.specific.base.menu import SpecificMenu
+from bui.specific.wx4.shared import WXShared
 
-class WX4Menu(SpecificMenu):
+class WX4Menu(WXShared, SpecificMenu):
 
     def _init(self):
         """Initialize the menu."""

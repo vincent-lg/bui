@@ -27,8 +27,8 @@ class List(Widget):
         #"focus": "The list gets or loses focus",
         "init": "The window is initialized",
         "press": "The user presses on a key while the list is focused.",
-        #"select": "The list selection changes.",
         "release": "The user releases a key while the list is focused",
+        "select": "The list selection changes.",
         "type": "The user types a character while the list is focused",
     }
 

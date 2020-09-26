@@ -31,11 +31,15 @@ class WX4RadioButton(WXShared, SpecificRadioButton):
 
     def refresh(self):
         """Refresh the available choices."""
+        self.in_main_thread(self.wx_refresh)
+
+    def wx_refresh(self):
+        """Refresh in the main thread."""
         if not hasattr(self, "wx_choices"):
             return
 
         for choice in self.wx_choices:
-            choice.Destroy()
+            self.in_main_thread(choice.Destroy)
 
         self.wx_choices[:] = []
         self.wx_grid = wx.GridSizer(cols=1)
