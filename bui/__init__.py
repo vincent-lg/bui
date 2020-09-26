@@ -24,4 +24,4 @@ from bui.widget.base import Widget
 from bui.widget.window import Window
 Widget.specific_package = PACKAGE
 name = "BUI"
-version = "0-alpha"
+version = "0-2.0"

@@ -32,3 +32,8 @@ file.format_string = (
 # write in it, nothing will be logged unless `push_application`
 # is called on the handlers.
 logger = Logger("bui")
+
+def start_logging():
+    """Start logging, push the logger."""
+    stream.push_application()
+    file.push_application()

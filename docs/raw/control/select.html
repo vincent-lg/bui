@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+   <meta charset="UTF-8">
+    <title>Blind User Interface - control/select.py</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="control/select.py" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="control/select.py" />
+    <meta property="og:description" content="control/select.py" />
+    <link rel="canonical" href="https://vincent-lg.github.io/bui/control/select.html" />
+    <meta property="og:url" content="https://vincent-lg.github.io/bui/control/select.html" />
+    <meta property="og:site_name" content="bui" />
+    <script type="application/ld+json">
+    {"@type":"WebSite","headline":"Blind User Interface - control/select.py","url":"https://vincent-lg.github.io/bui/control/select.html","name":"control/select.py","description":"control/select.py","@context":"http://schema.org"}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/bui/assets/css/style.css?v=1c99addae22d0f201ec863ee092d1195efd935b8">
+  </head>
+  <body>
+    <div>
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Select control, triggered when the selection changes for a widget.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L2"></a></span><br />
+      <span style="white-space: pre;"><a id="L3"></a>from bui.control.base import Control</span><br />
+      <span style="white-space: pre;"><a id="L4"></a></span><br />
+      <span style="white-space: pre;"><a id="L5"></a>class Select(Control):</span><br />
+      <span style="white-space: pre;"><a id="L6"></a></span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    When the selection changes for a widget.</span><br />
+      <span style="white-space: pre;"><a id="L9"></a></span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    This control can have many differemnt meanings depending on the</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    widget it affects.  On the [table](../layout/tag/table.md) and</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    [list](../layout/tag/list.md) widget, it is triggered when</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    the selection of one or more choices change, whether the user</span><br />
+      <span style="white-space: pre;"><a id="L14"></a>    made that change or not.  On the [text](../layout/tag/text.md)</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    widget, this control is triggered when the selected text changes,</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    whether the user made that change or not.</span><br />
+      <span style="white-space: pre;"><a id="L17"></a></span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    ## Usage</span><br />
+      <span style="white-space: pre;"><a id="L19"></a></span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    This control can only be bound with a widget.  The control type for</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    this control is &quot;select&quot;.</span><br />
+      <span style="white-space: pre;"><a id="L22"></a></span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    ### Window control</span><br />
+      <span style="white-space: pre;"><a id="L24"></a></span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    This control cannot be set on a window.  Selecting or unselecting an</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    entire window makes no sense, it should always be bound to a</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    widget.</span><br />
+      <span style="white-space: pre;"><a id="L28"></a></span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    ### Widget control</span><br />
+      <span style="white-space: pre;"><a id="L30"></a></span><br />
+      <span style="white-space: pre;"><a id="L31"></a>    If, for instance, a [list](../layout/tag/list.md) widget of ID &quot;students&quot; is present in the window, to trigger a method when the selection in this list changes would require to create a method named `on_select_students`.</span><br />
+      <span style="white-space: pre;"><a id="L32"></a></span><br />
+      <span style="white-space: pre;"><a id="L33"></a>        def on_select_students(self, ...):</span><br />
+      <span style="white-space: pre;"><a id="L34"></a></span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    This method will be called whenever the &quot;students&quot; list changes</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    in selection.  It is quite common to explicitly require the</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    &quot;selected&quot; argument in the method:</span><br />
+      <span style="white-space: pre;"><a id="L38"></a></span><br />
+      <span style="white-space: pre;"><a id="L39"></a>        def on_select_students(self, selected):</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>            print(f&quot;The new selection is: {selected}&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L41"></a></span><br />
+      <span style="white-space: pre;"><a id="L42"></a>    ## Control attributes</span><br />
+      <span style="white-space: pre;"><a id="L43"></a></span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    The control object has the following attributes:</span><br />
+      <span style="white-space: pre;"><a id="L45"></a></span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    | Attribute | Type      | Note                                |</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>    | --------- | --------- | ----------------------------------- |</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    | selected  | selection | What has been selected?  The object |</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    |           |           | type will vary depending on the     |</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    |           |           | widget to which this control is     |</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    |           |           | bound.  In list and table widgets,  |</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    |           |           | `selected` will contain a `Choice`  |</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    |           |           | or `Row` object if the list or      |</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    |           |           | table allows only one selection.    |</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    |           |           | If the `multisel` attribute has     |</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>    |           |           | been set, however, `selected` will  |</span><br />
+      <span style="white-space: pre;"><a id="L57"></a>    |           |           | contain a tuple of `Choice` or      |</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>    |           |           | `Row` objects.  For the text        |</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    |           |           | widget, `selected` will contain the |</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    |           |           | selected text, as a `str`.          |</span><br />
+      <span style="white-space: pre;"><a id="L61"></a></span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    Use these attributes as your control method argument.  For instance:</span><br />
+      <span style="white-space: pre;"><a id="L63"></a></span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        def on_seleect_answer(self, selected):</span><br />
+      <span style="white-space: pre;"><a id="L65"></a></span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    Since the control can be interrupted, you shouldn&#x27;t try to access</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>    the current selection with `widget.selected` for instance.  This will</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    most likely return the &quot;previous&quot; selection, since the change</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    in selection hasn&#x27;t been applied in BUI yet and can be cancelled.</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    Thus, you should always ask for the selection, using the</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    `selected` keyword argument in your control methods.</span><br />
+      <span style="white-space: pre;"><a id="L72"></a></span><br />
+      <span style="white-space: pre;"><a id="L73"></a>    Alternatively you can specify the `control` keyword argument in your</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>    method signature which will always contain the control object.  You</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>    can also use the `widget` keyword argument that will contain your</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    specific widget.</span><br />
+      <span style="white-space: pre;"><a id="L77"></a></span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    ## Control interruption</span><br />
+      <span style="white-space: pre;"><a id="L79"></a></span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    This control can be interrupted.  In this case, the selection will</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    be cancelled and the list, table or text will keep the</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    previous selection.  This can be useful to avoid selection</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>    of content that shouldn&#x27;t be selected.  Keep in mind, however,</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>    that preventing selection might not be a good way to indicate</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>    an invalid operation to your users.</span><br />
+      <span style="white-space: pre;"><a id="L86"></a></span><br />
+      <span style="white-space: pre;"><a id="L87"></a>    To interrupt a control, call the `control.stop` method.  You&#x27;ll</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    need to add the `control` argument in your control method:</span><br />
+      <span style="white-space: pre;"><a id="L89"></a></span><br />
+      <span style="white-space: pre;"><a id="L90"></a>        def on_select_students(self, selected, control):</span><br />
+      <span style="white-space: pre;"><a id="L91"></a>            if selected. == &quot;John&quot;: # Never select John, for some reason</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>                control.stop()</span><br />
+      <span style="white-space: pre;"><a id="L93"></a></span><br />
+      <span style="white-space: pre;"><a id="L94"></a>    &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L95"></a></span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    name = &quot;select&quot;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>    options = (&quot;selected&quot;, )</span><br />
+      <span style="white-space: pre;"><a id="L98"></a></span><br />
+      <span style="white-space: pre;"><a id="L99"></a>    def __init__(self, widget, selected):</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>        super().__init__(widget)</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>        self.selected = selected</span><br />
+    </div>
+  </body>
+</html>

@@ -61,6 +61,7 @@ class WX4Window(WXShared, SpecificWindow):
 
     def _init(self):
         """Initialize the specific widget."""
+        WX_THREAD.window = self.generic
         self._wx_init()
         area = self.usable_surface
         title = self.generic.title

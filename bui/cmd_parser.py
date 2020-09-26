@@ -10,11 +10,9 @@ or disable it, look at the `start` function defined in the BUI tools
 
 import argparse
 import asyncio
-import code
-import queue
-import threading
 
 from bui.control import log as control_log
+from bui.log import start_logging
 from bui.widget.window import Window
 
 def init_args():
@@ -29,11 +27,15 @@ def init_args():
     parser.add_argument("-i", "--interactive", action="store_true",
             help="Start an interactive Python interpreeter in the console, "
             "won't block the BUI window.")
+    parser.add_argument("-l", "--log",
+            help="Write in the bui.log log file", action="store_true")
     parser.add_argument("-c", "--debug-controls",
             help="Show subscribed control methods and fired controls, "
             "can take additional filters", nargs='*')
 
     args = parser.parse_args()
+    if args.log:
+        start_logging()
     if args.debug_controls is not None:
         print("Running in 'debug controls' mode.")
         control_log.stream.push_application()
@@ -57,35 +59,6 @@ def before_displaying(args, window, loop):
         loop (asyncio Loop): the event loop.
 
     """
-    inputs = asyncio.Queue()
-    prompts = queue.Queue()
-
-    def threaded():
-        user_input = ""
-        prompt = ">>> "
-        while user_input != "exit":
-            try:
-                user_input = input(prompt)
-            except EOFError:
-                user_input = "exit"
-
-            asyncio.run_coroutine_threadsafe(inputs.put(user_input), loop)
-            prompt = prompts.get()
-
-    async def main():
-        user_input = ""
-        interactive = code.InteractiveConsole({"window": window})
-        prompt = ">>> "
-        while user_input != "exit":
-            user_input = await inputs.get()
-            if interactive.push(user_input):
-                prompt = "... "
-            else:
-                prompt = ">>> "
-
-            prompts.put(prompt)
-
     if args.interactive:
-        print("Interactive...")
-        threading.Thread(target=threaded).start()
-        loop.create_task(main())
+        from bui.tools import PACKAGE
+        PACKAGE.interactive.interact()
