@@ -184,7 +184,8 @@ class WX4Window(WXShared, SpecificWindow):
         """Close this window, terminate loop if appropriate."""
         if self.wx_frame:
             # Show the parent window, if any
-            if (parent := self.generic._bui_parent) is not None:
+            parent = self.generic._bui_parent
+            if parent is not None:
                 self.in_main_thread(parent.specific.wx_frame.Show)
 
             self.in_main_thread(self.wx_frame.Destroy)
