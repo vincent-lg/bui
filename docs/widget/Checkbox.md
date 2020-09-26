@@ -41,7 +41,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/checkbox.html#L68)
+[See the source code](../raw/widget/checkbox.html#L69)
 
 Return whether the checkbox is disabled or not.
 
@@ -51,7 +51,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/checkbox.html#L63)
+[See the source code](../raw/widget/checkbox.html#L64)
 
 Return whether the checkbox is enabled or not.
 
@@ -61,7 +61,7 @@ Return whether the checkbox is enabled or not.
 
 `check(self)`
 
-[See the source code](../raw/widget/checkbox.html#L73)
+[See the source code](../raw/widget/checkbox.html#L74)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -88,7 +88,7 @@ raise no exception.
 
 `disable(self)`
 
-[See the source code](../raw/widget/checkbox.html#L85)
+[See the source code](../raw/widget/checkbox.html#L86)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -100,7 +100,7 @@ Disable the checkbox.
 
 `enable(self)`
 
-[See the source code](../raw/widget/checkbox.html#L81)
+[See the source code](../raw/widget/checkbox.html#L82)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -112,7 +112,7 @@ Force-enable the checkbox.
 
 `handle_check(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L89)
+[See the source code](../raw/widget/checkbox.html#L90)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -125,7 +125,7 @@ Do nothing if a checkbox is clicked.
 
 `handle_init(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L93)
+[See the source code](../raw/widget/checkbox.html#L94)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -138,7 +138,7 @@ Do nothing if a checkbox is pressed.
 
 `handle_press(self, control)`
 
-[See the source code](../raw/widget/checkbox.html#L97)
+[See the source code](../raw/widget/checkbox.html#L98)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -183,7 +183,7 @@ Args:
 
 `uncheck(self)`
 
-[See the source code](../raw/widget/checkbox.html#L77)
+[See the source code](../raw/widget/checkbox.html#L78)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

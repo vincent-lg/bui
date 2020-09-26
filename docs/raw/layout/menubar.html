@@ -20,14 +20,14 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Menubar object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Menubar object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class Menubar(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a menubar for this window.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    A menubar is traditionally at the top of your window, containing</span><br />
@@ -37,9 +37,9 @@
       <span style="white-space: pre;"><a id="L15"></a>    and sub-menus very easily:</span><br />
       <span style="white-space: pre;"><a id="L16"></a></span><br />
       <span style="white-space: pre;"><a id="L17"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L18"></a>    &lt;window title="Menubar demo"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    &lt;window title=&quot;Menubar demo&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L19"></a>      &lt;menubar&gt;</span><br />
-      <span style="white-space: pre;"><a id="L20"></a>        &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>        &lt;menu name=&quot;File&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L21"></a>          &lt;item&gt;Quit&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L22"></a>        &lt;/menu&gt;</span><br />
       <span style="white-space: pre;"><a id="L23"></a>      &lt;/menubar&gt;</span><br />
@@ -55,7 +55,7 @@
       <span style="white-space: pre;"><a id="L33"></a>    or more [menus](menu.md).  The menus are traditionally horizontal</span><br />
       <span style="white-space: pre;"><a id="L34"></a>    labels on which the user of your application can click to unfold</span><br />
       <span style="white-space: pre;"><a id="L35"></a>    what the menu contains.  You might see a lot of applications with</span><br />
-      <span style="white-space: pre;"><a id="L36"></a>    menus "file", "edit", "view" and so on.</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    menus &quot;file&quot;, &quot;edit&quot;, &quot;view&quot; and so on.</span><br />
       <span style="white-space: pre;"><a id="L37"></a></span><br />
       <span style="white-space: pre;"><a id="L38"></a>    [menu tags](.menu.md) should be inside a menubar tag.  A menubar</span><br />
       <span style="white-space: pre;"><a id="L39"></a>    must have at least one menu, and can span on several menus.</span><br />
@@ -73,19 +73,19 @@
       <span style="white-space: pre;"><a id="L51"></a></span><br />
       <span style="white-space: pre;"><a id="L52"></a>    ### Simple menu</span><br />
       <span style="white-space: pre;"><a id="L53"></a></span><br />
-      <span style="white-space: pre;"><a id="L54"></a>    Here's a simple example of a menubar with two menus, "File" and</span><br />
-      <span style="white-space: pre;"><a id="L55"></a>    "Edit", and several choices in each menu.</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    Here&#x27;s a simple example of a menubar with two menus, &quot;File&quot; and</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>    &quot;Edit&quot;, and several choices in each menu.</span><br />
       <span style="white-space: pre;"><a id="L56"></a></span><br />
       <span style="white-space: pre;"><a id="L57"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L58"></a>    &lt;window ...&gt;</span><br />
       <span style="white-space: pre;"><a id="L59"></a>      &lt;menubar&gt;</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>        &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>        &lt;menu name=&quot;File&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L61"></a>          &lt;item&gt;New...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L62"></a>          &lt;item&gt;Open...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L63"></a>          &lt;item&gt;Save...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L64"></a>          &lt;item&gt;Quit&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L65"></a>        &lt;/menu&gt;</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>        &lt;menu name="Edit"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>        &lt;menu name=&quot;Edit&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L67"></a>          &lt;item&gt;Cut&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L68"></a>          &lt;item&gt;Copy&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L69"></a>          &lt;item&gt;Paste&lt;/item&gt;</span><br />
@@ -104,10 +104,10 @@
       <span style="white-space: pre;"><a id="L82"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L83"></a>    &lt;window ...&gt;</span><br />
       <span style="white-space: pre;"><a id="L84"></a>      &lt;menubar&gt;</span><br />
-      <span style="white-space: pre;"><a id="L85"></a>        &lt;menu name="File"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        &lt;menu name=&quot;File&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L86"></a>          &lt;item&gt;New...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L87"></a>          &lt;item&gt;Open...&lt;/item&gt;</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>          &lt;menu name="Import"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>          &lt;menu name=&quot;Import&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L89"></a>            &lt;item&gt;A file...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L90"></a>            &lt;item&gt;A folder&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L91"></a>          &lt;/menu&gt;</span><br />
@@ -119,9 +119,9 @@
       <span style="white-space: pre;"><a id="L97"></a>    &lt;/window&gt;</span><br />
       <span style="white-space: pre;"><a id="L98"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L99"></a></span><br />
-      <span style="white-space: pre;"><a id="L100"></a>    This will create a menubar with only one menu: "File".</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>    Inside of it are four choices: "new", "open", "import" and "quit".</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>    "Import" is a sub-menu, so by clicking on it we have two choices:</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>    This will create a menubar with only one menu: &quot;File&quot;.</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    Inside of it are four choices: &quot;new&quot;, &quot;open&quot;, &quot;import&quot; and &quot;quit&quot;.</span><br />
+      <span style="white-space: pre;"><a id="L102"></a>    &quot;Import&quot; is a sub-menu, so by clicking on it we have two choices:</span><br />
       <span style="white-space: pre;"><a id="L103"></a>    import a file or import a folder.</span><br />
       <span style="white-space: pre;"><a id="L104"></a></span><br />
       <span style="white-space: pre;"><a id="L105"></a>    ## Attributes</span><br />
@@ -139,9 +139,9 @@
       <span style="white-space: pre;"><a id="L117"></a>    The menubar has no control.  Most of the time, you will simply</span><br />
       <span style="white-space: pre;"><a id="L118"></a>    use the controls of the [item widget](item.md).</span><br />
       <span style="white-space: pre;"><a id="L119"></a></span><br />
-      <span style="white-space: pre;"><a id="L120"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L121"></a></span><br />
-      <span style="white-space: pre;"><a id="L122"></a>    tag_name = "menubar"</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    tag_name = &quot;menubar&quot;</span><br />
       <span style="white-space: pre;"><a id="L123"></a>    attrs = ()</span><br />
     </div>
   </body>

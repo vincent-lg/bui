@@ -20,13 +20,13 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Init control, used on window and widgets to perform actions on init."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Init control, used on window and widgets to perform actions on init.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.control.base import Control</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
       <span style="white-space: pre;"><a id="L5"></a>class Init(Control):</span><br />
       <span style="white-space: pre;"><a id="L6"></a></span><br />
-      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L8"></a>    When the window or widget is initialized.</span><br />
       <span style="white-space: pre;"><a id="L9"></a></span><br />
       <span style="white-space: pre;"><a id="L10"></a>    Contrary to other controls, this one is automatically triggered by</span><br />
@@ -47,9 +47,9 @@
       <span style="white-space: pre;"><a id="L25"></a></span><br />
       <span style="white-space: pre;"><a id="L26"></a>        def on_init(self):</span><br />
       <span style="white-space: pre;"><a id="L27"></a>            # The window initializes</span><br />
-      <span style="white-space: pre;"><a id="L28"></a>            table = self["products"]</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>            table = self[&quot;products&quot;]</span><br />
       <span style="white-space: pre;"><a id="L29"></a>            table.rows = (</span><br />
-      <span style="white-space: pre;"><a id="L30"></a>                    ("Pocket watch", "$15", 80),</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>                    (&quot;Pocket watch&quot;, &quot;$15&quot;, 80),</span><br />
       <span style="white-space: pre;"><a id="L31"></a>                    ...</span><br />
       <span style="white-space: pre;"><a id="L32"></a>            )</span><br />
       <span style="white-space: pre;"><a id="L33"></a></span><br />
@@ -69,7 +69,7 @@
       <span style="white-space: pre;"><a id="L47"></a></span><br />
       <span style="white-space: pre;"><a id="L48"></a>    You can also link this control to most widgets.  Include the widget</span><br />
       <span style="white-space: pre;"><a id="L49"></a>    identifier in the method name.  For instance, if your widget has an ID</span><br />
-      <span style="white-space: pre;"><a id="L50"></a>    of "products", then to fill it when the widget is ready to be displayed:</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>    of &quot;products&quot;, then to fill it when the widget is ready to be displayed:</span><br />
       <span style="white-space: pre;"><a id="L51"></a></span><br />
       <span style="white-space: pre;"><a id="L52"></a>        def on_init_products(self):</span><br />
       <span style="white-space: pre;"><a id="L53"></a>            pass</span><br />
@@ -88,14 +88,14 @@
       <span style="white-space: pre;"><a id="L66"></a></span><br />
       <span style="white-space: pre;"><a id="L67"></a>    This control can be bound to an asynchronous method (that is, a</span><br />
       <span style="white-space: pre;"><a id="L68"></a>    coroutine).  However, in order to avoid slowing down the display of</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>    the window, notice that using such a method doesn't guarantee the</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>    the window, notice that using such a method doesn&#x27;t guarantee the</span><br />
       <span style="white-space: pre;"><a id="L70"></a>    initialization will be called before the window is displayed, which</span><br />
       <span style="white-space: pre;"><a id="L71"></a>    might create some logical errors depending on what you want to achieve:</span><br />
       <span style="white-space: pre;"><a id="L72"></a></span><br />
       <span style="white-space: pre;"><a id="L73"></a>        async def on_init(self, ...):</span><br />
       <span style="white-space: pre;"><a id="L74"></a></span><br />
       <span style="white-space: pre;"><a id="L75"></a>    As usual, just place the `async` keyword before the method</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>    definition to make it asynchronous.  Although you won't have</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>    definition to make it asynchronous.  Although you won&#x27;t have</span><br />
       <span style="white-space: pre;"><a id="L77"></a>    control over when the information will appear, you will be able</span><br />
       <span style="white-space: pre;"><a id="L78"></a>    to divide the task in different periods of time.</span><br />
       <span style="white-space: pre;"><a id="L79"></a></span><br />
@@ -107,7 +107,7 @@
       <span style="white-space: pre;"><a id="L85"></a>        class Example(Window):</span><br />
       <span style="white-space: pre;"><a id="L86"></a></span><br />
       <span style="white-space: pre;"><a id="L87"></a>            def on_init(self):</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>                # Notice you don't define it with async this time.  This</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>                # Notice you don&#x27;t define it with async this time.  This</span><br />
       <span style="white-space: pre;"><a id="L89"></a>                # method will be executed before the window appears.</span><br />
       <span style="white-space: pre;"><a id="L90"></a>                # ... some initialization might be required</span><br />
       <span style="white-space: pre;"><a id="L91"></a>                self.schedule(self.start_task)</span><br />
@@ -125,33 +125,33 @@
       <span style="white-space: pre;"><a id="L103"></a>    if the method blocks, the window will take longer to display.</span><br />
       <span style="white-space: pre;"><a id="L104"></a>    However, we schedule the `start_task` method to run.  This method</span><br />
       <span style="white-space: pre;"><a id="L105"></a>    has been defined by the developer and is asynchronous.  BUI will</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>    start it and call the method whenever possible (notice, you won't</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    start it and call the method whenever possible (notice, you won&#x27;t</span><br />
       <span style="white-space: pre;"><a id="L107"></a>    be in control of when it is called, chances are it will be called</span><br />
       <span style="white-space: pre;"><a id="L108"></a>    after the window appears, this time).</span><br />
       <span style="white-space: pre;"><a id="L109"></a></span><br />
       <span style="white-space: pre;"><a id="L110"></a>    ## Control attributes</span><br />
       <span style="white-space: pre;"><a id="L111"></a></span><br />
-      <span style="white-space: pre;"><a id="L112"></a>    This control doesn't have any attribute.  Notice, as usual, you</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    This control doesn&#x27;t have any attribute.  Notice, as usual, you</span><br />
       <span style="white-space: pre;"><a id="L113"></a>    can use the `widget` argument in your control method, if this is a</span><br />
       <span style="white-space: pre;"><a id="L114"></a>    widget control:</span><br />
       <span style="white-space: pre;"><a id="L115"></a></span><br />
       <span style="white-space: pre;"><a id="L116"></a>        def on_init_products(self, widget):</span><br />
       <span style="white-space: pre;"><a id="L117"></a></span><br />
-      <span style="white-space: pre;"><a id="L118"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L119"></a></span><br />
-      <span style="white-space: pre;"><a id="L120"></a>    name = "init"</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    name = &quot;init&quot;</span><br />
       <span style="white-space: pre;"><a id="L121"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>            "window": "A window is initialized.",</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>            &quot;window&quot;: &quot;A window is initialized.&quot;,</span><br />
       <span style="white-space: pre;"><a id="L123"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L124"></a></span><br />
       <span style="white-space: pre;"><a id="L125"></a>    def perform(self, options=None):</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L127"></a>        When the control is triggered.</span><br />
       <span style="white-space: pre;"><a id="L128"></a></span><br />
       <span style="white-space: pre;"><a id="L129"></a>        This method will be called when the window is ready to display,</span><br />
       <span style="white-space: pre;"><a id="L130"></a>        but before it actually appears on the screen.</span><br />
       <span style="white-space: pre;"><a id="L131"></a></span><br />
-      <span style="white-space: pre;"><a id="L132"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L133"></a>        super().perform(options)</span><br />
     </div>
   </body>

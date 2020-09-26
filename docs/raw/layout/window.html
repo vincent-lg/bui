@@ -20,14 +20,14 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Window object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Window object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class Window(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Window tag, to encompass widget tags.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    The window tag is the only one that is truly mandatory in your</span><br />
@@ -51,13 +51,13 @@
       <span style="white-space: pre;"><a id="L29"></a>    |              |          | in the window grid.      | cols=5&gt;`    |</span><br />
       <span style="white-space: pre;"><a id="L30"></a>    |              |          | Default is `6`.          |             |</span><br />
       <span style="white-space: pre;"><a id="L31"></a>    | `title`      | Yes      | The window or dialog     | `&lt;window    |</span><br />
-      <span style="white-space: pre;"><a id="L32"></a>    |              |          | title.  This attribute   | title="User |</span><br />
-      <span style="white-space: pre;"><a id="L33"></a>    |              |          | is mandatory.            | Config"&gt;`   |</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>    |              |          | title.  This attribute   | title=&quot;User |</span><br />
+      <span style="white-space: pre;"><a id="L33"></a>    |              |          | is mandatory.            | Config&quot;&gt;`   |</span><br />
       <span style="white-space: pre;"><a id="L34"></a></span><br />
       <span style="white-space: pre;"><a id="L35"></a>    You cannot set a window or dialog without a proper title.  Doing so</span><br />
       <span style="white-space: pre;"><a id="L36"></a>    would impair accessibility for screen readers.  If these tools can</span><br />
-      <span style="white-space: pre;"><a id="L37"></a>    read anything at all on your window, it's the title bar, so be sure</span><br />
-      <span style="white-space: pre;"><a id="L38"></a>    it's not empty.</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>    read anything at all on your window, it&#x27;s the title bar, so be sure</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>    it&#x27;s not empty.</span><br />
       <span style="white-space: pre;"><a id="L39"></a></span><br />
       <span style="white-space: pre;"><a id="L40"></a>    &gt; `title` is a translatable attribute.  If internationalization is</span><br />
       <span style="white-space: pre;"><a id="L41"></a>      set, it should contain the `ytranslate` path to the title and will</span><br />
@@ -65,12 +65,12 @@
       <span style="white-space: pre;"><a id="L43"></a></span><br />
       <span style="white-space: pre;"><a id="L44"></a>    The `rows` and `cols` attributes are used to set the window grid.  You</span><br />
       <span style="white-space: pre;"><a id="L45"></a>    can think of them as the height (in rows) and width (in columns) of the</span><br />
-      <span style="white-space: pre;"><a id="L46"></a>    grid.  Changing this value won't make the window any bigger, but</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    grid.  Changing this value won&#x27;t make the window any bigger, but</span><br />
       <span style="white-space: pre;"><a id="L47"></a>    it will give you more control on how to place the widget in the window</span><br />
       <span style="white-space: pre;"><a id="L48"></a>    itself.  On the other hand, having a large grid can make designing not</span><br />
       <span style="white-space: pre;"><a id="L49"></a>    so easy.  It all depends on your needs.</span><br />
       <span style="white-space: pre;"><a id="L50"></a></span><br />
-      <span style="white-space: pre;"><a id="L51"></a>    &gt; Note: you don't have to set the same number of rows and columns.</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>    &gt; Note: you don&#x27;t have to set the same number of rows and columns.</span><br />
       <span style="white-space: pre;"><a id="L52"></a>      This is just the default value.  You can set different values with no</span><br />
       <span style="white-space: pre;"><a id="L53"></a>      trap:</span><br />
       <span style="white-space: pre;"><a id="L54"></a></span><br />
@@ -79,8 +79,8 @@
       <span style="white-space: pre;"><a id="L57"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
       <span style="white-space: pre;"><a id="L59"></a>    This will set a window with only one column, but 8 rows.  If you place</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>    a widget in `x=0 y=0`, it will take all the window's width.  Again,</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>    this doesn't change the window size in any way, just the way widgets</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    a widget in `x=0 y=0`, it will take all the window&#x27;s width.  Again,</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    this doesn&#x27;t change the window size in any way, just the way widgets</span><br />
       <span style="white-space: pre;"><a id="L62"></a>    are placed on it.  You can picture the window to always be a</span><br />
       <span style="white-space: pre;"><a id="L63"></a>    square but sliced in different portions (squares or rectangles, more</span><br />
       <span style="white-space: pre;"><a id="L64"></a>    or less big depending on the height and width you set in the window</span><br />
@@ -90,26 +90,26 @@
       <span style="white-space: pre;"><a id="L68"></a></span><br />
       <span style="white-space: pre;"><a id="L69"></a>    A window is a specific graphical element since it only contains other</span><br />
       <span style="white-space: pre;"><a id="L70"></a>    elements and has no meaning by itself.  Therefore, you cannot send</span><br />
-      <span style="white-space: pre;"><a id="L71"></a>    it data, it wouldn't make much sense.  Instead, you should</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>    send data to the window's graphical elements themselves.</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    it data, it wouldn&#x27;t make much sense.  Instead, you should</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    send data to the window&#x27;s graphical elements themselves.</span><br />
       <span style="white-space: pre;"><a id="L73"></a></span><br />
       <span style="white-space: pre;"><a id="L74"></a>    However, some window attributes can be changed on the fly.</span><br />
       <span style="white-space: pre;"><a id="L75"></a></span><br />
       <span style="white-space: pre;"><a id="L76"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
       <span style="white-space: pre;"><a id="L77"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L78"></a>    | `title`        | The title (str)  | `self.title = "New title"`  |</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    | `title`        | The title (str)  | `self.title = &quot;New title&quot;`  |</span><br />
       <span style="white-space: pre;"><a id="L79"></a></span><br />
       <span style="white-space: pre;"><a id="L80"></a>    These attributes can be accessed and set using the standard Python</span><br />
       <span style="white-space: pre;"><a id="L81"></a>    syntax for attributes.  Behind the scenes, these attributes are cached,</span><br />
-      <span style="white-space: pre;"><a id="L82"></a>    handled by an extended `property()`, but you don't really need to</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>    handled by an extended `property()`, but you don&#x27;t really need to</span><br />
       <span style="white-space: pre;"><a id="L83"></a>    worry about how it works.  Suffice it to say that:</span><br />
       <span style="white-space: pre;"><a id="L84"></a></span><br />
       <span style="white-space: pre;"><a id="L85"></a>        class Example(Windows):</span><br />
       <span style="white-space: pre;"><a id="L86"></a></span><br />
       <span style="white-space: pre;"><a id="L87"></a>            def on_press_a(self):</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>                self.title = "You pressed A."</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>                self.title = &quot;You pressed A.&quot;</span><br />
       <span style="white-space: pre;"><a id="L89"></a></span><br />
-      <span style="white-space: pre;"><a id="L90"></a>    ... will update the window title when the user presses the 'a' key</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>    ... will update the window title when the user presses the &#x27;a&#x27; key</span><br />
       <span style="white-space: pre;"><a id="L91"></a>    on her keyboard.</span><br />
       <span style="white-space: pre;"><a id="L92"></a></span><br />
       <span style="white-space: pre;"><a id="L93"></a>    ## Controls</span><br />
@@ -125,7 +125,7 @@
       <span style="white-space: pre;"><a id="L103"></a>    | [close](../../control/close.md) | `on_close`   | The window is    |</span><br />
       <span style="white-space: pre;"><a id="L104"></a>    |                                 |              | about to be      |</span><br />
       <span style="white-space: pre;"><a id="L105"></a>    |                                 |              | closed, but      |</span><br />
-      <span style="white-space: pre;"><a id="L106"></a>    |                                 |              | isn't closed     |</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>    |                                 |              | isn&#x27;t closed     |</span><br />
       <span style="white-space: pre;"><a id="L107"></a>    |                                 |              | yet.             |</span><br />
       <span style="white-space: pre;"><a id="L108"></a>    | [focus](../../control/focus.md) | `on_focus`   | The window is    |</span><br />
       <span style="white-space: pre;"><a id="L109"></a>    |                                 |              | focused or lose  |</span><br />
@@ -158,22 +158,22 @@
       <span style="white-space: pre;"><a id="L136"></a>    |                                 |              | control can have |</span><br />
       <span style="white-space: pre;"><a id="L137"></a>    |                                 |              | sub-controls.    |</span><br />
       <span style="white-space: pre;"><a id="L138"></a></span><br />
-      <span style="white-space: pre;"><a id="L139"></a>    Notice that we don't specify the window identifier.  It would make</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>    Notice that we don&#x27;t specify the window identifier.  It would make</span><br />
       <span style="white-space: pre;"><a id="L140"></a>    no sense here.  Therefore, to use these events, you should just add a</span><br />
       <span style="white-space: pre;"><a id="L141"></a>    method in the window class with the control name and no identifier:</span><br />
       <span style="white-space: pre;"><a id="L142"></a></span><br />
       <span style="white-space: pre;"><a id="L143"></a>        class MainWindow(Window):</span><br />
       <span style="white-space: pre;"><a id="L144"></a></span><br />
       <span style="white-space: pre;"><a id="L145"></a>            def on_focus(self):</span><br />
-      <span style="white-space: pre;"><a id="L146"></a>                print(f"Am I focused? {'yes' if self.focused else 'no'}")</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>                print(f&quot;Am I focused? {&#x27;yes&#x27; if self.focused else &#x27;no&#x27;}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L147"></a></span><br />
-      <span style="white-space: pre;"><a id="L148"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L149"></a></span><br />
-      <span style="white-space: pre;"><a id="L150"></a>    tag_name = "window"</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>    tag_name = &quot;window&quot;</span><br />
       <span style="white-space: pre;"><a id="L151"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L152"></a>        Attr("title", help="The window title"),</span><br />
-      <span style="white-space: pre;"><a id="L153"></a>        Attr("width", help="The window width", type=int, default=6),</span><br />
-      <span style="white-space: pre;"><a id="L154"></a>        Attr("height", help="The window height", type=int, default=6),</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        Attr(&quot;title&quot;, help=&quot;The window title&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>        Attr(&quot;width&quot;, help=&quot;The window width&quot;, type=int, default=6),</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>        Attr(&quot;height&quot;, help=&quot;The window height&quot;, type=int, default=6),</span><br />
       <span style="white-space: pre;"><a id="L155"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L156"></a></span><br />
       <span style="white-space: pre;"><a id="L157"></a>    def __init__(self, layout, parent, title, width=0, height=0):</span><br />

@@ -20,13 +20,13 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Parent class of all window components in a layout stand-point."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Parent class of all window components in a layout stand-point.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>NO_VALUE = object()</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
       <span style="white-space: pre;"><a id="L5"></a>class Component:</span><br />
       <span style="white-space: pre;"><a id="L6"></a></span><br />
-      <span style="white-space: pre;"><a id="L7"></a>    tag_name = "to set"</span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    tag_name = &quot;to set&quot;</span><br />
       <span style="white-space: pre;"><a id="L8"></a>    attrs = ()</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    must_have_data = False</span><br />
       <span style="white-space: pre;"><a id="L10"></a>    has_widget = True</span><br />
@@ -35,19 +35,19 @@
       <span style="white-space: pre;"><a id="L13"></a>        self.layout = layout</span><br />
       <span style="white-space: pre;"><a id="L14"></a>        self.parent = parent</span><br />
       <span style="white-space: pre;"><a id="L15"></a>        self.children = []</span><br />
-      <span style="white-space: pre;"><a id="L16"></a>        self.id = ""</span><br />
-      <span style="white-space: pre;"><a id="L17"></a>        self.data = ""</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>        self.id = &quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L17"></a>        self.data = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L18"></a>        self.widget = None</span><br />
       <span style="white-space: pre;"><a id="L19"></a></span><br />
       <span style="white-space: pre;"><a id="L20"></a>    def __repr__(self):</span><br />
-      <span style="white-space: pre;"><a id="L21"></a>        return f"&lt;{self.tag_name.capitalize()}(attrs={len(self.attrs)}), has_data={bool(self.data)})&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>        return f&quot;&lt;{self.tag_name.capitalize()}(attrs={len(self.attrs)}), has_data={bool(self.data)})&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L22"></a></span><br />
       <span style="white-space: pre;"><a id="L23"></a>    def __str__(self):</span><br />
       <span style="white-space: pre;"><a id="L24"></a>        return self.display(0)</span><br />
       <span style="white-space: pre;"><a id="L25"></a></span><br />
       <span style="white-space: pre;"><a id="L26"></a>    @property</span><br />
       <span style="white-space: pre;"><a id="L27"></a>    def provided_attrs(self):</span><br />
-      <span style="white-space: pre;"><a id="L28"></a>        """Return a list [(attr, value)] of attributes."""</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        &quot;&quot;&quot;Return a list [(attr, value)] of attributes.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L29"></a>        values = []</span><br />
       <span style="white-space: pre;"><a id="L30"></a>        for attr in self.attrs:</span><br />
       <span style="white-space: pre;"><a id="L31"></a>            value = getattr(self, attr.name, NO_VALUE)</span><br />
@@ -57,7 +57,7 @@
       <span style="white-space: pre;"><a id="L35"></a></span><br />
       <span style="white-space: pre;"><a id="L36"></a>    @property</span><br />
       <span style="white-space: pre;"><a id="L37"></a>    def opening(self):</span><br />
-      <span style="white-space: pre;"><a id="L38"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L38"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L39"></a>        Return the opening tag without the trailing &gt;.</span><br />
       <span style="white-space: pre;"><a id="L40"></a></span><br />
       <span style="white-space: pre;"><a id="L41"></a>        For instance:</span><br />
@@ -65,30 +65,30 @@
       <span style="white-space: pre;"><a id="L43"></a>        Or:</span><br />
       <span style="white-space: pre;"><a id="L44"></a>            &lt;button id=btn x=2 y=5</span><br />
       <span style="white-space: pre;"><a id="L45"></a></span><br />
-      <span style="white-space: pre;"><a id="L46"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L47"></a>        provided = self.provided_attrs</span><br />
-      <span style="white-space: pre;"><a id="L48"></a>        attrs = ""</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>        attrs = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L49"></a>        for attr, value in provided:</span><br />
       <span style="white-space: pre;"><a id="L50"></a>            if attrs:</span><br />
-      <span style="white-space: pre;"><a id="L51"></a>                attrs += " "</span><br />
+      <span style="white-space: pre;"><a id="L51"></a>                attrs += &quot; &quot;</span><br />
       <span style="white-space: pre;"><a id="L52"></a></span><br />
       <span style="white-space: pre;"><a id="L53"></a>            name = attr.name</span><br />
       <span style="white-space: pre;"><a id="L54"></a>            if value is not NO_VALUE:</span><br />
       <span style="white-space: pre;"><a id="L55"></a>                value = str(value)</span><br />
-      <span style="white-space: pre;"><a id="L56"></a>                if " " in value:</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>                if &quot; &quot; in value:</span><br />
       <span style="white-space: pre;"><a id="L57"></a>                    value = repr(value)</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
-      <span style="white-space: pre;"><a id="L59"></a>                attrs += f"{name}={value}"</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>                attrs += f&quot;{name}={value}&quot;</span><br />
       <span style="white-space: pre;"><a id="L60"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>                attrs += f"{name}"</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>                attrs += f&quot;{name}&quot;</span><br />
       <span style="white-space: pre;"><a id="L62"></a></span><br />
       <span style="white-space: pre;"><a id="L63"></a>        if attrs:</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>            return f"&lt;{self.tag_name} {attrs}"</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>            return f&quot;&lt;{self.tag_name} {attrs}&quot;</span><br />
       <span style="white-space: pre;"><a id="L65"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>            return f"&lt;{self.tag_name}"</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>            return f&quot;&lt;{self.tag_name}&quot;</span><br />
       <span style="white-space: pre;"><a id="L67"></a></span><br />
       <span style="white-space: pre;"><a id="L68"></a>    def display(self, ident: int) -&gt; str:</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L70"></a>        Display this tag with child tags if appropriate.</span><br />
       <span style="white-space: pre;"><a id="L71"></a></span><br />
       <span style="white-space: pre;"><a id="L72"></a>        Args:</span><br />
@@ -97,23 +97,23 @@
       <span style="white-space: pre;"><a id="L75"></a>        Returns:</span><br />
       <span style="white-space: pre;"><a id="L76"></a>            formatted (str): the formatted string representation.</span><br />
       <span style="white-space: pre;"><a id="L77"></a></span><br />
-      <span style="white-space: pre;"><a id="L78"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L79"></a>        tag = self.opening</span><br />
       <span style="white-space: pre;"><a id="L80"></a>        if self.children:</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>            tag += "&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>            tag += &quot;&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L82"></a>            for child in self.children:</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>                tag += f"\n{(ident + 1) * 2 * ' '}{child.display(ident=ident + 1)}"</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>            tag += f"\n{ident * 2 * ' '}&lt;/{self.tag_name}&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>                tag += f&quot;\n{(ident + 1) * 2 * &#x27; &#x27;}{child.display(ident=ident + 1)}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>            tag += f&quot;\n{ident * 2 * &#x27; &#x27;}&lt;/{self.tag_name}&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L85"></a>        elif self.data:</span><br />
-      <span style="white-space: pre;"><a id="L86"></a>            tag += f"&gt;{self.data}&lt;/{self.tag_name}&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>            tag += f&quot;&gt;{self.data}&lt;/{self.tag_name}&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L87"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>            tag += f" /&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L88"></a>            tag += f&quot; /&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L89"></a></span><br />
       <span style="white-space: pre;"><a id="L90"></a>        return tag</span><br />
       <span style="white-space: pre;"><a id="L91"></a></span><br />
       <span style="white-space: pre;"><a id="L92"></a>    @classmethod</span><br />
       <span style="white-space: pre;"><a id="L93"></a>    def can_be_inside(cls, parent_types, parent):</span><br />
-      <span style="white-space: pre;"><a id="L94"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L95"></a>        Can this tag be included in a parent tag?</span><br />
       <span style="white-space: pre;"><a id="L96"></a></span><br />
       <span style="white-space: pre;"><a id="L97"></a>        Args:</span><br />
@@ -126,10 +126,10 @@
       <span style="white-space: pre;"><a id="L104"></a>        Raises:</span><br />
       <span style="white-space: pre;"><a id="L105"></a>            ValueError: give more details about the reason why, in case of rejection.</span><br />
       <span style="white-space: pre;"><a id="L106"></a></span><br />
-      <span style="white-space: pre;"><a id="L107"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L108"></a>        if parent_types is None:</span><br />
       <span style="white-space: pre;"><a id="L109"></a>            if parent:</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>                raise ValueError(f"{cls.tag_name} should be a parent tag, not contained in &lt;{parent.tag_name}&gt;")</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>                raise ValueError(f&quot;{cls.tag_name} should be a parent tag, not contained in &lt;{parent.tag_name}&gt;&quot;)</span><br />
       <span style="white-space: pre;"><a id="L111"></a></span><br />
       <span style="white-space: pre;"><a id="L112"></a>            return True</span><br />
       <span style="white-space: pre;"><a id="L113"></a></span><br />
@@ -139,21 +139,21 @@
       <span style="white-space: pre;"><a id="L117"></a>        if not isinstance(parent_types, (list, tuple)):</span><br />
       <span style="white-space: pre;"><a id="L118"></a>            parent_types = (parent_types, )</span><br />
       <span style="white-space: pre;"><a id="L119"></a></span><br />
-      <span style="white-space: pre;"><a id="L120"></a>        allowed = [f"&lt;{tag.tag_name}&gt;" for tag in parent_types]</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>        allowed = [f&quot;&lt;{tag.tag_name}&gt;&quot; for tag in parent_types]</span><br />
       <span style="white-space: pre;"><a id="L121"></a>        if len(allowed) &gt; 1:</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>            allowed = ", ".join(allowed[:-1]) + " or " + allowed[-1]</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>            allowed = &quot;, &quot;.join(allowed[:-1]) + &quot; or &quot; + allowed[-1]</span><br />
       <span style="white-space: pre;"><a id="L123"></a>        else:</span><br />
       <span style="white-space: pre;"><a id="L124"></a>            allowed = allowed[0]</span><br />
       <span style="white-space: pre;"><a id="L125"></a></span><br />
-      <span style="white-space: pre;"><a id="L126"></a>        raise ValueError(f"component {cls.tag_name} should be placed inside {allowed}")</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>        raise ValueError(f&quot;component {cls.tag_name} should be placed inside {allowed}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L127"></a></span><br />
       <span style="white-space: pre;"><a id="L128"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>        """Complete the widet, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L129"></a>        &quot;&quot;&quot;Complete the widet, when all the layout has been set.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L130"></a>        pass</span><br />
       <span style="white-space: pre;"><a id="L131"></a></span><br />
       <span style="white-space: pre;"><a id="L132"></a>    @staticmethod</span><br />
       <span style="white-space: pre;"><a id="L133"></a>    def deduce_id(deduce_from: str) -&gt; str:</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L135"></a>        Try and return a deduced identifier.</span><br />
       <span style="white-space: pre;"><a id="L136"></a></span><br />
       <span style="white-space: pre;"><a id="L137"></a>        An identifier must be a lowercase version of the given data with only</span><br />
@@ -165,22 +165,22 @@
       <span style="white-space: pre;"><a id="L143"></a>            deduce_from (str): the origin or the identifier to deduce.</span><br />
       <span style="white-space: pre;"><a id="L144"></a></span><br />
       <span style="white-space: pre;"><a id="L145"></a>        Examples:</span><br />
-      <span style="white-space: pre;"><a id="L146"></a>            &gt;&gt;&gt; Component.deduce_id("click me!")</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>            &gt;&gt;&gt; Component.deduce_id(&quot;click me!&quot;)</span><br />
       <span style="white-space: pre;"><a id="L147"></a>            `click_me`</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>            &gt;&gt;&gt; Component.deduce_id("Quit\tCTRL + Q")</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>            'quit'</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>            &gt;&gt;&gt; Component.deduce_id(&quot;Quit\tCTRL + Q&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>            &#x27;quit&#x27;</span><br />
       <span style="white-space: pre;"><a id="L150"></a></span><br />
-      <span style="white-space: pre;"><a id="L151"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L152"></a>        identifier = ""</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        identifier = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L153"></a>        for char in deduce_from:</span><br />
       <span style="white-space: pre;"><a id="L154"></a>            if char.isalpha():</span><br />
       <span style="white-space: pre;"><a id="L155"></a>                identifier += char.lower()</span><br />
-      <span style="white-space: pre;"><a id="L156"></a>            elif char == " " and not identifier.endswith("_"):</span><br />
-      <span style="white-space: pre;"><a id="L157"></a>                identifier += "_"</span><br />
-      <span style="white-space: pre;"><a id="L158"></a>            elif char == "\t":</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>            elif char == &quot; &quot; and not identifier.endswith(&quot;_&quot;):</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>                identifier += &quot;_&quot;</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>            elif char == &quot;\t&quot;:</span><br />
       <span style="white-space: pre;"><a id="L159"></a>                break</span><br />
       <span style="white-space: pre;"><a id="L160"></a></span><br />
-      <span style="white-space: pre;"><a id="L161"></a>        return identifier.strip("_")</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>        return identifier.strip(&quot;_&quot;)</span><br />
     </div>
   </body>
 </html>

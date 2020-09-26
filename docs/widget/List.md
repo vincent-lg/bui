@@ -38,13 +38,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/list.html#L90)
+[See the source code](../raw/widget/list.html#L92)
 
 Return the list choices.
 
 #### Set
 
-[See the source code](../raw/widget/list.html#L95)
+[See the source code](../raw/widget/list.html#L97)
 
 Modify the choices in the list.
 
@@ -60,13 +60,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/list.html#L133)
+[See the source code](../raw/widget/list.html#L135)
 
 Return the currently-selected choice ID or position.
 
 #### Set
 
-[See the source code](../raw/widget/list.html#L138)
+[See the source code](../raw/widget/list.html#L144)
 
 Change the selected label.
 
@@ -76,7 +76,7 @@ Change the selected label.
 
 `add_choice(self, choice: Union[Any, Tuple[Hashable, Any]])`
 
-[See the source code](../raw/widget/list.html#L153)
+[See the source code](../raw/widget/list.html#L168)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -118,7 +118,7 @@ raise no exception.
 
 `remove_choice(self, identifier: Any)`
 
-[See the source code](../raw/widget/list.html#L189)
+[See the source code](../raw/widget/list.html#L204)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -166,7 +166,7 @@ Args:
 
 `update_choice(self, i, choice)`
 
-[See the source code](../raw/widget/list.html#L184)
+[See the source code](../raw/widget/list.html#L199)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

@@ -20,7 +20,7 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Module containing the generic List class, a generic list widget."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Module containing the generic List class, a generic list widget.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from typing import Any, Hashable, Iterable, Tuple, Union</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
@@ -30,7 +30,7 @@
       <span style="white-space: pre;"><a id="L8"></a></span><br />
       <span style="white-space: pre;"><a id="L9"></a>class List(Widget):</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
-      <span style="white-space: pre;"><a id="L11"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L12"></a>    The generic list widget.</span><br />
       <span style="white-space: pre;"><a id="L13"></a></span><br />
       <span style="white-space: pre;"><a id="L14"></a>    A list is to represent a choice given to the user, with</span><br />
@@ -41,17 +41,17 @@
       <span style="white-space: pre;"><a id="L19"></a>    This is a generic widget which will be converted into a specific widget,</span><br />
       <span style="white-space: pre;"><a id="L20"></a>    depending on the used GUI toolkit.</span><br />
       <span style="white-space: pre;"><a id="L21"></a></span><br />
-      <span style="white-space: pre;"><a id="L22"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L23"></a></span><br />
-      <span style="white-space: pre;"><a id="L24"></a>    widget = "list"</span><br />
-      <span style="white-space: pre;"><a id="L25"></a>    class_name = "List"</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    widget = &quot;list&quot;</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>    class_name = &quot;List&quot;</span><br />
       <span style="white-space: pre;"><a id="L26"></a>    default_controls = {</span><br />
-      <span style="white-space: pre;"><a id="L27"></a>        #"focus": "The list gets or loses focus",</span><br />
-      <span style="white-space: pre;"><a id="L28"></a>        "init": "The window is initialized",</span><br />
-      <span style="white-space: pre;"><a id="L29"></a>        "press": "The user presses on a key while the list is focused.",</span><br />
-      <span style="white-space: pre;"><a id="L30"></a>        #"select": "The list selection changes.",</span><br />
-      <span style="white-space: pre;"><a id="L31"></a>        "release": "The user releases a key while the list is focused",</span><br />
-      <span style="white-space: pre;"><a id="L32"></a>        "type": "The user types a character while the list is focused",</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>        #&quot;focus&quot;: &quot;The list gets or loses focus&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        &quot;init&quot;: &quot;The window is initialized&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        &quot;press&quot;: &quot;The user presses on a key while the list is focused.&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>        &quot;release&quot;: &quot;The user releases a key while the list is focused&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>        &quot;select&quot;: &quot;The list selection changes.&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L32"></a>        &quot;type&quot;: &quot;The user types a character while the list is focused&quot;,</span><br />
       <span style="white-space: pre;"><a id="L33"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L34"></a></span><br />
       <span style="white-space: pre;"><a id="L35"></a>    def __init__(self, leaf):</span><br />
@@ -61,172 +61,187 @@
       <span style="white-space: pre;"><a id="L39"></a>        self.id = leaf.id</span><br />
       <span style="white-space: pre;"><a id="L40"></a>        self.width = leaf.width</span><br />
       <span style="white-space: pre;"><a id="L41"></a>        self.height = leaf.height</span><br />
-      <span style="white-space: pre;"><a id="L42"></a>        self._choices = []</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>        self._ids = {}</span><br />
-      <span style="white-space: pre;"><a id="L44"></a>        self._pos = {}</span><br />
-      <span style="white-space: pre;"><a id="L45"></a>        self._selected = 0</span><br />
-      <span style="white-space: pre;"><a id="L46"></a></span><br />
-      <span style="white-space: pre;"><a id="L47"></a>    def __len__(self):</span><br />
-      <span style="white-space: pre;"><a id="L48"></a>        return len(self._choices)</span><br />
-      <span style="white-space: pre;"><a id="L49"></a></span><br />
-      <span style="white-space: pre;"><a id="L50"></a>    def __getitem__(self, item):</span><br />
-      <span style="white-space: pre;"><a id="L51"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L52"></a>            item = self._ids[item]</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>        except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>            pass</span><br />
-      <span style="white-space: pre;"><a id="L55"></a></span><br />
-      <span style="white-space: pre;"><a id="L56"></a>        return self._choices[item]</span><br />
+      <span style="white-space: pre;"><a id="L42"></a>        self.name = leaf.name</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        self.multisel = leaf.multisel</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>        self._choices = []</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>        self._ids = {}</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>        self._pos = {}</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>        self._selected = (0, ) if self.multisel else 0</span><br />
+      <span style="white-space: pre;"><a id="L48"></a></span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    def __len__(self):</span><br />
+      <span style="white-space: pre;"><a id="L50"></a>        return len(self._choices)</span><br />
+      <span style="white-space: pre;"><a id="L51"></a></span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    def __getitem__(self, item):</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>            item = self._ids[item]</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>            pass</span><br />
       <span style="white-space: pre;"><a id="L57"></a></span><br />
-      <span style="white-space: pre;"><a id="L58"></a>    def __setitem__(self, item, choice):</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>        if isinstance(item, slice):</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>            items = list(range(item.start, item.stop))</span><br />
-      <span style="white-space: pre;"><a id="L61"></a>            choices = choice</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L63"></a>            items = [item]</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>            choices = []</span><br />
-      <span style="white-space: pre;"><a id="L65"></a>            for i, item in enumerate(items):</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>                try:</span><br />
-      <span style="white-space: pre;"><a id="L67"></a>                    key = self._ids[item]</span><br />
-      <span style="white-space: pre;"><a id="L68"></a>                except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L69"></a>                    pass</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>                else:</span><br />
-      <span style="white-space: pre;"><a id="L71"></a>                    items[i] = key</span><br />
-      <span style="white-space: pre;"><a id="L72"></a></span><br />
-      <span style="white-space: pre;"><a id="L73"></a>                choices.append(self._choices[item])</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>        return self._choices[item]</span><br />
+      <span style="white-space: pre;"><a id="L59"></a></span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    def __setitem__(self, item, choice):</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>        if isinstance(item, slice):</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>            items = list(range(item.start, item.stop))</span><br />
+      <span style="white-space: pre;"><a id="L63"></a>            choices = choice</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L65"></a>            items = [item]</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>            choices = []</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>            for i, item in enumerate(items):</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>                try:</span><br />
+      <span style="white-space: pre;"><a id="L69"></a>                    key = self._ids[item]</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>                except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>                    pass</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>                else:</span><br />
+      <span style="white-space: pre;"><a id="L73"></a>                    items[i] = key</span><br />
       <span style="white-space: pre;"><a id="L74"></a></span><br />
-      <span style="white-space: pre;"><a id="L75"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>            iter(choices)</span><br />
-      <span style="white-space: pre;"><a id="L77"></a>            if len(choices) != len(items):</span><br />
-      <span style="white-space: pre;"><a id="L78"></a>                raise TypeError</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>        except TypeError:</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>            raise TypeError("the number of choices doesn't match "</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>                    "the speicified indices") from None</span><br />
-      <span style="white-space: pre;"><a id="L82"></a></span><br />
-      <span style="white-space: pre;"><a id="L83"></a>        for item, choice in zip(items, choices):</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>            self.update_choice(item, choice)</span><br />
-      <span style="white-space: pre;"><a id="L85"></a></span><br />
-      <span style="white-space: pre;"><a id="L86"></a>    @CachedProperty</span><br />
-      <span style="white-space: pre;"><a id="L87"></a>    def id(self):</span><br />
-      <span style="white-space: pre;"><a id="L88"></a>        return self.leaf.id</span><br />
-      <span style="white-space: pre;"><a id="L89"></a></span><br />
-      <span style="white-space: pre;"><a id="L90"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L91"></a>    def choices(self):</span><br />
-      <span style="white-space: pre;"><a id="L92"></a>        """Return the list choices."""</span><br />
-      <span style="white-space: pre;"><a id="L93"></a>        return self._choices</span><br />
-      <span style="white-space: pre;"><a id="L94"></a></span><br />
-      <span style="white-space: pre;"><a id="L95"></a>    @choices.setter</span><br />
-      <span style="white-space: pre;"><a id="L96"></a>    def choices(self, choices: Iterable[Choice]):</span><br />
-      <span style="white-space: pre;"><a id="L97"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>        Modify the choices in the list.</span><br />
-      <span style="white-space: pre;"><a id="L99"></a></span><br />
-      <span style="white-space: pre;"><a id="L100"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>            choices (iterable): a list of choicess, where each choice can</span><br />
-      <span style="white-space: pre;"><a id="L102"></a>                    be a label (preferably a str) or a tuple</span><br />
-      <span style="white-space: pre;"><a id="L103"></a>                    (identifier, label) where identifier is hashable</span><br />
-      <span style="white-space: pre;"><a id="L104"></a>                    (a string is often preferred).</span><br />
-      <span style="white-space: pre;"><a id="L105"></a></span><br />
-      <span style="white-space: pre;"><a id="L106"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L108"></a>            iter(choices)</span><br />
-      <span style="white-space: pre;"><a id="L109"></a>        except TypeError:</span><br />
-      <span style="white-space: pre;"><a id="L110"></a>            raise TypeError("'choices' isn't a valid iterable")</span><br />
-      <span style="white-space: pre;"><a id="L111"></a></span><br />
-      <span style="white-space: pre;"><a id="L112"></a>        ids = {}</span><br />
-      <span style="white-space: pre;"><a id="L113"></a>        pos = {}</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>        new_choices = []</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>        for i, choice in enumerate(choices):</span><br />
-      <span style="white-space: pre;"><a id="L116"></a>            if isinstance(choice, (tuple, list)):</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>                id, label = choice</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>                label = str(label)</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>            else:</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>                id = i</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>                choice = str(choice)</span><br />
-      <span style="white-space: pre;"><a id="L122"></a></span><br />
-      <span style="white-space: pre;"><a id="L123"></a>            new_choices.append(label)</span><br />
-      <span style="white-space: pre;"><a id="L124"></a>            ids[id] = i</span><br />
-      <span style="white-space: pre;"><a id="L125"></a>            pos[i] = id</span><br />
-      <span style="white-space: pre;"><a id="L126"></a></span><br />
-      <span style="white-space: pre;"><a id="L127"></a>        self._choices[:] = new_choices</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>        self._ids = ids</span><br />
-      <span style="white-space: pre;"><a id="L129"></a>        self._pos = pos</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>        self._selected = 0</span><br />
-      <span style="white-space: pre;"><a id="L131"></a>        self.specific.refresh()</span><br />
-      <span style="white-space: pre;"><a id="L132"></a></span><br />
-      <span style="white-space: pre;"><a id="L133"></a>    @property</span><br />
-      <span style="white-space: pre;"><a id="L134"></a>    def selected(self):</span><br />
-      <span style="white-space: pre;"><a id="L135"></a>        """Return the currently-selected choice ID or position."""</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>        return self._pos[self._selected]</span><br />
-      <span style="white-space: pre;"><a id="L137"></a></span><br />
-      <span style="white-space: pre;"><a id="L138"></a>    @selected.setter</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>    def selected(self, selected):</span><br />
-      <span style="white-space: pre;"><a id="L140"></a>        """Change the selected label."""</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L142"></a>            selected = self._ids[selected]</span><br />
-      <span style="white-space: pre;"><a id="L143"></a>        except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L144"></a>            pass</span><br />
-      <span style="white-space: pre;"><a id="L145"></a></span><br />
-      <span style="white-space: pre;"><a id="L146"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>            self._choices[selected]</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>        except IndexError:</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>            raise IndexError(f"{selected!r} isn't a valid indice or key")</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L151"></a>            self._selected = selected</span><br />
-      <span style="white-space: pre;"><a id="L152"></a></span><br />
-      <span style="white-space: pre;"><a id="L153"></a>    def add_choice(self, choice: Choice):</span><br />
-      <span style="white-space: pre;"><a id="L154"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L155"></a>        Add a new choice at the end of the list.</span><br />
-      <span style="white-space: pre;"><a id="L156"></a></span><br />
-      <span style="white-space: pre;"><a id="L157"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L158"></a>            choice (Choice): a choice, either a choice label (probably</span><br />
-      <span style="white-space: pre;"><a id="L159"></a>                    a string) or a tuple of (choice identifier, choice label)</span><br />
-      <span style="white-space: pre;"><a id="L160"></a>                    where both may be strings.  The choice identifier,</span><br />
-      <span style="white-space: pre;"><a id="L161"></a>                    if specified, should be hashable.  The label</span><br />
-      <span style="white-space: pre;"><a id="L162"></a>                    has no constraint (if it's not a string, then</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>                    str() will be called on it).</span><br />
-      <span style="white-space: pre;"><a id="L164"></a></span><br />
-      <span style="white-space: pre;"><a id="L165"></a>        Note:</span><br />
-      <span style="white-space: pre;"><a id="L166"></a>            The label is what the user will see in the list, the</span><br />
-      <span style="white-space: pre;"><a id="L167"></a>            identifier will identify the user selection for the</span><br />
-      <span style="white-space: pre;"><a id="L168"></a>            developer.  If you don't specify any identifier,</span><br />
-      <span style="white-space: pre;"><a id="L169"></a>            the choice position in the list will be used.</span><br />
-      <span style="white-space: pre;"><a id="L170"></a></span><br />
-      <span style="white-space: pre;"><a id="L171"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L172"></a>        if isinstance(choice, tuple):</span><br />
-      <span style="white-space: pre;"><a id="L173"></a>            id, label = choice</span><br />
-      <span style="white-space: pre;"><a id="L174"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>            id = len(self._choices)</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>            label = choice</span><br />
-      <span style="white-space: pre;"><a id="L177"></a></span><br />
-      <span style="white-space: pre;"><a id="L178"></a>        label = str(label)</span><br />
-      <span style="white-space: pre;"><a id="L179"></a>        self._ids[id] = len(self._choices)</span><br />
-      <span style="white-space: pre;"><a id="L180"></a>        self._pos[len(self._choices)] = id</span><br />
-      <span style="white-space: pre;"><a id="L181"></a>        self._choices.append(label)</span><br />
-      <span style="white-space: pre;"><a id="L182"></a>        self.specific.update_choice(len(self._choices) - 1, label)</span><br />
-      <span style="white-space: pre;"><a id="L183"></a></span><br />
-      <span style="white-space: pre;"><a id="L184"></a>    def update_choice(self, i, choice):</span><br />
-      <span style="white-space: pre;"><a id="L185"></a>        """Update the specified choice."""</span><br />
-      <span style="white-space: pre;"><a id="L186"></a>        self._choices[i] = str(choice)</span><br />
-      <span style="white-space: pre;"><a id="L187"></a>        self.specific.update_choice(i, label)</span><br />
-      <span style="white-space: pre;"><a id="L188"></a></span><br />
-      <span style="white-space: pre;"><a id="L189"></a>    def remove_choice(self, identifier: Any):</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L191"></a>        Remove a choice in the list.</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>                choices.append(self._choices[item])</span><br />
+      <span style="white-space: pre;"><a id="L76"></a></span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>            iter(choices)</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>            if len(choices) != len(items):</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>                raise TypeError</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>            raise TypeError(&quot;the number of choices doesn&#x27;t match &quot;</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>                    &quot;the speicified indices&quot;) from None</span><br />
+      <span style="white-space: pre;"><a id="L84"></a></span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        for item, choice in zip(items, choices):</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>            self.update_choice(item, choice)</span><br />
+      <span style="white-space: pre;"><a id="L87"></a></span><br />
+      <span style="white-space: pre;"><a id="L88"></a>    @CachedProperty</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>    def id(self):</span><br />
+      <span style="white-space: pre;"><a id="L90"></a>        return self.leaf.id</span><br />
+      <span style="white-space: pre;"><a id="L91"></a></span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L93"></a>    def choices(self):</span><br />
+      <span style="white-space: pre;"><a id="L94"></a>        &quot;&quot;&quot;Return the list choices.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>        return self._choices</span><br />
+      <span style="white-space: pre;"><a id="L96"></a></span><br />
+      <span style="white-space: pre;"><a id="L97"></a>    @choices.setter</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    def choices(self, choices: Iterable[Choice]):</span><br />
+      <span style="white-space: pre;"><a id="L99"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>        Modify the choices in the list.</span><br />
+      <span style="white-space: pre;"><a id="L101"></a></span><br />
+      <span style="white-space: pre;"><a id="L102"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L103"></a>            choices (iterable): a list of choicess, where each choice can</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>                    be a label (preferably a str) or a tuple</span><br />
+      <span style="white-space: pre;"><a id="L105"></a>                    (identifier, label) where identifier is hashable</span><br />
+      <span style="white-space: pre;"><a id="L106"></a>                    (a string is often preferred).</span><br />
+      <span style="white-space: pre;"><a id="L107"></a></span><br />
+      <span style="white-space: pre;"><a id="L108"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L109"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>            iter(choices)</span><br />
+      <span style="white-space: pre;"><a id="L111"></a>        except TypeError:</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>            raise TypeError(&quot;&#x27;choices&#x27; isn&#x27;t a valid iterable&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L113"></a></span><br />
+      <span style="white-space: pre;"><a id="L114"></a>        ids = {}</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>        pos = {}</span><br />
+      <span style="white-space: pre;"><a id="L116"></a>        new_choices = []</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>        for i, choice in enumerate(choices):</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>            if isinstance(choice, (tuple, list)):</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>                id, label = choice</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>                label = str(label)</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>                id = i</span><br />
+      <span style="white-space: pre;"><a id="L123"></a>                choice = str(choice)</span><br />
+      <span style="white-space: pre;"><a id="L124"></a></span><br />
+      <span style="white-space: pre;"><a id="L125"></a>            new_choices.append(label)</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>            ids[id] = i</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>            pos[i] = id</span><br />
+      <span style="white-space: pre;"><a id="L128"></a></span><br />
+      <span style="white-space: pre;"><a id="L129"></a>        self._choices[:] = new_choices</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>        self._ids = ids</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>        self._pos = pos</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>        self._selected = (0, ) if self.multisel else 0</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>        self.specific.refresh()</span><br />
+      <span style="white-space: pre;"><a id="L134"></a></span><br />
+      <span style="white-space: pre;"><a id="L135"></a>    @property</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    def selected(self):</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>        &quot;&quot;&quot;Return the currently-selected choice ID or position.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L138"></a>        selected = self._selected</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        if self.multisel:</span><br />
+      <span style="white-space: pre;"><a id="L140"></a>            return tuple(self._pos[index] for index in selected)</span><br />
+      <span style="white-space: pre;"><a id="L141"></a></span><br />
+      <span style="white-space: pre;"><a id="L142"></a>        return self._pos[selected]</span><br />
+      <span style="white-space: pre;"><a id="L143"></a></span><br />
+      <span style="white-space: pre;"><a id="L144"></a>    @selected.setter</span><br />
+      <span style="white-space: pre;"><a id="L145"></a>    def selected(self, selected):</span><br />
+      <span style="white-space: pre;"><a id="L146"></a>        &quot;&quot;&quot;Change the selected label.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>        if self.multisel:</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>            choices = selected</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>            choices = (selected, )</span><br />
+      <span style="white-space: pre;"><a id="L151"></a></span><br />
+      <span style="white-space: pre;"><a id="L152"></a>        self._selected = ()</span><br />
+      <span style="white-space: pre;"><a id="L153"></a>        for selected in choices:</span><br />
+      <span style="white-space: pre;"><a id="L154"></a>            try:</span><br />
+      <span style="white-space: pre;"><a id="L155"></a>                selected = self._ids[selected]</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>            except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>                pass</span><br />
+      <span style="white-space: pre;"><a id="L158"></a></span><br />
+      <span style="white-space: pre;"><a id="L159"></a>            try:</span><br />
+      <span style="white-space: pre;"><a id="L160"></a>                self._choices[selected]</span><br />
+      <span style="white-space: pre;"><a id="L161"></a>            except IndexError:</span><br />
+      <span style="white-space: pre;"><a id="L162"></a>                raise IndexError(f&quot;{selected!r} isn&#x27;t a valid indice or key&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>            else:</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>                self._selected += (selected, )</span><br />
+      <span style="white-space: pre;"><a id="L165"></a></span><br />
+      <span style="white-space: pre;"><a id="L166"></a>        self.specific.select(self._selected)</span><br />
+      <span style="white-space: pre;"><a id="L167"></a></span><br />
+      <span style="white-space: pre;"><a id="L168"></a>    def add_choice(self, choice: Choice):</span><br />
+      <span style="white-space: pre;"><a id="L169"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>        Add a new choice at the end of the list.</span><br />
+      <span style="white-space: pre;"><a id="L171"></a></span><br />
+      <span style="white-space: pre;"><a id="L172"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>            choice (Choice): a choice, either a choice label (probably</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>                    a string) or a tuple of (choice identifier, choice label)</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>                    where both may be strings.  The choice identifier,</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>                    if specified, should be hashable.  The label</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>                    has no constraint (if it&#x27;s not a string, then</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>                    str() will be called on it).</span><br />
+      <span style="white-space: pre;"><a id="L179"></a></span><br />
+      <span style="white-space: pre;"><a id="L180"></a>        Note:</span><br />
+      <span style="white-space: pre;"><a id="L181"></a>            The label is what the user will see in the list, the</span><br />
+      <span style="white-space: pre;"><a id="L182"></a>            identifier will identify the user selection for the</span><br />
+      <span style="white-space: pre;"><a id="L183"></a>            developer.  If you don&#x27;t specify any identifier,</span><br />
+      <span style="white-space: pre;"><a id="L184"></a>            the choice position in the list will be used.</span><br />
+      <span style="white-space: pre;"><a id="L185"></a></span><br />
+      <span style="white-space: pre;"><a id="L186"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L187"></a>        if isinstance(choice, tuple):</span><br />
+      <span style="white-space: pre;"><a id="L188"></a>            id, label = choice</span><br />
+      <span style="white-space: pre;"><a id="L189"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>            id = len(self._choices)</span><br />
+      <span style="white-space: pre;"><a id="L191"></a>            label = choice</span><br />
       <span style="white-space: pre;"><a id="L192"></a></span><br />
-      <span style="white-space: pre;"><a id="L193"></a>        Args:</span><br />
-      <span style="white-space: pre;"><a id="L194"></a>            identifier (Any): the choice identifier or int position.</span><br />
-      <span style="white-space: pre;"><a id="L195"></a></span><br />
-      <span style="white-space: pre;"><a id="L196"></a>        """</span><br />
-      <span style="white-space: pre;"><a id="L197"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L198"></a>            i = self._ids[identifier]</span><br />
-      <span style="white-space: pre;"><a id="L199"></a>        except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L200"></a>            i = identifier</span><br />
-      <span style="white-space: pre;"><a id="L201"></a></span><br />
-      <span style="white-space: pre;"><a id="L202"></a>        del self._choices[i]</span><br />
-      <span style="white-space: pre;"><a id="L203"></a>        try:</span><br />
-      <span style="white-space: pre;"><a id="L204"></a>            del self._ids[identifier]</span><br />
-      <span style="white-space: pre;"><a id="L205"></a>        except KeyError:</span><br />
-      <span style="white-space: pre;"><a id="L206"></a>            pass</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>        self.specific.remove_choice(i)</span><br />
+      <span style="white-space: pre;"><a id="L193"></a>        label = str(label)</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>        self._ids[id] = len(self._choices)</span><br />
+      <span style="white-space: pre;"><a id="L195"></a>        self._pos[len(self._choices)] = id</span><br />
+      <span style="white-space: pre;"><a id="L196"></a>        self._choices.append(label)</span><br />
+      <span style="white-space: pre;"><a id="L197"></a>        self.specific.update_choice(len(self._choices) - 1, label)</span><br />
+      <span style="white-space: pre;"><a id="L198"></a></span><br />
+      <span style="white-space: pre;"><a id="L199"></a>    def update_choice(self, i, choice):</span><br />
+      <span style="white-space: pre;"><a id="L200"></a>        &quot;&quot;&quot;Update the specified choice.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L201"></a>        self._choices[i] = str(choice)</span><br />
+      <span style="white-space: pre;"><a id="L202"></a>        self.specific.update_choice(i, label)</span><br />
+      <span style="white-space: pre;"><a id="L203"></a></span><br />
+      <span style="white-space: pre;"><a id="L204"></a>    def remove_choice(self, identifier: Any):</span><br />
+      <span style="white-space: pre;"><a id="L205"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L206"></a>        Remove a choice in the list.</span><br />
+      <span style="white-space: pre;"><a id="L207"></a></span><br />
+      <span style="white-space: pre;"><a id="L208"></a>        Args:</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>            identifier (Any): the choice identifier or int position.</span><br />
+      <span style="white-space: pre;"><a id="L210"></a></span><br />
+      <span style="white-space: pre;"><a id="L211"></a>        &quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L212"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>            i = self._ids[identifier]</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>        except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>            i = identifier</span><br />
+      <span style="white-space: pre;"><a id="L216"></a></span><br />
+      <span style="white-space: pre;"><a id="L217"></a>        del self._choices[i]</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>        try:</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>            del self._ids[identifier]</span><br />
+      <span style="white-space: pre;"><a id="L220"></a>        except KeyError:</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>            pass</span><br />
+      <span style="white-space: pre;"><a id="L222"></a>        self.specific.remove_choice(i)</span><br />
     </div>
   </body>
 </html>

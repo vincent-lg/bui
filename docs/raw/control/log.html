@@ -20,24 +20,24 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Log specific to controls."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Log specific to controls.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>import sys</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
       <span style="white-space: pre;"><a id="L5"></a>from logbook import Logger, StreamHandler</span><br />
       <span style="white-space: pre;"><a id="L6"></a></span><br />
       <span style="white-space: pre;"><a id="L7"></a>filters = []</span><br />
-      <span style="white-space: pre;"><a id="L8"></a>stream = StreamHandler(sys.stdout, level="DEBUG", bubble=True)</span><br />
-      <span style="white-space: pre;"><a id="L9"></a>stream.format_string = "{record.message}"</span><br />
-      <span style="white-space: pre;"><a id="L10"></a>logger = Logger("bui.control")</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>stream = StreamHandler(sys.stdout, level=&quot;DEBUG&quot;, bubble=True)</span><br />
+      <span style="white-space: pre;"><a id="L9"></a>stream.format_string = &quot;{record.message}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>logger = Logger(&quot;bui.control&quot;)</span><br />
       <span style="white-space: pre;"><a id="L11"></a></span><br />
       <span style="white-space: pre;"><a id="L12"></a>def filter_record(record, handler):</span><br />
-      <span style="white-space: pre;"><a id="L13"></a>    """Check if the record can be logged."""</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    &quot;&quot;&quot;Check if the record can be logged.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L14"></a>    if not filters:</span><br />
       <span style="white-space: pre;"><a id="L15"></a>        return True</span><br />
       <span style="white-space: pre;"><a id="L16"></a></span><br />
       <span style="white-space: pre;"><a id="L17"></a>    for widget, control in filters:</span><br />
-      <span style="white-space: pre;"><a id="L18"></a>        wid = record.kwargs.get("widget", None)</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>        wid = record.kwargs.get(&quot;widget&quot;, None)</span><br />
       <span style="white-space: pre;"><a id="L19"></a>        if wid is None:</span><br />
       <span style="white-space: pre;"><a id="L20"></a>            return True</span><br />
       <span style="white-space: pre;"><a id="L21"></a></span><br />
@@ -48,7 +48,7 @@
       <span style="white-space: pre;"><a id="L26"></a>            else:</span><br />
       <span style="white-space: pre;"><a id="L27"></a>                continue</span><br />
       <span style="white-space: pre;"><a id="L28"></a>        if control:</span><br />
-      <span style="white-space: pre;"><a id="L29"></a>            if control == record.extra["control"]:</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>            if control == record.extra[&quot;control&quot;]:</span><br />
       <span style="white-space: pre;"><a id="L30"></a>                return True</span><br />
       <span style="white-space: pre;"><a id="L31"></a></span><br />
       <span style="white-space: pre;"><a id="L32"></a>            continue</span><br />
@@ -59,16 +59,16 @@
       <span style="white-space: pre;"><a id="L37"></a></span><br />
       <span style="white-space: pre;"><a id="L38"></a>class ControlLogger(Logger):</span><br />
       <span style="white-space: pre;"><a id="L39"></a></span><br />
-      <span style="white-space: pre;"><a id="L40"></a>    """Specific logger to work on a given control class."""</span><br />
+      <span style="white-space: pre;"><a id="L40"></a>    &quot;&quot;&quot;Specific logger to work on a given control class.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L41"></a></span><br />
       <span style="white-space: pre;"><a id="L42"></a>    def __init__(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>        name = f"bui.control.{control.name}"</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        name = f&quot;bui.control.{control.name}&quot;</span><br />
       <span style="white-space: pre;"><a id="L44"></a>        super().__init__(name)</span><br />
       <span style="white-space: pre;"><a id="L45"></a>        self.control = control</span><br />
       <span style="white-space: pre;"><a id="L46"></a></span><br />
       <span style="white-space: pre;"><a id="L47"></a>    def process_record(self, record):</span><br />
       <span style="white-space: pre;"><a id="L48"></a>        super().process_record(record)</span><br />
-      <span style="white-space: pre;"><a id="L49"></a>        record.extra['control'] = self.control.name</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>        record.extra[&#x27;control&#x27;] = self.control.name</span><br />
     </div>
   </body>
 </html>

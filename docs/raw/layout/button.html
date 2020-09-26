@@ -20,14 +20,14 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Button object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Button object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class Button(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a clickable button on the interface.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    A button is a very common widget, needing to be defined inside</span><br />
@@ -35,7 +35,7 @@
       <span style="white-space: pre;"><a id="L13"></a>    a control method in response, except if the button is disabled.</span><br />
       <span style="white-space: pre;"><a id="L14"></a></span><br />
       <span style="white-space: pre;"><a id="L15"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title="Test"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title=&quot;Test&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L17"></a>      &lt;button x=1 y=3&gt;My button&lt;/button&gt;</span><br />
       <span style="white-space: pre;"><a id="L18"></a>      ...</span><br />
       <span style="white-space: pre;"><a id="L19"></a>    &lt;/window&gt;</span><br />
@@ -48,12 +48,12 @@
       <span style="white-space: pre;"><a id="L26"></a></span><br />
       <span style="white-space: pre;"><a id="L27"></a>    | Name         | Required | Description              | Example     |</span><br />
       <span style="white-space: pre;"><a id="L28"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
-      <span style="white-space: pre;"><a id="L29"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    | `x`          | Yes      | The widget&#x27;s horizontal  | `&lt;button    |</span><br />
       <span style="white-space: pre;"><a id="L30"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
       <span style="white-space: pre;"><a id="L31"></a>    |              |          | is left). This position  |             |</span><br />
       <span style="white-space: pre;"><a id="L32"></a>    |              |          | is relative to the       |             |</span><br />
       <span style="white-space: pre;"><a id="L33"></a>    |              |          | window width.            |             |</span><br />
-      <span style="white-space: pre;"><a id="L34"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;button    |</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>    | `y`          | Yes      | The widget&#x27;s vertical    | `&lt;button    |</span><br />
       <span style="white-space: pre;"><a id="L35"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
       <span style="white-space: pre;"><a id="L36"></a>    |              |          | is at the top). This     |             |</span><br />
       <span style="white-space: pre;"><a id="L37"></a>    |              |          | position is relative to  |             |</span><br />
@@ -120,13 +120,13 @@
       <span style="white-space: pre;"><a id="L98"></a></span><br />
       <span style="white-space: pre;"><a id="L99"></a>        &lt;button x=2 y=5&gt;Click on me!&lt;/button&gt;</span><br />
       <span style="white-space: pre;"><a id="L100"></a></span><br />
-      <span style="white-space: pre;"><a id="L101"></a>    (This will set a button with `id` of "click_on_me".)</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>    (This will set a button with `id` of &quot;click_on_me&quot;.)</span><br />
       <span style="white-space: pre;"><a id="L102"></a></span><br />
       <span style="white-space: pre;"><a id="L103"></a>    &gt; The data is a translatable field.  If internationalization is</span><br />
       <span style="white-space: pre;"><a id="L104"></a>      set, it should contain the `ytranslate` path to the label and will</span><br />
       <span style="white-space: pre;"><a id="L105"></a>      be translated in the proper language as needed. Note that in this case,</span><br />
       <span style="white-space: pre;"><a id="L106"></a>      you absolutely need to set a proper ID, otherwise control methods</span><br />
-      <span style="white-space: pre;"><a id="L107"></a>      won't be easy to bind to the button.</span><br />
+      <span style="white-space: pre;"><a id="L107"></a>      won&#x27;t be easy to bind to the button.</span><br />
       <span style="white-space: pre;"><a id="L108"></a></span><br />
       <span style="white-space: pre;"><a id="L109"></a>    ### Inside of dialogs</span><br />
       <span style="white-space: pre;"><a id="L110"></a></span><br />
@@ -136,8 +136,8 @@
       <span style="white-space: pre;"><a id="L114"></a>    when the button is pressed.</span><br />
       <span style="white-space: pre;"><a id="L115"></a></span><br />
       <span style="white-space: pre;"><a id="L116"></a>    It is very frequent to place `set_true` on a confirmation button</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>    (like "OK" or "Continue") and `set_false` on a cancellation button</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>    (like "Cancel" or "Close without modification").  It is then very</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>    (like &quot;OK&quot; or &quot;Continue&quot;) and `set_false` on a cancellation button</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>    (like &quot;Cancel&quot; or &quot;Close without modification&quot;).  It is then very</span><br />
       <span style="white-space: pre;"><a id="L119"></a>    simple to test the dialog result in the control method that popped</span><br />
       <span style="white-space: pre;"><a id="L120"></a>    the dialog (see [the page about custom dialogs](dialog.md)</span><br />
       <span style="white-space: pre;"><a id="L121"></a>    for more information).</span><br />
@@ -149,7 +149,7 @@
       <span style="white-space: pre;"><a id="L127"></a></span><br />
       <span style="white-space: pre;"><a id="L128"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
       <span style="white-space: pre;"><a id="L129"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>    | `name`         | The name (str)   | `self.name = "Let's click"` |</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    | `name`         | The name (str)   | `self.name = &quot;Let&#x27;s click&quot;` |</span><br />
       <span style="white-space: pre;"><a id="L131"></a>    | `enabled`      | Whether the      | `if button.enabled:`        |</span><br />
       <span style="white-space: pre;"><a id="L132"></a>    |                | button is        |                             |</span><br />
       <span style="white-space: pre;"><a id="L133"></a>    |                | enabled (bool).  |                             |</span><br />
@@ -160,17 +160,17 @@
       <span style="white-space: pre;"><a id="L138"></a></span><br />
       <span style="white-space: pre;"><a id="L139"></a>    These attributes can be accessed and set using the standard Python</span><br />
       <span style="white-space: pre;"><a id="L140"></a>    syntax for attributes.  Behind the scenes, these attributes are cached,</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>    handled by an extended `property()`, but you don't really need to</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>    handled by an extended `property()`, but you don&#x27;t really need to</span><br />
       <span style="white-space: pre;"><a id="L142"></a>    worry about how it works.  Consider the following example:</span><br />
       <span style="white-space: pre;"><a id="L143"></a></span><br />
       <span style="white-space: pre;"><a id="L144"></a>        class Example(Window):</span><br />
       <span style="white-space: pre;"><a id="L145"></a></span><br />
       <span style="white-space: pre;"><a id="L146"></a>            def on_click_me(self, widget):</span><br />
-      <span style="white-space: pre;"><a id="L147"></a>                \"\"\"The click me button has been clicked.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>                widget.name = "Clicked on it"</span><br />
+      <span style="white-space: pre;"><a id="L147"></a>                \&quot;\&quot;\&quot;The click me button has been clicked.\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>                widget.name = &quot;Clicked on it&quot;</span><br />
       <span style="white-space: pre;"><a id="L149"></a></span><br />
       <span style="white-space: pre;"><a id="L150"></a>    &gt; Changing the name will not change the button ID.  Once set</span><br />
-      <span style="white-space: pre;"><a id="L151"></a>      in layout, the ID won't change.</span><br />
+      <span style="white-space: pre;"><a id="L151"></a>      in layout, the ID won&#x27;t change.</span><br />
       <span style="white-space: pre;"><a id="L152"></a></span><br />
       <span style="white-space: pre;"><a id="L153"></a>    A button also offers the following methods:</span><br />
       <span style="white-space: pre;"><a id="L154"></a></span><br />
@@ -182,8 +182,8 @@
       <span style="white-space: pre;"><a id="L160"></a>    For instance:</span><br />
       <span style="white-space: pre;"><a id="L161"></a></span><br />
       <span style="white-space: pre;"><a id="L162"></a>        def on_init(self):</span><br />
-      <span style="white-space: pre;"><a id="L163"></a>            '''The window initializes.'''</span><br />
-      <span style="white-space: pre;"><a id="L164"></a>            restart = window["restart"]</span><br />
+      <span style="white-space: pre;"><a id="L163"></a>            &#x27;&#x27;&#x27;The window initializes.&#x27;&#x27;&#x27;</span><br />
+      <span style="white-space: pre;"><a id="L164"></a>            restart = window[&quot;restart&quot;]</span><br />
       <span style="white-space: pre;"><a id="L165"></a>            restart.disable()</span><br />
       <span style="white-space: pre;"><a id="L166"></a></span><br />
       <span style="white-space: pre;"><a id="L167"></a>    &gt; Note: the `enabled` and `disabled` properties, along with the</span><br />
@@ -191,7 +191,7 @@
       <span style="white-space: pre;"><a id="L169"></a>      a button can be clicked by the user.  A disabled button (usually</span><br />
       <span style="white-space: pre;"><a id="L170"></a>      grayed out or marked unavailable) cannot be changed by the user.</span><br />
       <span style="white-space: pre;"><a id="L171"></a>      **However**, notice that some screen readers will skip over</span><br />
-      <span style="white-space: pre;"><a id="L172"></a>      unavailable buttons and won't even signal them, so make sure</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>      unavailable buttons and won&#x27;t even signal them, so make sure</span><br />
       <span style="white-space: pre;"><a id="L173"></a>      no vital information is found in a disabled button.</span><br />
       <span style="white-space: pre;"><a id="L174"></a></span><br />
       <span style="white-space: pre;"><a id="L175"></a>    ## Controls</span><br />
@@ -226,33 +226,33 @@
       <span style="white-space: pre;"><a id="L204"></a>        class MainWindow(Window):</span><br />
       <span style="white-space: pre;"><a id="L205"></a></span><br />
       <span style="white-space: pre;"><a id="L206"></a>            def on_click_button(self):</span><br />
-      <span style="white-space: pre;"><a id="L207"></a>                print(f"You clicked on the button of ID 'button'.")</span><br />
+      <span style="white-space: pre;"><a id="L207"></a>                print(f&quot;You clicked on the button of ID &#x27;button&#x27;.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L208"></a></span><br />
-      <span style="white-space: pre;"><a id="L209"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L209"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L210"></a></span><br />
-      <span style="white-space: pre;"><a id="L211"></a>    tag_name = "button"</span><br />
+      <span style="white-space: pre;"><a id="L211"></a>    tag_name = &quot;button&quot;</span><br />
       <span style="white-space: pre;"><a id="L212"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L213"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L214"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L215"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L216"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L217"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
-      <span style="white-space: pre;"><a id="L218"></a>        Attr("disabled", help="Disabled by default", default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L219"></a>        Attr("set_true", help="Set the dialog to True and close it",</span><br />
+      <span style="white-space: pre;"><a id="L213"></a>        Attr(&quot;x&quot;, help=&quot;The widget horizontal position&quot;, type=int),</span><br />
+      <span style="white-space: pre;"><a id="L214"></a>        Attr(&quot;y&quot;, help=&quot;The widget vertical position&quot;, type=int),</span><br />
+      <span style="white-space: pre;"><a id="L215"></a>        Attr(&quot;width&quot;, help=&quot;The widget width&quot;, type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L216"></a>        Attr(&quot;height&quot;, help=&quot;The widget height&quot;, type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L217"></a>        Attr(&quot;id&quot;, help=&quot;The widget identifier&quot;, default=&quot;&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L218"></a>        Attr(&quot;disabled&quot;, help=&quot;Disabled by default&quot;, default=False, if_present=True),</span><br />
+      <span style="white-space: pre;"><a id="L219"></a>        Attr(&quot;set_true&quot;, help=&quot;Set the dialog to True and close it&quot;,</span><br />
       <span style="white-space: pre;"><a id="L220"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L221"></a>        Attr("set_false", help="Set the dialog to False and close it",</span><br />
+      <span style="white-space: pre;"><a id="L221"></a>        Attr(&quot;set_false&quot;, help=&quot;Set the dialog to False and close it&quot;,</span><br />
       <span style="white-space: pre;"><a id="L222"></a>                default=False, if_present=True),</span><br />
-      <span style="white-space: pre;"><a id="L223"></a>        Attr("set", help="Set the dialog to some value and close it",</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>                default="")</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>        Attr(&quot;set&quot;, help=&quot;Set the dialog to some value and close it&quot;,</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>                default=&quot;&quot;)</span><br />
       <span style="white-space: pre;"><a id="L225"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L226"></a>    must_have_data = True</span><br />
       <span style="white-space: pre;"><a id="L227"></a></span><br />
       <span style="white-space: pre;"><a id="L228"></a>    def __init__(self, layout, parent, x, y, width=1, height=1,</span><br />
-      <span style="white-space: pre;"><a id="L229"></a>            id="", disabled=False, set_true=False, set_false=False, set=""):</span><br />
+      <span style="white-space: pre;"><a id="L229"></a>            id=&quot;&quot;, disabled=False, set_true=False, set_false=False, set=&quot;&quot;):</span><br />
       <span style="white-space: pre;"><a id="L230"></a>        super().__init__(layout, parent)</span><br />
       <span style="white-space: pre;"><a id="L231"></a>        self.x = x</span><br />
       <span style="white-space: pre;"><a id="L232"></a>        self.y = y</span><br />
-      <span style="white-space: pre;"><a id="L233"></a>        self.name = ""</span><br />
+      <span style="white-space: pre;"><a id="L233"></a>        self.name = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L234"></a>        self.width = width</span><br />
       <span style="white-space: pre;"><a id="L235"></a>        self.height = height</span><br />
       <span style="white-space: pre;"><a id="L236"></a>        self.id = id</span><br />
@@ -262,14 +262,14 @@
       <span style="white-space: pre;"><a id="L240"></a>        self.set = set</span><br />
       <span style="white-space: pre;"><a id="L241"></a></span><br />
       <span style="white-space: pre;"><a id="L242"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L243"></a>        """Complete the widet, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L243"></a>        &quot;&quot;&quot;Complete the widet, when all the layout has been set.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L244"></a>        self.name = self.data</span><br />
       <span style="white-space: pre;"><a id="L245"></a>        if not self.id:</span><br />
       <span style="white-space: pre;"><a id="L246"></a>            self.id = self.deduce_id(self.name)</span><br />
       <span style="white-space: pre;"><a id="L247"></a></span><br />
-      <span style="white-space: pre;"><a id="L248"></a>        if self.parent.tag_name != "dialog" and (self.set_true or self.set_false or self.set):</span><br />
-      <span style="white-space: pre;"><a id="L249"></a>            raise ValueError("Can't yset set_true, set_false or set "</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>                    "attributes on a button that doesn't belong in a dialog")</span><br />
+      <span style="white-space: pre;"><a id="L248"></a>        if self.parent.tag_name != &quot;dialog&quot; and (self.set_true or self.set_false or self.set):</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>            raise ValueError(&quot;Can&#x27;t yset set_true, set_false or set &quot;</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>                    &quot;attributes on a button that doesn&#x27;t belong in a dialog&quot;)</span><br />
     </div>
   </body>
 </html>

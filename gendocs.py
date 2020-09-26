@@ -1,6 +1,6 @@
 """Generate documentations, using code docstrings with slight formatting."""
 
-from cgi import escape
+from html import escape
 from importlib import import_module
 import inspect
 from pathlib import Path
@@ -325,3 +325,4 @@ for path in widget_dir.glob("*.py"):
     with raw_path.open("wb") as html_file:
         html_file.write(doc.encode("utf-8"))
     print(f"Write in {raw_path}.")
+

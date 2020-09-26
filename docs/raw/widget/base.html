@@ -20,7 +20,7 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Base generic widget."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Base generic widget.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>import asyncio</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from collections import defaultdict</span><br />
@@ -30,12 +30,12 @@
       <span style="white-space: pre;"><a id="L8"></a></span><br />
       <span style="white-space: pre;"><a id="L9"></a>class Widget:</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
-      <span style="white-space: pre;"><a id="L11"></a>    """Parent class for all generic widgets."""</span><br />
+      <span style="white-space: pre;"><a id="L11"></a>    &quot;&quot;&quot;Parent class for all generic widgets.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L12"></a></span><br />
-      <span style="white-space: pre;"><a id="L13"></a>    widget = ""</span><br />
+      <span style="white-space: pre;"><a id="L13"></a>    widget = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L14"></a>    specific_package = None</span><br />
       <span style="white-space: pre;"><a id="L15"></a>    default_controls = {}</span><br />
-      <span style="white-space: pre;"><a id="L16"></a>    implicit_control = ""</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    implicit_control = &quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L17"></a></span><br />
       <span style="white-space: pre;"><a id="L18"></a>    def __init__(self, leaf):</span><br />
       <span style="white-space: pre;"><a id="L19"></a>        self.leaf = leaf</span><br />
@@ -44,26 +44,26 @@
       <span style="white-space: pre;"><a id="L22"></a>        self.controls = defaultdict(list)</span><br />
       <span style="white-space: pre;"><a id="L23"></a></span><br />
       <span style="white-space: pre;"><a id="L24"></a>    def __repr__(self):</span><br />
-      <span style="white-space: pre;"><a id="L25"></a>        return f"&lt;bui.generic.{self.widget} object&gt;"</span><br />
+      <span style="white-space: pre;"><a id="L25"></a>        return f&quot;&lt;bui.generic.{self.widget} object&gt;&quot;</span><br />
       <span style="white-space: pre;"><a id="L26"></a></span><br />
       <span style="white-space: pre;"><a id="L27"></a>    def __str__(self):</span><br />
-      <span style="white-space: pre;"><a id="L28"></a>        return f"bui.generic.{self.widget}({self.id}"</span><br />
+      <span style="white-space: pre;"><a id="L28"></a>        return f&quot;bui.generic.{self.widget}({self.id}&quot;</span><br />
       <span style="white-space: pre;"><a id="L29"></a></span><br />
       <span style="white-space: pre;"><a id="L30"></a>    def create_specific(self):</span><br />
-      <span style="white-space: pre;"><a id="L31"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L31"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L32"></a>        Create the specific widget, using the `specific_package` attribute.</span><br />
       <span style="white-space: pre;"><a id="L33"></a></span><br />
-      <span style="white-space: pre;"><a id="L34"></a>        If the specific object has already been created, don't recreate it and</span><br />
+      <span style="white-space: pre;"><a id="L34"></a>        If the specific object has already been created, don&#x27;t recreate it and</span><br />
       <span style="white-space: pre;"><a id="L35"></a>        raise no exception.</span><br />
       <span style="white-space: pre;"><a id="L36"></a></span><br />
-      <span style="white-space: pre;"><a id="L37"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L37"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L38"></a>        if not self.specific:</span><br />
       <span style="white-space: pre;"><a id="L39"></a>            class_name = self.class_name</span><br />
       <span style="white-space: pre;"><a id="L40"></a>            SpecificWidget = getattr(self.specific_package, class_name)</span><br />
       <span style="white-space: pre;"><a id="L41"></a>            self.specific = SpecificWidget(self)</span><br />
       <span style="white-space: pre;"><a id="L42"></a></span><br />
       <span style="white-space: pre;"><a id="L43"></a>    def _init(self):</span><br />
-      <span style="white-space: pre;"><a id="L44"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L45"></a>        Private message, initialize the widget and its specific counterpart.</span><br />
       <span style="white-space: pre;"><a id="L46"></a></span><br />
       <span style="white-space: pre;"><a id="L47"></a>        This method should be called internally by BUI and not by the user.</span><br />
@@ -75,31 +75,31 @@
       <span style="white-space: pre;"><a id="L53"></a>        has access to the layout or widget tree, it is likely the widget</span><br />
       <span style="white-space: pre;"><a id="L54"></a>        has been properly initialized.</span><br />
       <span style="white-space: pre;"><a id="L55"></a></span><br />
-      <span style="white-space: pre;"><a id="L56"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L57"></a>        return self.specific._init()</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
       <span style="white-space: pre;"><a id="L59"></a>    def _process_control(self, control_name, options=None):</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>        """Process an in-progress control."""</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>        &quot;&quot;&quot;Process an in-progress control.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L61"></a>        options = options or {}</span><br />
       <span style="white-space: pre;"><a id="L62"></a>        Control = CONTROLS.get(control_name)</span><br />
       <span style="white-space: pre;"><a id="L63"></a>        if Control is None:</span><br />
-      <span style="white-space: pre;"><a id="L64"></a>            raise ValueError(f"unknown control {control_name!r}")</span><br />
+      <span style="white-space: pre;"><a id="L64"></a>            raise ValueError(f&quot;unknown control {control_name!r}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L65"></a></span><br />
       <span style="white-space: pre;"><a id="L66"></a>        control = Control(self, **options)</span><br />
       <span style="white-space: pre;"><a id="L67"></a>        return control.process(options)</span><br />
       <span style="white-space: pre;"><a id="L68"></a></span><br />
       <span style="white-space: pre;"><a id="L69"></a>    def _bind_controls(self, window):</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>        """Bind the diget controls."""</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>        &quot;&quot;&quot;Bind the diget controls.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L71"></a>        for name in self.default_controls.keys():</span><br />
       <span style="white-space: pre;"><a id="L72"></a>            Control = CONTROLS.get(name)</span><br />
       <span style="white-space: pre;"><a id="L73"></a>            Control._bind_methods(self, window)</span><br />
       <span style="white-space: pre;"><a id="L74"></a></span><br />
       <span style="white-space: pre;"><a id="L75"></a>    def schedule(self, coroutine):</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>        """Schedule the specified coroutine in the main event loop."""</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>        &quot;&quot;&quot;Schedule the specified coroutine in the main event loop.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L77"></a>        schedule(coroutine)</span><br />
       <span style="white-space: pre;"><a id="L78"></a></span><br />
       <span style="white-space: pre;"><a id="L79"></a>    async def sleep(self, seconds):</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L81"></a>        Asynchronous sleep during the specified number of seconds.</span><br />
       <span style="white-space: pre;"><a id="L82"></a></span><br />
       <span style="white-space: pre;"><a id="L83"></a>        This method should ONLY be called in an asynchronous control method.</span><br />
@@ -108,13 +108,13 @@
       <span style="white-space: pre;"><a id="L86"></a>        Args:</span><br />
       <span style="white-space: pre;"><a id="L87"></a>            seconds (int or float): the number of seconds to wait.</span><br />
       <span style="white-space: pre;"><a id="L88"></a></span><br />
-      <span style="white-space: pre;"><a id="L89"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L89"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L90"></a>        await asyncio.sleep(seconds)</span><br />
       <span style="white-space: pre;"><a id="L91"></a></span><br />
       <span style="white-space: pre;"><a id="L92"></a></span><br />
       <span style="white-space: pre;"><a id="L93"></a>class CachedProperty(property):</span><br />
       <span style="white-space: pre;"><a id="L94"></a></span><br />
-      <span style="white-space: pre;"><a id="L95"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L95"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L96"></a>    Cached property, to act like a property with inner cache.</span><br />
       <span style="white-space: pre;"><a id="L97"></a></span><br />
       <span style="white-space: pre;"><a id="L98"></a>    Use it like a standard property:</span><br />
@@ -127,29 +127,29 @@
       <span style="white-space: pre;"><a id="L105"></a></span><br />
       <span style="white-space: pre;"><a id="L106"></a>            @x.setter</span><br />
       <span style="white-space: pre;"><a id="L107"></a>            def x(self, new_x):</span><br />
-      <span style="white-space: pre;"><a id="L108"></a>                print(f"Setting x = {new_x}")</span><br />
+      <span style="white-space: pre;"><a id="L108"></a>                print(f&quot;Setting x = {new_x}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L109"></a></span><br />
-      <span style="white-space: pre;"><a id="L110"></a>    Internally, however, the property content is cached when it's</span><br />
+      <span style="white-space: pre;"><a id="L110"></a>    Internally, however, the property content is cached when it&#x27;s</span><br />
       <span style="white-space: pre;"><a id="L111"></a>    modified.  This is useful to define widget properties, as</span><br />
-      <span style="white-space: pre;"><a id="L112"></a>    we don't want to read the specific widget (which might call an</span><br />
+      <span style="white-space: pre;"><a id="L112"></a>    we don&#x27;t want to read the specific widget (which might call an</span><br />
       <span style="white-space: pre;"><a id="L113"></a>    expensive method) each time we access the property.  However, when the</span><br />
       <span style="white-space: pre;"><a id="L114"></a>    property is modified, we both update the cache and send the required</span><br />
       <span style="white-space: pre;"><a id="L115"></a>    update to the specific widget.</span><br />
       <span style="white-space: pre;"><a id="L116"></a></span><br />
       <span style="white-space: pre;"><a id="L117"></a>    A CachedProperty, much like a property, can be read-only, or read and</span><br />
       <span style="white-space: pre;"><a id="L118"></a>    write.  If the property cannot be written, the cache is not modified.</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>    However, if the generic object containing the property hasn't been</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>    However, if the generic object containing the property hasn&#x27;t been</span><br />
       <span style="white-space: pre;"><a id="L120"></a>    linked to a specific object yet (setting is still done in layout at this</span><br />
       <span style="white-space: pre;"><a id="L121"></a>    point, no window is created), a read-only property would still modify</span><br />
       <span style="white-space: pre;"><a id="L122"></a>    the cached when written with no error.</span><br />
       <span style="white-space: pre;"><a id="L123"></a></span><br />
-      <span style="white-space: pre;"><a id="L124"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L125"></a></span><br />
       <span style="white-space: pre;"><a id="L126"></a>    def __get__(self, obj, type=None):</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>        """Get the cached value."""</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>        &quot;&quot;&quot;Get the cached value.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L128"></a>        if obj is not None:</span><br />
       <span style="white-space: pre;"><a id="L129"></a>            attr = self.fget.__name__</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>            cached_attr = f"cached_{attr}"</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>            cached_attr = f&quot;cached_{attr}&quot;</span><br />
       <span style="white-space: pre;"><a id="L131"></a>            if hasattr(obj, cached_attr):</span><br />
       <span style="white-space: pre;"><a id="L132"></a>                return getattr(obj, cached_attr)</span><br />
       <span style="white-space: pre;"><a id="L133"></a>            else:</span><br />
@@ -158,9 +158,9 @@
       <span style="white-space: pre;"><a id="L136"></a>                return value</span><br />
       <span style="white-space: pre;"><a id="L137"></a></span><br />
       <span style="white-space: pre;"><a id="L138"></a>    def __set__(self, obj, value):</span><br />
-      <span style="white-space: pre;"><a id="L139"></a>        """Set the cache and call the fset function."""</span><br />
+      <span style="white-space: pre;"><a id="L139"></a>        &quot;&quot;&quot;Set the cache and call the fset function.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L140"></a>        attr = self.fget.__name__</span><br />
-      <span style="white-space: pre;"><a id="L141"></a>        cached_attr = f"cached_{attr}"</span><br />
+      <span style="white-space: pre;"><a id="L141"></a>        cached_attr = f&quot;cached_{attr}&quot;</span><br />
       <span style="white-space: pre;"><a id="L142"></a>        if obj.specific is not None:</span><br />
       <span style="white-space: pre;"><a id="L143"></a>            res = self.fset(obj, value)</span><br />
       <span style="white-space: pre;"><a id="L144"></a>            if res is not None:</span><br />

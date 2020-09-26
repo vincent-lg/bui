@@ -15,8 +15,8 @@ This class offers 2 properties.
 
 | Property | Get | Set |
 | -------- | --- | --- |
-| [disabled](#disabled) | Return whether the checkbox is disabled or not. | **Can't write** |
-| [enabled](#enabled) | Return whether the checkbox is enabled or not. | **Can't write** |
+| [disabled](#disabled) | Return whether the button is disabled or not. | **Can't write** |
+| [enabled](#enabled) | Return whether the button is enabled or not. | **Can't write** |
 
 This class offers 7 methods.
 
@@ -38,9 +38,9 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/button.html#L61)
+[See the source code](../raw/widget/button.html#L62)
 
-Return whether the checkbox is disabled or not.
+Return whether the button is disabled or not.
 
 ### enabled
 
@@ -48,9 +48,9 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/button.html#L56)
+[See the source code](../raw/widget/button.html#L57)
 
-Return whether the checkbox is enabled or not.
+Return whether the button is enabled or not.
 
 ## Methods
 
@@ -58,7 +58,7 @@ Return whether the checkbox is enabled or not.
 
 `after_click(self, control)`
 
-[See the source code](../raw/widget/button.html#L74)
+[See the source code](../raw/widget/button.html#L75)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -86,7 +86,7 @@ raise no exception.
 
 `disable(self)`
 
-[See the source code](../raw/widget/button.html#L70)
+[See the source code](../raw/widget/button.html#L71)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -98,7 +98,7 @@ Disable the checkbox.
 
 `enable(self)`
 
-[See the source code](../raw/widget/button.html#L66)
+[See the source code](../raw/widget/button.html#L67)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -110,7 +110,7 @@ Force-enable the checkbox.
 
 `handle_press(self, control)`
 
-[See the source code](../raw/widget/button.html#L86)
+[See the source code](../raw/widget/button.html#L87)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

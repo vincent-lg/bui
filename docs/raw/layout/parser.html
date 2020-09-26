@@ -20,12 +20,12 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Class to parse a layout description described in a pseudo-HTML syntax.</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Class to parse a layout description described in a pseudo-HTML syntax.</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>The `html.parser.HTMLParser` class is actually used, so that the parser</span><br />
       <span style="white-space: pre;"><a id="L4"></a>could interpret more complex instructions.  It also interprets other</span><br />
       <span style="white-space: pre;"><a id="L5"></a>markups.  However, contrary to HTML, the language is meant to be strict</span><br />
-      <span style="white-space: pre;"><a id="L6"></a>in content (you shouldn't close an outer tag with an inner tag not being</span><br />
+      <span style="white-space: pre;"><a id="L6"></a>in content (you shouldn&#x27;t close an outer tag with an inner tag not being</span><br />
       <span style="white-space: pre;"><a id="L7"></a>closed, for instance).</span><br />
       <span style="white-space: pre;"><a id="L8"></a></span><br />
       <span style="white-space: pre;"><a id="L9"></a>The layout definition can be found in specific `.bui` files, or within the</span><br />
@@ -34,7 +34,7 @@
       <span style="white-space: pre;"><a id="L12"></a></span><br />
       <span style="white-space: pre;"><a id="L13"></a>See [layout overview](../layout/overview.md) for more details.</span><br />
       <span style="white-space: pre;"><a id="L14"></a></span><br />
-      <span style="white-space: pre;"><a id="L15"></a>"""</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L16"></a></span><br />
       <span style="white-space: pre;"><a id="L17"></a>from html.parser import HTMLParser</span><br />
       <span style="white-space: pre;"><a id="L18"></a></span><br />
@@ -43,7 +43,7 @@
       <span style="white-space: pre;"><a id="L21"></a></span><br />
       <span style="white-space: pre;"><a id="L22"></a>class BUILayoutParser(HTMLParser):</span><br />
       <span style="white-space: pre;"><a id="L23"></a></span><br />
-      <span style="white-space: pre;"><a id="L24"></a>    """Parser object of BUI layout."""</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    &quot;&quot;&quot;Parser object of BUI layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L25"></a></span><br />
       <span style="white-space: pre;"><a id="L26"></a>    def __init__(self, filename, start_line=0):</span><br />
       <span style="white-space: pre;"><a id="L27"></a>        super().__init__()</span><br />
@@ -62,10 +62,10 @@
       <span style="white-space: pre;"><a id="L40"></a></span><br />
       <span style="white-space: pre;"><a id="L41"></a>    @property</span><br />
       <span style="white-space: pre;"><a id="L42"></a>    def pos(self):</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>        return f"{self.filename} [line {self.cur_line}, col {self.cur_offset}]"</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>        return f&quot;{self.filename} [line {self.cur_line}, col {self.cur_offset}]&quot;</span><br />
       <span style="white-space: pre;"><a id="L44"></a></span><br />
       <span style="white-space: pre;"><a id="L45"></a>    def handle_starttag(self, name, attrs):</span><br />
-      <span style="white-space: pre;"><a id="L46"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L47"></a>        The beginning of a tag has been met.</span><br />
       <span style="white-space: pre;"><a id="L48"></a></span><br />
       <span style="white-space: pre;"><a id="L49"></a>        Args:</span><br />
@@ -74,10 +74,10 @@
       <span style="white-space: pre;"><a id="L52"></a>                    a tuple containing (attribute name, attribute value),</span><br />
       <span style="white-space: pre;"><a id="L53"></a>                    both as str.</span><br />
       <span style="white-space: pre;"><a id="L54"></a></span><br />
-      <span style="white-space: pre;"><a id="L55"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L55"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L56"></a>        Tag, parent_types = TAGS.get(name, (None, None))</span><br />
       <span style="white-space: pre;"><a id="L57"></a>        if Tag is None:</span><br />
-      <span style="white-space: pre;"><a id="L58"></a>            raise ValueError(f"Error {self.pos}: unknown tag {name}")</span><br />
+      <span style="white-space: pre;"><a id="L58"></a>            raise ValueError(f&quot;Error {self.pos}: unknown tag {name}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L59"></a></span><br />
       <span style="white-space: pre;"><a id="L60"></a>        # Browse attributes</span><br />
       <span style="white-space: pre;"><a id="L61"></a>        remaining = list(Tag.attrs)</span><br />
@@ -85,13 +85,13 @@
       <span style="white-space: pre;"><a id="L63"></a>        for attr_name, value in attrs:</span><br />
       <span style="white-space: pre;"><a id="L64"></a>            candidates = [attr for attr in remaining if attr.name == attr_name]</span><br />
       <span style="white-space: pre;"><a id="L65"></a>            if not candidates:</span><br />
-      <span style="white-space: pre;"><a id="L66"></a>                raise ValueError(f"Error {self.pos}: tag {name}, unknown attribute {attr_name}")</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>                raise ValueError(f&quot;Error {self.pos}: tag {name}, unknown attribute {attr_name}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L67"></a></span><br />
       <span style="white-space: pre;"><a id="L68"></a>            attr = candidates[0]</span><br />
       <span style="white-space: pre;"><a id="L69"></a>            try:</span><br />
       <span style="white-space: pre;"><a id="L70"></a>                value = attr.prepare(value)</span><br />
       <span style="white-space: pre;"><a id="L71"></a>            except ValueError as err:</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>                raise ValueError(f"Error {self.pos}: attribute {attr.name}, {err}") from None</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>                raise ValueError(f&quot;Error {self.pos}: attribute {attr.name}, {err}&quot;) from None</span><br />
       <span style="white-space: pre;"><a id="L73"></a>            else:</span><br />
       <span style="white-space: pre;"><a id="L74"></a>                values[attr.python_name] = value</span><br />
       <span style="white-space: pre;"><a id="L75"></a>                remaining.remove(attr)</span><br />
@@ -100,11 +100,11 @@
       <span style="white-space: pre;"><a id="L78"></a>            try:</span><br />
       <span style="white-space: pre;"><a id="L79"></a>                value = attr.prepare()</span><br />
       <span style="white-space: pre;"><a id="L80"></a>            except ValueError as err:</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>                raise ValueError(f"Error {self.pos}: attribute {attr.name}, {err}") from None</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>                raise ValueError(f&quot;Error {self.pos}: attribute {attr.name}, {err}&quot;) from None</span><br />
       <span style="white-space: pre;"><a id="L82"></a>            else:</span><br />
       <span style="white-space: pre;"><a id="L83"></a>                values[attr.python_name] = value</span><br />
       <span style="white-space: pre;"><a id="L84"></a></span><br />
-      <span style="white-space: pre;"><a id="L85"></a>        # If there's already one open component, add it to the element if possible</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        # If there&#x27;s already one open component, add it to the element if possible</span><br />
       <span style="white-space: pre;"><a id="L86"></a>        Tag.can_be_inside(parent_types, self.current_component)</span><br />
       <span style="white-space: pre;"><a id="L87"></a>        if self.current_component:</span><br />
       <span style="white-space: pre;"><a id="L88"></a>            tag = Tag(self.layout, self.current_component, **values)</span><br />
@@ -119,11 +119,11 @@
       <span style="white-space: pre;"><a id="L97"></a>        current = self.current_component</span><br />
       <span style="white-space: pre;"><a id="L98"></a>        if current:</span><br />
       <span style="white-space: pre;"><a id="L99"></a>            if not current.data and current.must_have_data:</span><br />
-      <span style="white-space: pre;"><a id="L100"></a>                raise ValueError(f"Error {self.pos}: component {current.tag_name} should have data")</span><br />
+      <span style="white-space: pre;"><a id="L100"></a>                raise ValueError(f&quot;Error {self.pos}: component {current.tag_name} should have data&quot;)</span><br />
       <span style="white-space: pre;"><a id="L101"></a></span><br />
       <span style="white-space: pre;"><a id="L102"></a>            self.current_component = current.parent</span><br />
       <span style="white-space: pre;"><a id="L103"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L104"></a>            raise ValueError(f"Error {self.pos}: structural error, mismatched tags")</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>            raise ValueError(f&quot;Error {self.pos}: structural error, mismatched tags&quot;)</span><br />
       <span style="white-space: pre;"><a id="L105"></a></span><br />
       <span style="white-space: pre;"><a id="L106"></a>    def handle_data(self, data):</span><br />
       <span style="white-space: pre;"><a id="L107"></a>        if self.current_component:</span><br />

@@ -20,14 +20,14 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Context menu object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Context menu object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class Context(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a context menu, a popup menu.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    A context menu is a menu that will pop up, usually in response to</span><br />
@@ -45,8 +45,8 @@
       <span style="white-space: pre;"><a id="L23"></a></span><br />
       <span style="white-space: pre;"><a id="L24"></a>    Like [dialogs](dialog.md), context menus are generated dynamically</span><br />
       <span style="white-space: pre;"><a id="L25"></a>    in response to a control.  It is, however, necessary to</span><br />
-      <span style="white-space: pre;"><a id="L26"></a>    register them in the window layout, even though they don't</span><br />
-      <span style="white-space: pre;"><a id="L27"></a>    "appear" on the screen before they're actually popped up.</span><br />
+      <span style="white-space: pre;"><a id="L26"></a>    register them in the window layout, even though they don&#x27;t</span><br />
+      <span style="white-space: pre;"><a id="L27"></a>    &quot;appear&quot; on the screen before they&#x27;re actually popped up.</span><br />
       <span style="white-space: pre;"><a id="L28"></a></span><br />
       <span style="white-space: pre;"><a id="L29"></a>    ### Register a context menu</span><br />
       <span style="white-space: pre;"><a id="L30"></a></span><br />
@@ -54,13 +54,13 @@
       <span style="white-space: pre;"><a id="L32"></a>    a direct child of a window.</span><br />
       <span style="white-space: pre;"><a id="L33"></a></span><br />
       <span style="white-space: pre;"><a id="L34"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L35"></a>    &lt;window title="Show context menu usage"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L35"></a>    &lt;window title=&quot;Show context menu usage&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L36"></a>      &lt;!-- A menu bar perhaps here --&gt;</span><br />
       <span style="white-space: pre;"><a id="L37"></a>      &lt;context id=right&gt;</span><br />
       <span style="white-space: pre;"><a id="L38"></a>        &lt;item&gt;Cut&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L39"></a>        &lt;item&gt;Copy&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L40"></a>        &lt;item&gt;Paste&lt;/item&gt;</span><br />
-      <span style="white-space: pre;"><a id="L41"></a>        &lt;menu name="Paste Special"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>        &lt;menu name=&quot;Paste Special&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L42"></a>          &lt;item&gt;Mix...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L43"></a>          &lt;item&gt;Merge...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L44"></a>        &lt;/menu&gt;</span><br />
@@ -78,7 +78,7 @@
       <span style="white-space: pre;"><a id="L56"></a>    to represent sub-menus.</span><br />
       <span style="white-space: pre;"><a id="L57"></a></span><br />
       <span style="white-space: pre;"><a id="L58"></a>    Defining a context menu in layout will not pop anything on</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>    the screen.  This is just a way to register the menu, but you'll</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    the screen.  This is just a way to register the menu, but you&#x27;ll</span><br />
       <span style="white-space: pre;"><a id="L60"></a>    have to pop it.</span><br />
       <span style="white-space: pre;"><a id="L61"></a></span><br />
       <span style="white-space: pre;"><a id="L62"></a>    ### Pop it up</span><br />
@@ -89,18 +89,18 @@
       <span style="white-space: pre;"><a id="L67"></a>    ```python</span><br />
       <span style="white-space: pre;"><a id="L68"></a>    class TestContextMenu(Window):</span><br />
       <span style="white-space: pre;"><a id="L69"></a></span><br />
-      <span style="white-space: pre;"><a id="L70"></a>        layout = mark(\"\"\"</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>        layout = mark(\&quot;\&quot;\&quot;</span><br />
       <span style="white-space: pre;"><a id="L71"></a>           # Insert the layout in the previous section...</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>       \"\"\")</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>       \&quot;\&quot;\&quot;)</span><br />
       <span style="white-space: pre;"><a id="L73"></a></span><br />
       <span style="white-space: pre;"><a id="L74"></a>        def on_right_click(self):</span><br />
-      <span style="white-space: pre;"><a id="L75"></a>            \"\"\"The user has right clicked anywhere on the window.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L76"></a>            # We use the context menu's identifier ("right")</span><br />
-      <span style="white-space: pre;"><a id="L77"></a>            self.pop_menu("right")</span><br />
+      <span style="white-space: pre;"><a id="L75"></a>            \&quot;\&quot;\&quot;The user has right clicked anywhere on the window.\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L76"></a>            # We use the context menu&#x27;s identifier (&quot;right&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>            self.pop_menu(&quot;right&quot;)</span><br />
       <span style="white-space: pre;"><a id="L78"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L79"></a></span><br />
-      <span style="white-space: pre;"><a id="L80"></a>    And that's it.  The call to `pop_menu` will block until the</span><br />
-      <span style="white-space: pre;"><a id="L81"></a>    user selects a choice.  When that's done, a control is fired and</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>    And that&#x27;s it.  The call to `pop_menu` will block until the</span><br />
+      <span style="white-space: pre;"><a id="L81"></a>    user selects a choice.  When that&#x27;s done, a control is fired and</span><br />
       <span style="white-space: pre;"><a id="L82"></a>    the menu closes.</span><br />
       <span style="white-space: pre;"><a id="L83"></a></span><br />
       <span style="white-space: pre;"><a id="L84"></a>    &gt; How to intercept controls in this situation?</span><br />
@@ -111,19 +111,19 @@
       <span style="white-space: pre;"><a id="L89"></a>    ### Control methods and context menus</span><br />
       <span style="white-space: pre;"><a id="L90"></a></span><br />
       <span style="white-space: pre;"><a id="L91"></a>    We take the same example as previously and intercept the user</span><br />
-      <span style="white-space: pre;"><a id="L92"></a>    clicking on "Cut" and "Copy".</span><br />
+      <span style="white-space: pre;"><a id="L92"></a>    clicking on &quot;Cut&quot; and &quot;Copy&quot;.</span><br />
       <span style="white-space: pre;"><a id="L93"></a></span><br />
       <span style="white-space: pre;"><a id="L94"></a>    ```python</span><br />
       <span style="white-space: pre;"><a id="L95"></a>    class TestContextMenu(Window):</span><br />
       <span style="white-space: pre;"><a id="L96"></a></span><br />
-      <span style="white-space: pre;"><a id="L97"></a>        layout = mark(\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>            &lt;window title="Show context menu usage"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>        layout = mark(\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>            &lt;window title=&quot;Show context menu usage&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L99"></a>              &lt;!-- A menu bar perhaps here --&gt;</span><br />
       <span style="white-space: pre;"><a id="L100"></a>              &lt;context id=right&gt;</span><br />
       <span style="white-space: pre;"><a id="L101"></a>                &lt;item&gt;Cut&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L102"></a>                &lt;item id=ctx_copy&gt;Copy&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L103"></a>                &lt;item&gt;Paste&lt;/item&gt;</span><br />
-      <span style="white-space: pre;"><a id="L104"></a>                &lt;menu name="Paste Special"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L104"></a>                &lt;menu name=&quot;Paste Special&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L105"></a>                  &lt;item&gt;Mix...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L106"></a>                  &lt;item&gt;Merge...&lt;/item&gt;</span><br />
       <span style="white-space: pre;"><a id="L107"></a>                &lt;/menu&gt;</span><br />
@@ -133,21 +133,21 @@
       <span style="white-space: pre;"><a id="L111"></a>              &lt;!-- The window grid... --&gt;</span><br />
       <span style="white-space: pre;"><a id="L112"></a>              &lt;text x=2 y=2 width=3 id=result read-only&gt;Result&lt;/text&gt;</span><br />
       <span style="white-space: pre;"><a id="L113"></a>            &lt;/window&gt;</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>        \"\"\")</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>        \&quot;\&quot;\&quot;)</span><br />
       <span style="white-space: pre;"><a id="L115"></a></span><br />
       <span style="white-space: pre;"><a id="L116"></a>        def on_right_click(self):</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>            \"\"\"The user has right clicked anywhere on the window.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>            self.pop_menu("right")</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>            \&quot;\&quot;\&quot;The user has right clicked anywhere on the window.\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>            self.pop_menu(&quot;right&quot;)</span><br />
       <span style="white-space: pre;"><a id="L119"></a></span><br />
       <span style="white-space: pre;"><a id="L120"></a>        def on_cut(self):</span><br />
-      <span style="white-space: pre;"><a id="L121"></a>            \"\"\"The user has chosen "cut" in the context menu.\"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L122"></a>            self["result"].value = "The user chose to Cut!"</span><br />
+      <span style="white-space: pre;"><a id="L121"></a>            \&quot;\&quot;\&quot;The user has chosen &quot;cut&quot; in the context menu.\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>            self[&quot;result&quot;].value = &quot;The user chose to Cut!&quot;</span><br />
       <span style="white-space: pre;"><a id="L123"></a></span><br />
       <span style="white-space: pre;"><a id="L124"></a>        def on_ctx_copy(self):</span><br />
-      <span style="white-space: pre;"><a id="L125"></a>            \"\"\"The user has clicked on the "copy" menu item.</span><br />
+      <span style="white-space: pre;"><a id="L125"></a>            \&quot;\&quot;\&quot;The user has clicked on the &quot;copy&quot; menu item.</span><br />
       <span style="white-space: pre;"><a id="L126"></a>            (Note that this menu has a specific ID).</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>            \"\"\"</span><br />
-      <span style="white-space: pre;"><a id="L128"></a>            self["result"].value = "The user chose to Copy!"</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>            \&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L128"></a>            self[&quot;result&quot;].value = &quot;The user chose to Copy!&quot;</span><br />
       <span style="white-space: pre;"><a id="L129"></a>    ```</span><br />
       <span style="white-space: pre;"><a id="L130"></a></span><br />
       <span style="white-space: pre;"><a id="L131"></a>    It works because the context menu was registered beforehand and</span><br />
@@ -155,7 +155,7 @@
       <span style="white-space: pre;"><a id="L133"></a>    that the</span><br />
       <span style="white-space: pre;"><a id="L134"></a>    [note about identifiers in items](item.md#note-about-identifiers)</span><br />
       <span style="white-space: pre;"><a id="L135"></a>    also applies to items inside context menus: you might need to give</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>    them explicit IDs (like we did for the "Copy" item in the</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>    them explicit IDs (like we did for the &quot;Copy&quot; item in the</span><br />
       <span style="white-space: pre;"><a id="L137"></a>    previous example) and adapt your control methods accordingly.</span><br />
       <span style="white-space: pre;"><a id="L138"></a></span><br />
       <span style="white-space: pre;"><a id="L139"></a>    ## Attributes</span><br />
@@ -167,7 +167,7 @@
       <span style="white-space: pre;"><a id="L145"></a>    |              |          | Contrary to other        |             |</span><br />
       <span style="white-space: pre;"><a id="L146"></a>    |              |          | widgets, an identifier   |             |</span><br />
       <span style="white-space: pre;"><a id="L147"></a>    |              |          | is absolutely required,  |             |</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>    |              |          | otherwise you won't be   |             |</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>    |              |          | otherwise you won&#x27;t be   |             |</span><br />
       <span style="white-space: pre;"><a id="L149"></a>    |              |          | able to pop this context |             |</span><br />
       <span style="white-space: pre;"><a id="L150"></a>    |              |          | menu in a control        |             |</span><br />
       <span style="white-space: pre;"><a id="L151"></a>    |              |          | method.                  |             |</span><br />
@@ -190,11 +190,11 @@
       <span style="white-space: pre;"><a id="L168"></a>    This widget has no control.  Use the controls on</span><br />
       <span style="white-space: pre;"><a id="L169"></a>    [menu items](item.md#controls) instead.</span><br />
       <span style="white-space: pre;"><a id="L170"></a></span><br />
-      <span style="white-space: pre;"><a id="L171"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L171"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L172"></a></span><br />
-      <span style="white-space: pre;"><a id="L173"></a>    tag_name = "context"</span><br />
+      <span style="white-space: pre;"><a id="L173"></a>    tag_name = &quot;context&quot;</span><br />
       <span style="white-space: pre;"><a id="L174"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>        Attr("id", help="The widget identifier"),</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>        Attr(&quot;id&quot;, help=&quot;The widget identifier&quot;),</span><br />
       <span style="white-space: pre;"><a id="L176"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L177"></a></span><br />
       <span style="white-space: pre;"><a id="L178"></a>    def __init__(self, layout, parent, id):</span><br />

@@ -20,13 +20,13 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Close control, used on window and dialogs to perform actions when closed."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Close control, used on window and dialogs to perform actions when closed.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.control.base import Control</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
       <span style="white-space: pre;"><a id="L5"></a>class Close(Control):</span><br />
       <span style="white-space: pre;"><a id="L6"></a></span><br />
-      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L8"></a>    When the window or dialog is closed.</span><br />
       <span style="white-space: pre;"><a id="L9"></a></span><br />
       <span style="white-space: pre;"><a id="L10"></a>    Contrary to other controls, this one is automatically triggered by</span><br />
@@ -65,46 +65,46 @@
       <span style="white-space: pre;"><a id="L43"></a></span><br />
       <span style="white-space: pre;"><a id="L44"></a>    ### Widget control</span><br />
       <span style="white-space: pre;"><a id="L45"></a></span><br />
-      <span style="white-space: pre;"><a id="L46"></a>    You cannot use this control on a widget.  A text or checkbox doesn't</span><br />
+      <span style="white-space: pre;"><a id="L46"></a>    You cannot use this control on a widget.  A text or checkbox doesn&#x27;t</span><br />
       <span style="white-space: pre;"><a id="L47"></a>    close and get a chance to clean itself up.  These tasks should be</span><br />
       <span style="white-space: pre;"><a id="L48"></a>    performed in the window itself.</span><br />
       <span style="white-space: pre;"><a id="L49"></a></span><br />
       <span style="white-space: pre;"><a id="L50"></a>    ### Asynchronous calls</span><br />
       <span style="white-space: pre;"><a id="L51"></a></span><br />
       <span style="white-space: pre;"><a id="L52"></a>    This control can be bound to an asynchronous method (that is, a</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>    coroutine).  However, notice that using such a method doesn't</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    coroutine).  However, notice that using such a method doesn&#x27;t</span><br />
       <span style="white-space: pre;"><a id="L54"></a>    guarantee the method will be called before the window is destroyed, which</span><br />
       <span style="white-space: pre;"><a id="L55"></a>    might create some logical errors depending on what you want to achieve:</span><br />
       <span style="white-space: pre;"><a id="L56"></a></span><br />
       <span style="white-space: pre;"><a id="L57"></a>        async def on_close(self, ...):</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
       <span style="white-space: pre;"><a id="L59"></a>    As usual, just place the `async` keyword before the method</span><br />
-      <span style="white-space: pre;"><a id="L60"></a>    definition to make it asynchronous.  Although you won't have</span><br />
+      <span style="white-space: pre;"><a id="L60"></a>    definition to make it asynchronous.  Although you won&#x27;t have</span><br />
       <span style="white-space: pre;"><a id="L61"></a>    control over when the window is destroyed, you will be able</span><br />
       <span style="white-space: pre;"><a id="L62"></a>    to divide the task in different periods of time.</span><br />
       <span style="white-space: pre;"><a id="L63"></a></span><br />
       <span style="white-space: pre;"><a id="L64"></a>    ## Control attributes</span><br />
       <span style="white-space: pre;"><a id="L65"></a></span><br />
-      <span style="white-space: pre;"><a id="L66"></a>    This control doesn't have any attribute.</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    This control doesn&#x27;t have any attribute.</span><br />
       <span style="white-space: pre;"><a id="L67"></a></span><br />
       <span style="white-space: pre;"><a id="L68"></a>        def on_close(self, control):</span><br />
       <span style="white-space: pre;"><a id="L69"></a></span><br />
-      <span style="white-space: pre;"><a id="L70"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L71"></a></span><br />
-      <span style="white-space: pre;"><a id="L72"></a>    name = "close"</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    name = &quot;close&quot;</span><br />
       <span style="white-space: pre;"><a id="L73"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L74"></a>            "window": "A window is closed.",</span><br />
+      <span style="white-space: pre;"><a id="L74"></a>            &quot;window&quot;: &quot;A window is closed.&quot;,</span><br />
       <span style="white-space: pre;"><a id="L75"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L76"></a>    widget_control = False</span><br />
       <span style="white-space: pre;"><a id="L77"></a></span><br />
       <span style="white-space: pre;"><a id="L78"></a>    def perform(self, options=None):</span><br />
-      <span style="white-space: pre;"><a id="L79"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L79"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L80"></a>        When the control is triggered.</span><br />
       <span style="white-space: pre;"><a id="L81"></a></span><br />
       <span style="white-space: pre;"><a id="L82"></a>        This method will be called when the window is ready to be closed,</span><br />
       <span style="white-space: pre;"><a id="L83"></a>        but before it actually is destroys.</span><br />
       <span style="white-space: pre;"><a id="L84"></a></span><br />
-      <span style="white-space: pre;"><a id="L85"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L86"></a>        super().perform(options)</span><br />
     </div>
   </body>

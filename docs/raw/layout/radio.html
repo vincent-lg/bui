@@ -20,22 +20,22 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Radio button object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Radio button object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class RadioButton(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a radio button with multiple choices.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    A radio button is represented by multiple, mutually-exclusive buttons.</span><br />
-      <span style="white-space: pre;"><a id="L12"></a>    Each button in the group can't be selected without the other ones</span><br />
+      <span style="white-space: pre;"><a id="L12"></a>    Each button in the group can&#x27;t be selected without the other ones</span><br />
       <span style="white-space: pre;"><a id="L13"></a>    in the same group being de-selected.</span><br />
       <span style="white-space: pre;"><a id="L14"></a></span><br />
       <span style="white-space: pre;"><a id="L15"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title="Table demonstration"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    &lt;window title=&quot;Table demonstration&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L17"></a>      &lt;radio id=choices x=2 y=4&gt;</span><br />
       <span style="white-space: pre;"><a id="L18"></a>        &lt;choice&gt;Choice 1&lt;/choice&gt;</span><br />
       <span style="white-space: pre;"><a id="L19"></a>        &lt;choice&gt;Choice 2&lt;/choice&gt;</span><br />
@@ -55,12 +55,12 @@
       <span style="white-space: pre;"><a id="L33"></a></span><br />
       <span style="white-space: pre;"><a id="L34"></a>    | Name         | Required | Description              | Example     |</span><br />
       <span style="white-space: pre;"><a id="L35"></a>    | ------------ | -------- | ------------------------ | ----------- |</span><br />
-      <span style="white-space: pre;"><a id="L36"></a>    | `x`          | Yes      | The widget's horizontal  | `&lt;radio     |</span><br />
+      <span style="white-space: pre;"><a id="L36"></a>    | `x`          | Yes      | The widget&#x27;s horizontal  | `&lt;radio     |</span><br />
       <span style="white-space: pre;"><a id="L37"></a>    |              |          | position in columns (0   | x=5&gt;`       |</span><br />
       <span style="white-space: pre;"><a id="L38"></a>    |              |          | is left). This position  |             |</span><br />
       <span style="white-space: pre;"><a id="L39"></a>    |              |          | is relative to the       |             |</span><br />
       <span style="white-space: pre;"><a id="L40"></a>    |              |          | window width.            |             |</span><br />
-      <span style="white-space: pre;"><a id="L41"></a>    | `y`          | Yes      | The widget's vertical    | `&lt;radio     |</span><br />
+      <span style="white-space: pre;"><a id="L41"></a>    | `y`          | Yes      | The widget&#x27;s vertical    | `&lt;radio     |</span><br />
       <span style="white-space: pre;"><a id="L42"></a>    |              |          | position in rows (0      | y=2&gt;`       |</span><br />
       <span style="white-space: pre;"><a id="L43"></a>    |              |          | is at the top). This     |             |</span><br />
       <span style="white-space: pre;"><a id="L44"></a>    |              |          | position is relative to  |             |</span><br />
@@ -105,7 +105,7 @@
       <span style="white-space: pre;"><a id="L83"></a>    &gt; Note: the radio button identifier is mandatory.  You cannot dcreate a</span><br />
       <span style="white-space: pre;"><a id="L84"></a>      radio button without a valid identifier.  The reason for this constraint</span><br />
       <span style="white-space: pre;"><a id="L85"></a>      is due to the fact that this widget, in particular, will be edited</span><br />
-      <span style="white-space: pre;"><a id="L86"></a>      in your application.  Lacking an identifier, you won't be able to do</span><br />
+      <span style="white-space: pre;"><a id="L86"></a>      in your application.  Lacking an identifier, you won&#x27;t be able to do</span><br />
       <span style="white-space: pre;"><a id="L87"></a>      that.</span><br />
       <span style="white-space: pre;"><a id="L88"></a></span><br />
       <span style="white-space: pre;"><a id="L89"></a>    ## Data</span><br />
@@ -115,9 +115,9 @@
       <span style="white-space: pre;"><a id="L93"></a></span><br />
       <span style="white-space: pre;"><a id="L94"></a>    | Attribute      | Meaning and type | Example                     |</span><br />
       <span style="white-space: pre;"><a id="L95"></a>    | -------------- | ---------------- | --------------------------- |</span><br />
-      <span style="white-space: pre;"><a id="L96"></a>    | `choices`      | The available    | `self.choices = (("ch1",    |</span><br />
-      <span style="white-space: pre;"><a id="L97"></a>    |                | choices (lsit)   | "Choice 1"))`               |</span><br />
-      <span style="white-space: pre;"><a id="L98"></a>    | `selected`     | ID of the        | `self.selected = "ch1"`     |</span><br />
+      <span style="white-space: pre;"><a id="L96"></a>    | `choices`      | The available    | `self.choices = ((&quot;ch1&quot;,    |</span><br />
+      <span style="white-space: pre;"><a id="L97"></a>    |                | choices (lsit)   | &quot;Choice 1&quot;))`               |</span><br />
+      <span style="white-space: pre;"><a id="L98"></a>    | `selected`     | ID of the        | `self.selected = &quot;ch1&quot;`     |</span><br />
       <span style="white-space: pre;"><a id="L99"></a>    |                | selected choice  |                             |</span><br />
       <span style="white-space: pre;"><a id="L100"></a>    |                | (str) or indice  |                             |</span><br />
       <span style="white-space: pre;"><a id="L101"></a>    |                | of the choice if |                             |</span><br />
@@ -132,21 +132,21 @@
       <span style="white-space: pre;"><a id="L110"></a>    returned when this choice is selected:</span><br />
       <span style="white-space: pre;"><a id="L111"></a></span><br />
       <span style="white-space: pre;"><a id="L112"></a>        def on_click_update(self):</span><br />
-      <span style="white-space: pre;"><a id="L113"></a>            # A button of ID 'update' was clicked</span><br />
-      <span style="white-space: pre;"><a id="L114"></a>            # There is a radio button of ID 'actions' in the window</span><br />
-      <span style="white-space: pre;"><a id="L115"></a>            actions = self["actions"]</span><br />
+      <span style="white-space: pre;"><a id="L113"></a>            # A button of ID &#x27;update&#x27; was clicked</span><br />
+      <span style="white-space: pre;"><a id="L114"></a>            # There is a radio button of ID &#x27;actions&#x27; in the window</span><br />
+      <span style="white-space: pre;"><a id="L115"></a>            actions = self[&quot;actions&quot;]</span><br />
       <span style="white-space: pre;"><a id="L116"></a>            actions.choices = (</span><br />
-      <span style="white-space: pre;"><a id="L117"></a>                ("update", "Update the software"),</span><br />
-      <span style="white-space: pre;"><a id="L118"></a>                ("repair", "Repair the software"),</span><br />
-      <span style="white-space: pre;"><a id="L119"></a>                ("reinstall", "Remove the software configuration and install it again"),</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>                ("remove", "Uninstall this software"),</span><br />
+      <span style="white-space: pre;"><a id="L117"></a>                (&quot;update&quot;, &quot;Update the software&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L118"></a>                (&quot;repair&quot;, &quot;Repair the software&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L119"></a>                (&quot;reinstall&quot;, &quot;Remove the software configuration and install it again&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>                (&quot;remove&quot;, &quot;Uninstall this software&quot;),</span><br />
       <span style="white-space: pre;"><a id="L121"></a>            )</span><br />
       <span style="white-space: pre;"><a id="L122"></a></span><br />
       <span style="white-space: pre;"><a id="L123"></a>            action = actions.selected</span><br />
-      <span style="white-space: pre;"><a id="L124"></a>            # action will be either "update", "repair", "reinstall" or "remove"</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>            # action will be either &quot;update&quot;, &quot;repair&quot;, &quot;reinstall&quot; or &quot;remove&quot;</span><br />
       <span style="white-space: pre;"><a id="L125"></a></span><br />
       <span style="white-space: pre;"><a id="L126"></a>            # You can of course change the selected choice</span><br />
-      <span style="white-space: pre;"><a id="L127"></a>            actions.selected = "reinstall"</span><br />
+      <span style="white-space: pre;"><a id="L127"></a>            actions.selected = &quot;reinstall&quot;</span><br />
       <span style="white-space: pre;"><a id="L128"></a></span><br />
       <span style="white-space: pre;"><a id="L129"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L130"></a></span><br />
@@ -187,17 +187,17 @@
       <span style="white-space: pre;"><a id="L165"></a>        class MainWindow(Window):</span><br />
       <span style="white-space: pre;"><a id="L166"></a></span><br />
       <span style="white-space: pre;"><a id="L167"></a>            def on_select_actions(self, widget, selected):</span><br />
-      <span style="white-space: pre;"><a id="L168"></a>                print(f"The user selected the action {selected}.")</span><br />
+      <span style="white-space: pre;"><a id="L168"></a>                print(f&quot;The user selected the action {selected}.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L169"></a></span><br />
-      <span style="white-space: pre;"><a id="L170"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L170"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L171"></a></span><br />
-      <span style="white-space: pre;"><a id="L172"></a>    tag_name = "radio"</span><br />
+      <span style="white-space: pre;"><a id="L172"></a>    tag_name = &quot;radio&quot;</span><br />
       <span style="white-space: pre;"><a id="L173"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L174"></a>        Attr("x", help="The widget horizontal position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L175"></a>        Attr("y", help="The widget vertical position", type=int),</span><br />
-      <span style="white-space: pre;"><a id="L176"></a>        Attr("id", help="The widget identifier"),</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>        Attr("width", help="The widget width", type=int, default=1),</span><br />
-      <span style="white-space: pre;"><a id="L178"></a>        Attr("height", help="The widget height", type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L174"></a>        Attr(&quot;x&quot;, help=&quot;The widget horizontal position&quot;, type=int),</span><br />
+      <span style="white-space: pre;"><a id="L175"></a>        Attr(&quot;y&quot;, help=&quot;The widget vertical position&quot;, type=int),</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>        Attr(&quot;id&quot;, help=&quot;The widget identifier&quot;),</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>        Attr(&quot;width&quot;, help=&quot;The widget width&quot;, type=int, default=1),</span><br />
+      <span style="white-space: pre;"><a id="L178"></a>        Attr(&quot;height&quot;, help=&quot;The widget height&quot;, type=int, default=1),</span><br />
       <span style="white-space: pre;"><a id="L179"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L180"></a></span><br />
       <span style="white-space: pre;"><a id="L181"></a>    def __init__(self, layout, parent, x, y, id, width=1, height=1):</span><br />

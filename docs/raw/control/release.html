@@ -20,7 +20,7 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Release control, triggered when a key is released by the user."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Release control, triggered when a key is released by the user.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>import re</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
@@ -29,7 +29,7 @@
       <span style="white-space: pre;"><a id="L7"></a></span><br />
       <span style="white-space: pre;"><a id="L8"></a>class Release(Control):</span><br />
       <span style="white-space: pre;"><a id="L9"></a></span><br />
-      <span style="white-space: pre;"><a id="L10"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L11"></a>    When the user releases one or several keys.</span><br />
       <span style="white-space: pre;"><a id="L12"></a></span><br />
       <span style="white-space: pre;"><a id="L13"></a>    This control is somewhat identical to [press](press.md), but</span><br />
@@ -38,17 +38,17 @@
       <span style="white-space: pre;"><a id="L16"></a>    ## Usage</span><br />
       <span style="white-space: pre;"><a id="L17"></a></span><br />
       <span style="white-space: pre;"><a id="L18"></a>    If you want to set up a control on the window that triggers when the</span><br />
-      <span style="white-space: pre;"><a id="L19"></a>    user releases the 'a' key on her keyboard, you might add a method</span><br />
+      <span style="white-space: pre;"><a id="L19"></a>    user releases the &#x27;a&#x27; key on her keyboard, you might add a method</span><br />
       <span style="white-space: pre;"><a id="L20"></a>    in the window class with the name:</span><br />
       <span style="white-space: pre;"><a id="L21"></a></span><br />
       <span style="white-space: pre;"><a id="L22"></a>        def on_release_a(self, ...):</span><br />
       <span style="white-space: pre;"><a id="L23"></a></span><br />
-      <span style="white-space: pre;"><a id="L24"></a>    This method will only be called if the user releases the 'a' key on her</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>    This method will only be called if the user releases the &#x27;a&#x27; key on her</span><br />
       <span style="white-space: pre;"><a id="L25"></a>    keyboard.</span><br />
       <span style="white-space: pre;"><a id="L26"></a></span><br />
       <span style="white-space: pre;"><a id="L27"></a>    You can also use the same syntax to create a release control on</span><br />
       <span style="white-space: pre;"><a id="L28"></a>    a specific widget.  Assuming, for instance, you have a text entry</span><br />
-      <span style="white-space: pre;"><a id="L29"></a>    of ID 'entry', you could intercept a user releasing the 'a' key</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>    of ID &#x27;entry&#x27;, you could intercept a user releasing the &#x27;a&#x27; key</span><br />
       <span style="white-space: pre;"><a id="L30"></a>    while this widget is focused by creating the following method:</span><br />
       <span style="white-space: pre;"><a id="L31"></a></span><br />
       <span style="white-space: pre;"><a id="L32"></a>        def on_release_a_in_entry(self):</span><br />
@@ -66,19 +66,19 @@
       <span style="white-space: pre;"><a id="L44"></a>    control, by creating a method `on_release_{widget ID}`.</span><br />
       <span style="white-space: pre;"><a id="L45"></a></span><br />
       <span style="white-space: pre;"><a id="L46"></a>    &gt; Note: if you have both one ore more release sub-controls, and one main</span><br />
-      <span style="white-space: pre;"><a id="L47"></a>      release control, the latter will be called only if the former isn't</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>      release control, the latter will be called only if the former isn&#x27;t</span><br />
       <span style="white-space: pre;"><a id="L48"></a>      triggered.  Consider this example:</span><br />
       <span style="white-space: pre;"><a id="L49"></a></span><br />
       <span style="white-space: pre;"><a id="L50"></a>        class Interface(Window):</span><br />
       <span style="white-space: pre;"><a id="L51"></a></span><br />
       <span style="white-space: pre;"><a id="L52"></a>            def on_release_a(self):</span><br />
-      <span style="white-space: pre;"><a id="L53"></a>                print("A was released.")</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>                print(&quot;A was released.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L54"></a></span><br />
       <span style="white-space: pre;"><a id="L55"></a>            def on_release(self):</span><br />
-      <span style="white-space: pre;"><a id="L56"></a>                print("Another key (not A) was released.")</span><br />
+      <span style="white-space: pre;"><a id="L56"></a>                print(&quot;Another key (not A) was released.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L57"></a></span><br />
       <span style="white-space: pre;"><a id="L58"></a>    In this case, the `on_release` method will only be called if the key</span><br />
-      <span style="white-space: pre;"><a id="L59"></a>    is not an "a".</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    is not an &quot;a&quot;.</span><br />
       <span style="white-space: pre;"><a id="L60"></a></span><br />
       <span style="white-space: pre;"><a id="L61"></a>    ### Different keys, same method</span><br />
       <span style="white-space: pre;"><a id="L62"></a></span><br />
@@ -91,7 +91,7 @@
       <span style="white-space: pre;"><a id="L69"></a>            on_release_b = on_release_a</span><br />
       <span style="white-space: pre;"><a id="L70"></a>            on_release_r = on_release_a</span><br />
       <span style="white-space: pre;"><a id="L71"></a></span><br />
-      <span style="white-space: pre;"><a id="L72"></a>    This syntax will bind the keys 'a', 'b' and 'r' to the same method,</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    This syntax will bind the keys &#x27;a&#x27;, &#x27;b&#x27; and &#x27;r&#x27; to the same method,</span><br />
       <span style="white-space: pre;"><a id="L73"></a>    so that if the user releases one of these keys, the same action will</span><br />
       <span style="white-space: pre;"><a id="L74"></a>    be performed.</span><br />
       <span style="white-space: pre;"><a id="L75"></a></span><br />
@@ -101,10 +101,10 @@
       <span style="white-space: pre;"><a id="L79"></a>    method has to contain the name of the key as a lowercase version.</span><br />
       <span style="white-space: pre;"><a id="L80"></a>    Here are some examples:</span><br />
       <span style="white-space: pre;"><a id="L81"></a></span><br />
-      <span style="white-space: pre;"><a id="L82"></a>        def on_release_a(self, ...): # The user releases the 'a' key</span><br />
-      <span style="white-space: pre;"><a id="L83"></a>        def on_release_5(self, ...): # The user releases the '5' key</span><br />
-      <span style="white-space: pre;"><a id="L84"></a>        def on_release_escape(self, ...): # The user releases the 'escape' key</span><br />
-      <span style="white-space: pre;"><a id="L85"></a>        def on_release_space(self, ...): # The user releases the 'space' key</span><br />
+      <span style="white-space: pre;"><a id="L82"></a>        def on_release_a(self, ...): # The user releases the &#x27;a&#x27; key</span><br />
+      <span style="white-space: pre;"><a id="L83"></a>        def on_release_5(self, ...): # The user releases the &#x27;5&#x27; key</span><br />
+      <span style="white-space: pre;"><a id="L84"></a>        def on_release_escape(self, ...): # The user releases the &#x27;escape&#x27; key</span><br />
+      <span style="white-space: pre;"><a id="L85"></a>        def on_release_space(self, ...): # The user releases the &#x27;space&#x27; key</span><br />
       <span style="white-space: pre;"><a id="L86"></a></span><br />
       <span style="white-space: pre;"><a id="L87"></a>    All key names are lowercased.  Below is a table of commonly-used keys</span><br />
       <span style="white-space: pre;"><a id="L88"></a>    you can use in your method names:</span><br />
@@ -139,7 +139,7 @@
       <span style="white-space: pre;"><a id="L117"></a></span><br />
       <span style="white-space: pre;"><a id="L118"></a>        def on_release_ctrl_n(self):</span><br />
       <span style="white-space: pre;"><a id="L119"></a></span><br />
-      <span style="white-space: pre;"><a id="L120"></a>    &gt; Control key names form the key name.  They're separated with an</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>    &gt; Control key names form the key name.  They&#x27;re separated with an</span><br />
       <span style="white-space: pre;"><a id="L121"></a>      underscore (_).</span><br />
       <span style="white-space: pre;"><a id="L122"></a></span><br />
       <span style="white-space: pre;"><a id="L123"></a>    The rule for control keys is that their lowercased name should be</span><br />
@@ -167,17 +167,17 @@
       <span style="white-space: pre;"><a id="L145"></a>      If the user presses on CTRL + Shift + A for instance, you will</span><br />
       <span style="white-space: pre;"><a id="L146"></a>      see three [press](press.md) controls followed by three</span><br />
       <span style="white-space: pre;"><a id="L147"></a>      [release](release.md) controls.  The first [press](press.md) control</span><br />
-      <span style="white-space: pre;"><a id="L148"></a>      might be just 'ctrl', the second 'ctrl_shift', the third</span><br />
-      <span style="white-space: pre;"><a id="L149"></a>      'ctrl_shift_a'.  Then comes the release controls: first</span><br />
-      <span style="white-space: pre;"><a id="L150"></a>      'ctrl+shift+a', then... then it is difficult to predict what</span><br />
+      <span style="white-space: pre;"><a id="L148"></a>      might be just &#x27;ctrl&#x27;, the second &#x27;ctrl_shift&#x27;, the third</span><br />
+      <span style="white-space: pre;"><a id="L149"></a>      &#x27;ctrl_shift_a&#x27;.  Then comes the release controls: first</span><br />
+      <span style="white-space: pre;"><a id="L150"></a>      &#x27;ctrl+shift+a&#x27;, then... then it is difficult to predict what</span><br />
       <span style="white-space: pre;"><a id="L151"></a>      will be released.  Keys only used for modifiers might not raise</span><br />
       <span style="white-space: pre;"><a id="L152"></a>      consistent release controls.</span><br />
       <span style="white-space: pre;"><a id="L153"></a></span><br />
       <span style="white-space: pre;"><a id="L154"></a>    ### Link common actions with keyboard shortcuts</span><br />
       <span style="white-space: pre;"><a id="L155"></a></span><br />
-      <span style="white-space: pre;"><a id="L156"></a>    It's common to want to link a keyboard shortcut with a simple</span><br />
-      <span style="white-space: pre;"><a id="L157"></a>    action.  For instance, if we want to link 'Alt + F4' with the action</span><br />
-      <span style="white-space: pre;"><a id="L158"></a>    "close the window".</span><br />
+      <span style="white-space: pre;"><a id="L156"></a>    It&#x27;s common to want to link a keyboard shortcut with a simple</span><br />
+      <span style="white-space: pre;"><a id="L157"></a>    action.  For instance, if we want to link &#x27;Alt + F4&#x27; with the action</span><br />
+      <span style="white-space: pre;"><a id="L158"></a>    &quot;close the window&quot;.</span><br />
       <span style="white-space: pre;"><a id="L159"></a></span><br />
       <span style="white-space: pre;"><a id="L160"></a>    BUI offers an easy way to link these actions:</span><br />
       <span style="white-space: pre;"><a id="L161"></a></span><br />
@@ -186,7 +186,7 @@
       <span style="white-space: pre;"><a id="L164"></a>            # ...</span><br />
       <span style="white-space: pre;"><a id="L165"></a>            on_release_alt_f4 = close</span><br />
       <span style="white-space: pre;"><a id="L166"></a></span><br />
-      <span style="white-space: pre;"><a id="L167"></a>    Although convenient, this code doesn't do any particular magic.  It</span><br />
+      <span style="white-space: pre;"><a id="L167"></a>    Although convenient, this code doesn&#x27;t do any particular magic.  It</span><br />
       <span style="white-space: pre;"><a id="L168"></a>    is almost equivalent to the following, more understandable code:</span><br />
       <span style="white-space: pre;"><a id="L169"></a></span><br />
       <span style="white-space: pre;"><a id="L170"></a>        class Interface(Window):</span><br />
@@ -195,10 +195,10 @@
       <span style="white-space: pre;"><a id="L173"></a>            def on_release_alt_f4(self):</span><br />
       <span style="white-space: pre;"><a id="L174"></a>                self.close()</span><br />
       <span style="white-space: pre;"><a id="L175"></a></span><br />
-      <span style="white-space: pre;"><a id="L176"></a>    We simply directly link the action "close" to a specific keyboard</span><br />
-      <span style="white-space: pre;"><a id="L177"></a>    shortcut.  Python doesn't see much of a difference, although the</span><br />
+      <span style="white-space: pre;"><a id="L176"></a>    We simply directly link the action &quot;close&quot; to a specific keyboard</span><br />
+      <span style="white-space: pre;"><a id="L177"></a>    shortcut.  Python doesn&#x27;t see much of a difference, although the</span><br />
       <span style="white-space: pre;"><a id="L178"></a>    first syntax is just an alias for the `close` method.  This is</span><br />
-      <span style="white-space: pre;"><a id="L179"></a>    a common action: `close` is a basic action that doesn't require</span><br />
+      <span style="white-space: pre;"><a id="L179"></a>    a common action: `close` is a basic action that doesn&#x27;t require</span><br />
       <span style="white-space: pre;"><a id="L180"></a>    any argument and can be linked with a control method in</span><br />
       <span style="white-space: pre;"><a id="L181"></a>    this way.</span><br />
       <span style="white-space: pre;"><a id="L182"></a></span><br />
@@ -209,11 +209,11 @@
       <span style="white-space: pre;"><a id="L187"></a>    control object.  You can easily access it as a method argument?</span><br />
       <span style="white-space: pre;"><a id="L188"></a></span><br />
       <span style="white-space: pre;"><a id="L189"></a>        def on_release(self, key):</span><br />
-      <span style="white-space: pre;"><a id="L190"></a>            print(f"The user released {key!r}.")</span><br />
+      <span style="white-space: pre;"><a id="L190"></a>            print(f&quot;The user released {key!r}.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L191"></a></span><br />
       <span style="white-space: pre;"><a id="L192"></a>    If the user releases ESCAPE, this message will be displayed in the console:</span><br />
       <span style="white-space: pre;"><a id="L193"></a></span><br />
-      <span style="white-space: pre;"><a id="L194"></a>        The user released the 'escape' key.</span><br />
+      <span style="white-space: pre;"><a id="L194"></a>        The user released the &#x27;escape&#x27; key.</span><br />
       <span style="white-space: pre;"><a id="L195"></a></span><br />
       <span style="white-space: pre;"><a id="L196"></a>    The `key` argument is actually filled by the control manager.  When</span><br />
       <span style="white-space: pre;"><a id="L197"></a>    it examines your method signature and sees you want extra information,</span><br />
@@ -242,8 +242,8 @@
       <span style="white-space: pre;"><a id="L220"></a>    | `alt`     | bool      | Is the Alt key being released too?  |</span><br />
       <span style="white-space: pre;"><a id="L221"></a>    | `shift`   | bool      | Is the Shift key being released too?|</span><br />
       <span style="white-space: pre;"><a id="L222"></a></span><br />
-      <span style="white-space: pre;"><a id="L223"></a>    &gt; The `raw_key` attribute is useful if you want to intercept 'a' but</span><br />
-      <span style="white-space: pre;"><a id="L224"></a>      don't care if CTRL or Alt or all of the control keys is being released</span><br />
+      <span style="white-space: pre;"><a id="L223"></a>    &gt; The `raw_key` attribute is useful if you want to intercept &#x27;a&#x27; but</span><br />
+      <span style="white-space: pre;"><a id="L224"></a>      don&#x27;t care if CTRL or Alt or all of the control keys is being released</span><br />
       <span style="white-space: pre;"><a id="L225"></a>      at the time.</span><br />
       <span style="white-space: pre;"><a id="L226"></a></span><br />
       <span style="white-space: pre;"><a id="L227"></a>    Use these attributes as your control method argument.  For instance:</span><br />
@@ -254,23 +254,23 @@
       <span style="white-space: pre;"><a id="L232"></a>    method signature which will always contain the control object.</span><br />
       <span style="white-space: pre;"><a id="L233"></a></span><br />
       <span style="white-space: pre;"><a id="L234"></a>        def on_release(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L235"></a>            print(f"The user released on {control.key}.")</span><br />
+      <span style="white-space: pre;"><a id="L235"></a>            print(f&quot;The user released on {control.key}.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L236"></a></span><br />
-      <span style="white-space: pre;"><a id="L237"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L238"></a></span><br />
-      <span style="white-space: pre;"><a id="L239"></a>    name = "release"</span><br />
+      <span style="white-space: pre;"><a id="L239"></a>    name = &quot;release&quot;</span><br />
       <span style="white-space: pre;"><a id="L240"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L241"></a>            "window": "The user releases on her keyboard anywhere in the window",</span><br />
+      <span style="white-space: pre;"><a id="L241"></a>            &quot;window&quot;: &quot;The user releases on her keyboard anywhere in the window&quot;,</span><br />
       <span style="white-space: pre;"><a id="L242"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L243"></a></span><br />
       <span style="white-space: pre;"><a id="L244"></a>    has_sub_controls = True</span><br />
       <span style="white-space: pre;"><a id="L245"></a>    pattern_for_window = (</span><br />
-      <span style="white-space: pre;"><a id="L246"></a>        fr"^on_release_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
-      <span style="white-space: pre;"><a id="L247"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))$")</span><br />
+      <span style="white-space: pre;"><a id="L246"></a>        fr&quot;^on_release_(?P&lt;key&gt;({&#x27;_)?(&#x27;.join([re.escape(mod) for mod in MODIFIERS])}_)?&quot;</span><br />
+      <span style="white-space: pre;"><a id="L247"></a>        fr&quot;({&#x27;|&#x27;.join([re.escape(key) for key in KEYS])}))$&quot;)</span><br />
       <span style="white-space: pre;"><a id="L248"></a>    pattern_for_widgets = (</span><br />
-      <span style="white-space: pre;"><a id="L249"></a>        fr"^on_release_(?P&lt;key&gt;({'_)?('.join([re.escape(mod) for mod in MODIFIERS])}_)?"</span><br />
-      <span style="white-space: pre;"><a id="L250"></a>        fr"({'|'.join([re.escape(key) for key in KEYS])}))_in_{{id}}$")</span><br />
-      <span style="white-space: pre;"><a id="L251"></a>    options = ("key", "raw_key", "ctrl", "meta", "alt", "shift")</span><br />
+      <span style="white-space: pre;"><a id="L249"></a>        fr&quot;^on_release_(?P&lt;key&gt;({&#x27;_)?(&#x27;.join([re.escape(mod) for mod in MODIFIERS])}_)?&quot;</span><br />
+      <span style="white-space: pre;"><a id="L250"></a>        fr&quot;({&#x27;|&#x27;.join([re.escape(key) for key in KEYS])}))_in_{{id}}$&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L251"></a>    options = (&quot;key&quot;, &quot;raw_key&quot;, &quot;ctrl&quot;, &quot;meta&quot;, &quot;alt&quot;, &quot;shift&quot;)</span><br />
       <span style="white-space: pre;"><a id="L252"></a></span><br />
       <span style="white-space: pre;"><a id="L253"></a>    def __init__(self, widget, key, raw_key, ctrl=False, meta=False,</span><br />
       <span style="white-space: pre;"><a id="L254"></a>            alt=False, shift=False):</span><br />

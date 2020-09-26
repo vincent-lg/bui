@@ -20,13 +20,13 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Right-click control, used on most widgets to signal a right click."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Right-click control, used on most widgets to signal a right click.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.control.base import Control</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
       <span style="white-space: pre;"><a id="L5"></a>class RightClick(Control):</span><br />
       <span style="white-space: pre;"><a id="L6"></a></span><br />
-      <span style="white-space: pre;"><a id="L7"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L7"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L8"></a>    When the user right clicks or presses the application key.</span><br />
       <span style="white-space: pre;"><a id="L9"></a></span><br />
       <span style="white-space: pre;"><a id="L10"></a>    This control is fired when the user right clicks on a widget</span><br />
@@ -35,20 +35,20 @@
       <span style="white-space: pre;"><a id="L13"></a>    is focused.  It is common to link this control to the</span><br />
       <span style="white-space: pre;"><a id="L14"></a>    [context menu pop-up](../layout/tag/context.md).</span><br />
       <span style="white-space: pre;"><a id="L15"></a></span><br />
-      <span style="white-space: pre;"><a id="L16"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L16"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L17"></a></span><br />
-      <span style="white-space: pre;"><a id="L18"></a>    name = "right_click"</span><br />
+      <span style="white-space: pre;"><a id="L18"></a>    name = &quot;right_click&quot;</span><br />
       <span style="white-space: pre;"><a id="L19"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L20"></a>            "window": "The user right clicks in the window.",</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>            &quot;window&quot;: &quot;The user right clicks in the window.&quot;,</span><br />
       <span style="white-space: pre;"><a id="L21"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L22"></a></span><br />
       <span style="white-space: pre;"><a id="L23"></a>    def perform(self, options=None):</span><br />
-      <span style="white-space: pre;"><a id="L24"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L24"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L25"></a>        When the control is triggered.</span><br />
       <span style="white-space: pre;"><a id="L26"></a></span><br />
       <span style="white-space: pre;"><a id="L27"></a>        By default, no action is performed when right clicking.</span><br />
       <span style="white-space: pre;"><a id="L28"></a></span><br />
-      <span style="white-space: pre;"><a id="L29"></a>        """</span><br />
+      <span style="white-space: pre;"><a id="L29"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L30"></a>        super().perform(options)</span><br />
     </div>
   </body>

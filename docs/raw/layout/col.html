@@ -20,21 +20,21 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Col object represented in layout."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Col object represented in layout.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>from bui.layout.attr import Attr</span><br />
       <span style="white-space: pre;"><a id="L4"></a>from bui.layout.component import Component</span><br />
       <span style="white-space: pre;"><a id="L5"></a></span><br />
       <span style="white-space: pre;"><a id="L6"></a>class Col(Component):</span><br />
       <span style="white-space: pre;"><a id="L7"></a></span><br />
-      <span style="white-space: pre;"><a id="L8"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L8"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L9"></a>    Create a column inside of a table tag.</span><br />
       <span style="white-space: pre;"><a id="L10"></a></span><br />
       <span style="white-space: pre;"><a id="L11"></a>    A column is a layout component of a [table](./table.md) tag.  A</span><br />
       <span style="white-space: pre;"><a id="L12"></a>    table should have at least two columns.  Columns are defined in the</span><br />
       <span style="white-space: pre;"><a id="L13"></a>    layout, contrary to the data (that is, the table rows).</span><br />
       <span style="white-space: pre;"><a id="L14"></a>    ```</span><br />
-      <span style="white-space: pre;"><a id="L15"></a>    &lt;window title="Table demonstration"&gt;</span><br />
+      <span style="white-space: pre;"><a id="L15"></a>    &lt;window title=&quot;Table demonstration&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L16"></a>      &lt;table id=products x=2 y=4&gt;</span><br />
       <span style="white-space: pre;"><a id="L17"></a>        &lt;col&gt;Name&lt;/col&gt;</span><br />
       <span style="white-space: pre;"><a id="L18"></a>        &lt;col&gt;Quantity&lt;/col&gt;</span><br />
@@ -68,28 +68,28 @@
       <span style="white-space: pre;"><a id="L46"></a></span><br />
       <span style="white-space: pre;"><a id="L47"></a>        &lt;col&gt;Quantity&lt;/col&gt;</span><br />
       <span style="white-space: pre;"><a id="L48"></a></span><br />
-      <span style="white-space: pre;"><a id="L49"></a>    Will result in a column of ID "quantity" (lowercase).</span><br />
+      <span style="white-space: pre;"><a id="L49"></a>    Will result in a column of ID &quot;quantity&quot; (lowercase).</span><br />
       <span style="white-space: pre;"><a id="L50"></a></span><br />
       <span style="white-space: pre;"><a id="L51"></a>    ## Data</span><br />
       <span style="white-space: pre;"><a id="L52"></a></span><br />
-      <span style="white-space: pre;"><a id="L53"></a>    The column isn't a proper widget by itself.  It exists in the layout,</span><br />
-      <span style="white-space: pre;"><a id="L54"></a>    but isn't linked to a generic widget.  Interacting on a single column</span><br />
+      <span style="white-space: pre;"><a id="L53"></a>    The column isn&#x27;t a proper widget by itself.  It exists in the layout,</span><br />
+      <span style="white-space: pre;"><a id="L54"></a>    but isn&#x27;t linked to a generic widget.  Interacting on a single column</span><br />
       <span style="white-space: pre;"><a id="L55"></a>    is not possible with this object, rather, see the</span><br />
       <span style="white-space: pre;"><a id="L56"></a>    [table tag](./table.md).  Therefore, it has no attribute or methof</span><br />
       <span style="white-space: pre;"><a id="L57"></a>    of its own.</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
       <span style="white-space: pre;"><a id="L59"></a>    ## Controls</span><br />
       <span style="white-space: pre;"><a id="L60"></a></span><br />
-      <span style="white-space: pre;"><a id="L61"></a>    The column isn't a proper widget by itself.  It exists in the layout,</span><br />
-      <span style="white-space: pre;"><a id="L62"></a>    but isn't linked to a generic widget.  Interacting on a single column</span><br />
+      <span style="white-space: pre;"><a id="L61"></a>    The column isn&#x27;t a proper widget by itself.  It exists in the layout,</span><br />
+      <span style="white-space: pre;"><a id="L62"></a>    but isn&#x27;t linked to a generic widget.  Interacting on a single column</span><br />
       <span style="white-space: pre;"><a id="L63"></a>    is not possible with this object, rather, see the</span><br />
       <span style="white-space: pre;"><a id="L64"></a>    [table tag](./table.md).  Therefore, it has no control of its own.</span><br />
       <span style="white-space: pre;"><a id="L65"></a></span><br />
-      <span style="white-space: pre;"><a id="L66"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L66"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L67"></a></span><br />
-      <span style="white-space: pre;"><a id="L68"></a>    tag_name = "col"</span><br />
+      <span style="white-space: pre;"><a id="L68"></a>    tag_name = &quot;col&quot;</span><br />
       <span style="white-space: pre;"><a id="L69"></a>    attrs = (</span><br />
-      <span style="white-space: pre;"><a id="L70"></a>        Attr("id", help="The widget identifier", default=""),</span><br />
+      <span style="white-space: pre;"><a id="L70"></a>        Attr(&quot;id&quot;, help=&quot;The widget identifier&quot;, default=&quot;&quot;),</span><br />
       <span style="white-space: pre;"><a id="L71"></a>    )</span><br />
       <span style="white-space: pre;"><a id="L72"></a>    must_have_data = True</span><br />
       <span style="white-space: pre;"><a id="L73"></a>    has_widget = False</span><br />
@@ -99,7 +99,7 @@
       <span style="white-space: pre;"><a id="L77"></a>        self.id = id</span><br />
       <span style="white-space: pre;"><a id="L78"></a></span><br />
       <span style="white-space: pre;"><a id="L79"></a>    def complete(self):</span><br />
-      <span style="white-space: pre;"><a id="L80"></a>        """Complete the tag, when all the layout has been set."""</span><br />
+      <span style="white-space: pre;"><a id="L80"></a>        &quot;&quot;&quot;Complete the tag, when all the layout has been set.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L81"></a>        if not self.id:</span><br />
       <span style="white-space: pre;"><a id="L82"></a>            self.id = self.deduce_id(self.data)</span><br />
     </div>

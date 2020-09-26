@@ -40,7 +40,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/dialog.html#L136)
+[See the source code](../raw/widget/dialog.html#L137)
 
 Return the screen size that can be used, in pixels.
 
@@ -58,7 +58,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L251)
+[See the source code](../raw/widget/dialog.html#L255)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -85,7 +85,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L391)
+[See the source code](../raw/widget/dialog.html#L394)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -110,7 +110,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L377)
+[See the source code](../raw/widget/dialog.html#L378)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -129,7 +129,7 @@ Args:
 
 `parse_layout(Window, tag_name='window', **kwargs)`
 
-[See the source code](../raw/widget/dialog.html#L152)
+[See the source code](../raw/widget/dialog.html#L153)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -146,7 +146,7 @@ Raises:
 
 `pop_alert(self, title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')`
 
-[See the source code](../raw/widget/dialog.html#L301)
+[See the source code](../raw/widget/dialog.html#L305)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -183,7 +183,7 @@ by default), or contain a string of the button label to display.
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]], **kwargs)`
 
-[See the source code](../raw/widget/dialog.html#L340)
+[See the source code](../raw/widget/dialog.html#L344)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -205,7 +205,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L366)
+[See the source code](../raw/widget/dialog.html#L367)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -221,7 +221,7 @@ Args:
 
 `pop_open_file(self, message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)`
 
-[See the source code](../raw/widget/dialog.html#L259)
+[See the source code](../raw/widget/dialog.html#L263)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -302,7 +302,7 @@ Args:
 
 `stop_control(self)`
 
-[See the source code](../raw/widget/dialog.html#L255)
+[See the source code](../raw/widget/dialog.html#L259)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

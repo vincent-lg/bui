@@ -20,7 +20,7 @@
   </head>
   <body>
     <div>
-      <span style="white-space: pre;"><a id="L1"></a>"""Type control, triggered when a key is typeed by the user."""</span><br />
+      <span style="white-space: pre;"><a id="L1"></a>&quot;&quot;&quot;Type control, triggered when a key is typeed by the user.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L2"></a></span><br />
       <span style="white-space: pre;"><a id="L3"></a>import re</span><br />
       <span style="white-space: pre;"><a id="L4"></a></span><br />
@@ -29,7 +29,7 @@
       <span style="white-space: pre;"><a id="L7"></a></span><br />
       <span style="white-space: pre;"><a id="L8"></a>class Type(Control):</span><br />
       <span style="white-space: pre;"><a id="L9"></a></span><br />
-      <span style="white-space: pre;"><a id="L10"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L10"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L11"></a>    When the user types on her keyboard.</span><br />
       <span style="white-space: pre;"><a id="L12"></a></span><br />
       <span style="white-space: pre;"><a id="L13"></a>    This control is sent when the user presses on a key (or on</span><br />
@@ -39,17 +39,17 @@
       <span style="white-space: pre;"><a id="L17"></a>    Caps Lock key.</span><br />
       <span style="white-space: pre;"><a id="L18"></a></span><br />
       <span style="white-space: pre;"><a id="L19"></a>    Assuming, for instance, the user is on an international QWERTY</span><br />
-      <span style="white-space: pre;"><a id="L20"></a>    keyboard.  If she presses the ' key, this control will not be</span><br />
-      <span style="white-space: pre;"><a id="L21"></a>    fired (' being a dead key on international QWERTY).  But if the user</span><br />
-      <span style="white-space: pre;"><a id="L22"></a>    then presses on 'e', the "type" control will be sent with the typed</span><br />
-      <span style="white-space: pre;"><a id="L23"></a>    key set to 'é'.</span><br />
+      <span style="white-space: pre;"><a id="L20"></a>    keyboard.  If she presses the &#x27; key, this control will not be</span><br />
+      <span style="white-space: pre;"><a id="L21"></a>    fired (&#x27; being a dead key on international QWERTY).  But if the user</span><br />
+      <span style="white-space: pre;"><a id="L22"></a>    then presses on &#x27;e&#x27;, the &quot;type&quot; control will be sent with the typed</span><br />
+      <span style="white-space: pre;"><a id="L23"></a>    key set to &#x27;é&#x27;.</span><br />
       <span style="white-space: pre;"><a id="L24"></a></span><br />
       <span style="white-space: pre;"><a id="L25"></a>    In other words, this control is more useful to watch what user</span><br />
       <span style="white-space: pre;"><a id="L26"></a>    are typing rather than specific key presses on their keyboard.</span><br />
       <span style="white-space: pre;"><a id="L27"></a>    A type control is not sent each time a key is being pressed (as</span><br />
       <span style="white-space: pre;"><a id="L28"></a>    the example above demonstrated).  Not all key presses will result</span><br />
       <span style="white-space: pre;"><a id="L29"></a>    in a character being typed (arrow keys, for instance, will not).</span><br />
-      <span style="white-space: pre;"><a id="L30"></a>    If you don't know which control to watch, read:</span><br />
+      <span style="white-space: pre;"><a id="L30"></a>    If you don&#x27;t know which control to watch, read:</span><br />
       <span style="white-space: pre;"><a id="L31"></a>    [choose between press and type](../question/control/press-or-type.md).</span><br />
       <span style="white-space: pre;"><a id="L32"></a></span><br />
       <span style="white-space: pre;"><a id="L33"></a>    ## Usage</span><br />
@@ -62,16 +62,16 @@
       <span style="white-space: pre;"><a id="L40"></a>        def on_type_I(self, ...):</span><br />
       <span style="white-space: pre;"><a id="L41"></a></span><br />
       <span style="white-space: pre;"><a id="L42"></a>    Notice: this method will only be called if the user types an uppercase</span><br />
-      <span style="white-space: pre;"><a id="L43"></a>    'i', that is, if she types the Shift key then the 'i' key, or the</span><br />
-      <span style="white-space: pre;"><a id="L44"></a>    Caps Lock key and the 'i' key then.  Contrary to [press](press.md),</span><br />
+      <span style="white-space: pre;"><a id="L43"></a>    &#x27;i&#x27;, that is, if she types the Shift key then the &#x27;i&#x27; key, or the</span><br />
+      <span style="white-space: pre;"><a id="L44"></a>    Caps Lock key and the &#x27;i&#x27; key then.  Contrary to [press](press.md),</span><br />
       <span style="white-space: pre;"><a id="L45"></a>    character names in the method are case-sensitive.</span><br />
       <span style="white-space: pre;"><a id="L46"></a></span><br />
       <span style="white-space: pre;"><a id="L47"></a>    You can use this control on a widget too.  Assuming you want to react</span><br />
-      <span style="white-space: pre;"><a id="L48"></a>    if the user types a '8' while focusing on a list of ID "choices":</span><br />
+      <span style="white-space: pre;"><a id="L48"></a>    if the user types a &#x27;8&#x27; while focusing on a list of ID &quot;choices&quot;:</span><br />
       <span style="white-space: pre;"><a id="L49"></a></span><br />
       <span style="white-space: pre;"><a id="L50"></a>        def on_type_8_in_choices(self, ...):</span><br />
       <span style="white-space: pre;"><a id="L51"></a></span><br />
-      <span style="white-space: pre;"><a id="L52"></a>    &gt; Again, notice that contrary to [press](press.md), typing a '8' is</span><br />
+      <span style="white-space: pre;"><a id="L52"></a>    &gt; Again, notice that contrary to [press](press.md), typing a &#x27;8&#x27; is</span><br />
       <span style="white-space: pre;"><a id="L53"></a>      not equivalent on all keyboard layouts.  Some will need to press she</span><br />
       <span style="white-space: pre;"><a id="L54"></a>      Shift key to do it, some will not, some might access the digit with</span><br />
       <span style="white-space: pre;"><a id="L55"></a>      other modifier keys.  And of course, this method will also be called</span><br />
@@ -90,14 +90,14 @@
       <span style="white-space: pre;"><a id="L68"></a>            # sub-control</span><br />
       <span style="white-space: pre;"><a id="L69"></a>            ...</span><br />
       <span style="white-space: pre;"><a id="L70"></a></span><br />
-      <span style="white-space: pre;"><a id="L71"></a>    The second method will be called if the user types a 'b'.  The</span><br />
-      <span style="white-space: pre;"><a id="L72"></a>    first method will be called if the user types anything but a 'b'.</span><br />
+      <span style="white-space: pre;"><a id="L71"></a>    The second method will be called if the user types a &#x27;b&#x27;.  The</span><br />
+      <span style="white-space: pre;"><a id="L72"></a>    first method will be called if the user types anything but a &#x27;b&#x27;.</span><br />
       <span style="white-space: pre;"><a id="L73"></a></span><br />
       <span style="white-space: pre;"><a id="L74"></a>    ### What keys to intercept?</span><br />
       <span style="white-space: pre;"><a id="L75"></a></span><br />
       <span style="white-space: pre;"><a id="L76"></a>    As pointed out above, not all keys will lead to a character being</span><br />
       <span style="white-space: pre;"><a id="L77"></a>    typed.  You can write unicode characters directly in your</span><br />
-      <span style="white-space: pre;"><a id="L78"></a>    method name, thanks to Python 3's unicode support in</span><br />
+      <span style="white-space: pre;"><a id="L78"></a>    method name, thanks to Python 3&#x27;s unicode support in</span><br />
       <span style="white-space: pre;"><a id="L79"></a>    [identifiers](https://www.python.org/dev/peps/pep-3131/).</span><br />
       <span style="white-space: pre;"><a id="L80"></a></span><br />
       <span style="white-space: pre;"><a id="L81"></a>        def on_type_é(self):</span><br />
@@ -120,7 +120,7 @@
       <span style="white-space: pre;"><a id="L98"></a>    the `unicode` keyword argument in your control method:</span><br />
       <span style="white-space: pre;"><a id="L99"></a></span><br />
       <span style="white-space: pre;"><a id="L100"></a>        def on_type(self, unicode):</span><br />
-      <span style="white-space: pre;"><a id="L101"></a>            if unicode == "€":</span><br />
+      <span style="white-space: pre;"><a id="L101"></a>            if unicode == &quot;€&quot;:</span><br />
       <span style="white-space: pre;"><a id="L102"></a>                ...</span><br />
       <span style="white-space: pre;"><a id="L103"></a></span><br />
       <span style="white-space: pre;"><a id="L104"></a>    ## Control attributes</span><br />
@@ -139,23 +139,24 @@
       <span style="white-space: pre;"><a id="L117"></a>    method signature which will always contain the control object.</span><br />
       <span style="white-space: pre;"><a id="L118"></a></span><br />
       <span style="white-space: pre;"><a id="L119"></a>        def on_type(self, control):</span><br />
-      <span style="white-space: pre;"><a id="L120"></a>            print(f"The user will type {control.unicode}.")</span><br />
+      <span style="white-space: pre;"><a id="L120"></a>            print(f&quot;The user will type {control.unicode}.&quot;)</span><br />
       <span style="white-space: pre;"><a id="L121"></a></span><br />
-      <span style="white-space: pre;"><a id="L122"></a>    """</span><br />
+      <span style="white-space: pre;"><a id="L122"></a>    &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L123"></a></span><br />
-      <span style="white-space: pre;"><a id="L124"></a>    name = "type"</span><br />
+      <span style="white-space: pre;"><a id="L124"></a>    name = &quot;type&quot;</span><br />
       <span style="white-space: pre;"><a id="L125"></a>    widgets = {</span><br />
-      <span style="white-space: pre;"><a id="L126"></a>            "window": "The user typees on her keyboard anywhere in the window",</span><br />
+      <span style="white-space: pre;"><a id="L126"></a>            &quot;window&quot;: &quot;The user typees on her keyboard anywhere in the window&quot;,</span><br />
       <span style="white-space: pre;"><a id="L127"></a>    }</span><br />
       <span style="white-space: pre;"><a id="L128"></a></span><br />
       <span style="white-space: pre;"><a id="L129"></a>    has_sub_controls = True</span><br />
-      <span style="white-space: pre;"><a id="L130"></a>    pattern_for_window = fr"^on_type_(?P&lt;unicode&gt;.)$"</span><br />
-      <span style="white-space: pre;"><a id="L131"></a>    pattern_for_widgets = fr"^on_type_(?P&lt;unicode&gt;.)_in_{{id}}$"</span><br />
-      <span style="white-space: pre;"><a id="L132"></a>    options = ("unicode", )</span><br />
-      <span style="white-space: pre;"><a id="L133"></a></span><br />
-      <span style="white-space: pre;"><a id="L134"></a>    def __init__(self, widget, unicode):</span><br />
-      <span style="white-space: pre;"><a id="L135"></a>        super().__init__(widget)</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>        self.unicode = unicode</span><br />
+      <span style="white-space: pre;"><a id="L130"></a>    pattern_for_window = fr&quot;^on_type_(?P&lt;unicode&gt;.)$&quot;</span><br />
+      <span style="white-space: pre;"><a id="L131"></a>    name_for_widgets_without_options = &quot;on_{control}_in_{wid}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L132"></a>    pattern_for_widgets = fr&quot;^on_type_(?P&lt;unicode&gt;.)_in_{{id}}$&quot;</span><br />
+      <span style="white-space: pre;"><a id="L133"></a>    options = (&quot;unicode&quot;, )</span><br />
+      <span style="white-space: pre;"><a id="L134"></a></span><br />
+      <span style="white-space: pre;"><a id="L135"></a>    def __init__(self, widget, unicode):</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>        super().__init__(widget)</span><br />
+      <span style="white-space: pre;"><a id="L137"></a>        self.unicode = unicode</span><br />
     </div>
   </body>
 </html>
