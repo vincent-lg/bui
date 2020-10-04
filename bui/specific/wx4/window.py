@@ -262,7 +262,7 @@ class WX4Window(WXShared, SpecificWindow):
         style |= default_buttons[default]
         style |= wx.CENTRE
         parent = self.generic.window.specific.wx_parent
-        return wx.MessageBox(message, caption=title, style=style)
+        self.in_main_thread(wx.MessageBox, message, caption=title, style=style)
 
     def prepare_other_window(self, window):
         """Prepare another window."""

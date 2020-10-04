@@ -29,10 +29,8 @@ class WX4Dialog(WX4Window, SpecificDialog):
                 self.dlg_event.set())
 
     def close(self):
-        print("Destroying in sub-thread")
         self.in_main_thread(self.destroy)
 
     def destroy(self):
-        print("Destroying in main thread")
         self.wx_dialog.Destroy()
 
