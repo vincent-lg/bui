@@ -71,7 +71,7 @@ class SpecificWindow(SpecificWidget):
         pass
 
     @abstractmethod
-    def pop_dialog(self, dialog: SpecificWidget):
+    def pop_dialog(self, dialog: SpecificWidget, **kwargs):
         """Pop up a dialog."""
         pass
 

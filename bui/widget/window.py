@@ -202,8 +202,9 @@ class Window(Widget, metaclass=MetaWindow):
                 Generic = WIDGETS[leaf.tag_name]
 
             widget = Generic(leaf)
-            for key, value in kwargs.items():
-                setattr(widget, key, value)
+            if leaf is window_leaf:
+                for key, value in kwargs.items():
+                    setattr(widget, key, value)
 
             leaf.widget = widget
             widget.create_specific()
@@ -362,7 +363,7 @@ class Window(Widget, metaclass=MetaWindow):
             dialog = NewDialog
         assert issubclass(dialog, wg.dialog.Dialog)
         dialog.window = self
-        return await self.specific.pop_dialog(dialog)
+        return await self.specific.pop_dialog(dialog, **kwargs)
 
     def pop_menu(self, context_id: str):
         """
