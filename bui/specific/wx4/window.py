@@ -8,6 +8,10 @@ account for spanning that might occur.
 """
 
 import asyncio
+import traceback
+from queue import Queue, Empty
+import time
+import threading
 from typing import Dict, Union
 
 from pubsub import pub
@@ -216,7 +220,7 @@ class WX4Window(WXShared, SpecificWindow):
         """Pop a context menu, blocks until the menu is closed."""
         self.wx_frame.PopupMenu(context.wx_menu)
 
-    def pop_alert(self, title: str, message: str,
+    async def pop_alert(self, title: str, message: str,
             danger: str, buttons: Dict[str, Union[bool, str]],
             default: str):
         """
@@ -230,6 +234,16 @@ class WX4Window(WXShared, SpecificWindow):
             default (str): the default button for this dialog.
 
         """
+        queue = asyncio.Queue()
+        self.in_main_thread(self.wx_pop_alert, title, message, danger,
+                buttons, default, queue)
+        status = await queue.get()
+        return status
+
+    def wx_pop_alert(self, title: str, message: str,
+            danger: str, buttons: Dict[str, Union[bool, str]],
+            default: str, queue):
+        """Pop the alert in the main thread."""
         # Look for the icon
         icons = {
                 "info": wx.ICON_INFORMATION,
@@ -262,7 +276,36 @@ class WX4Window(WXShared, SpecificWindow):
         style |= default_buttons[default]
         style |= wx.CENTRE
         parent = self.generic.window.specific.wx_parent
-        self.in_main_thread(wx.MessageBox, message, caption=title, style=style)
+        dialog = wx.MessageDialog(parent, message, caption=title,
+                style=style)
+        ok = buttons.get("ok", False)
+        cancel = buttons.get("cancel", False)
+        yes = buttons.get("yes", False)
+        no = buttons.get("no", False)
+        if ok and cancel:
+            dialog.SetOKCancelLabels(ok, cancel)
+        elif isinstance(ok, str):
+            dialog.SetOKLabel(ok)
+        elif isinstance(yes, str) and isinstance(no, str) and isinstance(
+                cancel, str):
+            dialog.SetYesNoCancelLabels(yes, no, cancel)
+        elif isinstance(yes, str) and isinstance(no, str):
+            dialog.SetYesNoLabels(yes, no)
+
+        old_focus = parent.FindFocus()
+        res = dialog.ShowModal()
+        old_focus.SetFocus()
+        if res == wx.ID_OK:
+            WX_THREAD.loop.call_soon_threadsafe(queue.put_nowait, "ok")
+        elif res == wx.ID_CANCEL:
+            WX_THREAD.loop.call_soon_threadsafe(queue.put_nowait, "cancel")
+        elif res == wx.ID_YES:
+            WX_THREAD.loop.call_soon_threadsafe(queue.put_nowait, "yes")
+        elif res == wx.ID_NO:
+            WX_THREAD.loop.call_soon_threadsafe(queue.put_nowait, "no")
+        else:
+            WX_THREAD.loop.call_soon_threadsafe(queue.put_nowait, "unknown")
+
 
     def prepare_other_window(self, window):
         """Prepare another window."""

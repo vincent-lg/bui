@@ -303,7 +303,7 @@ class Window(Widget, metaclass=MetaWindow):
 
 
 
-    def pop_alert(self, title: str, message: str,
+    async def pop_alert(self, title: str, message: str,
             danger: Optional[str] = "error",
             ok: Optional[Union[bool, str]] = True,
             cancel: Optional[Union[bool, str]] = False,
@@ -316,7 +316,9 @@ class Window(Widget, metaclass=MetaWindow):
         Args:
             title (str): the dialog title.
             message (str): the message title, can be on several lines.
-            danger (str): the type of the dialog which will influence how noisy it is, what icon it displays and so on.  Possible values are:
+            danger (str): the type of the dialog which will influence
+                    how noisy it is, what icon it displays and so on.
+                    Possible values are:
                     "info": informative dialog, just to be polite.
                     "warning": warning message, danger increases.
                     "error": error message, probably can't go on.
@@ -328,7 +330,18 @@ class Window(Widget, metaclass=MetaWindow):
             default (str, optional): the name of the default button.
 
         The button can either be set to True (only ok is set to True
-        by default), or contain a string of the button label to display.
+        by default), or contain a string of the button label to display.  A button with False will not appear.  For isntance:
+
+            answer = await self.pop_alert(..., danger="question",
+                    ok="Go on anyway", cancel="Don't even try")
+            if answer == "ok":
+                # Go on
+
+        Returns:
+            clicked button (str): the clicked button as a string,
+                    either "ok", "cancel", "yes", "no".
+                    Even if a different label has been set for these
+                    buttons, the string identifiers do not change.
 
         """
         buttons = {}
@@ -339,7 +352,7 @@ class Window(Widget, metaclass=MetaWindow):
         if default not in buttons.keys():
             raise ValueError(f"{default!r} isn't in this alert box buttons")
 
-        self.specific.pop_alert(title=title, message=message,
+        return await self.specific.pop_alert(title=title, message=message,
                 danger=danger, buttons=buttons, default=default)
 
     async def pop_dialog(self, dialog: Union[str, Type['wg.dialog.Dialog']],
