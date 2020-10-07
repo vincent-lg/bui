@@ -134,7 +134,12 @@ class DownloadRow(AbcRow):
 
     """
 
-    columns = ("file", "status", "downloaded", "size")
+    columns = (
+            ("file", "File", False),
+            ("status", "Status", False),
+            ("downloaded", "Downloaded", False),
+            ("size", "Size", False),
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

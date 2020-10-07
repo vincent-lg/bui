@@ -23,7 +23,7 @@ To run this example:
 
 [Open raw](https://raw.githubusercontent.com/vincent-lg/bui/master/example/download.py) [Open in github](https://github.com/vincent-lg/bui/blob/master/example/download.py)
 
-## Source code (200 lines)
+## Source code (205 lines)
 
 ```python
 import asyncio
@@ -139,7 +139,12 @@ class DownloadRow(AbcRow):
 
     """
 
-    columns = ("file", "status", "downloaded", "size")
+    columns = (
+            ("file", "File", False),
+            ("status", "Status", False),
+            ("downloaded", "Downloaded", False),
+            ("size", "Size", False),
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

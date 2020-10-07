@@ -356,9 +356,94 @@ Viktor has B-, Magalie has B+, Ellis has B... in theory Ellis should be between 
 
 Turns out, sorting is very easy in a table and very much like what you're used, with the `list.sort` method or `sorted` function.  Python has a very powerful mechanism to sort, that would be a shame not to use it in BUI.
 
+## Hidden columns
+
+It often happens that we wish to add information to each row, but we don't wish for that information to be visible by the user.  The most common use case for this is a column with identifiers or slugs: we want to have this information in our rows, but we don't want this column to show to users.
+
+In this example, we would like to sort students by grade.  The problem is, their grade is represented by a letter.  Python doesn't really know how to sort that, save alphabetically.  One solution would be to add each grade as a number (say a percentage point).  We'll see another way to handle this situation later.
+
+First let's add our numeric grade column in our BUI file:
+
+```
+<window title="Student grades">
+  <table x=2 y=2 id=students>
+    <col>Name</col>
+    <col>Age</col>
+    <col>Grade</col>
+    <col hidden>Numeric</col>
+  </table>
+</window>
+```
+
+In this case, we've added a hidden column as a fourth column in the table: a hidden column is defined with the `<col>` tag as usual, but with the `hidden` attribute.
+
+If we modify only that part, we'll get an error when running our Python file.  We also need to add this information in each row:
+
+```python
+from bui import Window, start
+
+class StudentGrades(Window):
+
+    """Student grades, to show ways to manipulate a table widget."""
+
+    def on_init_students(self, widget):
+        """The 'students' table is ready to be displayed."""
+        widget.rows = (
+            ("Magalie", 14, "B+", 90),
+            ("Viktor", 15, "B-", 82),
+            ("Ellis", 13, "B", 85),
+            ("Arthur", 15, "A-", 92),
+        )
+
+
+start(StudentGrades)
+```
+
+Now, we can run this example:
+
+    python table.py -i
+
+Nothing different at first sight.
+
+But if you switch to the open Python console and try to see the rows:
+
+```
+>>> window["students"].rows
+[
+    <Row(name='Magalie', age=14, grade='B+', numeric=90)>,
+    <Row(name='Viktor', age=15, grade='B-', numeric=82)>,
+    <Row(name='Ellis', age=13, grade='B', numeric=85)>,
+    <Row(name='Arthur', age=15, grade='A-', numeric=92)>
+]
+>>>
+```
+
+Our hidden column is not displayed to the user, but it does appear in the row object.  We can modify it of course.  Most importantly, however, this solves an issue we hadn't been able to solve yet: how to sort students by grade?  We can do that now, using the "numeric" column:
+
+```
+>>> from operator import attrgetter
+>>> window["students"].sort(key=attrgetter("numeric"), reverse=True)
+>>> window["students"].rows
+[
+    <Row(name='Arthur', age=15, grade='A-', numeric=92)>,
+    <Row(name='Magalie', age=14, grade='B+', numeric=90)>,
+    <Row(name='Ellis', age=13, grade='B', numeric=85)>,
+    <Row(name='Viktor', age=15, grade='B-', numeric=82)>
+]
+>>>
+```
+
+This time, we can safely sort through the grades, since they are just numeric values.
+
+> Are hidden columns supposed to be at the end of our row?
+
+No, hidden columns can be anywhere in the table row.  Identifiers tend to be first, for instance.  That's not a problem for BUI, it can easily find out what to actually display to the user and what to skip when modified.
+
+The problem with this approach in our particular example: we need to set the numeric grade manually.  It's not so bad with only 4 students, but with a lot of them, it might be best to do it automatically.  So we'll now see how to do that.
+
 ## Customize the row class
 
-Let's work with the use case just explained in the previous section: we have assigned letter grades to students.  But we would like to sort them in a logical order, according to their grade value.  An easy option would be to add a fifth column, say, "numeric grade" which reflects the letter grade, but gives it a clear integer that we can use while sorting.  Problem is, we don't want to display this fifth column in our table: letter grades is what should be displayed, not numbers.
+Let's work with the use case just explained in the previous section: we have assigned letter grades to students.  But we would like to sort them in a logical order, according to their grade value.  The proposed solution in the previous section adds a hidden column with the numeric grade, but has the downside of forcing the developer to add a number matching each grade manually.  This can be fine at times, but it sure can be improved.
 
 There are different ways to solve this problem, but probably the best would be to extend the row class itself: by defining a new row class, we could add an extra information for each row but make sure this information isn't displayed in the table.  The numeric grade, in this case, will be present, but will not appear in the table.
 

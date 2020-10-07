@@ -58,7 +58,7 @@ to be somewhat narrower than the screen resolution.
 
 `close(self)`
 
-[See the source code](../raw/widget/dialog.html#L255)
+[See the source code](../raw/widget/dialog.html#L256)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -85,7 +85,7 @@ raise no exception.
 
 `handle_close(self, control)`
 
-[See the source code](../raw/widget/dialog.html#L394)
+[See the source code](../raw/widget/dialog.html#L408)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -110,7 +110,7 @@ Mark layout in the window.
 
 `open_window(self, window: 'Window', child=False)`
 
-[See the source code](../raw/widget/dialog.html#L378)
+[See the source code](../raw/widget/dialog.html#L392)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -146,7 +146,7 @@ Raises:
 
 `pop_alert(self, title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')`
 
-[See the source code](../raw/widget/dialog.html#L305)
+[See the source code](../raw/widget/dialog.html#L306)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -165,7 +165,9 @@ Display a default message box for inforiation or errors.
 Args:
     title (str): the dialog title.
     message (str): the message title, can be on several lines.
-    danger (str): the type of the dialog which will influence how noisy it is, what icon it displays and so on.  Possible values are:
+    danger (str): the type of the dialog which will influence
+            how noisy it is, what icon it displays and so on.
+            Possible values are:
             "info": informative dialog, just to be polite.
             "warning": warning message, danger increases.
             "error": error message, probably can't go on.
@@ -177,13 +179,24 @@ Args:
     default (str, optional): the name of the default button.
 
 The button can either be set to True (only ok is set to True
-by default), or contain a string of the button label to display.
+by default), or contain a string of the button label to display.  A button with False will not appear.  For isntance:
+
+    answer = await self.pop_alert(..., danger="question",
+            ok="Go on anyway", cancel="Don't even try")
+    if answer == "ok":
+        # Go on
+
+Returns:
+    clicked button (str): the clicked button as a string,
+            either "ok", "cancel", "yes", "no".
+            Even if a different label has been set for these
+            buttons, the string identifiers do not change.
 
 ### pop_dialog
 
 `pop_dialog(self, dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]], **kwargs)`
 
-[See the source code](../raw/widget/dialog.html#L344)
+[See the source code](../raw/widget/dialog.html#L358)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -205,7 +218,7 @@ Returns:
 
 `pop_menu(self, context_id: str)`
 
-[See the source code](../raw/widget/dialog.html#L367)
+[See the source code](../raw/widget/dialog.html#L381)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -221,7 +234,7 @@ Args:
 
 `pop_open_file(self, message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)`
 
-[See the source code](../raw/widget/dialog.html#L263)
+[See the source code](../raw/widget/dialog.html#L264)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -302,7 +315,7 @@ Args:
 
 `stop_control(self)`
 
-[See the source code](../raw/widget/dialog.html#L259)
+[See the source code](../raw/widget/dialog.html#L260)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

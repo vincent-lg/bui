@@ -1,4 +1,4 @@
-# Table in [widget/table:144](../raw/widget/table.html#L144)
+# Table in [widget/table:158](../raw/widget/table.html#L158)
 
 The generic table widget.
 
@@ -40,7 +40,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L195)
+[See the source code](../raw/widget/table.html#L209)
 
 Return a tuple of the valid row classes for this widget.
 
@@ -50,13 +50,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L249)
+[See the source code](../raw/widget/table.html#L263)
 
 Return the table rows.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L254)
+[See the source code](../raw/widget/table.html#L268)
 
 Modify the table rows.
 
@@ -71,13 +71,13 @@ This property can get and be set.
 
 #### Get
 
-[See the source code](../raw/widget/table.html#L286)
+[See the source code](../raw/widget/table.html#L300)
 
 Return the currently selected row.
 
 #### Set
 
-[See the source code](../raw/widget/table.html#L296)
+[See the source code](../raw/widget/table.html#L310)
 
 Select the given row or index.
 
@@ -90,7 +90,7 @@ Args:
 
 `add_row(self, *args, **kwargs)`
 
-[See the source code](../raw/widget/table.html#L345)
+[See the source code](../raw/widget/table.html#L359)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -131,7 +131,7 @@ raise no exception.
 
 `remove_row(self, row: Union[int, bui.widget.table.AbcRow, NoneType])`
 
-[See the source code](../raw/widget/table.html#L384)
+[See the source code](../raw/widget/table.html#L398)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -180,7 +180,7 @@ Args:
 
 `sort(self, key: Callable = None, reverse: bool = False)`
 
-[See the source code](../raw/widget/table.html#L406)
+[See the source code](../raw/widget/table.html#L420)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -206,7 +206,7 @@ Example:
 
 `update_row(self, row)`
 
-[See the source code](../raw/widget/table.html#L366)
+[See the source code](../raw/widget/table.html#L380)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |

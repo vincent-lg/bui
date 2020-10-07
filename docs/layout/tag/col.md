@@ -5,6 +5,7 @@ Create a column inside of a table tag.
 A column is a layout component of a [table](./table.md) tag.  A
 table should have at least two columns.  Columns are defined in the
 layout, contrary to the data (that is, the table rows).
+
 ```
 <window title="Table demonstration">
   <table id=products x=2 y=4>
@@ -15,7 +16,7 @@ layout, contrary to the data (that is, the table rows).
 </window>
 ```
 
-Using the `<table>` landmark creates an empty table, which will cause
+Using the `<table>` tag creates an empty table, which will cause
 an error.  A table must at least have two columns (if one, use
 a simple [list](./list.html).  Use the `<col>` tag inside of the
 `<table>` to create a column in the table.
@@ -25,6 +26,7 @@ a simple [list](./list.html).  Use the `<col>` tag inside of the
 | Name         | Required | Description              | Example     |
 | ------------ | -------- | ------------------------ | ----------- |
 | `id` | Yes | The column identifier (ID). If not set, use the name specified as data of the `<col>` tag. | `<col id=name>` |
+| `hidden` | No | If present, this column will not appear to the user.  This can be useful to store identifiers or data to be accessed by the developer, but not visible to the end user. | `<col hidden>` |
 
 See also the [table](./table.md) tag to set the table in the layout.
 
