@@ -18,8 +18,11 @@ class WX4Table(WXShared, SpecificTable):
         self.wx_add = self.wx_obj = self.wx_table = wx.ListCtrl(
                 window.wx_parent, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
 
-        for i, (_, name) in enumerate(self.generic.cols):
-            self.wx_table.InsertColumn(i, name)
+        num = 0
+        for i, (_, name, hidden) in enumerate(self.generic.cols):
+            if not hidden:
+                self.wx_table.InsertColumn(num, name)
+                num += 1
         window.add_widget(self)
         self.watch_keyboard(self.wx_table)
         self.wx_table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._OnSelected)
@@ -41,13 +44,15 @@ class WX4Table(WXShared, SpecificTable):
         index = row._index
         if index == num_items:
             # Append the row
-            self.in_main_thread(self.wx_table.Append, [str(cell) for cell in row])
+            self.in_main_thread(self.wx_table.Append, [str(cell)
+                    for cell in row._visible])
             row = self.generic.factory(index, *row)
             row._should_update = False
             self._wx_rows.append(row)
         else:
             old = self._wx_rows[index]
-            for i, (new_value, old_value) in enumerate(zip(row, old)):
+            for i, (new_value, old_value) in enumerate(
+                    zip(row._visible, old._visible)):
                 if new_value != old_value:
                     self.in_main_thread(self.wx_table.SetItem, index, i, str(new_value))
                     old[i] = new_value

@@ -34,12 +34,13 @@ class AbcRow:
         self._cols = {}
         self._should_update = True
         used_args = 0
-        for col, value in zip(self.columns, args):
+        ids = [tup[0] for tup in type(self).columns]
+        for col, value in zip(ids, args):
             self._update(col, value)
             self._cols[col] = value
             used_args += 1
 
-        for col in self.columns:
+        for col in ids:
             if col in kwargs:
                 if col in self._cols:
                     arg = self._cols[col]
@@ -54,8 +55,8 @@ class AbcRow:
                     self._update(col, value)
                     self._cols[col] = value
 
-        if not all(key in self._cols.keys() for key in self.columns):
-            forgotten = [key for key in self.columns if key not in self._cols]
+        if not all(key in self._cols.keys() for key in ids):
+            forgotten = [key for key in self.columns if key not in ids]
             raise ValueError(f"not all columns were specified: missing "
                     f"{', '.join(forgotten)}")
 
@@ -64,8 +65,8 @@ class AbcRow:
             unused = [str(arg) for arg in unused]
             raise ValueError(f"too many position arguments: {', '.join(unused)}")
 
-        if any(key not in self.columns for key in kwargs.keys()):
-            unused = [key for key in kwargs.keys() if key not in self.columns]
+        if any(key not in ids for key in kwargs.keys()):
+            unused = [key for key in kwargs.keys() if key not in ids]
             raise ValueError(f"unused keyword arguments: {', '.join(unused)}")
 
     @property
@@ -82,6 +83,19 @@ class AbcRow:
 
     def __iter__(self):
         return iter(self._cols.values())
+
+    @property
+    def _visible(self):
+        """Return only the visible columns."""
+        visible = []
+        for id, _, hidden in type(self).columns:
+            if hidden:
+                continue
+
+            value = self._cols[id]
+            visible.append(value)
+
+        return tuple(visible)
 
     def __getattr__(self, attr):
         cols = object.__getattribute__(self, "_cols")
@@ -311,7 +325,7 @@ class Table(Widget):
         """Widget initialization."""
         for tag in self.leaf.children:
             if tag.tag_name == "col":
-                self.cols.append((tag.id, tag.data))
+                self.cols.append((tag.id, tag.data, tag.hidden))
 
         if len(self.cols) < 2:
             raise ValueError("a table must have at least two columns.  "
@@ -436,6 +450,6 @@ def build_factory(widget, cols):
     """Build a factory (dynamic class) for the specified columns."""
     factory = type("Row", (AbcRow, ), {
             "widget": widget,
-            "columns": [tup[0] for tup in cols],
+            "columns": tuple(cols),
     })
     return factory

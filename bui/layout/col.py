@@ -68,13 +68,16 @@ class Col(Component):
     tag_name = "col"
     attrs = (
         Attr("id", help="The widget identifier", default=""),
+        Attr("hidden", help="The column is hidden to the user",
+                default=False, if_present=True),
     )
     must_have_data = True
     has_widget = False
 
-    def __init__(self, layout, parent, id):
+    def __init__(self, layout, parent, id, hidden=False):
         super().__init__(layout, parent)
         self.id = id
+        self.hidden = hidden
 
     def complete(self):
         """Complete the tag, when all the layout has been set."""
