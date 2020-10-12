@@ -120,7 +120,7 @@ class List(Widget):
                 label = str(label)
             else:
                 id = i
-                choice = str(choice)
+                label = str(choice)
 
             new_choices.append(label)
             ids[id] = i
