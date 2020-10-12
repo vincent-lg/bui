@@ -42,12 +42,12 @@ class WX4Text(WXShared, SpecificText):
                 pos = len(smaller)
                 off_pos = pos + smaller.count("\n") * (self._nl_offset - 1)
 
-            self.in_main_thread(self.wx_text.Remove, off_pos, self.wx_text.GetLastPosition())
-            to_add = value[pos:]
-            if to_add:
-                self.in_main_thread(self.wx_text.AppendText, to_add)
+            start = off_pos
+            value = value[pos:]
         else:
-            self.in_main_thread(self.wx_text.SetValue, value)
+            start = None
+
+        self.in_main_thread(self.wx_SetValue, value, start)
 
     @property
     def enabled(self):
@@ -144,7 +144,6 @@ class WX4Text(WXShared, SpecificText):
             else:
                 offset_pos = position
                 col = position
-
             cursor = self.generic.cursor
             cursor._pos = offset_pos
             cursor._lineno = lineno
@@ -157,6 +156,33 @@ class WX4Text(WXShared, SpecificText):
     def OnUpdateCursor(self, e):
         self.generic.schedule(self.AsyncUpdateCursor())
         e.Skip()
+
+    def wx_SetValue(self, text, start=None):
+        """
+        Update the text value.
+
+        Args:
+            text (str): the text to set as value.
+            start (optional, int): the starting index.  If not set,
+                    replace everything.  If set, let whatever
+                    was before the index and replace whatever
+                    comes after.
+
+        Note:
+            If specified, the start index should be aware of the
+            offset imposed by wxPython on Windows, that is, new lines
+            (\n) might need two characters instead of one.  This
+            method will apply the start with no consideration on this
+            offset, whatsoever.
+
+        This method should be called in the main thread.
+
+        """
+        if start is None:
+            self.wx_text.SetValue(text)
+        else:
+            self.wx_text.Remove(start, self.wx_text.GetLastPosition())
+            self.wx_text.AppendText(text)
 
     def move(self, position: int):
         """Move the cursor to the given position.
