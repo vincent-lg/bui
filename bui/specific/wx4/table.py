@@ -1,5 +1,6 @@
 """The wxPython implementation of a BUI table widget."""
 
+import threading
 from typing import Callable, List
 import wx
 
@@ -13,7 +14,10 @@ class WX4Table(WXShared, SpecificTable):
     """Wx-specific table widget."""
 
     def _init(self):
+        self.lock = threading.RLock()
         self._wx_rows = []
+        self.wx_selected = -1
+        self.wx_old_selected = self.wx_selected
         window = self.parent
         self.wx_add = self.wx_obj = self.wx_table = wx.ListCtrl(
                 window.wx_parent, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
@@ -72,14 +76,18 @@ class WX4Table(WXShared, SpecificTable):
             rows (list of Row): the collection of rows to update.
 
         """
-        for row in rows:
-            self.update_row(row)
-        self.delete_additional()
+        with self.lock:
+            for row in rows:
+                self.update_row(row)
+            self.delete_additional()
 
-        # Select the first item if nothing is selected
-        if len(self._wx_rows) > 0 and self._wx_selected < 0:
-            self.in_main_thread(self.wx_table.Select, 0)
-            self.in_main_thread(self.wx_table.Focus, 0)
+            # Select the first item if nothing is selected
+            if len(self._wx_rows) > 0 and self._wx_selected < 0:
+                self.in_main_thread(self.wx_table.Select, 0)
+                self.in_main_thread(self.wx_table.Focus, 0)
+
+            self.wx_selected = 0
+            self.wx_old_selected = self.wx_selected
 
     def remove_row(self, row: AbcRow):
         """
@@ -108,8 +116,11 @@ class WX4Table(WXShared, SpecificTable):
 
     def select_row(self, row: int):
         """Select the specified row."""
-        self.in_main_thread(self.wx_table.Select, row)
-        self.in_main_thread(self.wx_table.Focus, row)
+        with self.lock:
+            self.in_main_thread(self.wx_table.Select, row)
+            self.in_main_thread(self.wx_table.Focus, row)
+            self.wx_selected = row
+            self.wx_old_selected = self.wx_selected
 
     def sort(self, key: Callable = None, reverse=False):
         """Sort the table."""
@@ -119,4 +130,26 @@ class WX4Table(WXShared, SpecificTable):
 
     def _OnSelected(self, e):
         """An item has been selected."""
-        self.generic._selected = e.GetIndex()
+        with self.lock:
+            indexes = [e.GetIndex()]
+            selected = tuple(self.generic._rows[index] for index in indexes)
+            self.wx_selected = indexes[0] if indexes else -1
+            selected = selected[0] if selected else None
+
+        # Skip the event, no matter what
+        e.Skip()
+
+        # Call the control asynchronously.  The control can be stopped.
+        self.process_control(None, "select", {"selected": selected})
+
+    def process_control_in_thread(self, event, control, options):
+        """Sub-classing, processing the control in the async thread."""
+        result = super().process_control_in_thread(event, control, options)
+        if control == "select":
+            selected = options["selected"]
+            if result:
+                self.generic._selected = selected.index
+            else:
+                self.select_row(self.wx_old_selected)
+
+        return result
