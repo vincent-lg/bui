@@ -200,7 +200,7 @@ class WX4Text(WXShared, SpecificText):
                 cursor._pos = i
                 cursor._lineno = lineno
                 cursor._col = col
-                self.wx_text.SetInsertionPoint(offset_pos)
+                self.in_main_thread(self.wx_text.SetInsertionPoint, offset_pos)
                 break
 
             if char == "\n":
@@ -222,7 +222,7 @@ class WX4Text(WXShared, SpecificText):
             cursor._pos = len(text)
             cursor._lineno = lineno
             cursor._col = col
-            self.wx_text.SetInsertionPoint(self.wx_text.GetLastPosition())
+            self.in_main_thread(self.wx_text.SetInsertionPoint, 0)
 
     def vertical_move(self, lineno: int, col: int):
         """
