@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bui",
-    version="0.2.8",
+    version="0.2.9",
     author="Vincent Le Goff",
     author_email="vincent.legoff.srs@gmail.com",
     description="The Blind User Interface: the interface you can design with your eyes closed.",
