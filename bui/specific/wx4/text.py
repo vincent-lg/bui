@@ -3,10 +3,14 @@
 from itertools import count
 
 import wx
+import wx.lib.newevent
 
 from bui.specific.base import *
 from bui.specific.base.text import SpecificText
 from bui.specific.wx4.shared import WXShared
+
+# Constants
+EvtWatchCursor, EVT_WATCH_CURSOR = wx.lib.newevent.NewEvent()
 
 class WX4Text(WXShared, SpecificText):
 
@@ -103,8 +107,9 @@ class WX4Text(WXShared, SpecificText):
         window.add_widget(self)
         self.watch_keyboard(self.wx_text)
         self.wx_text.Bind(wx.EVT_TEXT, self.OnTextChanged)
-        self.wx_text.Bind(wx.EVT_LEFT_UP, self.OnUpdateCursor)
-        self.wx_text.Bind(wx.EVT_KEY_UP, self.OnUpdateCursor)
+        self.wx_text.Bind(wx.EVT_LEFT_UP, self.OnPrepareUpdateCursor)
+        self.wx_text.Bind(wx.EVT_KEY_UP, self.OnPrepareUpdateCursor)
+        self.wx_text.Bind(EVT_WATCH_CURSOR, self.OnWatchCursor)
 
     def OnTextChanged(self, e):
         text = e.GetString()
@@ -115,39 +120,75 @@ class WX4Text(WXShared, SpecificText):
         # Update the cursor position
         self.UpdateCursorPosition(text)
 
+    def OnPrepareUpdateCursor(self, e):
+        """
+        Prepare to update the cursor.
+
+        Notice that this method is the first link of a chain which will
+        require some time to proceed.  There is no event to watch
+        the cursor position, so this method will generate another
+        event which is supposed to run after the cursor has moved.
+        This second event, `WatchCursor`, will then generate a coroutine
+        that will only be executed in the asynchronous loop, thus
+        generating another constraint in time.  However, it is
+        worth noting these methods don't contain complicated calculation,
+        they just postpone each operation to a later date while
+        the cursor might be updated again.  In theory, this does
+        not affect BUI's performance.
+
+        """
+        e.Skip()
+        wx.PostEvent(self.wx_text, EvtWatchCursor())
+
+    def OnWatchCursor(self, e):
+        """
+        The cursor has supposedly changed position.
+
+        This is the second link in the chain of events.  This method
+        should be called after the cursor has moved.
+
+        """
+        e.Skip()
+        pos = self.wx_text.GetInsertionPoint()
+        self.UpdateCursorPosition()
+
     def UpdateCursorPosition(self, text=None):
         """Check the cursor position."""
         text = text if text else self.wx_text.GetValue()
         position = self.wx_text.GetInsertionPoint()
-        if self._last_updated != self._last_checked:
-            self._last_updated = self._last_checked
-            self.cached_position = position
-            num_nl = text.count("\n")
-            lineno, col = 0, 0
-            if num_nl > 0:
-                offset_pos = pos = 0
-                for character in text:
-                    if pos == self.cached_position:
-                        break
+        self.in_async_thread(self.async_update_cursor_position, text, position)
 
-                    if character == "\n":
-                        pos += self._nl_offset
-                        lineno += 1
-                        col = 0
-                    else:
-                        pos += 1
-                        col += 1
-                    offset_pos += 1
+    def async_update_cursor_position(self, text, position):
+        """
+        Update the cursor position in the asynchronous thread.
+
+        Args:
+            position (int): the new position (with offset).
+
+        """
+        num_nl = text.count("\n")
+        lineno, col = 0, 0
+        if num_nl > 0:
+            offset_pos = pos = 0
+            for character in text:
+                if pos == position:
+                    break
+
+                if character == "\n":
+                    pos += self._nl_offset
+                    lineno += 1
+                    col = 0
                 else:
-                    offset_pos += 1
+                    pos += 1
                     col += 1
-            else:
-                offset_pos = position
-                col = position
-            cursor = self.generic.cursor
-            cursor._pos = offset_pos
-            cursor._lineno = lineno
-            cursor._col = col
+                offset_pos += 1
+        else:
+            offset_pos = position
+            col = position
+        cursor = self.generic.cursor
+        cursor._pos = offset_pos
+        cursor._lineno = lineno
+        cursor._col = col
 
     async def AsyncUpdateCursor(self, text=None):
         if self.wx_text:
