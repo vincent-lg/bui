@@ -8,7 +8,7 @@ from pubsub import pub
 
 from bui.control.base import NOT_SET
 from bui.control.exceptions import StopControl
-from bui.specific.wx4.constants import KEYMAP
+from bui.specific.wx4.constants import KEYMAP, CHARMAP
 from bui.specific.wx4.log import logger
 from bui.specific.wx4.thread import WX_THREAD, EVENT_COUNTER
 
@@ -52,6 +52,8 @@ class WXShared:
                     key = f"ctrl{chr(key_code + 64)}"
                 else:
                     key = chr(key_code)
+
+                    key = CHARMAP.get(key, key)
             else:
                 key = str(key_code)
 

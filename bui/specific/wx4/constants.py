@@ -127,3 +127,17 @@ KEYMAP = {
         wx.WXK_SPECIAL19: "special19",
         wx.WXK_CONTROL: "",
 }
+
+CHARMAP = {
+        "-": "minus",
+        "=": "equal",
+        "`": "grave",
+        "[": "left_bracket",
+        "]": "right_bracket",
+        ";": "semicolon",
+        "'": "apostrophe",
+        "\\": "antislash",
+        ",": "comma",
+        ".": "dot",
+        "/": "slash",
+}
