@@ -275,7 +275,7 @@ class WX4Window(WXShared, SpecificWindow):
         }
         style |= default_buttons[default]
         style |= wx.CENTRE
-        parent = self.generic.window.specific.wx_parent
+        parent = self.wx_parent
         dialog = wx.MessageDialog(parent, message, caption=title,
                 style=style)
         ok = buttons.get("ok", False)
