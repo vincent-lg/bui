@@ -195,7 +195,7 @@ class Control(metaclass=MetaControl):
         report = report.replace("{", "{{").replace("}", "}}")
         cls.logger.debug(" " * 4 + report.strip(), widget=wid)
 
-    def process(self, options=None):
+    def process(self, options=None, callback=None):
         """Process the control, calls a generic `on_` method if found."""
         #if self.name == "select": breakpoint()
         wid = getattr(self.widget, "id", "")
@@ -234,7 +234,7 @@ class Control(metaclass=MetaControl):
 
             if group == options:
                 self._report_call(method, wid=wid)
-                res = self._call_method(method)
+                res = self._call_method(method, callback=callback)
                 break
 
         # Call after_{control} on the widget
@@ -264,7 +264,7 @@ class Control(metaclass=MetaControl):
         self._report_stop(reason, wid=wid)
         raise StopControl()
 
-    def _call_method(self, method):
+    def _call_method(self, method, callback=None):
         """Call a control method with optional arguments."""
         signature = inspect.signature(method)
         parameters = tuple(signature.parameters.keys())
@@ -281,7 +281,11 @@ class Control(metaclass=MetaControl):
 
         result = method(**kwargs)
         if asyncio.iscoroutine(result):
-            self.widget.schedule(result)
+            task = self.widget.schedule(result)
+            if callback:
+                task.add_done_callback(callback)
+        elif callback:
+            callback(None)
 
         return result
 

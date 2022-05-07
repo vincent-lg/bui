@@ -1,5 +1,6 @@
 """Contain the WXShared class."""
 
+import asyncio
 from collections import namedtuple
 import threading
 
@@ -84,7 +85,7 @@ class WXShared:
         kwargs["key"] = key
         return kwargs
 
-    def process_control(self, e, control, options=None):
+    def process_control(self, e, control, options=None, close=False):
         """
         Process the control.
 
@@ -95,6 +96,7 @@ class WXShared:
             e (wx.Event): the wxPython event.
             control (str): the control name to call.
             options (optional, dict): the control options.
+            close (bool): if set to True, terminate the loop.
 
         If the generic widget is not subscribed to this control,
         look for the parent widget and so on.
@@ -108,26 +110,27 @@ class WXShared:
                 WX_THREAD.loop.call_soon_threadsafe(
                         WX_THREAD.in_queue.put_nowait, (event,
                         self.process_control_in_thread, (control, options),
-                        {}))
+                        {}, close))
                 rcv_event, status = WX_THREAD.out_queue.get()
             else:
                 logger.debug(f"{msg_post}, already in async thread")
                 rcv_event = event
-                status = self.process_control_in_thread(event, control, options)
+                status = self.process_control_in_thread(event, control, options, close=close)
 
             logger.debug(f"  Received {rcv_event}-{event}, {status}, {e}")
             if e and event == rcv_event and status:
                 logger.debug("  Skip this event")
                 e.Skip()
 
-    def process_control_in_thread(self, event, control, options):
+    def process_control_in_thread(self, event, control, options, close=False):
         logger.debug(f"  In async thread, process control {control} "
                 f"from event {event} with options {options}")
         widget = self
         options = options or {}
+        callback = close_loop if close else None
         while widget:
             try:
-                result = widget.generic._process_control(control, options)
+                result = widget.generic._process_control(control, options, callback)
             except StopControl:
                 logger.debug("  This control was cancelled.")
                 return False
@@ -173,3 +176,7 @@ class WXShared:
 
     def _in_async_thread(self, callback, *args):
         callback(*args)
+
+
+def close_loop(task):
+    WX_THREAD.close_event.set()

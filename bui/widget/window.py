@@ -12,6 +12,7 @@ layout in a separate [file](../layout/file.md).
 
 """
 
+import asyncio
 import inspect
 from pathlib import Path
 import sys
@@ -246,11 +247,10 @@ class Window(Widget, metaclass=MetaWindow):
         self.specific.show()
         return self.specific._start(loop)
 
-    def _stop(self):
+    async def _stop(self):
         """Stop the window toolkit."""
         cancel_all()
-        self._process_control("close")
-        run_remaining()
+        self.specific.process_control(None, "close", close=True)
         self.close()
 
     def close(self):

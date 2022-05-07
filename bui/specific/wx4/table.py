@@ -142,9 +142,9 @@ class WX4Table(WXShared, SpecificTable):
         # Call the control asynchronously.  The control can be stopped.
         self.process_control(None, "select", {"selected": selected})
 
-    def process_control_in_thread(self, event, control, options):
+    def process_control_in_thread(self, event, control, options, close=False):
         """Sub-classing, processing the control in the async thread."""
-        result = super().process_control_in_thread(event, control, options)
+        result = super().process_control_in_thread(event, control, options, close=close)
         if control == "select":
             selected = options["selected"]
             if result:

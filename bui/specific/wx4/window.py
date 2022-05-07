@@ -94,6 +94,7 @@ class WX4Window(WXShared, SpecificWindow):
         # Start a WXThread if none exists
         if not WX_THREAD.is_alive():
             pub.subscribe(self.call, "callable")
+            WX_THREAD.app = self.wx_app
             WX_THREAD.start()
 
     def position_for(self, widget):
@@ -166,10 +167,7 @@ class WX4Window(WXShared, SpecificWindow):
             loop (AsyncLoop): the asynchronous event loop (see asyncio).
 
         """
-        #self.wx_app.top_windows.append(self.wx_frame)
-        #self.wx_app.loop = loop
         self.wx_app.MainLoop()
-        WX_THREAD.loop.call_soon_threadsafe(cancel_all)
 
     def create_menubar(self, menubar):
         """Create a menu bar."""
@@ -193,6 +191,8 @@ class WX4Window(WXShared, SpecificWindow):
                 self.in_main_thread(parent.specific.wx_frame.Show)
 
             self.in_main_thread(self.wx_frame.Destroy)
+        WX_THREAD.loop.call_soon_threadsafe(WX_THREAD.in_queue.put_nowait, (None, None, (), {}, False))
+        WX_THREAD.join()
 
     def _OnContext(self, e, widget=None):
         """On context menu."""

@@ -4,6 +4,7 @@ import asyncio
 from contextlib import contextmanager
 from importlib import import_module
 import os
+import platform
 
 from bui.cmd_parser import init_args, before_displaying
 
@@ -76,11 +77,19 @@ def start(window):
     # specific) window object, to watch for window events AND
     # asynchronous events at the same time
     if not FORBID_START:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         before_displaying(args, window, loop)
-        loop.run_until_complete(window._start(loop))
-        window._stop()
-        window.close()
+        try:
+            loop.run_until_complete(window._start(loop))
+        except asyncio.CancelledError:
+            pass
+
+
+        try:
+            loop.run_until_complete(window._stop())
+        except asyncio.CancelledError:
+            pass
 
     return window
 

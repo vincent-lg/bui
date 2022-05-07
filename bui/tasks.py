@@ -9,6 +9,7 @@ import asyncio
 
 RUNNING = []
 
+
 def schedule(coroutine):
     """
     Schedule the coroutine to run asynchronously.
@@ -21,6 +22,8 @@ def schedule(coroutine):
     task = loop.create_task(coroutine)
     RUNNING.append(task)
     task.add_done_callback(done)
+    return task
+
 
 def done(task):
     """The specified task is done."""
@@ -28,9 +31,14 @@ def done(task):
         RUNNING.remove(task)
     except ValueError:
         pass
+
+
 def cancel_all():
     """Cancel all tasks."""
-    pending = asyncio.Task.all_tasks()
+    all_tasks = getattr(
+        asyncio, "all_tasks", getattr(asyncio.Task, "all_tasks", None)
+    )
+    pending = all_tasks()
     for task in pending:
         try:
             task.cancel()

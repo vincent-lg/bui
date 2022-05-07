@@ -56,7 +56,7 @@ class Widget:
         """
         return self.specific._init()
 
-    def _process_control(self, control_name, options=None):
+    def _process_control(self, control_name, options=None, callback=None):
         """Process an in-progress control."""
         options = options or {}
         Control = CONTROLS.get(control_name)
@@ -64,7 +64,7 @@ class Widget:
             raise ValueError(f"unknown control {control_name!r}")
 
         control = Control(self, **options)
-        return control.process(options)
+        return control.process(options, callback=callback)
 
     def _bind_controls(self, window):
         """Bind the diget controls."""
@@ -74,7 +74,7 @@ class Widget:
 
     def schedule(self, coroutine):
         """Schedule the specified coroutine in the main event loop."""
-        schedule(coroutine)
+        return schedule(coroutine)
 
     async def sleep(self, seconds):
         """
