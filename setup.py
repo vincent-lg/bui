@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bui",
-    version="0.2.13",
+    version="0.3.0",
     author="Vincent Le Goff",
     author_email="vincent.legoff.srs@gmail.com",
     description="The Blind User Interface: the interface you can design with your eyes closed.",
@@ -16,7 +16,7 @@ setuptools.setup(
     python_requires=">=3.6",
     install_requires = [
         'Logbook == 1.5.2',
-        'wxPython == 4.1.1; platform_system=="Windows"',
+        'wxPython == 4.2.0; platform_system=="Windows"',
         'Pypubsub == 4.0.3; platform_system=="Windows"',
     ],
     extras_require={
