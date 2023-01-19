@@ -23,7 +23,7 @@ To run this example:
 
 [Open raw](https://raw.githubusercontent.com/vincent-lg/bui/master/example/download.py) [Open in github](https://github.com/vincent-lg/bui/blob/master/example/download.py)
 
-## Source code (205 lines)
+## Source code (206 lines)
 
 ```python
 import asyncio
@@ -65,14 +65,17 @@ class DownloadExample(Window):
 
     def on_init_download(self, widget):
         """The 'download' table is ready to be displayed."""
+        self.tasks = []
         widget.row_class = DownloadRow
         widget.downloading = False
         widget.rows = [(file, "Unknown", "Unknown", "Unknown") for file, _ in FILES]
-        self.schedule(self.download_all())
+        self.tasks.append(self.schedule(self.download_all()))
 
     async def on_close(self):
         """Close the window, end the session."""
         await self.session.close()
+        for task in self.tasks:
+            task.cancel()
 
     def on_add(self):
         """The 'add' button was clicked."""
@@ -91,7 +94,7 @@ class DownloadExample(Window):
             table = self["download"]
             row = table.add_row(name, "Unknown", "Unknown", "Unknown")
             row.url = url
-            self.schedule(row.download(self.session))
+            self.tasks.append(self.schedule(row.download(self.session)))
     on_add_file = on_add
     on_press_ctrl_a = on_add
     on_quit = close
@@ -107,13 +110,11 @@ class DownloadExample(Window):
         """Download all files asynchronously."""
         self.session = aiohttp.ClientSession()
         table = self["download"]
-        tasks = []
         for i, (filename, url) in enumerate(FILES):
             row = table.rows[i]
             row.url = url
-            tasks.append(row.download(self.session))
+            self.tasks.append(self.schedule(row.download(self.session)))
 
-        await asyncio.gather(*tasks)
 
 
 class DownloadRow(AbcRow):

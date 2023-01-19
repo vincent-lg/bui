@@ -78,7 +78,7 @@
       <span style="white-space: pre;"><a id="L56"></a>        &quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L57"></a>        return self.specific._init()</span><br />
       <span style="white-space: pre;"><a id="L58"></a></span><br />
-      <span style="white-space: pre;"><a id="L59"></a>    def _process_control(self, control_name, options=None):</span><br />
+      <span style="white-space: pre;"><a id="L59"></a>    def _process_control(self, control_name, options=None, callback=None):</span><br />
       <span style="white-space: pre;"><a id="L60"></a>        &quot;&quot;&quot;Process an in-progress control.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L61"></a>        options = options or {}</span><br />
       <span style="white-space: pre;"><a id="L62"></a>        Control = CONTROLS.get(control_name)</span><br />
@@ -86,7 +86,7 @@
       <span style="white-space: pre;"><a id="L64"></a>            raise ValueError(f&quot;unknown control {control_name!r}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L65"></a></span><br />
       <span style="white-space: pre;"><a id="L66"></a>        control = Control(self, **options)</span><br />
-      <span style="white-space: pre;"><a id="L67"></a>        return control.process(options)</span><br />
+      <span style="white-space: pre;"><a id="L67"></a>        return control.process(options, callback=callback)</span><br />
       <span style="white-space: pre;"><a id="L68"></a></span><br />
       <span style="white-space: pre;"><a id="L69"></a>    def _bind_controls(self, window):</span><br />
       <span style="white-space: pre;"><a id="L70"></a>        &quot;&quot;&quot;Bind the diget controls.&quot;&quot;&quot;</span><br />
@@ -96,7 +96,7 @@
       <span style="white-space: pre;"><a id="L74"></a></span><br />
       <span style="white-space: pre;"><a id="L75"></a>    def schedule(self, coroutine):</span><br />
       <span style="white-space: pre;"><a id="L76"></a>        &quot;&quot;&quot;Schedule the specified coroutine in the main event loop.&quot;&quot;&quot;</span><br />
-      <span style="white-space: pre;"><a id="L77"></a>        schedule(coroutine)</span><br />
+      <span style="white-space: pre;"><a id="L77"></a>        return schedule(coroutine)</span><br />
       <span style="white-space: pre;"><a id="L78"></a></span><br />
       <span style="white-space: pre;"><a id="L79"></a>    async def sleep(self, seconds):</span><br />
       <span style="white-space: pre;"><a id="L80"></a>        &quot;&quot;&quot;</span><br />

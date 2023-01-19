@@ -217,7 +217,7 @@
       <span style="white-space: pre;"><a id="L195"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
       <span style="white-space: pre;"><a id="L196"></a>        cls.logger.debug(&quot; &quot; * 4 + report.strip(), widget=wid)</span><br />
       <span style="white-space: pre;"><a id="L197"></a></span><br />
-      <span style="white-space: pre;"><a id="L198"></a>    def process(self, options=None):</span><br />
+      <span style="white-space: pre;"><a id="L198"></a>    def process(self, options=None, callback=None):</span><br />
       <span style="white-space: pre;"><a id="L199"></a>        &quot;&quot;&quot;Process the control, calls a generic `on_` method if found.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L200"></a>        #if self.name == &quot;select&quot;: breakpoint()</span><br />
       <span style="white-space: pre;"><a id="L201"></a>        wid = getattr(self.widget, &quot;id&quot;, &quot;&quot;)</span><br />
@@ -256,7 +256,7 @@
       <span style="white-space: pre;"><a id="L234"></a></span><br />
       <span style="white-space: pre;"><a id="L235"></a>            if group == options:</span><br />
       <span style="white-space: pre;"><a id="L236"></a>                self._report_call(method, wid=wid)</span><br />
-      <span style="white-space: pre;"><a id="L237"></a>                res = self._call_method(method)</span><br />
+      <span style="white-space: pre;"><a id="L237"></a>                res = self._call_method(method, callback=callback)</span><br />
       <span style="white-space: pre;"><a id="L238"></a>                break</span><br />
       <span style="white-space: pre;"><a id="L239"></a></span><br />
       <span style="white-space: pre;"><a id="L240"></a>        # Call after_{control} on the widget</span><br />
@@ -286,7 +286,7 @@
       <span style="white-space: pre;"><a id="L264"></a>        self._report_stop(reason, wid=wid)</span><br />
       <span style="white-space: pre;"><a id="L265"></a>        raise StopControl()</span><br />
       <span style="white-space: pre;"><a id="L266"></a></span><br />
-      <span style="white-space: pre;"><a id="L267"></a>    def _call_method(self, method):</span><br />
+      <span style="white-space: pre;"><a id="L267"></a>    def _call_method(self, method, callback=None):</span><br />
       <span style="white-space: pre;"><a id="L268"></a>        &quot;&quot;&quot;Call a control method with optional arguments.&quot;&quot;&quot;</span><br />
       <span style="white-space: pre;"><a id="L269"></a>        signature = inspect.signature(method)</span><br />
       <span style="white-space: pre;"><a id="L270"></a>        parameters = tuple(signature.parameters.keys())</span><br />
@@ -303,48 +303,52 @@
       <span style="white-space: pre;"><a id="L281"></a></span><br />
       <span style="white-space: pre;"><a id="L282"></a>        result = method(**kwargs)</span><br />
       <span style="white-space: pre;"><a id="L283"></a>        if asyncio.iscoroutine(result):</span><br />
-      <span style="white-space: pre;"><a id="L284"></a>            self.widget.schedule(result)</span><br />
-      <span style="white-space: pre;"><a id="L285"></a></span><br />
-      <span style="white-space: pre;"><a id="L286"></a>        return result</span><br />
-      <span style="white-space: pre;"><a id="L287"></a></span><br />
-      <span style="white-space: pre;"><a id="L288"></a>    def _report_fire(self, options: dict = None):</span><br />
-      <span style="white-space: pre;"><a id="L289"></a>        report = f&quot;Fire {self.name} control on {self.widget.widget}&quot;</span><br />
-      <span style="white-space: pre;"><a id="L290"></a>        wid = getattr(self.widget, &quot;id&quot;, None)</span><br />
-      <span style="white-space: pre;"><a id="L291"></a>        if wid:</span><br />
-      <span style="white-space: pre;"><a id="L292"></a>            report += f&quot;({wid}) &quot;</span><br />
-      <span style="white-space: pre;"><a id="L293"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L294"></a>            report += &quot; &quot;</span><br />
-      <span style="white-space: pre;"><a id="L295"></a>        if options:</span><br />
-      <span style="white-space: pre;"><a id="L296"></a>            report += f&quot;with options={options}&quot;</span><br />
-      <span style="white-space: pre;"><a id="L297"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
-      <span style="white-space: pre;"><a id="L298"></a>        self.logger.debug(&quot;  &quot; + report.strip(), widget=wid)</span><br />
-      <span style="white-space: pre;"><a id="L299"></a></span><br />
-      <span style="white-space: pre;"><a id="L300"></a>    def _report_call(self, method: Callable, child: bool = False, wid: str = &quot;&quot;):</span><br />
-      <span style="white-space: pre;"><a id="L301"></a>        report = &quot;Match &quot;</span><br />
-      <span style="white-space: pre;"><a id="L302"></a>        if child:</span><br />
-      <span style="white-space: pre;"><a id="L303"></a>            report += &quot;child &quot;</span><br />
-      <span style="white-space: pre;"><a id="L304"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L305"></a>            report += &quot;main &quot;</span><br />
-      <span style="white-space: pre;"><a id="L306"></a></span><br />
-      <span style="white-space: pre;"><a id="L307"></a>        report += f&quot;control to {method.__name__}, call it&quot;</span><br />
-      <span style="white-space: pre;"><a id="L308"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
-      <span style="white-space: pre;"><a id="L309"></a>        self.logger.debug(&quot; &quot; * 4 + report.strip(), widget=wid)</span><br />
+      <span style="white-space: pre;"><a id="L284"></a>            task = self.widget.schedule(result)</span><br />
+      <span style="white-space: pre;"><a id="L285"></a>            if callback:</span><br />
+      <span style="white-space: pre;"><a id="L286"></a>                task.add_done_callback(callback)</span><br />
+      <span style="white-space: pre;"><a id="L287"></a>        elif callback:</span><br />
+      <span style="white-space: pre;"><a id="L288"></a>            callback(None)</span><br />
+      <span style="white-space: pre;"><a id="L289"></a></span><br />
+      <span style="white-space: pre;"><a id="L290"></a>        return result</span><br />
+      <span style="white-space: pre;"><a id="L291"></a></span><br />
+      <span style="white-space: pre;"><a id="L292"></a>    def _report_fire(self, options: dict = None):</span><br />
+      <span style="white-space: pre;"><a id="L293"></a>        report = f&quot;Fire {self.name} control on {self.widget.widget}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L294"></a>        wid = getattr(self.widget, &quot;id&quot;, None)</span><br />
+      <span style="white-space: pre;"><a id="L295"></a>        if wid:</span><br />
+      <span style="white-space: pre;"><a id="L296"></a>            report += f&quot;({wid}) &quot;</span><br />
+      <span style="white-space: pre;"><a id="L297"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L298"></a>            report += &quot; &quot;</span><br />
+      <span style="white-space: pre;"><a id="L299"></a>        if options:</span><br />
+      <span style="white-space: pre;"><a id="L300"></a>            report += f&quot;with options={options}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L301"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L302"></a>        self.logger.debug(&quot;  &quot; + report.strip(), widget=wid)</span><br />
+      <span style="white-space: pre;"><a id="L303"></a></span><br />
+      <span style="white-space: pre;"><a id="L304"></a>    def _report_call(self, method: Callable, child: bool = False, wid: str = &quot;&quot;):</span><br />
+      <span style="white-space: pre;"><a id="L305"></a>        report = &quot;Match &quot;</span><br />
+      <span style="white-space: pre;"><a id="L306"></a>        if child:</span><br />
+      <span style="white-space: pre;"><a id="L307"></a>            report += &quot;child &quot;</span><br />
+      <span style="white-space: pre;"><a id="L308"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L309"></a>            report += &quot;main &quot;</span><br />
       <span style="white-space: pre;"><a id="L310"></a></span><br />
-      <span style="white-space: pre;"><a id="L311"></a>    def _report_stop(self, reason: str = &quot;&quot;, wid: str = &quot;&quot;):</span><br />
-      <span style="white-space: pre;"><a id="L312"></a>        if reason:</span><br />
-      <span style="white-space: pre;"><a id="L313"></a>            report = f&quot;Stopping: {reason}&quot;</span><br />
-      <span style="white-space: pre;"><a id="L314"></a>        else:</span><br />
-      <span style="white-space: pre;"><a id="L315"></a>            report = f&quot;Stopping&quot;</span><br />
-      <span style="white-space: pre;"><a id="L316"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
-      <span style="white-space: pre;"><a id="L317"></a>        self.logger.debug(6 * &quot; &quot; + report, widget=wid)</span><br />
-      <span style="white-space: pre;"><a id="L318"></a></span><br />
-      <span style="white-space: pre;"><a id="L319"></a></span><br />
-      <span style="white-space: pre;"><a id="L320"></a>class _ControlScope:</span><br />
-      <span style="white-space: pre;"><a id="L321"></a></span><br />
-      <span style="white-space: pre;"><a id="L322"></a>    &quot;&quot;&quot;Enumeration to define the control scope.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L311"></a>        report += f&quot;control to {method.__name__}, call it&quot;</span><br />
+      <span style="white-space: pre;"><a id="L312"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L313"></a>        self.logger.debug(&quot; &quot; * 4 + report.strip(), widget=wid)</span><br />
+      <span style="white-space: pre;"><a id="L314"></a></span><br />
+      <span style="white-space: pre;"><a id="L315"></a>    def _report_stop(self, reason: str = &quot;&quot;, wid: str = &quot;&quot;):</span><br />
+      <span style="white-space: pre;"><a id="L316"></a>        if reason:</span><br />
+      <span style="white-space: pre;"><a id="L317"></a>            report = f&quot;Stopping: {reason}&quot;</span><br />
+      <span style="white-space: pre;"><a id="L318"></a>        else:</span><br />
+      <span style="white-space: pre;"><a id="L319"></a>            report = f&quot;Stopping&quot;</span><br />
+      <span style="white-space: pre;"><a id="L320"></a>        report = report.replace(&quot;{&quot;, &quot;{{&quot;).replace(&quot;}&quot;, &quot;}}&quot;)</span><br />
+      <span style="white-space: pre;"><a id="L321"></a>        self.logger.debug(6 * &quot; &quot; + report, widget=wid)</span><br />
+      <span style="white-space: pre;"><a id="L322"></a></span><br />
       <span style="white-space: pre;"><a id="L323"></a></span><br />
-      <span style="white-space: pre;"><a id="L324"></a>    WINDOW = &#x27;window control&#x27;</span><br />
-      <span style="white-space: pre;"><a id="L325"></a>    WIDGET = &#x27;widget control&#x27;</span><br />
+      <span style="white-space: pre;"><a id="L324"></a>class _ControlScope:</span><br />
+      <span style="white-space: pre;"><a id="L325"></a></span><br />
+      <span style="white-space: pre;"><a id="L326"></a>    &quot;&quot;&quot;Enumeration to define the control scope.&quot;&quot;&quot;</span><br />
+      <span style="white-space: pre;"><a id="L327"></a></span><br />
+      <span style="white-space: pre;"><a id="L328"></a>    WINDOW = &#x27;window control&#x27;</span><br />
+      <span style="white-space: pre;"><a id="L329"></a>    WIDGET = &#x27;widget control&#x27;</span><br />
     </div>
   </body>
 </html>

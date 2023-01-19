@@ -21,7 +21,10 @@ def format_doc(doc: str) -> str:
         formatted (str): the formatted doc.
 
     """
-    doc = dedent(doc)
+    try:
+        doc = dedent(doc)
+    except:
+        breakpoint()
 
     # Read tables, collapse cells if needed
     watch_table = False

@@ -21,7 +21,8 @@ attempted) with its classes.
 from bui.geometry import Point, Rectangle, Size
 from bui.tools import start, PACKAGE
 from bui.widget.base import Widget
+from bui.widget.dialog import Dialog
 from bui.widget.window import Window
 Widget.specific_package = PACKAGE
 name = "BUI"
-version = "0.2.13"
+version = "0.3.2"

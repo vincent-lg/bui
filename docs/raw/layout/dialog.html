@@ -64,9 +64,9 @@
       <span style="white-space: pre;"><a id="L42"></a></span><br />
       <span style="white-space: pre;"><a id="L43"></a>        \&quot;\&quot;\&quot;Example window.\&quot;\&quot;\&quot;</span><br />
       <span style="white-space: pre;"><a id="L44"></a></span><br />
-      <span style="white-space: pre;"><a id="L45"></a>        def on_profile(self):</span><br />
+      <span style="white-space: pre;"><a id="L45"></a>        async def on_profile(self):</span><br />
       <span style="white-space: pre;"><a id="L46"></a>            \&quot;\&quot;\&quot;The user clicked on the &#x27;profile&#x27; button.\&quot;\&quot;\&quot;</span><br />
-      <span style="white-space: pre;"><a id="L47"></a>            dialog = self.pop_dialog(\&quot;\&quot;\&quot;</span><br />
+      <span style="white-space: pre;"><a id="L47"></a>            dialog = await self.pop_dialog(\&quot;\&quot;\&quot;</span><br />
       <span style="white-space: pre;"><a id="L48"></a>                &lt;dialog title=&quot;Enter your name&quot;&gt;</span><br />
       <span style="white-space: pre;"><a id="L49"></a>                  &lt;text x=2 y=3 id=name&gt;Enter your name here:&lt;/text&gt;</span><br />
       <span style="white-space: pre;"><a id="L50"></a>                  &lt;button x=1 y=5 set_true&gt;OK&lt;/button&gt;</span><br />
@@ -153,9 +153,9 @@
       <span style="white-space: pre;"><a id="L131"></a>    ```python</span><br />
       <span style="white-space: pre;"><a id="L132"></a>    class Example(Window):</span><br />
       <span style="white-space: pre;"><a id="L133"></a></span><br />
-      <span style="white-space: pre;"><a id="L134"></a>        def on_hash(self):</span><br />
+      <span style="white-space: pre;"><a id="L134"></a>        async def on_hash(self):</span><br />
       <span style="white-space: pre;"><a id="L135"></a>            \&quot;\&quot;\&quot;The user pressed on the &#x27;hash&#x27; button.\&quot;\&quot;\&quot;</span><br />
-      <span style="white-space: pre;"><a id="L136"></a>            dialog = self.pop_dialog(Hashes)</span><br />
+      <span style="white-space: pre;"><a id="L136"></a>            dialog = await self.pop_dialog(Hashes)</span><br />
       <span style="white-space: pre;"><a id="L137"></a>            # Block until &#x27;ok&#x27; or &#x27;cancel&#x27; has been pressed</span><br />
       <span style="white-space: pre;"><a id="L138"></a>            if dialog:</span><br />
       <span style="white-space: pre;"><a id="L139"></a>                hash_name = dialog[&quot;hashes&quot;].selected.name</span><br />

@@ -42,9 +42,9 @@ class Dialog(Component):
 
         \"\"\"Example window.\"\"\"
 
-        def on_profile(self):
+        async def on_profile(self):
             \"\"\"The user clicked on the 'profile' button.\"\"\"
-            dialog = self.pop_dialog(\"\"\"
+            dialog = await self.pop_dialog(\"\"\"
                 <dialog title="Enter your name">
                   <text x=2 y=3 id=name>Enter your name here:</text>
                   <button x=1 y=5 set_true>OK</button>
@@ -131,9 +131,9 @@ class Dialog(Component):
     ```python
     class Example(Window):
 
-        def on_hash(self):
+        async def on_hash(self):
             \"\"\"The user pressed on the 'hash' button.\"\"\"
-            dialog = self.pop_dialog(Hashes)
+            dialog = await self.pop_dialog(Hashes)
             # Block until 'ok' or 'cancel' has been pressed
             if dialog:
                 hash_name = dialog["hashes"].selected.name

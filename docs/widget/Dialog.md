@@ -24,7 +24,7 @@ This class offers 13 methods.
 | [mark](#mark) | `mark(layout: str)` | Mark layout in the window. |
 | [open_window](#open_window) | `open_window(window: 'Window', child=False)` | Open a new window. |
 | [parse_layout](#parse_layout) | `parse_layout(Window, tag_name='window', **kwargs)` | Determine where the layout is and try to parse it, return a window. |
-| [pop_alert](#pop_alert) | `pop_alert(title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')` | Display a default message box for inforiation or errors. |
+| [pop_alert](#pop_alert) | `pop_alert(title: str, message: str, danger: Optional[str] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Optional[str] = 'ok')` | Display a default message box for inforiation or errors. |
 | [pop_dialog](#pop_dialog) | `pop_dialog(dialog: Union[str, Type[ForwardRef('wg.dialog.Dialog')]], **kwargs)` | Pop up a custom dialog, blocks until the dialog has been closed. |
 | [pop_menu](#pop_menu) | `pop_menu(context_id: str)` | Pop a context menu, blocks until the menu is closed. |
 | [pop_open_file](#pop_open_file) | `pop_open_file(message: str, location: pathlib.Path = None, filters: Sequence[Union[str, Tuple[str, str]]] = (), default: str = None, multiple: bool = False, preview: bool = True, hidden: bool = False)` | Display a system dialog to select one or several files. |
@@ -40,7 +40,7 @@ This property can only get (read-only).
 
 #### Get
 
-[See the source code](../raw/widget/dialog.html#L137)
+[See the source code](../raw/widget/dialog.html#L138)
 
 Return the screen size that can be used, in pixels.
 
@@ -98,7 +98,7 @@ The window closes.
 
 `mark(layout: str)`
 
-[See the source code](../raw/widget/dialog.html#L53)
+[See the source code](../raw/widget/dialog.html#L54)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -129,7 +129,7 @@ Args:
 
 `parse_layout(Window, tag_name='window', **kwargs)`
 
-[See the source code](../raw/widget/dialog.html#L153)
+[See the source code](../raw/widget/dialog.html#L154)
 
 | Parameter | Type | Default |
 | --------- | ---- | ------- |
@@ -144,7 +144,7 @@ Raises:
 
 ### pop_alert
 
-`pop_alert(self, title: str, message: str, danger: Union[str, NoneType] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Union[str, NoneType] = 'ok')`
+`pop_alert(self, title: str, message: str, danger: Optional[str] = 'error', ok: Union[bool, str, NoneType] = True, cancel: Union[bool, str, NoneType] = False, yes: Union[bool, str, NoneType] = False, no: Union[bool, str, NoneType] = False, default: Optional[str] = 'ok')`
 
 [See the source code](../raw/widget/dialog.html#L306)
 
@@ -153,12 +153,12 @@ Raises:
 | self | `Dialog` |  |
 | title | `str` |  |
 | message | `str` |  |
-| danger | `Union[str, NoneType]` | `'error'` |
+| danger | `Optional[str]` | `'error'` |
 | ok | `Union[bool, str, NoneType]` | `True` |
 | cancel | `Union[bool, str, NoneType]` | `False` |
 | yes | `Union[bool, str, NoneType]` | `False` |
 | no | `Union[bool, str, NoneType]` | `False` |
-| default | `Union[str, NoneType]` | `'ok'` |
+| default | `Optional[str]` | `'ok'` |
 
 Display a default message box for inforiation or errors.
 

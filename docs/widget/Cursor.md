@@ -24,7 +24,7 @@ This class offers 1 method.
 
 | Method | Signature | Description |
 | ------ | --------- | ----------- |
-| [move](#move) | `move(pos: int, col: Union[int, NoneType] = None)` | Move the cursor. |
+| [move](#move) | `move(pos: int, col: Optional[int] = None)` | Move the cursor. |
 
 ## Properties
 
@@ -112,7 +112,7 @@ Return the text before the cursor.
 
 ### move
 
-`move(self, pos: int, col: Union[int, NoneType] = None)`
+`move(self, pos: int, col: Optional[int] = None)`
 
 [See the source code](../raw/widget/text.html#L154)
 
@@ -120,7 +120,7 @@ Return the text before the cursor.
 | --------- | ---- | ------- |
 | self | `Cursor` |  |
 | pos | `int` |  |
-| col | `Union[int, NoneType]` | `None` |
+| col | `Optional[int]` | `None` |
 
 Move the cursor.
 
