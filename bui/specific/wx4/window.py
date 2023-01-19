@@ -184,6 +184,7 @@ class WX4Window(WXShared, SpecificWindow):
 
     def close(self):
         """Close this window, terminate loop if appropriate."""
+        parent = None
         if self.wx_frame:
             # Show the parent window, if any
             parent = self.generic._bui_parent
@@ -191,8 +192,17 @@ class WX4Window(WXShared, SpecificWindow):
                 self.in_main_thread(parent.specific.wx_frame.Show)
 
             self.in_main_thread(self.wx_frame.Destroy)
-        WX_THREAD.loop.call_soon_threadsafe(WX_THREAD.in_queue.put_nowait, (None, None, (), {}, False))
-        WX_THREAD.join()
+
+        # Terminate the loop
+        if parent is None:
+            # The close event is to be set
+            WX_THREAD.loop.call_soon_threadsafe(WX_THREAD.close_event.set)
+
+            # Send a None event to the queue
+            WX_THREAD.loop.call_soon_threadsafe(WX_THREAD.in_queue.put_nowait, (None, None, (), {}, False))
+
+            # Wait for the thread to terminate
+            WX_THREAD.join()
 
     def _OnContext(self, e, widget=None):
         """On context menu."""
