@@ -184,14 +184,21 @@ class WX4Window(WXShared, SpecificWindow):
 
     def close(self):
         """Close this window, terminate loop if appropriate."""
+        if threading.current_thread() is threading.main_thread():
+            self._close()
+        else:
+            self.in_main_thread(self._close)
+
+    def _close(self):
+        """Close this window, terminate loop if appropriate."""
         parent = None
         if self.wx_frame:
             # Show the parent window, if any
             parent = self.generic._bui_parent
             if parent is not None:
-                self.in_main_thread(parent.specific.wx_frame.Show)
+                parent.specific.wx_frame.Show()
 
-            self.in_main_thread(self.wx_frame.Destroy)
+            self.destroy(self.wx_frame)
 
         # Terminate the loop
         if parent is None:
@@ -201,8 +208,13 @@ class WX4Window(WXShared, SpecificWindow):
             # Send a None event to the queue
             WX_THREAD.loop.call_soon_threadsafe(WX_THREAD.in_queue.put_nowait, (None, None, (), {}, False))
 
-            # Wait for the thread to terminate
-            WX_THREAD.join()
+            # Send a "pass" to the output queue so it will skip all events
+            WX_THREAD.out_queue.put_nowait((None, True))
+
+    def destroy(self, wx_window):
+        """Try and destroy the window."""
+        wx_window.Show(False)
+        wx_window.Destroy()
 
     def _OnContext(self, e, widget=None):
         """On context menu."""
@@ -342,9 +354,8 @@ class WX4Window(WXShared, SpecificWindow):
         """Execute the given callable."""
         args = args or ()
         kwargs = kwargs or {}
-        try:
-            callback(*args, **kwargs)
-        except RuntimeError:
-            # Although not perfect, this will catch errors raised by
-            # wxPython if the object was deleted.
-            pass
+        callback(*args, **kwargs)
+        #except RuntimeError:
+        #    # Although not perfect, this will catch errors raised by
+        #    # wxPython if the object was deleted.
+        #    pass

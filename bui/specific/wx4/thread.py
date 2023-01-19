@@ -31,6 +31,7 @@ class WXThread(threading.Thread):
         self.close_event = asyncio.Event()
         self.in_queue = asyncio.Queue()
         self.out_queue = LifoQueue()
+
         try:
             await self.process_all_events()
         except asyncio.CancelledError:

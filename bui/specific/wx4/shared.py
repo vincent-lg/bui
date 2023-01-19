@@ -111,14 +111,20 @@ class WXShared:
                         WX_THREAD.in_queue.put_nowait, (event,
                         self.process_control_in_thread, (control, options),
                         {}, close))
-                rcv_event, status = WX_THREAD.out_queue.get()
+                if getattr(self, "wx_end", False):
+                    rcv_event, status = WX_THREAD.out_queue.get()
+                else:
+                    rcv_event, status = event, True
+
+                if rcv_event is None:
+                    self.wx_end = True
             else:
                 logger.debug(f"{msg_post}, already in async thread")
                 rcv_event = event
                 status = self.process_control_in_thread(event, control, options, close=close)
 
             logger.debug(f"  Received {rcv_event}-{event}, {status}, {e}")
-            if e and event == rcv_event and status:
+            if rcv_event is None or (e and event == rcv_event and status):
                 logger.debug("  Skip this event")
                 e.Skip()
 
