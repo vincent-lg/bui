@@ -25,4 +25,4 @@ from bui.widget.dialog import Dialog
 from bui.widget.window import Window
 Widget.specific_package = PACKAGE
 name = "BUI"
-version = "0.3.2"
+version = "0.3.3"
