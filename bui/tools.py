@@ -65,13 +65,13 @@ def load_GUI():
 
     return able[0]
 
-def start(window):
+def start(window, **kwargs):
     """Start a window."""
     args = None
     if not FORBID_START:
         args = init_args()
 
-    window = window.parse_layout(window)
+    window = window.parse_layout(window, **kwargs)
 
     # Create an asyncio EventLoop and hand it to the generic (and
     # specific) window object, to watch for window events AND

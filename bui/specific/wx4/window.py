@@ -56,12 +56,12 @@ class WX4Window(WXShared, SpecificWindow):
     @property
     def title(self):
         """Return the current title, override in child class."""
-        return self.wx_frame.GetTitle()
+        raise ValueError("cannot obtain the window's title")
 
     @title.setter
     def title(self, new_title):
         """Set the window's title, override in child class."""
-        self.wx_frame.SetTitle(new_title)
+        self.in_main_thread(self.wx_frame.SetTitle, new_title)
 
     def _init(self):
         """Initialize the specific widget."""
@@ -78,8 +78,8 @@ class WX4Window(WXShared, SpecificWindow):
 
         self.wx_frame = wx.Frame(parent, title=title, name=title,
                 size=tuple(area.bottom_right))
-        #self.wx_app.top_windows.append(self.wx_frame)
         self.wx_parent = self.wx_panel = wx.Panel(self.wx_frame)
+        #self.wx_app.top_windows.append(self.wx_frame)
         self.wx_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # Bind press and type controls

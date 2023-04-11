@@ -22,7 +22,7 @@ from bui.control.exceptions import StopControl
 from bui.control.log import logger as control_logger
 from bui.layout.parser import BUILayoutParser
 from bui.tasks import cancel_all, run_remaining
-from bui.widget.base import Widget
+from bui.widget.base import Widget, CachedProperty
 from bui import widget as wg
 
 class MetaWindow(type):
@@ -123,7 +123,7 @@ class Window(Widget, metaclass=MetaWindow):
     def __init__(self, leaf):
         super().__init__(leaf)
         self.control_methods = {}
-        self.title = leaf.title
+        self._title = leaf.title
         self.width = leaf.width
         self.height = leaf.height
         self._ids = {}
@@ -150,6 +150,14 @@ class Window(Widget, metaclass=MetaWindow):
 
         """
         return self.specific.usable_surface
+
+    @CachedProperty
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, title):
+        self.specific.title = title
 
     @classmethod
     def parse_layout(cls, Window, tag_name="window", **kwargs):
