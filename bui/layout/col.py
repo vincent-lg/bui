@@ -43,6 +43,12 @@ class Col(Component):
     |              |          | be accessed by the       |             |
     |              |          | developer, but not       |             |
     |              |          | visible to the end user. |             |
+    | `unique`     | No       | If present, this column  | `<col       |
+    |              |          | should hold a unique     | unique>`    |
+    |              |          | data, like an integer    |             |
+    |              |          | ID. No two rows can      |             |
+    |              |          | have the same unique row |             |
+    |              |          | value.                   |             |
 
     See also the [table](./table.md) tag to set the table in the layout.
 
@@ -79,14 +85,21 @@ class Col(Component):
         Attr("id", help="The widget identifier", default=""),
         Attr("hidden", help="The column is hidden to the user",
                 default=False, if_present=True),
+        Attr(
+            "unique",
+            help="The column is unique",
+            default=False,
+            if_present=True,
+        ),
     )
     must_have_data = True
     has_widget = False
 
-    def __init__(self, layout, parent, id, hidden=False):
+    def __init__(self, layout, parent, id, hidden=False, unique=False):
         super().__init__(layout, parent)
         self.id = id
         self.hidden = hidden
+        self.unique = unique
 
     def complete(self):
         """Complete the tag, when all the layout has been set."""

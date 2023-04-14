@@ -193,6 +193,7 @@ class Table(Widget):
         self.row_class = None
         self._rows = []
         self._selected = 0
+        self._uniques = set()
 
     def __str__(self):
         """Return a nice display of the table."""
@@ -326,6 +327,8 @@ class Table(Widget):
         for tag in self.leaf.children:
             if tag.tag_name == "col":
                 self.cols.append((tag.id, tag.data, tag.hidden))
+                if tag.unique:
+                    self._uniques.add(tag.id)
 
         if len(self.cols) < 2:
             raise ValueError("a table must have at least two columns.  "
@@ -444,6 +447,25 @@ class Table(Widget):
 
         self.specific.sort(key=key, reverse=reverse)
         self.selected = selected
+
+    def get_from_unique(self, column, value):
+        """Return the row matching a unique column or None.
+
+        Args:
+            column (str): the column.  It must be unique.
+            value (Any): the row value.
+
+        """
+        if column not in self._uniques:
+            raise ValueError(f"the column {column!r} isn't uniquely declared")
+
+        rows = [row for row in self._rows if getattr(row, column) == value]
+        if rows:
+            row = rows[0]
+        else:
+            row = None
+
+        return row
 
 
 def build_factory(widget, cols):
