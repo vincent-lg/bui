@@ -85,7 +85,9 @@ class WXShared:
         kwargs["key"] = key
         return kwargs
 
-    def process_control(self, e, control, options=None, close=False):
+    def process_control(
+        self, e, control, options=None, close=False, has_next=False
+    ):
         """
         Process the control.
 
@@ -97,6 +99,7 @@ class WXShared:
             control (str): the control name to call.
             options (optional, dict): the control options.
             close (bool): if set to True, terminate the loop.
+            has_next (bool): if true, call DoAllowNextEvent, else calll Skip
 
         If the generic widget is not subscribed to this control,
         look for the parent widget and so on.
@@ -111,10 +114,11 @@ class WXShared:
                         WX_THREAD.in_queue.put_nowait, (event,
                         self.process_control_in_thread, (control, options),
                         {}, close))
-                if getattr(self, "wx_end", False):
-                    rcv_event, status = WX_THREAD.out_queue.get()
-                else:
+                wx_end = getattr(self, "wx_end", False)
+                if wx_end:
                     rcv_event, status = event, True
+                else:
+                    rcv_event, status = WX_THREAD.out_queue.get()
 
                 if rcv_event is None:
                     self.wx_end = True
@@ -126,7 +130,10 @@ class WXShared:
             logger.debug(f"  Received {rcv_event}-{event}, {status}, {e}")
             if rcv_event is None or (e and event == rcv_event and status):
                 logger.debug("  Skip this event")
-                e.Skip()
+                if has_next:
+                    e.DoAllowNextEvent()
+                else:
+                    e.Skip()
 
     def process_control_in_thread(self, event, control, options, close=False):
         logger.debug(f"  In async thread, process control {control} "
@@ -148,6 +155,17 @@ class WXShared:
             else:
                 break
 
+        return True
+
+    def should_process_control(self, event, name, options=None):
+        """Returns whether this widget can perform this control.
+
+        Args:
+            event (wx): the WX event.
+            name (str): the control name.
+            options (dict, optional): the control options.
+
+        """
         return True
 
     def in_main_thread(self, callback, *args, **kwargs):

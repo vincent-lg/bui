@@ -6,6 +6,10 @@ from bui.specific.base import *
 from bui.specific.base.button import SpecificButton
 from bui.specific.wx4.shared import WXShared
 
+NAV_KEYS = (
+    "left right up down pageup pagedown home end tab return space"
+).split()
+
 class WX4Button(WXShared, SpecificButton):
 
     @property
@@ -45,3 +49,20 @@ class WX4Button(WXShared, SpecificButton):
     def OnClick(self, e):
         """The menu is seslected, create a click control."""
         self.process_control(e, "click")
+
+    def should_process_control(self, event, name, options=None):
+        """Returns whether this widget can perform this control.
+
+        Args:
+            event (wx): the WX event.
+            name (str): the control name.
+            options (dict, optional): the control options.
+
+        """
+        options = {} if options is None else options
+        if name == "press":
+            if options.get("hook", False):
+                if options.get("raw_key") not in NAV_KEYS:
+                    return False
+
+        return True

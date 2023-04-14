@@ -32,6 +32,7 @@ class WX4Window(WXShared, SpecificWindow):
         self.wx_app = None
         self.wx_display = None
         self.wx_menus = []
+        self.ids = {}
 
     @property
     def usable_surface(self):
@@ -87,7 +88,7 @@ class WX4Window(WXShared, SpecificWindow):
             self.watch_keyboard(self.wx_panel)
         if "right_click" in self.generic.controls:
             self.wx_frame.Bind(wx.EVT_CONTEXT_MENU, self._OnContext)
-
+        self.wx_frame.Bind(wx.EVT_CHAR_HOOK, self._OnCharHook)
         self.wx_panel.SetSizerAndFit(self.wx_sizer)
         self.wx_frame.SetClientSize(self.wx_panel.GetSize())
 
@@ -151,6 +152,7 @@ class WX4Window(WXShared, SpecificWindow):
         widget.wx_obj.SetPosition((int(x), int(y)))
         widget.wx_obj.SetSize(int(width), int(height))
         self.wx_sizer.Add(widget.wx_add)
+        self.ids[hash(widget.wx_obj)] = generic
 
     def show(self):
         """Show the window."""
@@ -222,6 +224,20 @@ class WX4Window(WXShared, SpecificWindow):
             widget.generic._process_control("right_click")
         else:
             self.generic._process_control("right_click")
+
+    def _OnCharHook(self, event):
+        kwargs = self._get_control_args(event)
+        focused = self.wx_frame.FindFocus()
+        generic = self.ids.get(hash(focused))
+
+        if generic is not None:
+            kwargs["hook"] = True
+            widget = generic.specific
+            if widget.should_process_control(event, "press", kwargs):
+                kwargs.pop("hook", False)
+                widget.process_control(event, "press", kwargs)
+            else:
+                event.DoAllowNextEvent()
 
     async def pop_dialog(self, dialog: SpecificWidget, **kwargs):
         """Pop up a dialog."""
